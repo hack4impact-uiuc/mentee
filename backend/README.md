@@ -11,7 +11,7 @@ Create a `.env` file in this folder with the contents:
 ```
 MONGO_USER=[DB username]
 MONGO_PASSWORD=[DB password]
-MONGO_DB=communityconnect-labs
+MONGO_DB=mentee
 MONGO_HOST=[host uri]
 ```
 Replace the `[xxx]` with your own credentials.

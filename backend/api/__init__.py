@@ -62,7 +62,7 @@ def create_app(test_config=None):
     host = os.environ.get("MONGO_HOST")
     app.config["MONGODB_SETTINGS"] = {
         "db": db,
-        "host": host % (db, user, password),
+        "host": host % (user, password, db),
     }
 
     # register mongoengine to this app
