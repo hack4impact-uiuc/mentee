@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from api.models import db, Person, Email
+from api.models import db, Person, Email, MentorProfile
 from api.core import create_response, serialize_list, logger
 
 main = Blueprint("main", __name__)  # initialize blueprint
@@ -38,10 +38,11 @@ def create_person():
         return create_response(status=422, message=msg)
 
     #  create MongoEngine objects
-    new_person = Person(name=data["name"])
+    emails = []
     for email in data["emails"]:
         email_obj = Email(email=email)
-        new_person.emails.append(email_obj)
+        emails.append(email_obj)
+    new_person = Person(name=data["name"], emails=emails)
     new_person.save()
 
     return create_response(
