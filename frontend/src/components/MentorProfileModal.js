@@ -100,7 +100,7 @@ function MentorProfileModal(props) {
             <div className="modal-input-container">
               <ModalInput
                 height={65}
-                type="dropdown"
+                type="dropdown-multiple"
                 title="Major(s)"
                 clicked={inputClicked[10 + i * 4 + 2]}
                 index={10 + i * 4 + 2}
@@ -385,7 +385,7 @@ function MentorProfileModal(props) {
           <div className="modal-inner-container">
             <div className="modal-input-container">
               <ModalInput
-                height={65}
+                style={styles.modalInput}
                 type="text"
                 title="Name *"
                 clicked={inputClicked[0]}
@@ -395,9 +395,9 @@ function MentorProfileModal(props) {
                 defaultValue={name}
                 valid={isValid[0]}
                 validate={validate}
-              ></ModalInput>
+              />
               <ModalInput
-                height={65}
+                style={styles.modalInput}
                 type="text"
                 title="Professional Title *"
                 clicked={inputClicked[1]}
@@ -407,10 +407,11 @@ function MentorProfileModal(props) {
                 defaultValue={title}
                 valid={isValid[1]}
                 validate={validate}
-              ></ModalInput>
+              />
             </div>
             <div className="modal-input-container">
               <ModalInput
+                style={styles.modalInput}
                 type="textarea"
                 title="About"
                 clicked={inputClicked[2]}
@@ -418,7 +419,7 @@ function MentorProfileModal(props) {
                 handleClick={handleClick}
                 onChange={handleAboutChange}
                 defaultValue={about}
-              ></ModalInput>
+              />
             </div>
             <div className="modal-availability-checkbox">
               <Checkbox
@@ -445,7 +446,7 @@ function MentorProfileModal(props) {
             </div>
             <div className="modal-input-container">
               <ModalInput
-                height={65}
+                style={styles.modalInput}
                 type="text"
                 title="Location"
                 clicked={inputClicked[5]}
@@ -453,9 +454,9 @@ function MentorProfileModal(props) {
                 handleClick={handleClick}
                 onChange={handleLocationChange}
                 defaultValue={location}
-              ></ModalInput>
+              />
               <ModalInput
-                height={65}
+                style={styles.modalInput}
                 type="text"
                 title="Website"
                 clicked={inputClicked[6]}
@@ -463,12 +464,12 @@ function MentorProfileModal(props) {
                 handleClick={handleClick}
                 onChange={handleWebsiteChange}
                 defaultValue={website}
-              ></ModalInput>
+              />
             </div>
             <div className="modal-input-container">
               <ModalInput
-                height={65}
-                type="dropdown"
+                style={styles.modalInput}
+                type="dropdown-multiple"
                 title="Languages"
                 clicked={inputClicked[7]}
                 index={7}
@@ -479,9 +480,9 @@ function MentorProfileModal(props) {
                 defaultValue={languages}
                 valid={isValid[7]}
                 validate={validate}
-              ></ModalInput>
+              />
               <ModalInput
-                height={65}
+                style={styles.modalInput}
                 type="text"
                 title="LinkedIn"
                 clicked={inputClicked[8]}
@@ -489,12 +490,12 @@ function MentorProfileModal(props) {
                 handleClick={handleClick}
                 onChange={handleLinkedinChange}
                 defaultValue={linkedin}
-              ></ModalInput>
+              />
             </div>
             <div className="modal-input-container">
               <ModalInput
-                height={65}
-                type="dropdown"
+                style={styles.modalInput}
+                type="dropdown-multiple"
                 title="Specializations"
                 clicked={inputClicked[9]}
                 index={9}
@@ -504,7 +505,7 @@ function MentorProfileModal(props) {
                 defaultValue={specializations}
                 valid={isValid[9]}
                 validate={validate}
-              ></ModalInput>
+              />
             </div>
             <div className="modal-education-header">Education</div>
             {renderEducationInputs()}
@@ -523,6 +524,12 @@ function MentorProfileModal(props) {
 }
 
 const styles = {
+  modalInput: {
+    height: 65,
+    margin: 18,
+    padding: 4,
+    paddingTop: 6,
+  },
   footer: {
     borderRadius: 13,
     marginRight: 15,
