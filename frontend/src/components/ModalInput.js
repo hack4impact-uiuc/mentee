@@ -101,6 +101,8 @@ function ModalInput(props) {
             placeholder={placeholder}
           />
         );
+      default:
+        return null;
     }
   };
 

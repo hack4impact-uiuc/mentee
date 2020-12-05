@@ -26,7 +26,7 @@ function Videos() {
       }
     }
     getVideos();
-  }, []);
+  }, [mentorID]);
 
   async function updateVideos(data, id) {
     const update = {
@@ -56,7 +56,7 @@ function Videos() {
 
     if (selectFilter !== "") {
       const filteredVideos = newVideos.filter((video, index, arr) => {
-        return SPECIALIZATIONS.indexOf(video.tag) == selectFilter;
+        return SPECIALIZATIONS.indexOf(video.tag) === selectFilter;
       });
       newVideos = filteredVideos;
     }
@@ -99,7 +99,7 @@ function Videos() {
 
   const filterSpecialization = (value) => {
     const filteredVideos = videos.filter((video, index, arr) => {
-      return SPECIALIZATIONS.indexOf(video.tag) == value;
+      return SPECIALIZATIONS.indexOf(video.tag) === value;
     });
     setFiltered(filteredVideos);
     setSelectFilter(value);
