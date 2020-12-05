@@ -11,19 +11,23 @@ import "../css/Videos.scss";
 
 function Videos() {
   const [videos, setVideos] = useState([]);
+  const [name, setName] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [selectFilter, setSelectFilter] = useState("");
   const [titleFilter, setTitleFilter] = useState("");
+  const [mentorID, setMentorID] = useState("");
   const [form] = Form.useForm();
-  const mentorID = getMentorID();
 
   useEffect(() => {
     async function getVideos() {
-      const mentor = await fetchMentorByID(mentorID);
+      const newMentorID = await getMentorID();
+      const mentor = await fetchMentorByID(newMentorID);
+      setName(mentor.name);
       if (mentor) {
         setVideos(mentor.videos);
         setFiltered(mentor.videos);
       }
+      setMentorID(newMentorID);
     }
     getVideos();
   }, [mentorID]);
@@ -158,7 +162,7 @@ function Videos() {
   return (
     <div style={{ height: "100%" }}>
       <div className="videos-header">
-        <h1 className="videos-header-title">Welcome, {"Insert name"}</h1>
+        <h1 className="videos-header-title">Welcome, {name}</h1>
       </div>
       <div className="filter-card">
         <h1 style={{ fontWeight: "bold", fontSize: 18 }}>Your Uploads</h1>
