@@ -3,9 +3,10 @@ import { Row, Col, Button, Form, Input, Select } from "antd";
 import moment from "moment";
 import MentorVideo from "../MentorVideo";
 import VideoSubmit from "../VideoSubmit";
+import { getMentorID } from "utils/auth.service";
 import { SPECIALIZATIONS } from "utils/consts.js";
 import { formatDropdownItems } from "utils/inputs";
-import { fetchMentorByID, mentorID, editMentorProfile } from "utils/api";
+import { fetchMentorByID, editMentorProfile } from "utils/api";
 import "../css/Videos.scss";
 
 function Videos() {
@@ -17,6 +18,7 @@ function Videos() {
 
   useEffect(() => {
     async function getVideos() {
+      const mentorID = getMentorID();
       const mentor = await fetchMentorByID(mentorID);
       if (mentor) {
         setVideos(mentor.videos);
