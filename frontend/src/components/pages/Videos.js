@@ -103,7 +103,8 @@ function Videos() {
 
   const filterSpecialization = (value) => {
     const filteredVideos = videos.filter((video, index, arr) => {
-      return SPECIALIZATIONS.indexOf(video.tag) === value;
+      // eslint-disable-next-line eqeqeq
+      return SPECIALIZATIONS.indexOf(video.tag) == value;
     });
     setFiltered(filteredVideos);
     setSelectFilter(value);
