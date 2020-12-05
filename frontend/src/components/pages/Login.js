@@ -3,7 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { Input } from "antd";
 import { isLoggedIn, login } from "utils/auth.service";
 import MenteeButton from "../MenteeButton";
-
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "../css/Home.scss";
 import "../css/Login.scss";
 import Honeycomb from "../../resources/honeycomb.png";
@@ -56,8 +56,11 @@ function Login() {
               inputClicked[1] ? "__clicked" : ""
             }`}
           >
-            <Input
+            <Input.Password
               className="login-input"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
               onClick={() => handleInputClick(1)}
               onChange={(e) => setPassword(e.target.value)}
               bordered={false}

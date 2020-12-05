@@ -15,10 +15,10 @@ function Videos() {
   const [selectFilter, setSelectFilter] = useState("");
   const [titleFilter, setTitleFilter] = useState("");
   const [form] = Form.useForm();
+  const mentorID = getMentorID();
 
   useEffect(() => {
     async function getVideos() {
-      const mentorID = getMentorID();
       const mentor = await fetchMentorByID(mentorID);
       if (mentor) {
         setVideos(mentor.videos);
