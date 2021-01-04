@@ -28,12 +28,10 @@ def get_requests_by_mentor(mentor_id):
 @appointment.route("/appointment", methods=["POST"])
 def create_appointment():
     data = request.get_json()
-
     validate_data = ApppointmentForm.from_json(data)
     msg, is_invalid = is_invalid_form(validate_data)
     if is_invalid:
         return create_response(status=422, message=msg)
-
     new_appointment = AppointmentRequest(
         mentor_id=data.get("mentor_id"),
         accepted=data.get("accepted"),
@@ -43,13 +41,12 @@ def create_appointment():
         languages=data.get("languages"),
         age=data.get("age"),
         gender=data.get("gender"),
-        ethnicity=data.get("ethnicity"),
         location=data.get("location"),
-        mentorship_goals=data.get("mentorship_goals"),
         specialist_categories=data.get("specialist_categories"),
         message=data.get("message"),
-        attendee_count=data.get("attendee_count"),
         organization=data.get("organization"),
+        allow_texts=data.get("allow_texts"),
+        allow_calls=data.get("allow_calls"),
     )
 
     time_data = data.get("timeslot")
@@ -75,6 +72,7 @@ def create_appointment():
         return create_response(status=503, message=msg)
 
     new_appointment.save()
+
     return create_response(
         message=f"Successfully created appointment with MentorID: {new_appointment.mentor_id} as Mentee Name: {new_appointment.name}"
     )
