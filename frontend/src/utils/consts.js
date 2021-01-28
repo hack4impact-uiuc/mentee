@@ -17,6 +17,7 @@ export const REGISTRATION_STAGE = {
 export const LANGUAGES = [
   "Arabic",
   "Bengali",
+  "Burmese",
   "Cantonese",
   "English",
   "French",
@@ -24,6 +25,7 @@ export const LANGUAGES = [
   "Hindi",
   "Italian",
   "Japanese",
+  "Karen",
   "Mandarin",
   "Portuguese",
   "Russian",
