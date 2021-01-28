@@ -10,6 +10,7 @@ function ModalInput(props) {
     clicked,
     index,
     educationIndex,
+    hasBorder = true,
     onEducationChange,
     maxRows,
     type,
@@ -42,6 +43,12 @@ function ModalInput(props) {
       ...styles.container,
       ...props.style,
     };
+    if (hasBorder) {
+      style = {
+        ...style,
+        ...styles.border,
+      };
+    }
 
     if (isClicked && valid) {
       style = {
@@ -159,6 +166,8 @@ const styles = {
     flexDirection: "column",
     width: "100%",
     backgroundColor: "#FFFDF5",
+  },
+  border: {
     borderBottomStyle: "solid",
     borderBottomWidth: 3,
     borderColor: "#828282",
