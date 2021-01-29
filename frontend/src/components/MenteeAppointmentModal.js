@@ -469,17 +469,11 @@ function MenteeAppointmentModal(props) {
                   <div className="modal-mentee-appointment-contact-container">
                     <Form.Item
                       name="phone"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your phone number",
-                        },
-                      ]}
                     >
                       <ModalInput
                         style={styles.contactInput}
                         type="text"
-                        title="Phone Number*"
+                        title="Phone Number"
                         clicked={inputClicked[9]}
                         index={9}
                         handleClick={handleClick}
