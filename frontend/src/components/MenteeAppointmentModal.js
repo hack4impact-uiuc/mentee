@@ -467,9 +467,7 @@ function MenteeAppointmentModal(props) {
                     </Form.Item>
                   </div>
                   <div className="modal-mentee-appointment-contact-container">
-                    <Form.Item
-                      name="phone"
-                    >
+                    <Form.Item name="phone">
                       <ModalInput
                         style={styles.contactInput}
                         type="text"
