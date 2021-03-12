@@ -159,12 +159,20 @@ def get_mentors_appointments():
     mentors = MentorProfile.objects.only("id", "name")
     appointments = AppointmentRequest.objects()
 
-    data = {}
+    data = []
     for mentor in mentors:
-        data[mentor.name] = [
+        mentor_appts = [
             appointment
             for appointment in appointments
             if appointment.mentor_id == mentor.id
         ]
+        data.append(
+            {
+                "name": mentor.name,
+                "id": str(mentor.id),
+                "appointments": mentor_appts,
+                "numOfAppointments": len(mentor_appts),
+            }
+        )
 
-    return create_response(data=data, status=200, message="Success")
+    return create_response(data={"mentorData": data}, status=200, message="Success")
