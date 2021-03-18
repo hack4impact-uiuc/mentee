@@ -11,6 +11,7 @@ import Login from "components/pages/Login";
 import Register from "components/pages/Register";
 import Verify from "components/pages/Verify";
 import RegisterForm from "components/pages/RegisterForm";
+import MentorApplicationView from "components/MentorApplicationView";
 import AdminAccountData from "components/pages/AdminAccountData";
 
 function App() {
@@ -81,7 +82,9 @@ function App() {
       />
       <Route
         path="/manage-users"
-        component={() => <Navigation content={<div />} needsAuth={true} />}
+        component={() => (
+          <Navigation content={<MentorApplicationView />} needsAuth={true} />
+        )}
       />
       <Route
         path="/account-data"
