@@ -208,6 +208,22 @@ export const deleteMentorById = (id) => {
   );
 };
 
+export const adminUploadEmails = (file, isMentor) => {
+  let mentorOrMentee = "mentors";
+  if (!isMentor) {
+    mentorOrMentee = "mentees";
+  }
+  const requestExtension = "/upload/" + mentorOrMentee;
+  let formData = new FormData();
+  formData.append("fileupload", file);
+  return instance.post(requestExtension, formData).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 /**
  * Wrapper function calls to general account endpoints
  * This helps with avoiding the need to change multiple files
