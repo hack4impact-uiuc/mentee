@@ -208,6 +208,17 @@ export const deleteMentorById = (id) => {
   );
 };
 
+export const updateApplicationState = (state, id) => {
+  const requestExtension = "/application/" + id;
+  let applicationState = { application_state: state };
+  return instance.put(requestExtension, applicationState).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 export const adminUploadEmails = (file, isMentor) => {
   let mentorOrMentee = "mentors";
   if (!isMentor) {
