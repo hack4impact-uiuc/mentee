@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { fetchApplications, updateApplicationState } from "../../utils/api";
+import { fetchApplications, updateApplicationById } from "../../utils/api";
+import MentorApplicationView from "../MentorApplicationView";
+import { APP_STATUS } from "../../utils/consts";
 
 const { confirm } = Modal;
-
-// application state constants
-const PENDING = "Pending";
-const REVIEWED = "Reviewed";
-const REJECTED = "Rejected";
-const OFFER_MADE = "Offer Made";
 
 function ApplicationOrganizer() {
   const [applicationData, setApplicationData] = useState([]);
@@ -37,9 +33,15 @@ function ApplicationOrganizer() {
     const getAllApplications = async () => {
       const applications = await fetchApplications();
       if (applications) {
-        setApplicationData(
-          applications ? applications.mentor_applications : []
+        const newApplications = applications.mentor_applications.map(
+          (app, index) => {
+            return {
+              ...app,
+              index: index,
+            };
+          }
         );
+        setApplicationData(newApplications);
       }
     };
 
@@ -50,19 +52,19 @@ function ApplicationOrganizer() {
     setColumns({
       [1]: {
         name: "Pending",
-        items: filterApplications(PENDING),
+        items: filterApplications(APP_STATUS.PENDING),
       },
       [2]: {
         name: "Reviewed",
-        items: filterApplications(REVIEWED),
+        items: filterApplications(APP_STATUS.REVIEWED),
       },
       [3]: {
         name: "Rejected",
-        items: filterApplications(REJECTED),
+        items: filterApplications(APP_STATUS.REJECTED),
       },
       [4]: {
         name: "Offer Made",
-        items: filterApplications(OFFER_MADE),
+        items: filterApplications(APP_STATUS.OFFER_MADE),
       },
     });
   }, [applicationData]);
@@ -80,6 +82,7 @@ function ApplicationOrganizer() {
           application.name +
           " Specializations: " +
           application.specializations,
+        ...application,
       }));
   }
 
@@ -87,7 +90,6 @@ function ApplicationOrganizer() {
    * Confirmation modal when item is dragged to a new column destination
    */
   function showConfirm(name, id, removed, sourceItems, sourceColumn, sourceID) {
-    console.log(applicationData);
     confirm({
       title: "Move this Application?",
       icon: <ExclamationCircleOutlined />,
@@ -95,10 +97,12 @@ function ApplicationOrganizer() {
         // updates application state of item based on destination column name
         async function updateApplication() {
           // onOk send the put request
-          await updateApplicationState(name, id);
+          const data = {
+            application_state: name,
+          };
+          await updateApplicationById(data, id);
         }
         updateApplication();
-        console.log("updated");
       },
       onCancel() {
         // puts item back into source column if canceled
@@ -110,7 +114,6 @@ function ApplicationOrganizer() {
             items: sourceItems,
           },
         });
-        console.log("Cancel");
       },
     });
   }
@@ -218,16 +221,10 @@ function ApplicationOrganizer() {
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      backgroundColor: "white",
-                                      color: "black",
                                       ...provided.draggableProps.style,
                                     }}
                                   >
-                                    {item.content}
+                                    <MentorApplicationView data={item} />
                                   </div>
                                 );
                               }}
