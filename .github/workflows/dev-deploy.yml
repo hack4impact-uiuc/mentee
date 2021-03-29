@@ -29,11 +29,14 @@ jobs:
         with:
           node-version: '12'
           check-latest: true
+        env:
+          CI: false
+          REACT_APP_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          REACT_APP_ENV: development
       - run: yarn install
-      - run: export REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
       # set CI to false because warnings are treated as errors if CI=true
       # manually set react env here because NODE_ENV=production on build
-      - run: CI=false REACT_APP_ENV=development REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} yarn run build
+      - run: yarn run build
       
       - name: save build artifacts
         uses: actions/upload-artifact@v2
