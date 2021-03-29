@@ -30,7 +30,7 @@ jobs:
           node-version: '12'
           check-latest: true
       - run: yarn install
-      - run: set REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
+      - run: export REACT_APP_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
       # set CI to false because warnings are treated as errors if CI=true
       # manually set react env here because NODE_ENV=production on build
       - run: CI=false REACT_APP_ENV=development yarn run build
