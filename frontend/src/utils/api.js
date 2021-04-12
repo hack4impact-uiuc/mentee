@@ -265,14 +265,16 @@ export const getApplicationById = async (id) => {
   );
 };
 
-export const adminUploadEmails = (file, isMentor) => {
-  let mentorOrMentee = "mentors";
-  if (!isMentor) {
-    mentorOrMentee = "mentees";
-  }
-  const requestExtension = "/upload/" + mentorOrMentee;
+export const adminUploadEmails = (file, password, isMentor) => {
+  const requestExtension = "/upload/mentors";
   let formData = new FormData();
   formData.append("fileupload", file);
+  formData.append("pass", password);
+  if (isMentor) {
+    formData.append("mentorOrMentee", "true");
+  } else {
+    formData.append("mentorOrMentee", "false");
+  }
   return authPost(requestExtension, formData).then(
     (response) => response,
     (err) => {

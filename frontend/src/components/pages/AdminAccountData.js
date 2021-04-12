@@ -49,7 +49,7 @@ function AdminAccountData() {
   const [displayOption, setDisplayOption] = useState(keys.MENTORS);
   const [filterData, setFilterData] = useState([]);
   const [downloadFile, setDownloadFile] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
   const { onAuthStateChanged } = useAuth();
 
@@ -84,7 +84,7 @@ function AdminAccountData() {
   };
 
   const handleAddAccount = () => {
-    setModalVisible(true);
+    setUploadModalVisible(true);
   };
 
   const handleMentorsDownload = async () => {
@@ -189,8 +189,8 @@ function AdminAccountData() {
             Add New Account
           </Button>
           <UploadEmails
-            setModalVisible={setModalVisible}
-            modalVisible={modalVisible}
+            setUploadModalVisible={setUploadModalVisible}
+            uploadModalVisible={uploadModalVisible}
           />
           <Button
             className="table-button"
