@@ -102,6 +102,21 @@ function AdminLogin(props) {
               }}
             />
           </div>
+          <div className="login-register-container">
+            <div>Don&#39;t have an account?</div>
+            <NavLink
+              to={`/register?as=${ACCOUNT_TYPE.ADMIN}`}
+              className="login-register-link"
+            >
+              Register
+            </NavLink>
+          </div>
+          <div className="login-register-container">
+            <div>Forgot password?</div>
+            <NavLink to="/forgot-password" className="login-register-link">
+              Reset it
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>
