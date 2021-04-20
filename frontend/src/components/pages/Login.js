@@ -7,12 +7,15 @@ import {
   login,
   refreshToken,
   isUserAdmin,
+  isUserMentee,
+  isUserMentor,
   sendVerificationEmail,
 } from "utils/auth.service";
 import MenteeButton from "../MenteeButton";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Logo from "../../resources/logo.png";
 import firebase from "firebase";
+import usePersistedState from "utils/hooks/usePersistedState";
 import { ACCOUNT_TYPE, LOGIN_ERROR_MSGS } from "utils/consts";
 
 import "../css/Home.scss";
@@ -29,6 +32,10 @@ function Login() {
   const [loggingIn, setLoggingIn] = useState(false);
   const history = useHistory();
   const isMobile = useMediaQuery({ query: `(max-width: 768px)` });
+  const [permissions, setPermissions] = usePersistedState(
+    "permissions",
+    ACCOUNT_TYPE.GUEST
+  );
 
   function handleInputFocus(index) {
     let newClickedInput = [false, false];
@@ -37,10 +44,12 @@ function Login() {
   }
 
   const redirectToAppointments = useCallback(() => {
+    setPermissions(ACCOUNT_TYPE.MENTOR);
     history.push("appointments");
   }, [history]);
 
   const redirectToAdminPortal = useCallback(() => {
+    setPermissions(ACCOUNT_TYPE.ADMIN);
     history.push("account-data");
   }, [history]);
 
