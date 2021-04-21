@@ -36,7 +36,7 @@ function GuestNavHeader({ history }) {
             <>
               <span className="navigation-header-button">
                 <MenteeButton
-                  width="100%"
+                  width="9em"
                   theme="light"
                   content={<b>{"Apply"}</b>}
                   onClick={() => {
@@ -49,31 +49,6 @@ function GuestNavHeader({ history }) {
                   // }}
                 />
               </span>
-              <span className="navigation-header-button">
-                <MenteeButton
-                  width="100%"
-                  theme="light"
-                  content={<b>{"Mentee Portal"}</b>}
-                  onClick={() => {
-                    history.push({
-                      // TODO: Change this to mentee login
-                      pathname: isMentee ? "/messages" : "/messages",
-                    });
-                  }}
-                />
-              </span>
-              <span className="navigation-header-button">
-                <MenteeButton
-                  width="100%"
-                  theme="light"
-                  content={<b>{"Admin Portal"}</b>}
-                  onClick={() => {
-                    history.push({
-                      pathname: isAdmin ? "/account-data" : "/admin-login",
-                    });
-                  }}
-                />
-              </span>
             </>
           )}
           {/* TODO: Update this since verification modal will not longer be needed anymore! */}
@@ -81,7 +56,7 @@ function GuestNavHeader({ history }) {
             <MenteeVerificationModal
               content={<b>Find a Mentor</b>}
               theme="light"
-              width="100%"
+              width="9em"
               onVerified={() => {
                 history.push({
                   pathname: "/gallery",
@@ -93,11 +68,19 @@ function GuestNavHeader({ history }) {
           {/** TODO: Generalize this to be Login instead of just Mentor Login */}
           <span className="navigation-header-button">
             <MenteeButton
-              width="100%"
-              content={<b>{isLoggedIn() ? "Your Profile" : "Mentor Log In"}</b>}
-              onClick={() => {
+              width="9em"
+              content={<b>{isLoggedIn() ? "Your Portal" : "Log In"}</b>}
+              onClick={async () => {
+                let redirect = "/select-login";
+                if (isMentor) {
+                  redirect = "/appointments";
+                } else if (isMentee) {
+                  redirect = "/messages";
+                } else if (isAdmin) {
+                  redirect = "/account-data";
+                }
                 history.push({
-                  pathname: "/login",
+                  pathname: isLoggedIn() ? redirect : "/select-login",
                 });
               }}
             />
