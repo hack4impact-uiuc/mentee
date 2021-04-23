@@ -12,7 +12,6 @@ from .AppointmentRequest import AppointmentRequest
 from .MentorApplication import MentorApplication
 from .VerifiedEmail import VerifiedEmail
 from .MenteeProfile import MenteeProfile
-from .Message import Message
 from .Admin import Admin
 
 __all__ = [
@@ -27,7 +26,6 @@ __all__ = [
     "VerifiedEmail",
     "MentorApplication",
     "MenteeProfile",
-    "Message",
     "Admin",
 ]
 
