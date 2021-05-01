@@ -56,7 +56,6 @@ function MenteeAppointments() {
       );
       if (formattedAppointments) {
         // TODO: Connect this to the backend once #289 is ready
-        console.log(formattedAppointments);
         setAppointments(ApptData);
         setVisibleAppts(ApptData.upcoming);
       }
