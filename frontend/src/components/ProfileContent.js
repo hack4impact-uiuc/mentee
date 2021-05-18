@@ -6,7 +6,7 @@ import {
   LinkedinOutlined,
 } from "@ant-design/icons";
 
-import MenteeButton from "components/MenteeButton";
+import PublicMessageModal from "components/PublicMessageModal";
 import { formatLinkForHref } from "utils/misc";
 import { ACCOUNT_TYPE } from "utils/consts";
 import MentorProfileModal from "./MentorProfileModal";
@@ -62,11 +62,13 @@ function ProfileContent(props) {
   }, [accountType]);
 
   const getProfileButton = () => {
-    if (isMentor)
+    // In editable profile page
+    if (isMentor && !accountType)
       return (
         <MentorProfileModal mentor={account} onSave={props.handleSaveEdits} />
       );
 
+    // In public mentor profile
     if (accountType == ACCOUNT_TYPE.MENTOR)
       return (
         <MenteeAppointmentModal
@@ -80,7 +82,11 @@ function ProfileContent(props) {
     // Mentee public profile
     else
       return (
-        <MenteeButton style={{ fontWeight: "bold" }} content="Send Message" />
+        <PublicMessageModal
+          menteeName={account.name}
+          menteeID={id}
+          mentorID={profileId}
+        />
       );
   };
 
