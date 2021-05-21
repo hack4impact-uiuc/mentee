@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { MenuOutlined } from "@ant-design/icons";
-import { message } from "antd";
+import { MenuOutlined, SmileOutlined } from "@ant-design/icons";
+import { Result, message } from "antd";
 
 import {
   fetchAppointmentsByMenteeId,
@@ -8,13 +8,12 @@ import {
   EditFavMentorById,
 } from "utils/api";
 import { formatAppointments } from "utils/dateFormatting";
-import { ACCOUNT_TYPE, PROFILE_URL, APPOINTMENT_STATUS } from "utils/consts";
+import { ACCOUNT_TYPE, MENTOR_PROFILE } from "utils/consts";
 import OverlaySelect from "components/OverlaySelect";
 import useAuth from "utils/hooks/useAuth";
 import BookmarkSidebar from "components/BookmarkSidebar";
 
 import "components/css/MenteeAppointments.scss";
-import ApptData from "utils/MenteeApptsData.json";
 
 const appointmentTabs = Object.freeze({
   upcoming: {
@@ -31,10 +30,14 @@ function AppointmentCard({ info }) {
   return (
     <div className="mentee-appt-card">
       <div className="status-section">
-        {info.status} <div className={`status-${info.status}`} />
+        {info.status ?? "pending"}{" "}
+        <div className={`status-${info.status ?? "pending"}`} />
       </div>
       <div className="mentee-appt-card-header">
-        Meeting with <a href={PROFILE_URL + info.mentorId}>{info.mentorName}</a>
+        Meeting with{" "}
+        <a href={`${MENTOR_PROFILE}/${info.mentorID}`}>
+          {info.mentorName ?? "Mentor Not Found"}
+        </a>
       </div>
       <div className="mentee-appt-card-time">
         {info.date}
@@ -63,10 +66,10 @@ function MenteeAppointments() {
         appointmentsResponse,
         ACCOUNT_TYPE.MENTEE
       );
+
       if (formattedAppointments && favMentors) {
-        // TODO: Connect this to the backend once #289 is ready
-        setAppointments(ApptData);
-        setVisibleAppts(ApptData.upcoming);
+        setAppointments(formattedAppointments);
+        setVisibleAppts(formattedAppointments.upcoming);
 
         resFavMentors.map((elem) => (elem.id = elem._id.$oid));
         setFavMentors(resFavMentors);
@@ -95,7 +98,7 @@ function MenteeAppointments() {
   return (
     <div className="mentee-appointments-page">
       <div className="mentee-appts-section">
-        <div className="mentee-appts-header">Welcome {ApptData.name}!</div>
+        <div className="mentee-appts-header">Welcome {appointments.name}!</div>
         <div className="mentee-appts-container">
           <OverlaySelect
             options={appointmentTabs}
@@ -103,9 +106,14 @@ function MenteeAppointments() {
             className="mentee-appts-overlay-style"
             onChange={handleOverlayChange}
           />
-          {visibleAppts.map((elem) => (
-            <AppointmentCard info={elem} />
-          ))}
+          {!visibleAppts || !visibleAppts.length ? (
+            <Result
+              icon={<SmileOutlined style={{ color: "#A58123" }} />}
+              title="There are currently no appointments"
+            />
+          ) : (
+            visibleAppts.map((elem) => <AppointmentCard info={elem} />)
+          )}
         </div>
       </div>
       <BookmarkSidebar bookmarks={favMentors} unfavorite={handleUnfavorite} />
