@@ -5,7 +5,7 @@ import { JsonToTable } from "react-json-to-table";
 
 import "./css/AdminAccountData.scss";
 import { formatLinkForHref } from "utils/misc";
-import { MENTEE_PROFILE, MENTOR_PROFILE } from "utils/consts";
+import { MENTEE_PROFILE, MENTOR_PROFILE, ACCOUNT_TYPE } from "utils/consts";
 
 const { Column } = Table;
 
@@ -72,7 +72,11 @@ function AdminDataTable({ data, deleteAccount, isMentee }) {
           <Popconfirm
             title={`Are you sure you want to delete ${data.name}?`}
             onConfirm={() => {
-              deleteAccount(data.id, data.name);
+              deleteAccount(
+                data.id,
+                data.isMentee ? ACCOUNT_TYPE.MENTEE : ACCOUNT_TYPE.MENTOR,
+                data.name
+              );
             }}
             onCancel={() =>
               message.info(`No deletion has been for ${data.name}`)
