@@ -4,7 +4,7 @@ import { Avatar } from "antd";
 
 import ProfileContent from "../ProfileContent";
 import ProfileVideos from "../ProfileVideos";
-import { fetchAccountById } from "../../utils/api";
+import { fetchAccountById, getMenteePrivateStatus } from "../../utils/api";
 
 import "../css/PublicProfile.scss";
 import { ACCOUNT_TYPE } from "utils/consts";
