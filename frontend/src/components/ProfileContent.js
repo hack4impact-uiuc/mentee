@@ -10,6 +10,7 @@ import { formatLinkForHref } from "utils/misc";
 import MentorProfileModal from "./MentorProfileModal";
 import MenteeProfileModal from "./MenteeProfileModal";
 import MenteeAppointmentModal from "./MenteeAppointmentModal";
+import PublicMessageModal from "./PublicMessageModal";
 import { ACCOUNT_TYPE } from "utils/consts";
 import useAuth from "utils/hooks/useAuth";
 import "./css/Profile.scss";
@@ -93,6 +94,19 @@ function ProfileContent(props) {
               }
               mentee_id={profileId}
               handleUpdateMentor={props.handleUpdateAccount}
+            />
+          )}
+        {!props.isMentor &&
+          parseInt(accountType, 10) !== ACCOUNT_TYPE.MENTOR &&
+          props.mentor &&
+          props.mentor._id &&
+          props.mentor._id["$oid"] !== profileId && (
+            <PublicMessageModal
+              menteeName={props.mentor.name}
+              menteeID={
+                props.mentor && props.mentor._id && props.mentor._id["$oid"]
+              }
+              mentorID={profileId}
             />
           )}
         {isMentor &&
