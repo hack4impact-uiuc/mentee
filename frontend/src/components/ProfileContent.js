@@ -18,6 +18,7 @@ function ProfileContent(props) {
   const { isMentor, isMentee } = useAuth();
 
   const getTitle = (name, age) => {
+    console.log(accountType, ACCOUNT_TYPE.MENTOR)
     if (accountType === ACCOUNT_TYPE.MENTOR && name) {
       return name;
     } else if (name && age) {
