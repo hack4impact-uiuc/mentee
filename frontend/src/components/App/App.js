@@ -1,14 +1,15 @@
 import React from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import Appointments from "components/pages/Appointments";
+import MenteeAppointments from "components/pages/MenteeAppointments";
 import Home from "components/pages/Home";
 import Videos from "components/pages/Videos";
 import Profile from "components/pages/Profile";
 import Navigation from "components/Navigation";
 import Gallery from "components/pages/Gallery";
 import PublicProfile from "components/pages/PublicProfile";
+import SelectLogin from "components/pages/SelectLogin";
 import Login from "components/pages/Login";
-import AdminLogin from "components/pages/AdminLogin";
 import Register from "components/pages/Register";
 import Verify from "components/pages/Verify";
 import RegisterForm from "components/pages/RegisterForm";
@@ -17,7 +18,10 @@ import ApplicationOrganizer from "components/pages/ApplicationOrganizer";
 import AdminAccountData from "components/pages/AdminAccountData";
 import AdminAppointmentData from "components/pages/AdminAppointmentData";
 import AdminVerifiedEmails from "components/pages/AdminVerifiedEmails";
+import MenteeGallery from "components/pages/MenteeGallery";
 import NotFound from "components/pages/NotFound";
+import MenteeRegisterForm from "components/pages/MenteeRegisterForm";
+import { ACCOUNT_TYPE } from "utils/consts";
 
 function App() {
   return (
@@ -40,6 +44,16 @@ function App() {
         )}
       />
       <Route
+        path="/mentee-appointments"
+        component={() => (
+          <Navigation
+            content={<MenteeAppointments />}
+            page="mentee-appointments"
+            needsAuth={true}
+          />
+        )}
+      />
+      <Route
         path="/videos"
         component={() => (
           <Navigation content={<Videos />} page="videos" needsAuth={true} />
@@ -56,24 +70,38 @@ function App() {
         exact
         component={() => <Navigation content={<Gallery />} needsAuth={false} />}
       />
+
       <Route
-        path="/gallery/:id"
+        path="/mentee-gallery"
+        exact
+        component={() => (
+          <Navigation content={<MenteeGallery />} needsAuth={false} />
+        )}
+      />
+
+      <Route
+        path="/gallery/:type/:id"
         component={(props) => (
           <Navigation
-            content={<PublicProfile id={props.match.params.id} />}
+            content={
+              <PublicProfile
+                id={props.match.params.id}
+                accountType={props.match.params.type}
+              />
+            }
             needsAuth={false}
           />
         )}
       />
       <Route
-        path="/login"
-        component={() => <Navigation content={<Login />} needsAuth={false} />}
+        path="/select-login"
+        component={() => (
+          <Navigation content={<SelectLogin />} needsAuth={false} />
+        )}
       />
       <Route
-        path="/admin-login"
-        component={() => (
-          <Navigation content={<AdminLogin />} needsAuth={false} />
-        )}
+        path="/login"
+        component={() => <Navigation content={<Login />} needsAuth={false} />}
       />
       <Route
         path="/register"
@@ -92,39 +120,63 @@ function App() {
         )}
       />
       <Route
-        path="/create-profile"
-        component={() => (
-          <Navigation content={<RegisterForm />} needsAuth={false} />
-        )}
+        path="/create-profile/:type"
+        component={(props) => {
+          const type = parseInt(props.match.params.type, 10);
+          return (
+            <Navigation
+              content={
+                type === ACCOUNT_TYPE.MENTOR ? (
+                  <RegisterForm />
+                ) : type === ACCOUNT_TYPE.MENTEE ? (
+                  <MenteeRegisterForm />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
+              needsAuth={false}
+            />
+          );
+        }}
       />
       <Route
         path="/organizer"
         component={() => (
-          <Navigation content={<ApplicationOrganizer />} needsAuth={true} />
+          <Navigation
+            content={<ApplicationOrganizer />}
+            needsAuth={true}
+            page="applications"
+          />
         )}
       />
       <Route
         path="/account-data"
         component={() => (
-          <Navigation content={<AdminAccountData />} needsAuth={true} />
+          <Navigation
+            content={<AdminAccountData />}
+            needsAuth={true}
+            page="accountData"
+          />
         )}
       />
       <Route
         path="/all-appointments"
         component={() => (
-          <Navigation content={<AdminAppointmentData />} needsAuth={true} />
+          <Navigation
+            content={<AdminAppointmentData />}
+            needsAuth={true}
+            page="allAppointments"
+          />
         )}
       />
       <Route
         path="/verified-emails"
         component={() => (
-          <Navigation content={<AdminVerifiedEmails />} needsAuth={true} />
-        )}
-      />
-      <Route
-        path="/not-found"
-        component={() => (
-          <Navigation content={<NotFound />} needsAuth={false} />
+          <Navigation
+            content={<AdminVerifiedEmails />}
+            needsAuth={true}
+            page="verifiedEmails"
+          />
         )}
       />
       <Route

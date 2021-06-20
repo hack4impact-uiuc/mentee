@@ -4,23 +4,29 @@ import {
   CommentOutlined,
   LinkOutlined,
   LinkedinOutlined,
+  LockFilled,
 } from "@ant-design/icons";
 import { formatLinkForHref } from "utils/misc";
 import MentorProfileModal from "./MentorProfileModal";
-import MenteeAppointmentModal from "./MenteeAppointmentModal";
+import MenteeProfileModal from "./MenteeProfileModal";
+import useAuth from "utils/hooks/useAuth";
 import "./css/Profile.scss";
 
 function ProfileContent(props) {
-  const getMeetingMethods = () => {
-    const in_person = props.mentor.offers_in_person
-      ? "In person | Online"
-      : "Online";
-    const group_session = props.mentor.offers_group_appointments
-      ? "Group Meetings | 1-on-1"
-      : "1-on-1";
-    return in_person + " | " + group_session;
+  const { isMentor, isMentee } = useAuth();
+  const getTitle = (name, age) => {
+    if (props.isMentor) {
+      return name;
+    } else {
+      return name + ", " + age;
+    }
   };
 
+  const getPrivacy = (privacy) => {
+    if (privacy) {
+      return <LockFilled className="mentor-lock-symbol" />;
+    }
+  };
   const getLanguages = (languages) => {
     return languages.join(" • ");
   };
@@ -29,6 +35,19 @@ function ProfileContent(props) {
     return specializations.map((specialization, idx) => (
       <div className="mentor-specialization-tag">{specialization}</div>
     ));
+  };
+
+  const getSpecializations = (isMentor) => {
+    if (isMentor) {
+      return (
+        <div>
+          <div className="mentor-profile-heading">
+            <b>Specializations</b>
+          </div>
+          <div>{getSpecializationTags(props.mentor.specializations || [])}</div>
+        </div>
+      );
+    }
   };
 
   const getEducations = (educations) => {
@@ -55,7 +74,10 @@ function ProfileContent(props) {
   return (
     <div>
       <div className="mentor-profile-name">
-        {props.mentor.name}
+        <div className="mentor-profile-decorations">
+          {getTitle(props.mentor.name, props.mentor.age)}
+          <div>{getPrivacy(props.mentor.is_private)}</div>
+        </div>
         {props.isMentor ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
@@ -64,19 +86,15 @@ function ProfileContent(props) {
             />
           </div>
         ) : (
-          <div className="mentor-profile-button">
-            <MenteeAppointmentModal
-              mentor_name={props.mentor.name}
-              availability={props.mentor.availability}
-              mentor_id={props.id}
-              handleUpdateMentor={props.handleUpdateMentor}
-            />
-          </div>
+          isMentee && (
+            <div className="mentor-profile-button">
+              <MenteeProfileModal
+                mentee={props.mentor}
+                onSave={props.handleSaveEdits}
+              />
+            </div>
+          )
         )}
-      </div>
-      <div className="mentor-profile-heading">
-        {props.mentor.professional_title} <t className="yellow-dot">•</t>{" "}
-        {getMeetingMethods()}
       </div>
       <div>
         {props.mentor.location && (
@@ -128,10 +146,7 @@ function ProfileContent(props) {
       </div>
       <div className="mentor-profile-about">{props.mentor.biography}</div>
       <br />
-      <div className="mentor-profile-heading">
-        <b>Specializations</b>
-      </div>
-      <div>{getSpecializationTags(props.mentor.specializations || [])}</div>
+      {getSpecializations(props.isMentor)}
       <br />
       <div className="mentor-profile-heading">
         <b>Education</b>

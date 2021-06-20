@@ -12,7 +12,11 @@ export const API_URL = BASE_URL + "api/";
 
 export const AUTH_URL = BASE_URL + "auth/";
 
-export const PROFILE_URL = FRONT_BASE_URL + "gallery/";
+export const MENTEE_PROFILE = FRONT_BASE_URL + "gallery/2/";
+
+export const MENTOR_PROFILE = FRONT_BASE_URL + "gallery/1/";
+
+export const MENTEE_DEFAULT_VIDEO_NAME = "Introduction";
 
 export const REGISTRATION_STAGE = {
   START: 0,
@@ -24,6 +28,13 @@ export const ACCOUNT_TYPE = {
   ADMIN: 0,
   MENTOR: 1,
   MENTEE: 2,
+  GUEST: 3,
+};
+
+export const PLURAL_TYPE = {
+  MENTORS: "mentors",
+  MENTEES: "mentees",
+  ADMINS: "admins",
 };
 
 export const APP_STATUS = {
@@ -32,6 +43,13 @@ export const APP_STATUS = {
   REJECTED: "Rejected",
   OFFER_MADE: "Offer Made",
 };
+
+export const APPOINTMENT_STATUS = {
+  PENDING: "pending",
+  DENIED: "denied",
+  ACCEPTED: "accepted",
+};
+
 export const LANGUAGES = [
   "Arabic",
   "Bengali",
@@ -50,6 +68,18 @@ export const LANGUAGES = [
   "Spanish",
   "Swahili",
   "Urdu",
+];
+
+export const AGE_RANGES = [
+  "16-18",
+  "19-22",
+  "23-25",
+  "26-30",
+  "30s",
+  "40s",
+  "50s",
+  "60s",
+  "70s+",
 ];
 
 export const SPECIALIZATIONS = [
@@ -95,18 +125,23 @@ export const AGES = [
 // Keys for fields of Appointments
 export const APPOINTMENT_FORM_KEYS = [
   "mentor_id",
-  "name",
-  "email",
-  "phone_number",
-  "languages",
-  "age",
-  "gender",
-  "location",
-  "specialist_categories",
+  "mentee_id",
+  "topic",
   "message",
-  "organization",
   "allow_calls",
   "allow_texts",
+];
+
+// Keys for fields of Message
+export const MESSAGE_FORM_KEYS = [
+  "message",
+  "user_name",
+  "user_id",
+  "recipient_name",
+  "recipient_id",
+  "email",
+  "link",
+  "time",
 ];
 
 // Error messages for login

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL, ACCOUNT_TYPE } from "utils/consts";
+import { API_URL, ACCOUNT_TYPE, PLURAL_TYPE } from "utils/consts";
 import { getUserIdToken } from "utils/auth.service";
 
 const instance = axios.create({
@@ -112,6 +112,16 @@ export const fetchApplications = async () => {
   );
 };
 
+export const createApplication = (application) => {
+  const requestExtension = `/application/new`;
+  return instance.post(requestExtension, application).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 export const createAppointment = (appointment) => {
   const requestExtension = `/appointment/`;
   return instance.post(requestExtension, appointment).then(
@@ -142,8 +152,8 @@ export const deleteAppointment = (id) => {
   );
 };
 
-export const getAppointmentsByMentorID = (id) => {
-  const requestExtension = `/appointment/mentor/${id}`;
+export const fetchAppointmentsById = (id, accountType) => {
+  const requestExtension = `/appointment/${accountType}/${id}`;
   return instance.get(requestExtension).then(
     (response) => response.data.result,
     (err) => {
@@ -184,8 +194,8 @@ export const editAvailability = (timeslots, id) => {
   );
 };
 
-export const fetchMentorsAppointments = () => {
-  const requestExtension = "/appointment/mentors";
+export const fetchAppointmentsByType = (accountType) => {
+  const requestExtension = `/appointment/${accountType}`;
   return authGet(requestExtension).then(
     (response) => response.data.result,
     (err) => {
@@ -218,9 +228,29 @@ export const downloadMentorsData = async () => {
   const requestExtension = "/download/accounts/all";
   return authGet(requestExtension, {
     responseType: "blob",
+    params: {
+      account_type: ACCOUNT_TYPE.MENTOR,
+    },
   }).then(
     (response) => {
       downloadBlob(response, "mentor_data.xlsx");
+    },
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
+export const downloadMenteesData = async () => {
+  const requestExtension = "/download/accounts/all";
+  return authGet(requestExtension, {
+    responseType: "blob",
+    params: {
+      account_type: ACCOUNT_TYPE.MENTEE,
+    },
+  }).then(
+    (response) => {
+      downloadBlob(response, "mentee_data.xlsx");
     },
     (err) => {
       console.error(err);
@@ -242,13 +272,46 @@ export const downloadAllApplicationData = async () => {
   );
 };
 
-export const deleteMentorById = (id) => {
-  const requestExtension = `/mentor/${id}`;
+export const deleteAccountById = (id, accountType) => {
+  const requestExtension = `/account/${accountType}/${id}`;
   return authDelete(requestExtension).then(
     (response) => response,
     (err) => {
       console.error(err);
       return false;
+    }
+  );
+};
+
+export const EditFavMentorById = (mentee_id, mentor_id, favorite) => {
+  const requestExtension = `/mentee/editFavMentor`;
+  const data = {
+    mentee_id,
+    mentor_id,
+    favorite,
+  };
+  return instance.put(requestExtension, data).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
+export const getFavMentorsById = (mentee_id) => {
+  const requestExtension = `/mentee/favorites/${mentee_id}`;
+  return instance.get(requestExtension).then(
+    (response) => response.data.result.favorites,
+    (err) => console.error(err)
+  );
+};
+
+export const sendMessage = (data) => {
+  const requestExtension = `/messages/`;
+  return instance.post(requestExtension, data).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
     }
   );
 };
@@ -299,6 +362,26 @@ export const getAdmin = (id) => {
   );
 };
 
+export const getMessages = (user_id) => {
+  const requestExtension = `/messages/?recipient_id=${user_id}`;
+  return instance.get(requestExtension).then(
+    (response) => response.data.result.Messages,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
+export const getMenteePrivateStatus = (profileId) => {
+  const requestExtension = `/account/${profileId}/private`;
+  return instance.get(requestExtension).then(
+    (response) => response.data && response.data.result,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 /**
  * Wrapper function calls to general account endpoints
  * This helps with avoiding the need to change multiple files
@@ -344,3 +427,17 @@ export const fetchMentors = async () => {
 export const fetchMentees = async () => {
   return await fetchAccounts(ACCOUNT_TYPE.MENTEE);
 };
+
+export const fetchAppointmentsByMenteeId = async (id) => {
+  return await fetchAppointmentsById(id, ACCOUNT_TYPE.MENTEE);
+};
+
+export const fetchAppointmentsByMentorId = async (id) => {
+  return await fetchAppointmentsById(id, ACCOUNT_TYPE.MENTOR);
+};
+
+export const fetchMentorsAppointments = async () =>
+  await fetchAppointmentsByType(PLURAL_TYPE.MENTORS);
+
+export const fetchMenteesAppointments = async () =>
+  await fetchAppointmentsByType(PLURAL_TYPE.MENTEES);

@@ -9,6 +9,8 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from twilio.rest import Client as TwilioClient
 from .flask_imgur import Imgur
+from api.models import MentorProfile, MenteeProfile, Admin
+from api.utils.constants import Account
 
 wtforms_json.init()
 
@@ -60,19 +62,49 @@ class AvailabilityForm(Form):
     end_time = StringField(validators=[InputRequired()])
 
 
+class MessageForm(Form):
+    message = StringField(validators=[InputRequired()])
+    user_name = StringField(validators=[InputRequired()])
+    user_id = StringField(validators=[InputRequired()])
+    recipient_name = StringField(validators=[InputRequired()])
+    recipient_id = StringField(validators=[InputRequired()])
+    email = StringField()
+    link = StringField()
+    time = StringField(validators=[InputRequired()])
+
+
 class ApppointmentForm(Form):
     mentor_id = StringField(validators=[InputRequired()])
+    mentee_id = StringField(validators=[InputRequired()])
     timeslot = FormField(AvailabilityForm)
-    name = StringField(validators=[InputRequired()])
-    email = StringField(validators=[InputRequired()])
-    phone_number = StringField()
-    languages = FieldList(StringField(), validators=[validators.required()])
-    age = StringField(validators=[InputRequired()])
-    gender = StringField(validators=[InputRequired()])
-    location = StringField()
-    specialist_categories = FieldList(StringField(), validators=[validators.required()])
-    message = StringField()
-    organization = StringField(validators=[InputRequired()])
+    topic = StringField(validators=[InputRequired()])
+    status = StringField(validators=[InputRequired()])
+
+
+# class MentorApplicationForm(Form):
+# email = StringField(validators=[InputRequired()])
+# name = StringField(validators=[InputRequired()])
+# cell_number = StringField(validators=[InputRequired()])
+# business_number = StringField()
+# hear_about_us = StringField(validators=[InputRequired()])
+# offer_donation = BooleanField(validators=[InputRequired()])
+# mentoring_options = FieldList(StringField(), validators=[InputRequired()])
+# employer_name = StringField(validators=[InputRequired()])
+# work_sectors = FieldList(StringField(), validators=[InputRequired()])
+# role_description = StringField(validators=[InputRequired()])
+# time_at_current_company = StringField(validators=[InputRequired()])
+# linkedin = StringField(validators=[InputRequired()])
+# why_join_mentee = StringField(validators=[InputRequired()])
+# commit_time = StringField(validators=[InputRequired()])
+# specialist_time = StringField(validators=[InputRequired()])
+# immigrant_status = StringField(validators=[InputRequired()])
+# languages = StringField(validators=[InputRequired()])
+# specializations = FieldList(StringField(), validators=[InputRequired()])
+# knowledge_location = StringField(validators=[InputRequired()])
+# referral = StringField()
+# application_state = StringField(validators=[InputRequired()])
+# date_submitted = FieldList(validators=[InputRequired()])
+# notes = StringField()
 
 
 def is_invalid_form(form_data) -> Tuple[str, bool]:
@@ -153,3 +185,12 @@ def send_sms(text: str = "", recipient: str = "") -> Tuple[bool, str]:
         return False, str(e)
 
     return True, ""
+
+
+def get_profile_model(role):
+    if role == Account.MENTOR:
+        return MentorProfile
+    elif role == Account.MENTEE:
+        return MenteeProfile
+    elif role == Account.ADMIN:
+        return Admin

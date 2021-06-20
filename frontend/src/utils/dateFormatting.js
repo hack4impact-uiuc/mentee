@@ -1,17 +1,29 @@
 import moment from "moment";
+import { APPOINTMENT_STATUS } from "./consts";
+import { ACCOUNT_TYPE } from "utils/consts";
 
-export const formatAppointments = (data) => {
-  if (!data) {
+const isPending = (appointment) =>
+  appointment.status === APPOINTMENT_STATUS.PENDING ||
+  (appointment.accepted !== undefined && !appointment.accepted);
+
+export const formatAppointments = (data, type) => {
+  if (!data || !data.requests) {
     return;
   }
 
   const output = {
-    mentor_name: data.mentor_name,
+    name: data.name,
     upcoming: [],
     pending: [],
     past: [],
   };
-  const appointments = data.requests;
+  let appointments = data.requests;
+  if (type === ACCOUNT_TYPE.MENTOR) {
+    appointments = data.requests.filter(
+      (elem) => !elem.status || elem.status !== APPOINTMENT_STATUS.REJECTED
+    );
+  }
+
   const now = moment();
 
   appointments.sort((a, b) =>
@@ -43,7 +55,11 @@ export const formatAppointments = (data) => {
     const endTime = moment(timeslot.end_time.$date);
 
     let currentKey = "upcoming";
-    if (!appointment.accepted && startTime.isSameOrAfter(now)) {
+    if (
+      isPending(appointment) &&
+      startTime.isSameOrAfter(now) &&
+      type !== ACCOUNT_TYPE.MENTEE
+    ) {
       currentKey = "pending";
     } else if (startTime.isBefore(now)) {
       currentKey = "past";
@@ -51,26 +67,31 @@ export const formatAppointments = (data) => {
     let keyInfo = appointmentType[currentKey];
 
     const formattedAppointment = {
-      description: appointment.message,
+      message: appointment.message,
       id: appointment._id.$oid,
+      mentorID: appointment.mentor_id.$oid,
+      menteeID: appointment.mentee_id && appointment.mentee_id.$oid,
       name: appointment.name,
-      email: appointment.email,
-      age: appointment.age,
+      mentorName: appointment.mentor_name,
       date: startTime.format("dddd MMMM Do, YYYY"),
       time: startTime.format("h:mm a") + " - " + endTime.format("h:mm a"),
       isoTime: startTime.format(),
-      email: appointment.email,
-      phone_number: appointment.phone_number,
-      languages: appointment.languages,
-      gender: appointment.gender,
-      ethnicity: appointment.ethnicity,
-      location: appointment.location,
-      mentorship_goals: appointment.mentorship_goals,
-      specialist_categories: appointment.specialist_categories,
-      organization: appointment.organization,
-      allow_texts: appointment.allow_texts,
-      allow_calls: appointment.allow_calls,
+      topic: appointment.topic,
+      allowTexts: appointment.allow_texts,
+      allowCalls: appointment.allow_calls,
+      status: appointment.status,
     };
+    if (!appointment.status) {
+      formattedAppointment.status = appointment.accepted
+        ? APPOINTMENT_STATUS.ACCEPTED
+        : APPOINTMENT_STATUS.PENDING;
+    }
+
+    // Short process for formatting into Mentee's Appointment Page
+    if (type === ACCOUNT_TYPE.MENTEE) {
+      output[currentKey].push(formattedAppointment);
+      continue;
+    }
 
     // case where there is no dates at all in current type of appointment
     if (output[currentKey].length < 1) {
