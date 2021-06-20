@@ -1,0 +1,203 @@
+.page-one-column-container {
+  display: flex;
+  justify-content: space-between;
+  // width: 100%;
+  padding-bottom: 1em;
+  padding-top: 3em;
+  padding-left: 6em;
+  padding-right: 6em;
+  background-color: white;
+  overflow: auto;
+}
+
+.donation-question {
+  overflow-wrap: break-word;
+}
+
+.donation-question {
+  overflow-wrap: break-word;
+}
+
+.column-one,
+.column-two,
+.column-one-page-two,
+.column-two-page-two {
+  padding-top: 3em;
+  width: 50%;
+  overflow: auto;
+}
+
+.column-one,
+.column-one-page-two {
+  padding-right: 3em;
+  overflow: auto;
+}
+
+.input-form {
+  padding-bottom: 3em;
+  overflow: auto;
+}
+
+.input-form-two {
+  padding-bottom: 3em;
+  overflow: auto;
+}
+
+.next-button {
+  margin-left: 1em;
+}
+
+.header-one {
+  position: relative;
+  top: 3em;
+  left: 4em;
+  color: #e4bb50;
+}
+
+.header-two {
+  position: relative;
+  top: 3em;
+  left: 4em;
+  color: #e4bb50;
+}
+
+.header-three {
+  position: relative;
+  top: 3em;
+  left: 4em;
+  color: #e4bb50;
+}
+
+.header-four {
+  position: relative;
+  top: 2em;
+  left: 2em;
+  display: inline;
+  color: #e4bb50;
+}
+
+.page-two-header {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.navigation-content {
+  overflow-x: hidden;
+  margin-left: 0px;
+  background-color: #fcf6e8;
+}
+
+.ant-steps-item-tail::after {
+  display: none;
+  color: orange;
+}
+
+.ant-steps-item {
+  width: 5%;
+  flex: none;
+  position: relative;
+  top: 3em;
+  left: 4em;
+}
+
+.steps-content {
+  // width: 190vh;
+  position: relative;
+  background-color: white;
+  width: 75vw;
+}
+
+.steps-action {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-right: 6em;
+  padding-bottom: 3em;
+}
+
+.instructions {
+  margin: 3em;
+  background-color: white;
+  padding: 1em;
+}
+
+.para-2 {
+  margin-top: 5em;
+}
+
+.background {
+  background-color: #fcf6e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  // margin-left: 8%;
+}
+
+.column-one-page-two {
+  width: 50%;
+}
+
+.column-two-page-two {
+  width: 50%;
+}
+
+.page-two-margin,
+.page-three-padding {
+  margin-bottom: 3em;
+}
+
+.submit-button {
+  margin-left: 20em;
+}
+
+.welcome-page {
+  color: #e4bb50;
+}
+
+.success-message {
+  color: #e4bb50;
+}
+
+.special-topics-question {
+  width: 50%;
+}
+
+.ant-steps-item-process
+  .ant-steps-item-icon
+  > .ant-steps-icon
+  .ant-steps-icon-dot {
+  background-color: #e4bb4f;
+}
+
+.ant-steps-item-wait
+  .ant-steps-item-icon
+  > .ant-steps-icon
+  .ant-steps-icon-dot {
+  background: #ffecbd;
+}
+
+.ant-steps-item-finish
+  .ant-steps-item-icon
+  > .ant-steps-icon
+  .ant-steps-icon-dot {
+  background-color: #ffecbd;
+}
+
+.ant-steps ant-steps-horizontal ant-steps-label-vertical ant-steps-dot {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-four-header-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-four-submit-error {
+  color: red;
+  margin-right: 2em;
+  margin-top: 1em;
+}
