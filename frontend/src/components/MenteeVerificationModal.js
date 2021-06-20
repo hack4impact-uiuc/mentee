@@ -44,7 +44,7 @@ function MenteeVerificationModal(props) {
     const res = await verify(email, password, props.mentor);
     setIsVerifying(false);
 
-    console.log('res', res)
+    console.log("res", res);
     setVerified(res);
     if (!res) {
       setError(true);
@@ -76,7 +76,7 @@ function MenteeVerificationModal(props) {
     }
   };
 
-  console.log('HERE')
+  console.log("HERE");
   return (
     <span className={props.className}>
       <MenteeButton

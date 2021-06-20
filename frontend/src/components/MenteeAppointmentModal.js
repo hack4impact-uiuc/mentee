@@ -13,7 +13,7 @@ import { createAppointment, editAvailability } from "../utils/api";
 import "./css/AntDesign.scss";
 import "./css/Modal.scss";
 import "./css/MenteeModal.scss";
-import MenteeVerificationModal from './MenteeVerificationModal';
+import MenteeVerificationModal from "./MenteeVerificationModal";
 import { isLoggedIn } from "utils/auth.service";
 
 const DAY = 24 * 60 * 60 * 1000;
