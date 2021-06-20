@@ -16,6 +16,7 @@ import RegisterForm from "components/pages/RegisterForm";
 import ForgotPassword from "components/pages/ForgotPassword";
 import ApplicationOrganizer from "components/pages/ApplicationOrganizer";
 import AdminAccountData from "components/pages/AdminAccountData";
+import MentorApplication from "components/pages/MentorApplication";
 import AdminAppointmentData from "components/pages/AdminAppointmentData";
 import AdminVerifiedEmails from "components/pages/AdminVerifiedEmails";
 import MenteeGallery from "components/pages/MenteeGallery";
@@ -69,6 +70,14 @@ function App() {
         path="/gallery"
         exact
         component={() => <Navigation content={<Gallery />} needsAuth={false} />}
+      />
+
+      <Route
+        path="/application-page"
+        exact
+        component={() => (
+          <Navigation content={<MentorApplication />} needsAuth={false} />
+        )}
       />
 
       <Route
