@@ -15,7 +15,7 @@ import "./css/Profile.scss";
 
 function ProfileContent(props) {
   const {accountType} = props;
-  const { isMentor, isMentee } = useAuth();
+  const { isMentor, isMentee, profileId } = useAuth();
 
   const getTitle = (name, age) => {
     if (parseInt(accountType, 10) === ACCOUNT_TYPE.MENTOR && name) {
@@ -40,8 +40,8 @@ function ProfileContent(props) {
     ));
   };
 
-  const getSpecializations = () => {
-    if (accountType === ACCOUNT_TYPE.MENTOR) {
+  const getSpecializations = (isMentor) => {
+    if (isMentor) {
       return (
         <div>
           <div className="mentor-profile-heading">
@@ -81,7 +81,7 @@ function ProfileContent(props) {
           {getTitle(props.mentor.name, props.mentor.age)}
           <div>{getPrivacy(props.mentor.is_private)}</div>
         </div>
-        {accountType === ACCOUNT_TYPE.MENTOR ? (
+        {isMentor && props.mentor && props.mentor._id && profileId === props.mentor._id['$oid'] ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
               mentor={props.mentor}
@@ -89,7 +89,7 @@ function ProfileContent(props) {
             />
           </div>
         ) : (
-          isMentee && (
+          isMentee && props.mentor && props.mentor._id && profileId === props.mentor._id['$oid'] && (
             <div className="mentor-profile-button">
               <MenteeProfileModal
                 mentee={props.mentor}
