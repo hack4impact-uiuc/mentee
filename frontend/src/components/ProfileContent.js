@@ -15,9 +15,9 @@ import "./css/Profile.scss";
 function ProfileContent(props) {
   const { isMentor, isMentee } = useAuth();
   const getTitle = (name, age) => {
-    if (props.isMentor) {
+    if (props.isMentor && name) {
       return name;
-    } else {
+    } else if (name && age) {
       return name + ", " + age;
     }
   };
