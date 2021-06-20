@@ -89,7 +89,8 @@ function MenteeVerificationModal(props) {
       />
 
       <Modal
-        title={"Verify " + (props.mentor ? "Mentor" : "Mentee")}
+        // title={"Verify " + (props.mentor ? "Mentor" : "Mentee")}
+        title="Verify your email"
         visible={isVisible}
         className="verification-modal"
         onCancel={() => {
