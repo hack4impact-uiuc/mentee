@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import { withRouter } from "react-router-dom";
 import { isLoggedIn } from "utils/auth.service";
 import MenteeButton from "./MenteeButton";
-import MenteeVerificationModal from "./MenteeVerificationModal";
+import LoginVerificationModal from "./MenteeVerificationModal";
 import useAuth from "../utils/hooks/useAuth";
 
 import "./css/Navigation.scss";
@@ -50,7 +50,7 @@ function GuestNavHeader({ history }) {
           )}
           {/* TODO: Update this since verification modal will not longer be needed anymore! */}
           <span className="navigation-header-button">
-            <MenteeVerificationModal
+            <LoginVerificationModal
               content={<b>Find a Mentor</b>}
               theme="light"
               width="9em"
@@ -63,7 +63,7 @@ function GuestNavHeader({ history }) {
             />
           </span>
           <span className="navigation-header-button">
-            <MenteeVerificationModal
+            <LoginVerificationModal
               content={<b>Find a Mentee</b>}
               theme="light"
               width="9em"
