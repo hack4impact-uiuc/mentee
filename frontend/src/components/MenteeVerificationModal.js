@@ -76,6 +76,7 @@ function MenteeVerificationModal(props) {
     }
   };
 
+  console.log("HERE");
   return (
     <span className={props.className}>
       <MenteeButton

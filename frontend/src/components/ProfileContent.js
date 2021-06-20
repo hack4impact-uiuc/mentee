@@ -9,16 +9,18 @@ import {
 import { formatLinkForHref } from "utils/misc";
 import MentorProfileModal from "./MentorProfileModal";
 import MenteeProfileModal from "./MenteeProfileModal";
+import MenteeAppointmentModal from "./MenteeAppointmentModal";
+import PublicMessageModal from "./PublicMessageModal";
 import { ACCOUNT_TYPE } from "utils/consts";
 import useAuth from "utils/hooks/useAuth";
 import "./css/Profile.scss";
 
 function ProfileContent(props) {
   const { accountType } = props;
-  const { isMentor, isMentee } = useAuth();
+  const { isMentor, isMentee, profileId } = useAuth();
 
   const getTitle = (name, age) => {
-    if (accountType === ACCOUNT_TYPE.MENTOR && name) {
+    if (parseInt(accountType, 10) === ACCOUNT_TYPE.MENTOR && name) {
       return name;
     } else if (name && age) {
       return name + ", " + age;
@@ -40,8 +42,8 @@ function ProfileContent(props) {
     ));
   };
 
-  const getSpecializations = () => {
-    if (accountType === ACCOUNT_TYPE.MENTOR) {
+  const getSpecializations = (isMentor) => {
+    if (isMentor) {
       return (
         <div>
           <div className="mentor-profile-heading">
@@ -81,7 +83,36 @@ function ProfileContent(props) {
           {getTitle(props.mentor.name, props.mentor.age)}
           <div>{getPrivacy(props.mentor.is_private)}</div>
         </div>
-        {accountType === ACCOUNT_TYPE.MENTOR ? (
+        {isMentee &&
+          (props.isMentor ||
+            parseInt(accountType, 10) === ACCOUNT_TYPE.MENTOR) && (
+            <MenteeAppointmentModal
+              mentor_name={props.mentor.name}
+              availability={props.mentor.availability}
+              mentor_id={
+                props.mentor && props.mentor._id && props.mentor._id["$oid"]
+              }
+              mentee_id={profileId}
+              handleUpdateMentor={props.handleUpdateAccount}
+            />
+          )}
+        {!props.isMentor &&
+          parseInt(accountType, 10) !== ACCOUNT_TYPE.MENTOR &&
+          props.mentor &&
+          props.mentor._id &&
+          props.mentor._id["$oid"] !== profileId && (
+            <PublicMessageModal
+              menteeName={props.mentor.name}
+              menteeID={
+                props.mentor && props.mentor._id && props.mentor._id["$oid"]
+              }
+              mentorID={profileId}
+            />
+          )}
+        {isMentor &&
+        props.mentor &&
+        props.mentor._id &&
+        profileId === props.mentor._id["$oid"] ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
               mentor={props.mentor}
@@ -89,7 +120,10 @@ function ProfileContent(props) {
             />
           </div>
         ) : (
-          isMentee && (
+          isMentee &&
+          props.mentor &&
+          props.mentor._id &&
+          profileId === props.mentor._id["$oid"] && (
             <div className="mentor-profile-button">
               <MenteeProfileModal
                 mentee={props.mentor}
