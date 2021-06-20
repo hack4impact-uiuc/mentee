@@ -5,6 +5,7 @@ import { Form, Input, Avatar, Switch, Button } from "antd";
 import { getMentorID, getIdTokenResult, getMenteeID } from "utils/auth.service";
 import useAuth from "utils/hooks/useAuth";
 import ProfileContent from "../ProfileContent";
+import { ACCOUNT_TYPE } from "utils/consts";
 
 import "../css/MenteeButton.scss";
 import "../css/Profile.scss";
@@ -192,6 +193,7 @@ function Profile() {
             <ProfileContent
               mentor={user}
               isMentor={isMentor}
+              accountType={isMentor && ACCOUNT_TYPE.MENTOR}
               handleSaveEdits={handleSaveEdits}
             />
           </div>
