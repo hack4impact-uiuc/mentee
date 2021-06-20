@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import LoginVerificationModal from "../MenteeVerificationModal";
+import LoginVerificationModal from "../LoginVerificationModal";
 import "../css/Home.scss";
 import Logo from "../../resources/logo.png";
 import Health from "../../resources/focus-for-health.svg";

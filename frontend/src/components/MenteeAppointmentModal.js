@@ -4,7 +4,7 @@ import { Form, Modal, Calendar, Avatar, Switch } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import ModalInput from "./ModalInput";
 import MenteeButton from "./MenteeButton";
-import LoginVerificationModal from "./MenteeVerificationModal";
+import LoginVerificationModal from "./LoginVerificationModal";
 import {
   SPECIALIZATIONS,
   APPOINTMENT_FORM_KEYS,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { Input } from "antd";
-import LoginVerificationModal from "../MenteeVerificationModal";
+import MenteeVerificationModal from "../MenteeVerificationModal";
 import {
   getRegistrationStage,
   isLoggedIn,
@@ -130,7 +130,7 @@ function Register({ history }) {
           ) : (
             <br />
           )}
-          <LoginVerificationModal
+          <MenteeVerificationModal
             content={<b>Next</b>}
             width="50%"
             height="125%"

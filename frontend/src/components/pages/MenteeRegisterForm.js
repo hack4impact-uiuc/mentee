@@ -266,12 +266,12 @@ function MenteeRegisterForm(props) {
       languages: languages,
       biography,
       organization,
-      video: {
+      video: video ? {
         title: MENTEE_DEFAULT_VIDEO_NAME,
         url: video,
         tag: MENTEE_DEFAULT_VIDEO_NAME,
         date_uploaded: moment().format(),
-      },
+      } : undefined,
       is_private: privacy,
     };
 

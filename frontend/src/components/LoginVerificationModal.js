@@ -58,7 +58,7 @@ function LoginVerificationModal(props) {
               content="Login"
               onClick={() => {
                 setIsVisible(false);
-                history.push({pathname: "/select-login"});
+                history.push({ pathname: "/select-login" });
               }}
             />
           </div>

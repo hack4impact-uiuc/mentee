@@ -5,7 +5,7 @@ import { Layout } from "antd";
 import { withRouter } from "react-router-dom";
 import { isLoggedIn } from "utils/auth.service";
 import MenteeButton from "./MenteeButton";
-import LoginVerificationModal from "./MenteeVerificationModal";
+import LoginVerificationModal from "./LoginVerificationModal";
 import useAuth from "../utils/hooks/useAuth";
 
 import "./css/Navigation.scss";

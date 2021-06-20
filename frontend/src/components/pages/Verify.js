@@ -9,10 +9,11 @@ import {
   isUserVerified,
   isUserMentor,
   isUserAdmin,
+  isUserMentee,
   refreshToken,
 } from "utils/auth.service";
 import MenteeButton from "../MenteeButton";
-import { REGISTRATION_STAGE } from "utils/consts";
+import { REGISTRATION_STAGE, ACCOUNT_TYPE } from "utils/consts";
 
 import "../css/Home.scss";
 import "../css/Login.scss";
@@ -56,7 +57,9 @@ function Verify({ history, sent }) {
                 const success = await isUserVerified();
                 if (success) {
                   if (await isUserMentor()) {
-                    history.push("/create-profile");
+                    history.push(`/create-profile/${ACCOUNT_TYPE.MENTOR}`);
+                  } else if (await isUserMentee()) {
+                    history.push(`/create-profile/${ACCOUNT_TYPE.MENTEE}`);
                   } else if (await isUserAdmin()) {
                     await refreshToken();
                     history.push("/account-data");
