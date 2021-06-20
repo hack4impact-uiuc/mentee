@@ -14,7 +14,7 @@ import useAuth from "utils/hooks/useAuth";
 import "./css/Profile.scss";
 
 function ProfileContent(props) {
-  const {accountType} = props;
+  const { accountType } = props;
   const { isMentor, isMentee } = useAuth();
 
   const getTitle = (name, age) => {
