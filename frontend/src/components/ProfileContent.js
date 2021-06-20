@@ -9,13 +9,16 @@ import {
 import { formatLinkForHref } from "utils/misc";
 import MentorProfileModal from "./MentorProfileModal";
 import MenteeProfileModal from "./MenteeProfileModal";
+import { ACCOUNT_TYPE } from "utils/consts";
 import useAuth from "utils/hooks/useAuth";
 import "./css/Profile.scss";
 
 function ProfileContent(props) {
+  const {accountType} = props;
   const { isMentor, isMentee } = useAuth();
+
   const getTitle = (name, age) => {
-    if (props.isMentor && name) {
+    if (accountType === ACCOUNT_TYPE.MENTOR && name) {
       return name;
     } else if (name && age) {
       return name + ", " + age;
@@ -37,8 +40,8 @@ function ProfileContent(props) {
     ));
   };
 
-  const getSpecializations = (isMentor) => {
-    if (isMentor) {
+  const getSpecializations = () => {
+    if (accountType === ACCOUNT_TYPE.MENTOR) {
       return (
         <div>
           <div className="mentor-profile-heading">
@@ -78,7 +81,7 @@ function ProfileContent(props) {
           {getTitle(props.mentor.name, props.mentor.age)}
           <div>{getPrivacy(props.mentor.is_private)}</div>
         </div>
-        {props.isMentor ? (
+        {accountType === ACCOUNT_TYPE.MENTOR ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
               mentor={props.mentor}
