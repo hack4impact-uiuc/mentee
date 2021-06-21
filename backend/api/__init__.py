@@ -106,10 +106,10 @@ def create_app(test_config=None):
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")
     def catch_all(path):
-        return app.send_static_file("../../frontend/build/index.html")
+        return app.send_static_file("frontend/build/index.html")
 
     @app.errorhandler(404)
     def not_found(e):
-        return app.send_static_file("../../frontend/build/index.html")
+        return app.send_static_file("frontend/build/index.html")
 
     return app
