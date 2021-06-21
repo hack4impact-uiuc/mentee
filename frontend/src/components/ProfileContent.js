@@ -109,10 +109,7 @@ function ProfileContent(props) {
               mentorID={profileId}
             />
           )}
-        {isMentor &&
-        props.mentor &&
-        props.mentor._id &&
-        profileId === props.mentor._id["$oid"] ? (
+        {isMentor && props.showEditBtn ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
               mentor={props.mentor}
@@ -121,9 +118,7 @@ function ProfileContent(props) {
           </div>
         ) : (
           isMentee &&
-          props.mentor &&
-          props.mentor._id &&
-          profileId === props.mentor._id["$oid"] && (
+          props.showEditBtn && (
             <div className="mentor-profile-button">
               <MenteeProfileModal
                 mentee={props.mentor}
