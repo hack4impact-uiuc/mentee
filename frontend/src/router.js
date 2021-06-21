@@ -24,15 +24,13 @@ import NotFound from "components/pages/NotFound";
 import MenteeRegisterForm from "components/pages/MenteeRegisterForm";
 import { ACCOUNT_TYPE } from "utils/consts";
 
-function App() {
-  return (
-    <Router>
-      <Route
-        path="/"
-        exact
-        component={() => (
+export default (
+  <Router>
+    <Route path="/" component={App}>
+      <IndexRoute
+        component={
           <Navigation content={<Home />} page="home" needsAuth={false} />
-        )}
+        }
       />
       <Route
         path="/appointments"
@@ -129,8 +127,7 @@ function App() {
         )}
       />
       <Route
-        path="
-        /:type"
+        path="/create-profile/:type"
         component={(props) => {
           const type = parseInt(props.match.params.type, 10);
           return (
@@ -195,8 +192,6 @@ function App() {
           <Navigation content={<NotFound />} needsAuth={false} />
         )}
       />
-    </Router>
-  );
-}
-
-export default App;
+    </Route>
+  </Router>
+);
