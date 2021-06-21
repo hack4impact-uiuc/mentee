@@ -22,7 +22,7 @@ function Profile() {
   const [onEdit, setEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(false);
   const [form] = Form.useForm();
-  const { onAuthStateChanged, isMentor } = useAuth();
+  const { onAuthStateChanged, isMentor, profileId } = useAuth();
 
   useEffect(() => {
     onAuthStateChanged(fetchUser);
@@ -195,6 +195,9 @@ function Profile() {
               isMentor={isMentor}
               accountType={isMentor && ACCOUNT_TYPE.MENTOR}
               handleSaveEdits={handleSaveEdits}
+              showEditBtn={
+                user && user._id && profileId && profileId === user._id["$oid"]
+              }
             />
           </div>
           <fieldset className="mentor-profile-contact">
