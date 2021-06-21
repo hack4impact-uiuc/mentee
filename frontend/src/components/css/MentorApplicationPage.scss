@@ -195,3 +195,24 @@
   margin-right: 2em;
   margin-top: 1em;
 }
+
+
+// mobile
+@media (max-width: 768px) {
+  .steps-content {
+    width: auto;
+    margin: 0em 1em;
+  }
+
+  .page-one-column-container {
+    flex-direction: column;
+  }
+
+  .page-one-column-container > div {
+    width: 100%;
+  }
+
+  .header-four {
+    left: 4em;
+  }
+}
