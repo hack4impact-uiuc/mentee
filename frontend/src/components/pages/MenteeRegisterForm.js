@@ -240,7 +240,7 @@ function MenteeRegisterForm(props) {
 
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
           unsubscribe();
-          history.push("/profile");
+          history.push("/mentee-appointments");
         });
       } else {
         setError(true);
