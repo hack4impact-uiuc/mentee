@@ -19,6 +19,7 @@ import {
   MENTEE_DEFAULT_VIDEO_NAME,
   AGE_RANGES,
 } from "utils/consts";
+import { useMediaQuery } from "react-responsive";
 import moment from "moment";
 import "../css/AntDesign.scss";
 import "../css/Modal.scss";
@@ -27,6 +28,7 @@ import "../css/MenteeButton.scss";
 
 function MenteeRegisterForm(props) {
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: `(max-width: 500px)` });
   const numInputs = 14;
   const [inputClicked, setInputClicked] = useState(
     new Array(numInputs).fill(false)
@@ -417,7 +419,7 @@ function MenteeRegisterForm(props) {
             value={phone}
           />
         </div>
-        <div className="modal-input-container" style={{ width: "50%" }}>
+        <div className="modal-input-container" style={{ width: !isMobile ? "50%" : "auto" }}>
           <ModalInput
             style={styles.modalInput}
             type="text"
