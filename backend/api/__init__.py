@@ -105,9 +105,6 @@ def create_app(test_config=None):
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")
     def catch_all(path):
-        print(path);
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        print(dir_path)
         return app.send_static_file("frontend/build/index.html")
 
     @app.errorhandler(404)
