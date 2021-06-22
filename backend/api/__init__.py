@@ -8,8 +8,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_mongoengine import MongoEngine
 
-from api.core import all_exception_handler
-
+from api.core import all_exception_handler, logger
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -106,6 +105,9 @@ def create_app(test_config=None):
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")
     def catch_all(path):
+        logger.info(path);
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        logger.info(dir_path)
         return app.send_static_file("frontend/build/index.html")
 
     @app.errorhandler(404)
