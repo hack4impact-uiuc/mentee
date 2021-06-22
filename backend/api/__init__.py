@@ -33,7 +33,7 @@ def create_app(test_config=None):
         app.run()
     """
 
-    app = Flask(__name__, static_folder="../../frontend/builds", static_url_path="")
+    app = Flask(__name__, static_folder="../../frontend/artifacts", static_url_path="")
 
     CORS(app)  # add CORS
 
@@ -102,12 +102,13 @@ def create_app(test_config=None):
 
     app.register_error_handler(Exception, all_exception_handler)
 
-    @app.route("*")
-    def catch_all():
-        return app.send_static_file("frontend/build/index.html")
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def catch_all(path):
+        return app.send_static_file("../../frontend/artifacts/index.html")
 
     @app.errorhandler(404)
     def not_found(e):
-        return app.send_static_file("frontend/build/index.html")
+        return app.send_static_file("../../frontend/artifacts/index.html")
 
     return app
