@@ -57,3 +57,10 @@
 .verify-resend-link:hover {
   color: $register-link-hover;
 }
+
+@media (max-width: 768px) {
+  .register-container {
+    height: 60vh;
+    width: 100%;
+  }
+}
