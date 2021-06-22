@@ -129,8 +129,7 @@ function App() {
         )}
       />
       <Route
-        path="
-        /:type"
+        path="/create-profile/:type"
         component={(props) => {
           const type = parseInt(props.match.params.type, 10);
           return (
