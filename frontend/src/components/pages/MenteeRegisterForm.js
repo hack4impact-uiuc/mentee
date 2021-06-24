@@ -419,7 +419,10 @@ function MenteeRegisterForm(props) {
             value={phone}
           />
         </div>
-        <div className="modal-input-container" style={{ width: !isMobile ? "50%" : "auto" }}>
+        <div
+          className="modal-input-container"
+          style={{ width: !isMobile ? "50%" : "auto" }}
+        >
           <ModalInput
             style={styles.modalInput}
             type="text"

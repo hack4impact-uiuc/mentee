@@ -148,8 +148,7 @@ function Register({ history }) {
             </NavLink>
           </div>
         </div>
-        {!isMobile && 
-        <img className="logo" src={Logo} alt="" />}
+        {!isMobile && <img className="logo" src={Logo} alt="" />}
       </div>
     </div>
   );
