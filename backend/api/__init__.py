@@ -87,15 +87,6 @@ def create_app(test_config=None):
         messages,
     )
 
-    @app.route("/", defaults={"path": ""})
-    @app.route("/<path:path>")
-    def catch_all(path):
-        return app.send_static_file("../../frontend/artifacts/index.html")
-
-    @app.errorhandler(404)
-    def not_found(e):
-        return app.send_static_file("../../frontend/artifacts/index.html")
-
     # why blueprints http://flask.pocoo.org/docs/1.0/blueprints/
     app.register_blueprint(app_blueprint.app_blueprint)
     app.register_blueprint(main.main, url_prefix="/api")
@@ -110,5 +101,14 @@ def create_app(test_config=None):
     app.register_blueprint(messages.messages, url_prefix="/api/messages")
 
     app.register_error_handler(Exception, all_exception_handler)
+
+    @app.route("/", defaults={"path": ""})
+    @app.route("/<path:path>")
+    def catch_all(path):
+        return app.send_static_file("../../frontend/artifacts/index.html")
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return app.send_static_file("../../frontend/artifacts/index.html")
 
     return app
