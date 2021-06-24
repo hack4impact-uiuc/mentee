@@ -33,8 +33,7 @@ def create_app(test_config=None):
         app.run()
     """
 
-    app = Flask(__name__, static_folder="../../frontend/artifacts",
-                static_url_path="")
+    app = Flask(__name__, static_folder="../../frontend/artifacts", static_url_path="")
 
     CORS(app)  # add CORS
 
@@ -62,8 +61,7 @@ def create_app(test_config=None):
     password = os.environ.get("MONGO_PASSWORD")
     db = os.environ.get("MONGO_DB")
     host = os.environ.get("MONGO_HOST")
-    app.config["MONGODB_SETTINGS"] = {
-        "db": db, "host": host % (user, password, db)}
+    app.config["MONGODB_SETTINGS"] = {"db": db, "host": host % (user, password, db)}
 
     # firebase
     firebase_admin.initialize_app()
@@ -102,10 +100,8 @@ def create_app(test_config=None):
     app.register_blueprint(app_blueprint.app_blueprint)
     app.register_blueprint(main.main, url_prefix="/api")
     app.register_blueprint(auth.auth, url_prefix="/auth")
-    app.register_blueprint(appointment.appointment,
-                           url_prefix="/api/appointment")
-    app.register_blueprint(availability.availability,
-                           url_prefix="/api/availability")
+    app.register_blueprint(appointment.appointment, url_prefix="/api/appointment")
+    app.register_blueprint(availability.availability, url_prefix="/api/availability")
     app.register_blueprint(verify.verify, url_prefix="/api")
     app.register_blueprint(apply.apply, url_prefix="/api/application")
     app.register_blueprint(admin.admin, url_prefix="/api")
