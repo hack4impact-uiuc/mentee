@@ -1,5 +1,5 @@
 {
-  "root": "frontend/artifacts/",
+  "root": "frontend/",
   "clean_urls": true,
   "routes": {
     "/static/**": "static/",
