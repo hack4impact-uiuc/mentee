@@ -18,7 +18,6 @@ import { REGISTRATION_STAGE, ACCOUNT_TYPE } from "utils/consts";
 import "../css/Home.scss";
 import "../css/Login.scss";
 import "../css/Register.scss";
-import Honeycomb from "../../resources/honeycomb.png";
 
 function Verify({ history, sent }) {
   const [verifying, setVerifying] = useState(false);
@@ -41,9 +40,6 @@ function Verify({ history, sent }) {
                 A verification email has been sent to your email. Please click
                 the link contained inside to verify your account.
               </t>
-            </div>
-            <div className="verify-header-image">
-              <img className="verify-honeycomb" src={Honeycomb} alt="" />
             </div>
           </div>
           <div className="login-button">
