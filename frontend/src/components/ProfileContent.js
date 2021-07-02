@@ -83,32 +83,36 @@ function ProfileContent(props) {
           {getTitle(props.mentor.name, props.mentor.age)}
           <div>{getPrivacy(props.mentor.is_private)}</div>
         </div>
-        {isMentee &&
-          (props.isMentor ||
-            parseInt(accountType, 10) === ACCOUNT_TYPE.MENTOR) && (
-            <MenteeAppointmentModal
-              mentor_name={props.mentor.name}
-              availability={props.mentor.availability}
-              mentor_id={
-                props.mentor && props.mentor._id && props.mentor._id["$oid"]
-              }
-              mentee_id={profileId}
-              handleUpdateMentor={props.handleUpdateAccount}
-            />
-          )}
-        {!props.isMentor &&
-          parseInt(accountType, 10) !== ACCOUNT_TYPE.MENTOR &&
-          props.mentor &&
-          props.mentor._id &&
-          props.mentor._id["$oid"] !== profileId && (
-            <PublicMessageModal
-              menteeName={props.mentor.name}
-              menteeID={
-                props.mentor && props.mentor._id && props.mentor._id["$oid"]
-              }
-              mentorID={profileId}
-            />
-          )}
+        <div className="mentor-profile-actions">
+          <div className="mentor-profile-book-appt-btn">
+            {isMentee &&
+              (props.isMentor ||
+                parseInt(accountType, 10) === ACCOUNT_TYPE.MENTOR) && (
+                <MenteeAppointmentModal
+                  mentor_name={props.mentor.name}
+                  availability={props.mentor.availability}
+                  mentor_id={
+                    props.mentor && props.mentor._id && props.mentor._id["$oid"]
+                  }
+                  mentee_id={profileId}
+                  handleUpdateMentor={props.handleUpdateAccount}
+                />
+              )}
+          </div>
+          <div className="mentor-profile-send-msg-btn">
+            {props.mentor &&
+              props.mentor._id &&
+              props.mentor._id["$oid"] !== profileId && (
+                <PublicMessageModal
+                  menteeName={props.mentor.name}
+                  menteeID={
+                    props.mentor && props.mentor._id && props.mentor._id["$oid"]
+                  }
+                  mentorID={profileId}
+                />
+              )}
+          </div>
+        </div>
         {isMentor && props.showEditBtn ? (
           <div className="mentor-profile-button">
             <MentorProfileModal
