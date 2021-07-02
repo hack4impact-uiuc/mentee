@@ -102,7 +102,8 @@ function ProfileContent(props) {
           <div className="mentor-profile-send-msg-btn">
             {props.mentor &&
               props.mentor._id &&
-              props.mentor._id["$oid"] !== profileId && (
+              props.mentor._id["$oid"] !== profileId &&
+              profileId && (
                 <PublicMessageModal
                   menteeName={props.mentor.name}
                   menteeID={
