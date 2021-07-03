@@ -76,6 +76,8 @@ function ProfileContent(props) {
     ));
   };
 
+  console.log(props.isMentor);
+
   return (
     <div>
       <div className="mentor-profile-name">
@@ -100,7 +102,9 @@ function ProfileContent(props) {
               )}
           </div>
           <div className="mentor-profile-send-msg-btn">
-            {props.mentor &&
+            {!props.isMentor &&
+              parseInt(accountType, 10) !== ACCOUNT_TYPE.MENTOR &&
+              props.mentor &&
               props.mentor._id &&
               props.mentor._id["$oid"] !== profileId &&
               profileId && (
