@@ -76,8 +76,6 @@ function ProfileContent(props) {
     ));
   };
 
-  console.log(props.isMentor);
-
   return (
     <div>
       <div className="mentor-profile-name">
