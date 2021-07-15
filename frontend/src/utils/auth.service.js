@@ -19,8 +19,9 @@ const post = (url, data, params) =>
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-const getIdToken = () => getCurrentUser().getIdToken();
-export const getIdTokenResult = () => getCurrentUser().getIdTokenResult();
+const getIdToken = (forceRefresh) => getCurrentUser().getIdToken(forceRefresh);
+export const getIdTokenResult = (forceRefresh) =>
+  getCurrentUser().getIdTokenResult(forceRefresh);
 
 // Role is where you put "admin" or "mentor"- right now we only support mentor
 export const register = async (email, password, role) =>
@@ -82,16 +83,18 @@ export const logout = async () =>
 export const refreshToken = async () => {
   // need initial token from registration
   if (isLoggedIn()) {
-    return await getIdToken().then(async (idToken) => {
-      const token = await post("/refreshToken", {
-        token: idToken,
-        role: await getRole(),
-      }).then((data) => data && data.result.token);
+    return await getCurrentUser()
+      .getIdToken(true)
+      .then(async (idToken) => {
+        const token = await post("/refreshToken", {
+          token: idToken,
+          role: await getRole(),
+        }).then((data) => data && data.result.token);
 
-      await firebase.auth().signInWithCustomToken(token);
+        await firebase.auth().signInWithCustomToken(token);
 
-      return token;
-    });
+        return token;
+      });
   }
 };
 

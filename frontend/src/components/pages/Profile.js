@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Form, Input, Avatar, Switch, Button } from "antd";
-import { getMentorID, getIdTokenResult, getMenteeID } from "utils/auth.service";
+import {
+  getMentorID,
+  getMenteeID,
+  logout,
+  getCurrentUser,
+} from "utils/auth.service";
 import useAuth from "utils/hooks/useAuth";
 import ProfileContent from "../ProfileContent";
 import { ACCOUNT_TYPE } from "utils/consts";
