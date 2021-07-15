@@ -19,8 +19,8 @@ const post = (url, data, params) =>
     .then((res) => res.data)
     .catch((err) => console.error(err));
 
-const getIdToken = () => getCurrentUser().getIdToken(true);
-export const getIdTokenResult = () => getCurrentUser().getIdTokenResult(true);
+const getIdToken = () => getCurrentUser().getIdToken();
+export const getIdTokenResult = () => getCurrentUser().getIdTokenResult();
 
 // Role is where you put "admin" or "mentor"- right now we only support mentor
 export const register = async (email, password, role) =>
