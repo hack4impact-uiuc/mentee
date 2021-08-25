@@ -174,3 +174,26 @@
   text-align: center;
   border-radius: 4px;
 }
+
+.navigation-hamburger-btn {
+  border: none;
+  background-color: #fbecc1;
+  width: 64px;
+  height: 100%;
+}
+
+.mobile-nav-btn, .mobile-nav-btn-login-modal button {
+  width: 100% !important;
+  border: none;
+  box-shadow: none;
+  border-radius: 2px !important;
+  margin-bottom: 1.5em;
+}
+
+
+.drawer-btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 3em;
+}

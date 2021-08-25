@@ -34,7 +34,7 @@ function Navigation(props) {
   useEffect(() => {
     onAuthStateChanged((user) => {
       if (!user && props.needsAuth) {
-        history.push("/login");
+        history.push("/select-login");
       }
     });
   }, [history, props.needsAuth]);

@@ -359,7 +359,7 @@ function MenteeProfileModal(props) {
       biography: about,
       location: location,
       is_private: privacy,
-      video: {
+      video: videoUrl && {
         title: MENTEE_DEFAULT_VIDEO_NAME,
         url: videoUrl,
         tag: MENTEE_DEFAULT_VIDEO_NAME,

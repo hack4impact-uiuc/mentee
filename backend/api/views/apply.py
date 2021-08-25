@@ -119,8 +119,9 @@ def edit_application(id):
             logger.info(msg)
 
         # Add to verified emails
-        new_verified = VerifiedEmail(email=mentor_email, is_mentor=True)
-        new_verified.save()
+        if not VerifiedEmail.objects(email=mentor_email):
+            new_verified = VerifiedEmail(email=mentor_email, is_mentor=True)
+            new_verified.save()
 
     return create_response(status=200, message=f"Success")
 

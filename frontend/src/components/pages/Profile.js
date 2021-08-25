@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Form, Input, Avatar, Switch, Button } from "antd";
-import { getMentorID, getIdTokenResult, getMenteeID } from "utils/auth.service";
+import {
+  getMentorID,
+  getMenteeID,
+  logout,
+  getCurrentUser,
+} from "utils/auth.service";
 import useAuth from "utils/hooks/useAuth";
 import ProfileContent from "../ProfileContent";
+import { ACCOUNT_TYPE } from "utils/consts";
 
 import "../css/MenteeButton.scss";
 import "../css/Profile.scss";
@@ -21,7 +27,7 @@ function Profile() {
   const [onEdit, setEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(false);
   const [form] = Form.useForm();
-  const { onAuthStateChanged, isMentor } = useAuth();
+  const { onAuthStateChanged, isMentor, profileId } = useAuth();
 
   useEffect(() => {
     onAuthStateChanged(fetchUser);
@@ -192,7 +198,11 @@ function Profile() {
             <ProfileContent
               mentor={user}
               isMentor={isMentor}
+              accountType={isMentor && ACCOUNT_TYPE.MENTOR}
               handleSaveEdits={handleSaveEdits}
+              showEditBtn={
+                user && user._id && profileId && profileId === user._id["$oid"]
+              }
             />
           </div>
           <fieldset className="mentor-profile-contact">

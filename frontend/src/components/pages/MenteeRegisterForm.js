@@ -19,6 +19,7 @@ import {
   MENTEE_DEFAULT_VIDEO_NAME,
   AGE_RANGES,
 } from "utils/consts";
+import { useMediaQuery } from "react-responsive";
 import moment from "moment";
 import "../css/AntDesign.scss";
 import "../css/Modal.scss";
@@ -27,6 +28,7 @@ import "../css/MenteeButton.scss";
 
 function MenteeRegisterForm(props) {
   const history = useHistory();
+  const isMobile = useMediaQuery({ query: `(max-width: 500px)` });
   const numInputs = 14;
   const [inputClicked, setInputClicked] = useState(
     new Array(numInputs).fill(false)
@@ -240,7 +242,7 @@ function MenteeRegisterForm(props) {
 
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
           unsubscribe();
-          history.push("/profile");
+          history.push("/mentee-appointments");
         });
       } else {
         setError(true);
@@ -266,12 +268,14 @@ function MenteeRegisterForm(props) {
       languages: languages,
       biography,
       organization,
-      video: {
-        title: MENTEE_DEFAULT_VIDEO_NAME,
-        url: video,
-        tag: MENTEE_DEFAULT_VIDEO_NAME,
-        date_uploaded: moment().format(),
-      },
+      video: video
+        ? {
+            title: MENTEE_DEFAULT_VIDEO_NAME,
+            url: video,
+            tag: MENTEE_DEFAULT_VIDEO_NAME,
+            date_uploaded: moment().format(),
+          }
+        : undefined,
       is_private: privacy,
     };
 
@@ -415,7 +419,10 @@ function MenteeRegisterForm(props) {
             value={phone}
           />
         </div>
-        <div className="modal-input-container" style={{ width: "50%" }}>
+        <div
+          className="modal-input-container"
+          style={{ width: !isMobile ? "50%" : "auto" }}
+        >
           <ModalInput
             style={styles.modalInput}
             type="text"

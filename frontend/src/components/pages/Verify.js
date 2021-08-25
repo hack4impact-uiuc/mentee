@@ -9,15 +9,15 @@ import {
   isUserVerified,
   isUserMentor,
   isUserAdmin,
+  isUserMentee,
   refreshToken,
 } from "utils/auth.service";
 import MenteeButton from "../MenteeButton";
-import { REGISTRATION_STAGE } from "utils/consts";
+import { REGISTRATION_STAGE, ACCOUNT_TYPE } from "utils/consts";
 
 import "../css/Home.scss";
 import "../css/Login.scss";
 import "../css/Register.scss";
-import Honeycomb from "../../resources/honeycomb.png";
 
 function Verify({ history, sent }) {
   const [verifying, setVerifying] = useState(false);
@@ -41,9 +41,6 @@ function Verify({ history, sent }) {
                 the link contained inside to verify your account.
               </t>
             </div>
-            <div className="verify-header-image">
-              <img className="verify-honeycomb" src={Honeycomb} alt="" />
-            </div>
           </div>
           <div className="login-button">
             <MenteeButton
@@ -56,7 +53,9 @@ function Verify({ history, sent }) {
                 const success = await isUserVerified();
                 if (success) {
                   if (await isUserMentor()) {
-                    history.push("/create-profile");
+                    history.push(`/create-profile/${ACCOUNT_TYPE.MENTOR}`);
+                  } else if (await isUserMentee()) {
+                    history.push(`/create-profile/${ACCOUNT_TYPE.MENTEE}`);
                   } else if (await isUserAdmin()) {
                     await refreshToken();
                     history.push("/account-data");

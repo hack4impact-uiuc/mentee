@@ -47,6 +47,16 @@
     align-items: center;
   }
 
+  .mentor-profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 1em;
+  }
+
+  .mentor-profile-book-appt-btn {
+    margin-right: 1em;
+  }
+
   .mentor-lock-symbol {
     margin-left: 0.5em;
   }

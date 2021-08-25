@@ -4,7 +4,6 @@ import { Avatar, Spin } from "antd";
 import { UserOutlined, HeartFilled } from "@ant-design/icons";
 
 import MenteeButton from "./MenteeButton";
-import { MENTOR_PROFILE } from "utils/consts";
 import BookmarkImage from "resources/AddBookmarkMentor.svg";
 import "components/css/MenteeAppointments.scss";
 
@@ -12,7 +11,7 @@ function BookmarkSidebar({ bookmarks, unfavorite }) {
   const history = useHistory();
 
   const redirectToProfile = (mentorId) => {
-    history.push(`${MENTOR_PROFILE}/${mentorId}`);
+    history.push(`/gallery/1/${mentorId}`);
   };
 
   return (
