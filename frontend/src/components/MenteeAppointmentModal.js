@@ -389,74 +389,26 @@ function MenteeAppointmentModal(props) {
         title="        " // Uses Unicode spaces to get desired heading
         visible={contactModalVisible}
         onCancel={() => closeModals()}
-        className="appointment-date-modal"
+        className="contact-me-modal"
         style={{ overflow: "hidden" }}
         footer={null}
       >
-        <div className="modal-container-row">
-          <div className="modal-mentee-appointment-info-container">
-            <Avatar
-              className="modal-mentee-appointment-profile-icon"
-              size={80}
-              icon={<UserOutlined />}
-            />
-            <h3 className="bold">Mentoring Session with {props.mentor_name}</h3>
-            <h2 className="bold">Select a Date & Time</h2>
-          </div>
-          <div className="modal-mentee-appointment-datetime-container">
-            <div className="modal-mentee-appointment-datetime-container-header">
-              <Calendar
-                fullscreen={false}
-                onSelect={handleDateChange}
-                disabledDate={disabledDate}
-              />
-              <div className="modal-mentee-appointment-datetime-header">
-                <div className="modal-mentee-appointment-datetime-text">
-                  Select Time
-                </div>
-                <div className="modal-mentee-appointment-datetime-timezone">
-                  {tz}
-                </div>
-              </div>
-              <div className="modal-mentee-appointment-timeslots-container">
-                {!isAvailable ? (
-                  <h1>There are no appointments available</h1>
-                ) : (
-                  dayTimeSlots.map((timeSlot, index) => (
-                    <div
-                      key={index}
-                      className="modal-mentee-appointment-timeslot"
-                    >
-                      <MenteeButton
-                        key={index}
-                        width={170}
-                        content={
-                          moment(timeSlot.start_time.$date).format("hh:mm A") +
-                          "-" +
-                          moment(timeSlot.end_time.$date).format("hh:mm A")
-                        }
-                        theme="light"
-                        borderOnClick={true}
-                        onClick={() => setTime(timeSlot)}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-            <div className="modal-mentee-appointment-datetime-container-footer">
-              {validate && (
-                <b style={styles.alertToast}>Appointment Time Not Chosen</b>
-              )}
-              <MenteeButton
-                width={120}
-                content={"continue"}
-                onClick={() => {
-                  updateModal();
-                }}
-              />
-            </div>
-          </div>
+        <div className="message-modal-container">
+          <h1>Send message to {props.mentor_name}</h1>
+          <ModalInput
+            style={styles.modalInput}
+            type="textarea"
+            handleClick={handleClick}
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            large
+          />
+          <br />
+          <MenteeButton
+            width={120}
+            content={"Send Message"}
+            onClick={() => {}}
+          />
         </div>
       </Modal>
     </span>
