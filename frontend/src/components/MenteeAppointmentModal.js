@@ -9,7 +9,11 @@ import {
   APPOINTMENT_FORM_KEYS,
   APPOINTMENT_STATUS,
 } from "../utils/consts";
-import { createAppointment, editAvailability } from "../utils/api";
+import {
+  createAppointment,
+  editAvailability,
+  sendMenteeMentorEmail,
+} from "../utils/api";
 import "./css/AntDesign.scss";
 import "./css/Modal.scss";
 import "./css/MenteeModal.scss";
@@ -407,7 +411,16 @@ function MenteeAppointmentModal(props) {
           <MenteeButton
             width={120}
             content={"Send Message"}
-            onClick={() => {}}
+            onClick={async () => {
+              const res = await sendMenteeMentorEmail(
+                mentorID,
+                menteeID,
+                message
+              );
+              if (!res) {
+                console.log("Failed to send message");
+              }
+            }}
           />
         </div>
       </Modal>
