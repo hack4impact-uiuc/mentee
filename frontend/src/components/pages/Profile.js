@@ -26,8 +26,10 @@ function Profile() {
   const [user, setUser] = useState({});
   const [onEdit, setEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(false);
+
   const [form] = Form.useForm();
-  const { onAuthStateChanged, isMentor, profileId } = useAuth();
+
+  const { onAuthStateChanged, isMentor, profileId, isMentee } = useAuth();
 
   useEffect(() => {
     onAuthStateChanged(fetchUser);
