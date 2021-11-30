@@ -4,6 +4,7 @@ import { sendMenteeMentorEmail } from "../utils/api";
 import { SPECIALIZATIONS } from "../utils/consts.js";
 import MenteeButton from "./MenteeButton";
 import ModalInput from "./ModalInput";
+import thankYouImage from "../resources/thankYou.png";
 
 import "./css/AntDesign.scss";
 import "./css/Modal.scss";
@@ -16,6 +17,7 @@ function MentorContactModal({ mentorId, menteeId, mentorName }) {
   const [interestAreas, setInterestAreas] = useState([]);
   const [communicationMethod, setCommunicationMethod] = useState("");
   const [error, setError] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(false);
 
   const closeModal = () => {
     setModalVisible(false);
@@ -49,11 +51,15 @@ function MentorContactModal({ mentorId, menteeId, mentorName }) {
         style={{ overflow: "hidden" }}
         footer={null}
       >
-        <h1>Reach Out to {mentorName}</h1>
-        <h2>your name and email will be sent to this mentor</h2>
+        <h1 className="modal-mentee-appointment-contact-header">
+          Reach Out to {mentorName}
+        </h1>
+        <h3 className="modal-mentee-appointment-contact-description">
+          Your name and email will be sent to this mentor
+        </h3>
         <Form>
           <Form.Item
-            label="select"
+            label="Choose Interest Areas"
             name="Choose Interest Areas"
             rules={[
               { required: true, message: "Please select an interest area!" },
@@ -72,7 +78,7 @@ function MentorContactModal({ mentorId, menteeId, mentorName }) {
             </Select>
           </Form.Item>
           <Form.Item
-            label="radio"
+            label="Preferred communication method"
             name="What is your preferred communication method?"
             rules={[
               {
@@ -118,11 +124,37 @@ function MentorContactModal({ mentorId, menteeId, mentorName }) {
                   setError(true);
                 } else {
                   closeModal();
+                  setConfirmationModal(true);
                 }
               }}
             />
           </div>
         </Form>
+      </Modal>
+      <Modal
+        forceRender
+        visible={confirmationModal}
+        onCancel={() => setConfirmationModal(false)}
+        className="modal-mentee-confirmation-modal"
+        style={{ overflow: "hidden" }}
+        footer={null}
+      >
+        <div className="modal-mentee-confirmation-content">
+          <img
+            className="modal-mentee-confirmation-modal-art"
+            src={thankYouImage}
+          />
+          <div className="modal-mentee-confirmation-modal-text">
+            <div className="modal-mentee-confirmation-modal-title">
+              {" "}
+              Thank you!{" "}
+            </div>
+            <div className="modal-mentee-confirmation-modal-body">
+              Your mentor will be getting back to you soon! Feel free to browse
+              the mentor page and reach out to other mentors.
+            </div>
+          </div>
+        </div>
       </Modal>
     </span>
   );
