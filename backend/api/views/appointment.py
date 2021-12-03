@@ -21,6 +21,8 @@ from mongoengine.queryset.visitor import Q
 appointment = Blueprint("appointment", __name__)
 
 # GET request for appointments by account id
+
+
 @appointment.route("/<int:account_type>/<string:id>", methods=["GET"])
 def get_requests_by_id(account_type, id):
     account = None
