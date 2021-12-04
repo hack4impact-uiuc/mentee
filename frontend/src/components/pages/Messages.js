@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import "../css/Messages.scss";
 import useAuth from "../../utils/hooks/useAuth";
-import { BASE_URL } from "../../utils/consts";
+import { BASE_URL } from "utils/consts";
 import MessagesSidebar from "components/MessagesSidebar";
 import { Layout } from "antd";
 import MessagesChatArea from "components/MessagesChatArea";
