@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import "../css/Messages.scss";
 import useAuth from "../../utils/hooks/useAuth";
-import { BASE_URL } from "utils/consts";
+import { MENTEE_GALLERY_PAGE, MENTOR_GALLERY_PAGE } from "../../utils/consts";
 import MessagesSidebar from "components/MessagesSidebar";
 import { Layout } from "antd";
 import MessagesChatArea from "components/MessagesChatArea";
@@ -14,6 +14,8 @@ function Messages(props) {
   const [latestConvos, setLatestConvos] = useState([]);
   const [activeMessageId, setActiveMessageId] = useState("");
   const [messages, setMessages] = useState([]);
+
+  const URL = "http://localhost:5000";
 
   const { profileId } = useAuth();
 
