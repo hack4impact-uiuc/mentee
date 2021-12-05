@@ -20,34 +20,42 @@ function Messages(props) {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    if (profileId && messages?.length) {
-      if (socket === null) {
-        setSocket(io(BASE_URL));
-      }
+    const newSocket = io(BASE_URL);
+    setSocket(newSocket);
 
-      if (socket) {
-        console.log("listening to ... " + profileId);
-        socket.on(profileId, (data) => {
-          if (data?.sender_id?.$oid == activeMessageId) {
-            setMessages([...messages, data]);
-          } else {
-            console.log(data);
-            const messageCard = {
-              latestMessage: data,
-              otherUser: {
-                name: data?.sender_id?.$oid,
-                image:
-                  "https://image.shutterstock.com/image-vector/fake-stamp-vector-grunge-rubber-260nw-1049845097.jpg",
-              },
-              otherId: data?.sender_id?.$oid,
-              new: true, // use to indicate new message card UI
-            };
-            setLatestConvos([messageCard, ...latestConvos]);
-          }
-        });
-      }
+    return () => socket?.close();
+  }, [setSocket]);
+
+  const messageListener = (data) => {
+    console.log("GETTING A MESSAGE");
+    if (data?.sender_id?.$oid == activeMessageId) {
+      setMessages([...messages, data]);
+    } else {
+      console.log(data);
+      const messageCard = {
+        latestMessage: data,
+        otherUser: {
+          name: data?.sender_id?.$oid,
+          image:
+            "https://image.shutterstock.com/image-vector/fake-stamp-vector-grunge-rubber-260nw-1049845097.jpg",
+        },
+        otherId: data?.sender_id?.$oid,
+        new: true, // use to indicate new message card UI
+      };
+      setLatestConvos([messageCard, ...latestConvos]);
     }
-  }, [messages, profileId, socket]);
+  };
+  console.log(messages);
+
+  useEffect(() => {
+    if (socket && profileId) {
+      console.log("listening to ... " + profileId);
+      socket.on(profileId, messageListener);
+      return () => {
+        socket.off(profileId, messageListener);
+      };
+    }
+  }, [socket, profileId, messages]);
 
   useEffect(() => {
     async function getData() {
@@ -66,10 +74,13 @@ function Messages(props) {
   });
 
   useEffect(() => {
-    setActiveMessageId(props.match ? props.match.params.receiverId : null);
-    if (activeMessageId && profileId) {
-      setMessages(getMessageData(profileId, activeMessageId));
+    async function getData() {
+      setActiveMessageId(props.match ? props.match.params.receiverId : null);
+      if (activeMessageId && profileId) {
+        setMessages(await getMessageData(profileId, activeMessageId));
+      }
     }
+    getData();
   }, [props.location]);
 
   useEffect(() => {
