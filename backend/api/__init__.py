@@ -105,6 +105,6 @@ def create_app(test_config=None):
     app.register_blueprint(notifications.notifications, url_prefix="/api/notifications")
 
     app.register_error_handler(Exception, all_exception_handler)
-    
+
     socketio.init_app(app)
     return app
