@@ -25,7 +25,7 @@ def runprod():
 
 @manager.command
 def runworker():
-    socketio.run(app, debug=False, port=5000)
+    socketio.run(app, debug=True)
 
 
 if __name__ == "__main__":
