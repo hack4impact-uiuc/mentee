@@ -53,7 +53,7 @@ def create_app(test_config=None):
     strm.setLevel(logging.DEBUG)
     strm.setFormatter(formatter)
 
-    gunicorn_error_logger = logging.getLogger('gunicorn.error')
+    gunicorn_error_logger = logging.getLogger("gunicorn.error")
     app.logger.handlers.extend(gunicorn_error_logger.handlers)
     app.logger.addHandler(strm)
     app.logger.setLevel(logging.DEBUG)
