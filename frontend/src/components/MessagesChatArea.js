@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Avatar,
+  Alert,
   Card,
   Col,
   Divider,
@@ -39,15 +40,14 @@ function MessagesChatArea(props) {
     fetchAccount();
   }, [otherId]);
 
-  // const [messages, setMessages] = useState([]);
-
-  // console.log(profileId)
-
   /*
     To do: Load user on opening. Read from mongo and also connect to socket.
   */
 
   const sendMessage = (e) => {
+    if (!messageText.replace(/\s/g, "").length) {
+      return;
+    }
     let today = new Date();
     let date =
       today.getFullYear() +
@@ -69,10 +69,9 @@ function MessagesChatArea(props) {
     msg["sender_id"] = { $oid: msg["sender_id"] };
     msg["recipient_id"] = { $oid: msg["recipient_id"] };
     props.addMyMessage(msg);
+    return;
   };
 
-  // console.log(messages);
-  // console.log(activeMessageId);
   if (!activeMessageId || !messages || !messages.length) {
     return <div>Loading...</div>;
   }
@@ -107,7 +106,6 @@ function MessagesChatArea(props) {
               <div className="chatRight__inner" data-chat="person1">
                 {block.sender_id.$oid != profileId && (
                   <span>
-                    {console.log(accountData)}
                     <Avatar src={accountData.image?.url} />{" "}
                   </span>
                 )}
