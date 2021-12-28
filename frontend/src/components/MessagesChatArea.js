@@ -60,7 +60,11 @@ function MessagesChatArea(props) {
   };
 
   if (!activeMessageId || !messages || !messages.length) {
-    return <div>Loading...</div>;
+    return (
+      <div className="no-messages">
+        <div className="start-convo">Start a conversation today!</div>
+      </div>
+    );
   }
 
   const OldHeader = () => (
