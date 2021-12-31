@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import "../css/Messages.scss";
-import useAuth from "../../utils/hooks/useAuth";
-import { BASE_URL } from "../../utils/consts";
+import { useSelector, useDispatch } from "react-redux";
+
 import MessagesSidebar from "components/MessagesSidebar";
-import { Layout } from "antd";
+import { Layout, message } from "antd";
 import MessagesChatArea from "components/MessagesChatArea";
 import { getLatestMessages, getMessageData } from "utils/api";
-import { io } from "socket.io-client";
-import usePersistedState from "utils/hooks/usePersistedState";
+import socket from "utils/socket";
+
+import "../css/Messages.scss";
+import { setActiveMessageId } from "features/messagesSlice";
+import { updateNotificationsCount } from "features/notificationsSlice";
 
 function Messages(props) {
   const { history } = props;
+  const dispatch = useDispatch();
   const [latestConvos, setLatestConvos] = useState([]);
-  const [activeMessageId, setActiveMessageId] = useState("");
+  const activeMessageId = useSelector(
+    (state) => state.messages.activeMessageId
+  );
   const [userType, setUserType] = useState();
   const [messages, setMessages] = useState([]);
-  const { profileId } = useAuth();
-
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io(BASE_URL);
-    setSocket(newSocket);
-    return () => socket?.close();
-  }, [setSocket]);
+  const [loading, setLoading] = useState(false);
+  const profileId = useSelector((state) => state.user.user?._id?.$oid);
 
   const messageListener = (data) => {
     if (data?.sender_id?.$oid == activeMessageId) {
-      setMessages([...messages, data]);
+      setMessages((prevMessages) => [...prevMessages, data]);
+      dispatch(
+        updateNotificationsCount({
+          recipient: profileId,
+          sender: data.sender_id.$oid,
+        })
+      );
     } else {
-      const messageCard = {
-        latestMessage: data,
-        otherUser: {
-          name: data?.sender_id?.$oid,
-          image:
-            "https://image.shutterstock.com/image-vector/fake-stamp-vector-grunge-rubber-260nw-1049845097.jpg",
-        },
-        otherId: data?.sender_id?.$oid,
-        new: true, // use to indicate new message card UI
-      };
-      setLatestConvos([messageCard, ...latestConvos]);
+      async function fetchLatest() {
+        const data = await getLatestMessages(profileId);
+        setLatestConvos(data);
+      }
+      fetchLatest();
     }
   };
 
@@ -51,13 +49,19 @@ function Messages(props) {
         socket.off(profileId, messageListener);
       };
     }
-  }, [socket, profileId, messages]);
+  }, [socket, profileId]);
 
   useEffect(() => {
     async function getData() {
       const data = await getLatestMessages(profileId);
       setLatestConvos(data);
       if (data?.length) {
+        dispatch(
+          updateNotificationsCount({
+            recipient: profileId,
+            sender: data[0].otherId,
+          })
+        );
         history.push(
           `/messages/${data[0].otherId}?user_type=${data[0].otherUser.user_type}`
         );
@@ -73,7 +77,9 @@ function Messages(props) {
 
   useEffect(() => {
     var user_type = new URLSearchParams(props.location.search).get("user_type");
-    setActiveMessageId(props.match ? props.match.params.receiverId : null);
+    dispatch(
+      setActiveMessageId(props.match ? props.match.params.receiverId : null)
+    );
     setUserType(user_type);
   });
 
@@ -82,28 +88,33 @@ function Messages(props) {
       var user_type = new URLSearchParams(props.location.search).get(
         "user_type"
       );
-      setActiveMessageId(props.match ? props.match.params.receiverId : null);
+      dispatch(
+        setActiveMessageId(props.match ? props.match.params.receiverId : null)
+      );
       setUserType(user_type);
+
       if (activeMessageId && profileId) {
+        setLoading(true);
         setMessages(await getMessageData(profileId, activeMessageId));
+        setLoading(false);
       }
     }
     getData();
-  }, [props.location]);
+  }, [activeMessageId]);
 
-  useEffect(() => {
-    async function getData() {
-      const data = await getMessageData(profileId, activeMessageId);
-      setMessages(data);
-    }
+  // useEffect(() => {
+  //   async function getData() {
+  //     const data = await getMessageData(profileId, activeMessageId);
+  //     setMessages(data);
+  //   }
 
-    if (profileId && activeMessageId) {
-      getData();
-    }
-  }, [profileId, activeMessageId]);
+  //   if (profileId && activeMessageId) {
+  //     getData();
+  //   }
+  // }, [profileId, activeMessageId]);
 
   const addMyMessage = (msg) => {
-    setMessages([...messages, msg]);
+    setMessages((prevMessages) => [...prevMessages, msg]);
   };
 
   return (
@@ -120,6 +131,7 @@ function Messages(props) {
           addMyMessage={addMyMessage}
           otherId={activeMessageId}
           userType={userType}
+          loading={loading}
         />
       </Layout>
     </Layout>

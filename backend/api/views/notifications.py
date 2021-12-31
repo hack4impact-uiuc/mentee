@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from flask.globals import request
 from api.core import create_response, logger
 from flask import Blueprint
 from api.models.MenteeProfile import MenteeProfile, MentorProfile
@@ -10,7 +12,7 @@ from api.utils.constants import WEEKLY_NOTIF_REMINDER
 notifications = Blueprint("notifications", __name__)
 
 
-@notifications.route("/notifications/<id>", methods=["GET"])
+@notifications.route("/<id>", methods=["GET"])
 def get_unread_dm_count(id):
     try:
         notifications = DirectMessage.objects(
@@ -22,6 +24,29 @@ def get_unread_dm_count(id):
         return create_response(status=422, message=msg)
 
     return create_response(data={"notifications": notifications})
+
+
+@notifications.route("/update", methods=["PUT"])
+def update_unread_count():
+    data = request.get_json()
+    if not data:
+        return create_response(status=422, message="Missing data from PUT request")
+
+    recipient = data.get("recipient", None)
+    sender = data.get("sender", None)
+    if not recipient or not sender:
+        return create_response(status=422, message="Missing IDs for recipient/sender")
+
+    try:
+        messages = DirectMessage.objects(
+            Q(recipient_id=recipient) & Q(message_read=False) & Q(sender_id=sender)
+        )
+    except Exception as e:
+        msg = "Mongoengine: failed to fetch message objects"
+        logger.info(e)
+        return create_response(status=422, message=msg)
+    messages.update(set__message_read=True)
+    return create_response(status=200, message="Success")
 
 
 @notifications.route("/weeklyemails", methods=["GET"])

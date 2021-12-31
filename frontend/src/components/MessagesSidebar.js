@@ -7,7 +7,6 @@ import { SearchOutlined } from "@ant-design/icons";
 
 function MessagesSidebar(props) {
   const { Sider } = Layout;
-
   const [searchQuery, setSearchQuery] = useState("");
 
   const styles = {
