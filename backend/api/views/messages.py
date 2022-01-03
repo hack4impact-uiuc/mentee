@@ -1,4 +1,4 @@
-from os import path
+from os import confstr, path
 from flask import Blueprint, request, jsonify
 from api.models import MentorProfile, MenteeProfile, Users, Message, DirectMessage
 from api.utils.request_utils import MessageForm, is_invalid_form, send_email
@@ -166,12 +166,9 @@ def get_sidebar(user_id):
         sidebarContacts = set()
         for message in sentMessages:
             otherId = message["recipient_id"]
-            # print(otherId + " " + user_id)
 
             if str(otherId) == user_id:
                 otherId = message["sender_id"]
-            # if otherId == user_id:
-            #     continue
 
             if otherId not in sidebarContacts:
                 otherUser = None
@@ -184,9 +181,11 @@ def get_sidebar(user_id):
                     user_type = Account.MENTEE.value
                     try:
                         otherUser = MenteeProfile.objects.get(id=otherId)
-                    except:
+                    except Exception as e:
+                        logger.info(e)
                         msg = "Could not find mentor or mentee for given ids"
-                        return create_response(status=422, message=msg)
+                        logger.info(msg)
+                        continue
                 otherUser = json.loads(otherUser.to_json())
                 otherUserObj = {
                     "name": otherUser["name"],
