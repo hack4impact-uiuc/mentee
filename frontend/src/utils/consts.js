@@ -7,7 +7,7 @@ export const BASE_URL =
 
 export const FRONT_BASE_URL =
   process.env.NODE_ENV === "production"
-    ? "https://mentee-global.vercel.app.com/"
+    ? "https://mentee-global.vercel.app/"
     : `http://localhost:3000/`;
 
 export const API_URL = BASE_URL + "api/";
