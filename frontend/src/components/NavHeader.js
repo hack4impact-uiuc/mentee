@@ -118,7 +118,7 @@ function NavHeader({ history }) {
               </>
             )}
             {/* TODO: Update this since verification modal will not longer be needed anymore! */}
-            {isMentee && (
+            {(isMentee || isAdmin) && (
               <span className="navigation-header-button">
                 <LoginVerificationModal
                   content={<b>Find a Mentor</b>}
@@ -133,7 +133,8 @@ function NavHeader({ history }) {
                 />
               </span>
             )}
-            {isMentor && (
+
+            {isLoggedIn() && (
               <span className="navigation-header-button">
                 <LoginVerificationModal
                   content={<b>Find a Mentee</b>}
@@ -148,6 +149,7 @@ function NavHeader({ history }) {
                 />
               </span>
             )}
+
             <span className="navigation-header-button">
               <MenteeButton
                 loginButton
@@ -168,7 +170,7 @@ function NavHeader({ history }) {
                 }}
               />
             </span>
-            {isLoggedIn() && (
+            {isLoggedIn() && !isAdmin && (
               <span className="navigation-header-button">
                 <MenteeButton
                   loginButton
