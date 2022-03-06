@@ -7,7 +7,7 @@ export const BASE_URL =
 
 export const FRONT_BASE_URL =
   process.env.NODE_ENV === "production"
-    ? process.env.VERCEL_ENV // Temporarily while we migrate from vercel
+    ? process.env.VERCEL_ENV === "master" // Temporarily while we migrate from vercel
       ? "https://mentee-global.vercel.app/"
       : BASE_URL
     : `http://localhost:3000/`;
