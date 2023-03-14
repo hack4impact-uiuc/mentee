@@ -7,7 +7,6 @@ from firebase_admin.exceptions import FirebaseError
 from api.models import db, Users, MentorProfile, Admin, MenteeProfile,PartnerProfile
 from api.core import create_response, serialize_list, logger
 from api.utils.constants import (
-    AUTH_URL,
     USER_VERIFICATION_TEMPLATE,
     USER_FORGOT_PASSWORD_TEMPLATE,
     Account,
