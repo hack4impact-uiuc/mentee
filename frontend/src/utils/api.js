@@ -50,9 +50,13 @@ export const fetchAccountById = (id, type) => {
   );
 };
 
-export const fetchAccounts = (type) => {
+export const fetchAccounts = (type, restricted = undefined) => {
   const requestExtension = `/accounts/${type}`;
-  return authGet(requestExtension).then(
+  return authGet(requestExtension, {
+    params: {
+      restricted: restricted,
+    },
+  }).then(
     (response) => response.data.result.accounts,
     (err) => {
       console.error(err);
@@ -856,8 +860,8 @@ export const fetchMenteeByID = async (id) => {
 export const fetchMentors = async () => {
   return await fetchAccounts(ACCOUNT_TYPE.MENTOR);
 };
-export const fetchPartners = async () => {
-  return await fetchAccounts(ACCOUNT_TYPE.PARTNER);
+export const fetchPartners = async (restricted = undefined) => {
+  return await fetchAccounts(ACCOUNT_TYPE.PARTNER, restricted);
 };
 
 export const fetchMentees = async () => {

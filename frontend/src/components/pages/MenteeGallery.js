@@ -1,18 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { fetchMenteeByID, fetchMentors, fetchMentees } from "../../utils/api";
+import React, { useState, useEffect } from "react";
+import {
+  fetchPartners,
+  fetchMentees,
+  getDisplaySpecializations,
+  getDisplayLanguages,
+} from "utils/api";
 import MenteeCard from "../MenteeCard";
 import { Input, Checkbox, Modal, Result, Spin } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import MenteeButton from "../MenteeButton";
 import "../css/Gallery.scss";
-import { isLoggedIn, getMenteeID } from "utils/auth.service";
+import { isLoggedIn } from "utils/auth.service";
 import { useLocation } from "react-router";
-import {
-  editFavMentorById,
-  getDisplayLanguages,
-  getDisplaySpecializations,
-} from "utils/api";
 import { useAuth } from "../../utils/hooks/useAuth";
+import { useSelector } from "react-redux";
+import ModalInput from "../ModalInput";
 
 function Gallery() {
   const { isAdmin, isMentor, isMentee } = useAuth();
@@ -25,13 +27,57 @@ function Gallery() {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [langMasters, setLangMasters] = useState([]);
   const [specMasters, setSpecMasters] = useState([]);
+  const [allPartners, setAllPartners] = useState([]);
+  const [selectedPartnerID, setSelectedPartnerID] = useState(undefined);
   const verified = location.state && location.state.verified;
-
+  const user = useSelector((state) => state.user.user);
   useEffect(() => {
     async function getMentees() {
       const mentee_data = await fetchMentees();
       if (mentee_data) {
-        setMentees(mentee_data);
+        if (user && user.pair_partner && user.pair_partner.restricted) {
+          if (user.pair_partner.assign_mentees) {
+            var temp = [];
+            mentee_data.map((mentee_item) => {
+              var check_exist = user.pair_partner.assign_mentees.find(
+                (x) => x.id === mentee_item._id.$oid
+              );
+              if (check_exist) {
+                temp.push(mentee_item);
+              }
+              return false;
+            });
+            setMentees(temp);
+          }
+        } else {
+          var restricted_partners = await fetchPartners(true);
+          if (
+            !isAdmin &&
+            restricted_partners &&
+            restricted_partners.length > 0
+          ) {
+            var assigned_mentee_ids = [];
+            restricted_partners.map((partner_item) => {
+              if (partner_item.assign_mentees) {
+                partner_item.assign_mentees.map((assign_item) => {
+                  assigned_mentee_ids.push(assign_item.id);
+                  return false;
+                });
+              }
+              return false;
+            });
+            temp = [];
+            mentee_data.map((mentee_item) => {
+              if (!assigned_mentee_ids.includes(mentee_item._id.$oid)) {
+                temp.push(mentee_item);
+              }
+              return false;
+            });
+            setMentees(temp);
+          } else {
+            setMentees(mentee_data);
+          }
+        }
       }
     }
     setPageLoaded(true);
@@ -42,6 +88,29 @@ function Gallery() {
       setSpecMasters(await getDisplaySpecializations());
     }
     getMasters();
+
+    async function getAllPartners() {
+      var all_data = [];
+      if (isAdmin) {
+        all_data = await fetchPartners();
+      } else {
+        if (user && user.pair_partner && user.pair_partner.restricted) {
+          all_data = [user.pair_partner];
+        } else {
+          all_data = await fetchPartners(false);
+        }
+      }
+      var temp = [];
+      all_data.map((item) => {
+        temp.push({
+          id: item.id ? item.id : item._id["$oid"],
+          name: item.organization,
+        });
+        return false;
+      });
+      setAllPartners(temp);
+    }
+    getAllPartners();
   }, []);
 
   const getFilteredMentees = () => {
@@ -56,8 +125,10 @@ function Gallery() {
       const matchInterests =
         interestRange.length === 0 ||
         interestRange.some((l) => specializs.indexOf(l) >= 0);
-
-      return matchesLanguages && matchesName && matchInterests;
+      const matchPartner =
+        !selectedPartnerID ||
+        (mentee.pair_partner && mentee.pair_partner.id === selectedPartnerID);
+      return matchesLanguages && matchesName && matchInterests && matchPartner;
     });
   };
 
@@ -107,7 +178,19 @@ function Gallery() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-
+          <div className="gallery-filter-section-title">Partner</div>
+          <ModalInput
+            type="dropdown-single-object"
+            title=""
+            handleClick={() => {}}
+            onChange={(value) => {
+              setSelectedPartnerID(value);
+            }}
+            options={allPartners}
+            value={selectedPartnerID}
+            style={styles.searchInput}
+            prefix={<SearchOutlined />}
+          />
           <div className="gallery-filter-section-title">Languages</div>
           <Checkbox.Group
             defaultValue={languages}
@@ -127,7 +210,19 @@ function Gallery() {
             style={styles.searchInput}
             onChange={(e) => setQuery(e.target.value)}
           />
-
+          <div className="gallery-filter-section-title">Partner</div>
+          <ModalInput
+            type="dropdown-single-object"
+            title=""
+            handleClick={() => {}}
+            onChange={(value) => {
+              setSelectedPartnerID(value);
+            }}
+            options={allPartners}
+            value={selectedPartnerID}
+            style={styles.searchInput}
+            prefix={<SearchOutlined />}
+          />
           <div className="gallery-filter-section-title">Languages</div>
           <Checkbox.Group
             defaultValue={languages}
@@ -164,6 +259,7 @@ function Gallery() {
                   video={mentee.video}
                   age={mentee.age}
                   id={mentee._id["$oid"]}
+                  pair_partner={mentee.pair_partner}
                 />
               );
             })
