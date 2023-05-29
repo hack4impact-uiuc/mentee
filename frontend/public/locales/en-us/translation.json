@@ -16,11 +16,19 @@
     "resetPassword": "Reset it",
     "clickLoginPrompt": "Please click on your role to continue on"
   },
+  "loginErrors": {
+    "incorrectCredentials": "Incorrect username and/or password. Please try again.",
+    "resetPassword": "Please reset password. A link to reset your password has been sent to your email.",
+    "serverError": "Something went wrong.",
+    "reregisterAccount": "Please re-register your account.",
+    "existingEmail": "This email is already in use in another role"
+  },
   "common": {
     "logout": "logout",
     "welcome": "Welcome to <1>MENTEE!</1>",
     "mentee": "Mentee",
     "mentor": "Mentor",
-    "partner": "Partner"
+    "partner": "Partner",
+    "admin": "Admin"
   }
 }

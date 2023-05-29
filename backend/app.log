@@ -1667,3 +1667,74 @@
 2023-05-29 11:43:57,874 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: INFO in [apply: 206]: No application currently exist with this email undefined
 2023-05-29 11:43:57,879 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/3 200 OK
 2023-05-29 11:43:57,965 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/3: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/3 200 OK
+2023-05-29 12:10:42,828 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:10:42,836 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/3 200 OK
+2023-05-29 12:10:42,923 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/3: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/3 200 OK
+2023-05-29 12:10:44,008 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:10:44,009 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:10:44,084 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:10:44,799 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:10:44,800 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:10:44,870 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:19:53,566 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:19:53,577 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:19:53,656 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:19:55,217 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:19:55,221 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:19:55,301 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:20:19,986 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:20:19,992 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:20:20,074 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:20:39,390 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:20:39,395 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:20:39,568 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:29:17,177 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:29:17,182 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:29:17,276 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:29:18,593 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:29:18,596 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:29:18,682 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:29:19,408 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:29:19,411 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/3 200 OK
+2023-05-29 12:29:19,494 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/3: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/3 200 OK
+2023-05-29 12:30:21,573 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:30:21,578 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:30:21,658 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:30:22,813 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:30:22,817 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:30:22,902 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:30:50,263 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:30:50,268 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:30:50,351 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:32:18,421 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:32:18,424 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:32:18,507 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:32:19,670 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:32:19,673 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:32:19,756 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:32:22,567 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:32:22,569 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:32:22,646 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:38:34,176 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:38:34,181 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:38:34,265 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:38:35,534 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:38:35,537 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:38:35,618 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
+2023-05-29 12:38:36,611 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:38:36,614 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/3: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/3 200 OK
+2023-05-29 12:38:36,695 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/3: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/3 200 OK
+2023-05-29 12:38:40,722 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:38:40,731 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/1: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/1 200 OK
+2023-05-29 12:38:40,817 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/1: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/1 200 OK
+2023-05-29 12:38:49,726 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 23]: OPTIONS /auth/login 200 OK
+2023-05-29 12:38:50,629 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 15]: POST /auth/login 500 b'{\n  "message": "\'InvalidArgumentError\' object has no attribute \'message\'",\n  "result": null,\n  "success": false\n}\n'
+2023-05-29 12:38:52,781 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 15]: POST /auth/login 500 b'{\n  "message": "\'InvalidArgumentError\' object has no attribute \'message\'",\n  "result": null,\n  "success": false\n}\n'
+2023-05-29 12:39:19,496 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 23]: OPTIONS /auth/login 200 OK
+2023-05-29 12:39:19,967 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 15]: POST /auth/login 500 b'{\n  "message": "\'InvalidArgumentError\' object has no attribute \'message\'",\n  "result": null,\n  "success": false\n}\n'
+2023-05-29 12:39:41,447 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 23]: OPTIONS /auth/login 200 OK
+2023-05-29 12:39:41,950 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 15]: POST /auth/login 500 b'{\n  "message": "\'InvalidArgumentError\' object has no attribute \'message\'",\n  "result": null,\n  "success": false\n}\n'
+2023-05-29 12:39:43,742 127.0.0.1: requested http://localhost:8000/auth/login: DEBUG in [manage: 15]: POST /auth/login 500 b'{\n  "message": "\'InvalidArgumentError\' object has no attribute \'message\'",\n  "result": null,\n  "success": false\n}\n'
+2023-05-29 12:39:46,364 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: INFO in [apply: 206]: No application currently exist with this email undefined
+2023-05-29 12:39:46,370 127.0.0.1: requested http://localhost:8000/api/application/isHaveProfile/undefined/2: DEBUG in [manage: 23]: GET /api/application/isHaveProfile/undefined/2 200 OK
+2023-05-29 12:39:46,455 127.0.0.1: requested http://localhost:8000/api/application/checkHaveAccount/undefined/2: DEBUG in [manage: 23]: GET /api/application/checkHaveAccount/undefined/2 200 OK
