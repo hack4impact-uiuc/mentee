@@ -30,7 +30,7 @@ function Home({ history }) {
       <div className="home-content">
         <div className="home-text-container">
           <h1 className="home-header2">
-            <Trans i18nKey={"homepage.welcome"}>
+            <Trans i18nKey={"common.welcome"}>
               Welcome to <span>MENTEE</span>!
             </Trans>
           </h1>

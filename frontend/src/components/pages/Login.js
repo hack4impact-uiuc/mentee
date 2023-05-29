@@ -11,6 +11,7 @@ import usePersistedState from "utils/hooks/usePersistedState";
 import SelectLogin from "./SelectLogin";
 import "../css/Login.scss";
 import { getExistingProfile, isHaveAccount } from "../../utils/api";
+import { Trans } from "react-i18next";
 const Logins = Object.freeze({
   mentee: {
     title: "Mentee",
@@ -146,13 +147,13 @@ function Login() {
     <div className="containerr">
       {contextHolder}
       <h1 className="home-header3">
-        Welcome to <span>MENTEE!</span>
+        <Trans i18nKey={""}>
+          Welcome to <span>MENTEE!</span>
+        </Trans>
       </h1>
       <div className="page-background">
         <div className="login-content">
-          <h1 className="login-text">
-            Please Login {roleObject && roleObject.title}
-          </h1>
+          <h1 className="login-text">Login {roleObject && roleObject.title}</h1>
 
           <div
             className={`login-input-container${

@@ -1,13 +1,26 @@
 {
   "homepage": {
-    "welcome": "Welcome to <1>MENTEE!</1>",
     "isExistingUser": "Are you a new or existing user?",
     "newAccountTitle": "NEW",
     "newAccountDesc": "APPLY - TRAIN - BUILD",
     "existingAccountTitle": "EXISTING",
     "existingAccountDesc": "PLATFORM LOGIN"
   },
+  "login": {
+    "prompt": "Login",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": "Don't have an account?",
+    "apply": "Apply",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset it",
+    "clickLoginPrompt": "Please click on your role to continue on"
+  },
   "common": {
-    "logout": "logout"
+    "logout": "logout",
+    "welcome": "Welcome to <1>MENTEE!</1>",
+    "mentee": "Mentee",
+    "mentor": "Mentor",
+    "partner": "Partner"
   }
 }
