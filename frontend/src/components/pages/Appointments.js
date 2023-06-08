@@ -187,13 +187,13 @@ function Appointments() {
   }
 
   async function handleManualSave() {
-    document.getElementById("date_error").style.display = "none";
+    // document.getElementById("date_error").style.display = "none";
     document.getElementById("time_error").style.display = "none";
-    var now = moment();
-    if (selectedDate.isAfter(now)) {
-      document.getElementById("date_error").style.display = "block";
-      return;
-    }
+    // var now = moment();
+    // if (selectedDate.isAfter(now)) {
+    //   document.getElementById("date_error").style.display = "block";
+    //   return;
+    // }
     if (selectedEndtime < selectedStarttime) {
       document.getElementById("time_error").style.display = "block";
       return;
@@ -439,9 +439,25 @@ function Appointments() {
                 handleTakeAppointments(e.target.checked);
               }}
               checked={takeAppoinment}
+              style={{ marginLeft: "1%" }}
             >
               Taking appointments
             </Checkbox>
+            <div
+              style={{
+                marginLeft: "1%",
+                marginTop: "12px",
+                marginBottom: "15px",
+              }}
+            >
+              <MenteeButton
+                style={{ marginBottom: "10px" }}
+                content={<b>Add Appointment</b>}
+                onClick={() => {
+                  setManualModalvisible(true);
+                }}
+              ></MenteeButton>
+            </div>
             <div className="appointments-tabs">
               {Object.values(Tabs).map((tab, index) => (
                 <Tab tab={tab} text={tab.title} key={index} />
@@ -453,7 +469,7 @@ function Appointments() {
       </Row>
       <Modal
         className="manual-add-modal"
-        title="Add Session Manually"
+        title="Add Appointment"
         visible={manualModalvisible}
         onCancel={() => setManualModalvisible(false)}
         footer={[
@@ -561,9 +577,9 @@ function Appointments() {
               />
             </Form.Item>
           </div>
-          <p id="date_error" className="error">
+          {/* <p id="date_error" className="error">
             Select date in the past
-          </p>
+          </p> */}
           <p id="time_error" className="error">
             Invalid Times.Please select times correctly
           </p>
