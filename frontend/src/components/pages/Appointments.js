@@ -43,10 +43,10 @@ const Tabs = Object.freeze({
     title: "All Upcoming",
     key: "upcoming",
   },
-  pending: {
-    title: "All Pending",
-    key: "pending",
-  },
+  // pending: {
+  //   title: "All Pending",
+  //   key: "pending",
+  // },
   past: {
     title: "All Past",
     key: "past",
@@ -372,17 +372,6 @@ function Appointments() {
     return (
       <div>
         <b className="appointment-tabs-title">{currentTab.title}</b>
-        {currentTab.title === "All Past" && (
-          <>
-            <MenteeButton
-              style={{ float: "right" }}
-              content={<b>Manual Add</b>}
-              onClick={() => {
-                setManualModalvisible(true);
-              }}
-            ></MenteeButton>
-          </>
-        )}
         <div className="appointments-background">
           {data.map((appointmentsObject, index) => (
             <div key={index} className="appointments-date-block">
