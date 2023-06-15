@@ -56,4 +56,9 @@ MENTOR_APP_STATES = {
 }
 TRAINING_TYPE = {"LINK": "LINK", "VIDEO": "VIDEO", "DOCUMENT": "DOCUMENT"}
 # Appointment Status
-APPT_STATUS = {"PENDING": "pending", "DENIED": "denied", "ACCEPTED": "accepted", "REJECTED": "Rejected",}
+APPT_STATUS = {
+    "PENDING": "pending",
+    "DENIED": "denied",
+    "ACCEPTED": "accepted",
+    "REJECTED": "Rejected",
+}

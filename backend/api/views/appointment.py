@@ -84,14 +84,15 @@ def get_requests_by_id(account_type, id):
     # Includes mentor name because appointments page does not fetch all mentor info
     return create_response(data={"name": account.name, "requests": res})
 
+
 # POST request for Mentee Appointment
 @appointment.route("/send_invite_email", methods=["POST"])
 @all_users
 def send_invite_email():
     data = request.get_json()
-    mentee_id = data.get('recipient_id')
-    mentor_id = data.get('sener_id')
-    availabes_in_future = data.get('availabes_in_future')
+    mentee_id = data.get("recipient_id")
+    mentor_id = data.get("sener_id")
+    availabes_in_future = data.get("availabes_in_future")
     try:
         mentee = MenteeProfile.objects.get(id=mentee_id)
         mentor = MentorProfile.objects.get(id=mentor_id)
@@ -101,23 +102,28 @@ def send_invite_email():
         return create_response(status=422, message=msg)
     avail_htmls = []
     for avail_item in availabes_in_future:
-        start_date_object = datetime.strptime(avail_item['start_time']['$date'], "%Y-%m-%dT%H:%M:%S%z")
-        end_date_object = datetime.strptime(avail_item['end_time']['$date'], "%Y-%m-%dT%H:%M:%S%z")
+        start_date_object = datetime.strptime(
+            avail_item["start_time"]["$date"], "%Y-%m-%dT%H:%M:%S%z"
+        )
+        end_date_object = datetime.strptime(
+            avail_item["end_time"]["$date"], "%Y-%m-%dT%H:%M:%S%z"
+        )
         start_time = start_date_object.strftime("%m-%d-%Y %I:%M%p %Z")
         end_time = end_date_object.strftime("%I:%M%p %Z")
-        avail_htmls.append(start_time + ' ~ ' + end_time)
+        avail_htmls.append(start_time + " ~ " + end_time)
 
-    if (len(avail_htmls) > 0 and mentee.email_notifications):
+    if len(avail_htmls) > 0 and mentee.email_notifications:
         res, res_msg = send_email(
             recipient=mentee.email,
             template_id=SEND_INVITE_TEMPLATE,
-            data={"future_availability": avail_htmls, "name":mentor.name},
+            data={"future_availability": avail_htmls, "name": mentor.name},
         )
         if not res:
             msg = "Failed to send mentee email " + res_msg
             logger.info(msg)
-    
+
     return create_response(status=200, message="send mail successfully")
+
 
 # POST request for Mentee Appointment
 @appointment.route("/", methods=["POST"])
@@ -176,7 +182,9 @@ def create_appointment():
 
     if mentor.email_notifications:
         res, res_msg = send_email(
-            recipient=mentor.email, template_id=MENTOR_APPT_TEMPLATE, data={"name":mentee.name, "date":start_time}
+            recipient=mentor.email,
+            template_id=MENTOR_APPT_TEMPLATE,
+            data={"name": mentee.name, "date": start_time},
         )
 
         if not res:

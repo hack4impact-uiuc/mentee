@@ -720,9 +720,7 @@ function MenteeProfileModal(props) {
             >
               {t("menteeProfile.privateAccount")}
             </Checkbox>
-            <div>
-              {t("menteeProfile.privateAccountInfo")}
-            </div>
+            <div>{t("menteeProfile.privateAccountInfo")}</div>
           </div>
         </div>
       </Modal>

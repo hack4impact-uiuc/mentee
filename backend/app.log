@@ -15732,3 +15732,6 @@
 2023-06-14 18:53:36,493 127.0.0.1: requested http://localhost:8000/api/appointment/2/61259f4bef046e930d49fc15: DEBUG in [manage: 23]: GET /api/appointment/2/61259f4bef046e930d49fc15 200 OK
 2023-06-14 18:53:36,503 127.0.0.1: requested http://localhost:8000/api/mentee/favorites/61259f4bef046e930d49fc15: DEBUG in [manage: 23]: OPTIONS /api/mentee/favorites/61259f4bef046e930d49fc15 200 OK
 2023-06-14 18:53:36,790 127.0.0.1: requested http://localhost:8000/api/mentee/favorites/61259f4bef046e930d49fc15: DEBUG in [manage: 23]: GET /api/mentee/favorites/61259f4bef046e930d49fc15 200 OK
+2023-06-15 16:44:57,806 127.0.0.1: requested http://localhost:8000/api/masters/specializations: DEBUG in [manage: 23]: OPTIONS /api/masters/specializations 200 OK
+2023-06-15 16:44:57,808 127.0.0.1: requested http://localhost:8000/api/accounts/2: DEBUG in [manage: 23]: OPTIONS /api/accounts/2 200 OK
+2023-06-15 16:44:58,260 127.0.0.1: requested http://localhost:8000/api/masters/specializations: DEBUG in [manage: 23]: GET /api/masters/specializations 200 OK
