@@ -175,11 +175,11 @@
     "noFavorites": "لا يوجد موجهون مفضلون"
   },
   "languages": {
-    "en": "إنجليزي",
-    "es": "الأسبانية",
-    "pt": "البرتغالية",
+    "en": "English",
+    "es": "Español",
+    "pt": "Português",
     "fa": "فارسی",
-    "ar": "عربى"
+    "ar": "العربية"
   },
   "navHeader": {
     "editProfile": "تعديل الملف الشخصي",

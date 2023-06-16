@@ -176,10 +176,10 @@
   },
   "languages": {
     "en": "English",
-    "es": "Spanish",
-    "pt": "Portuguese",
-    "fa": "Dari",
-    "ar": "Arabic"
+    "es": "Español",
+    "pt": "Português",
+    "fa": "فارسی",
+    "ar": "العربية"
   },
   "navHeader": {
     "editProfile": "Edit Profile",

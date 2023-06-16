@@ -175,11 +175,11 @@
     "noFavorites": "No hay mentores favoritos"
   },
   "languages": {
-    "en": "Inglés",
+    "en": "English",
     "es": "Español",
-    "pt": "Portugués",
-    "fa": "Persa",
-    "ar": "Arábica"
+    "pt": "Português",
+    "fa": "فارسی",
+    "ar": "العربية"
   },
   "navHeader": {
     "editProfile": "Editar perfil",
