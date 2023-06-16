@@ -2,9 +2,9 @@
   "homepage": {
     "isExistingUser": "¿Es usted un usuario nuevo o existente?",
     "newAccountTitle": "NUEVO",
-    "newAccountDesc": "APLICAR - ENTRENAR - CONSTRUIR",
+    "newAccountDesc": "APLICAR",
     "existingAccountTitle": "EXISTENTE",
-    "existingAccountDesc": "INICIO DE SESIÓN EN LA PLATAFORMA"
+    "existingAccountDesc": "INICIO DE SESIÓN"
   },
   "login": {
     "noAccount": "¿No tienes una cuenta?",
@@ -183,13 +183,13 @@
   },
   "navHeader": {
     "editProfile": "Editar perfil",
-    "findPartner": "Encuentra un compañero",
-    "findMentor": "Encuentre un mentor",
-    "findMentee": "Encuentre un aprendiz",
+    "findPartner": "Buscar socio",
+    "findMentor": "Buscar mentores",
+    "findMentee": "Buscar mentees",
     "yourPortal": "Tu Portal"
   },
   "sidebars": {
-    "appointments": "Equipo",
+    "appointments": "Citas",
     "profile": "Perfil",
     "videos": "Tus vídeos"
   },
@@ -256,7 +256,7 @@
     "welcome": "Bienvenido, {{name}}!",
     "takingAppointments": "Tomando citas?",
     "addAppointment": "Agregar cita",
-    "selectMentee": "Por favor, seleccione un aprendiz",
+    "selectMentee": "Por favor, seleccione un mentee",
     "meetingDate": "Fecha de la reunión",
     "selectDate": "Seleccione fecha",
     "startTime": "Hora de inicio",
@@ -289,7 +289,8 @@
     "messageToMentor": "Mensaje al mentor",
     "allowCall": "Permitir llamadas",
     "allowText": "Permitir textos",
-    "selectTopic": "Por favor seleccione un tema"
+    "selectTopic": "Por favor seleccione un tema",
+    "successBookingMessage": "Has reservado exitosamente una cita con {{mentorName}} el {{notifDate}} en el intervalo de tiempo {{timeInterval}}"
   },
   "mentorVideoPage": {
     "specializationTag": "Etiqueta de especializaciones",
@@ -322,23 +323,23 @@
     "SDG17": "ODS 17: Alianzas para lograr los objetivos"
   },
   "common": {
-    "login": "Acceso",
+    "login": "Inicio de sesión",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "logout": "Cerrar sesión",
-    "submit": "Entregar",
-    "save": "Ahorrar",
-    "welcome": "Bienvenido a <1>APRENDIZADO!</1>",
-    "mentee": "aprendiz",
+    "submit": "Enviar",
+    "save": "Guardar",
+    "welcome": "¡Bienvenido a <1>MENTEE!</1>",
+    "mentee": "Mentee",
     "mentor": "Mentor",
-    "partner": "Pareja",
-    "admin": "Administración",
-    "firstName": "Nombre de pila",
+    "partner": "Socio",
+    "admin": "Administrador",
+    "firstName": "Nombre",
     "lastName": "Apellido",
     "phoneNumber": "Número de teléfono",
     "selectPrompt": "Por favor seleccione una opción",
-    "inputPrompt": "Por favor agregue entrada",
-    "invalidUrl": "URL invalida",
+    "inputPrompt": "Por favor ingrese",
+    "invalidUrl": "URL inválida",
     "messages": "Mensajes",
     "message": "Mensaje",
     "apply": "Aplicar",
@@ -351,10 +352,10 @@
     "languages": "Idiomas",
     "back": "Atrás",
     "clearAll": "Limpiar todo",
-    "clear": "Claro",
+    "clear": "Borrar",
     "continue": "Continuar",
-    "deny": "Denegar",
-    "delete": "Borrar",
-    "pleaseSelect": "Porfavor seleccione"
+    "deny": "Rechazar",
+    "delete": "Eliminar",
+    "pleaseSelect": "Por favor seleccione"
   }
 }
