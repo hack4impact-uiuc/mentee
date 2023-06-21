@@ -7,6 +7,7 @@ import { EnvironmentOutlined, CommentOutlined } from "@ant-design/icons";
 import "./css/Appointments.scss";
 import { useTranslation } from "react-i18next";
 
+// TODO: Remove this and all of the dependent variables
 const Tabs = Object.freeze({
   upcoming: {
     title: "All Upcoming",

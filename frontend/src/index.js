@@ -17,6 +17,8 @@ import i18n from "utils/i18n";
 
 moment.locale(i18n.language);
 
+import "utils/i18n";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
