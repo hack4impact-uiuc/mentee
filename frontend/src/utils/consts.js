@@ -95,18 +95,6 @@ export const REGIONS = [
 //   "Other",
 // ];
 
-// const getAllLangs = async() =>{
-//   const requestExtension = `/masters/languages`;
-//   var records = await instance.get(requestExtension);
-//   var res = [];
-//   var languages = records.data.result.result;
-//   for (let language of languages) {
-//     language.id = language._id["$oid"];
-//     res.push(language);
-//   }
-//   return res;
-// }
-
 export const AGE_RANGES = [
   "16-18",
   "19-22",
@@ -156,17 +144,6 @@ export const AGE_RANGES = [
 // ];
 
 export const GENDERS = ["Male", "Female", "Non-Binary", "Other"];
-
-export const AGES = [
-  "Under 18 years",
-  "18 to 24",
-  "25 to 29",
-  "30 to 34",
-  "35 to 39",
-  "40 to 44",
-  "45 to 49",
-  "Over 60",
-];
 
 // Keys for fields of Appointments
 export const APPOINTMENT_FORM_KEYS = [

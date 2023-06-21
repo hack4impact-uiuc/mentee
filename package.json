@@ -11,7 +11,9 @@
     "setup": "concurrently \"yarn setup:backend\" \"yarn setup:frontend\""
   },
   "dependencies": {
+    "concurrently": "^8.2.0",
     "debounce": "^1.2.1",
+    "moment-timezone": "^0.5.43",
     "sass": "^1.50.0"
   }
 }
