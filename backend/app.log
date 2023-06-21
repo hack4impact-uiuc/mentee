@@ -7955,3 +7955,7 @@
 2023-06-08 03:31:55,815 127.0.0.1: requested http://localhost:8000/api/appointment/2/61285521fb4a87cfab26d0f0: DEBUG in [manage: 23]: GET /api/appointment/2/61285521fb4a87cfab26d0f0 200 OK
 2023-06-08 03:31:55,833 127.0.0.1: requested http://localhost:8000/api/mentee/favorites/61285521fb4a87cfab26d0f0: DEBUG in [manage: 23]: OPTIONS /api/mentee/favorites/61285521fb4a87cfab26d0f0 200 OK
 2023-06-08 03:31:55,871 127.0.0.1: requested http://localhost:8000/api/mentee/favorites/61285521fb4a87cfab26d0f0: DEBUG in [manage: 23]: GET /api/mentee/favorites/61285521fb4a87cfab26d0f0 200 OK
+2023-06-21 16:05:51,749 127.0.0.1: requested http://localhost:8000/api/account/6493438fd6695a19f73b292e?account_type=3: DEBUG in [manage: 23]: OPTIONS /api/account/6493438fd6695a19f73b292e 200 OK
+2023-06-21 16:05:52,211 127.0.0.1: requested http://localhost:8000/api/account/6493438fd6695a19f73b292e?account_type=3: DEBUG in [manage: 23]: GET /api/account/6493438fd6695a19f73b292e 200 OK
+2023-06-21 16:05:52,234 127.0.0.1: requested http://localhost:8000/api/notifications/6493438fd6695a19f73b292e: DEBUG in [manage: 23]: OPTIONS /api/notifications/6493438fd6695a19f73b292e 200 OK
+2023-06-21 16:05:52,743 127.0.0.1: requested http://localhost:8000/api/notifications/6493438fd6695a19f73b292e: DEBUG in [manage: 23]: GET /api/notifications/6493438fd6695a19f73b292e 200 OK
