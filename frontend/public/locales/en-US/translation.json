@@ -225,7 +225,6 @@
     "immigrantOption6": "I identify as LGTBQ.",
     "immigrantOption7": "I have economic hardship.",
     "immigrantOption8": "I come from a country at war.",
-    "immigrantOption9": "other",
     "introduction": "We appreciate your interest in becoming part of the MENTEE community! You will gain access to our global mentors and supportive programs. We can't wait to see all you will achieve. Remember, as a mentee you can stay here and actively seek mentorship, learning, and development for life, if you'd like to stay with us that long. :)",
     "languageBackground": "What is your native language?",
     "orgAffiliation": "What organization is supporting you locally or what organization are you affiliated with?",
@@ -242,8 +241,7 @@
     "workOption2": "I work full-time.",
     "workOption3": "I attend technical school.",
     "workOption4": "I am a college/university student attaining my first degree.",
-    "workOption5": "I am a college/university students attaining my second or third degree.",
-    "workOption6": "Other"
+    "workOption5": "I am a college/university students attaining my second or third degree."
   },
   "commonApplication": {
     "genderIdentification": "What do you identify as?",

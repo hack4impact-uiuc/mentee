@@ -70,7 +70,7 @@ function MenteeApplication(props) {
     },
     {
       value: "other",
-      label: t("menteeApplication.immigrantOption9"),
+      label: t("common.other"),
     },
   ];
 
