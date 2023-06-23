@@ -7,7 +7,6 @@ import os
 
 translate_client = translate_v2.Client()
 
-
 def get_all_translations(text):
     """Get all translations for a given text."""
     translations = {language: text for language in I18N_LANGUAGES}
