@@ -455,7 +455,7 @@ function Appointments() {
       </Row>
       <Modal
         className="manual-add-modal"
-        title="Add Appointment"
+        title={t("mentorAppointmentPage.addAppointment")}
         visible={manualModalvisible}
         onCancel={() => setManualModalvisible(false)}
         footer={[
@@ -574,7 +574,7 @@ function Appointments() {
             className="modal-mentee-appointment-header-text"
             style={{ marginTop: "10px" }}
           >
-            Meeting Topic*
+            {t("mentorAppointmentPage.meetingTopic")}*
           </div>
           <Form.Item
             name="Topic"
