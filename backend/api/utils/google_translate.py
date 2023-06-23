@@ -5,10 +5,7 @@ from google.oauth2 import service_account
 import json
 import os
 
-credentials = service_account.Credentials.from_service_account_info(
-    json.loads(os.environ.get("GOOGLE_TRANSLATE_CREDENTIALS"))
-)
-translate_client = translate_v2.Client(credentials=credentials)
+translate_client = translate_v2.Client()
 
 
 def get_all_translations(text):
