@@ -15,7 +15,7 @@ const TrainingList = (props) => {
         setTrainings(trains);
         setLoading(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.error(e));
   }, []);
   return (
     <div className="train_list">
@@ -26,7 +26,13 @@ const TrainingList = (props) => {
             <h1 className="chapter">{train.name}</h1>
             <p className="trainingDesc">{train.description}</p>
             {train.typee === TRAINING_TYPE.VIDEO && (
-              <ReactPlayer width={800} height={600} o url={train.url} />
+              <ReactPlayer
+                className="react-player"
+                width={"100%"}
+                height={400}
+                o
+                url={train.url}
+              />
             )}
             {train.typee === TRAINING_TYPE.LINK && (
               <a className="external-link" href={train.url} target="_blank">

@@ -31,7 +31,7 @@ function Home({ history }) {
         <div className="home-text-container">
           <h1 className="home-header2">
             <Trans i18nKey={"common.welcome"}>
-              Welcome to <span>MENTEE</span>!
+              Welcome to <span style={{ marginLeft: 0 }}>MENTEE</span>!
             </Trans>
           </h1>
           {isLoggedIn() ? (
@@ -46,8 +46,8 @@ function Home({ history }) {
           <br />
           <LoginVerificationModal
             content={
-              (isMentor && <b>Find a Mentee</b>) ||
-              (isMentee && <b>Find a Mentor</b>)
+              (isMentor && <b>{t("navHeader.findMentee")}</b>) ||
+              (isMentee && <b>{t("navHeader.findMentor")}</b>)
             }
             theme="dark"
             onVerified={() => {

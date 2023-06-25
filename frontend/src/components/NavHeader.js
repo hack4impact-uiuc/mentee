@@ -14,6 +14,7 @@ import {
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { resetUser, fetchUser } from "features/userSlice";
+import { fetchOptions } from "features/optionsSlice";
 import { isLoggedIn } from "utils/auth.service";
 import MenteeButton from "./MenteeButton";
 import LoginVerificationModal from "./LoginVerificationModal";
@@ -126,6 +127,10 @@ function NavHeader({ history }) {
       dispatch(fetchUser({ id: profileId, role }));
     }
   }, [role]);
+
+  useEffect(() => {
+    dispatch(fetchOptions());
+  }, [i18n.language]);
 
   const getUserType = () => {
     if (role === ACCOUNT_TYPE.MENTOR) {
@@ -264,19 +269,48 @@ function NavHeader({ history }) {
             />
           )}
           {(isPartner || isAdmin) && isLoggedIn() && (
-            <span className="navigation-header-button">
-              <LoginVerificationModal
-                content={<b>{t("navHeader.findPartner")}</b>}
-                theme="light"
+            <>
+              <span className="navigation-header-button">
+                <LoginVerificationModal
+                  content={<b>{t("navHeader.findPartner")}</b>}
+                  theme="light"
+                  width="9em"
+                  onVerified={() => {
+                    history.push({
+                      pathname: "/partner-gallery",
+                      state: { verified: true },
+                    });
+                  }}
+                />
+              </span>
+              <div style={{ marginTop: "20px" }} />
+              <MenteeButton
+                className="mobile-nav-btn"
+                content={
+                  <b>
+                    {isLoggedIn()
+                      ? t("navHeader.yourPortal")
+                      : t("common.login")}
+                  </b>
+                }
                 width="9em"
-                onVerified={() => {
+                onClick={async () => {
+                  let redirect = "/login";
+                  if (isMentor) {
+                    redirect = "/appointments";
+                  } else if (isMentee) {
+                    redirect = "/mentee-appointments";
+                  } else if (isAdmin) {
+                    redirect = "/account-data";
+                  } else if (isPartner) {
+                    redirect = "/profile";
+                  }
                   history.push({
-                    pathname: "/partner-gallery",
-                    state: { verified: true },
+                    pathname: isLoggedIn() ? redirect : "/login",
                   });
                 }}
               />
-            </span>
+            </>
           )}
           {!isPartner && isLoggedIn() && (
             <MenteeButton
@@ -300,6 +334,19 @@ function NavHeader({ history }) {
                 }
                 history.push({
                   pathname: isLoggedIn() ? redirect : "/login",
+                });
+              }}
+            />
+          )}
+          {isLoggedIn() && !isAdmin && (
+            <MenteeButton
+              className="mobile-nav-btn"
+              loginButton
+              content={<b>{t("common.messages")}</b>}
+              width="9em"
+              onClick={() => {
+                history.push({
+                  pathname: `/messages/${role}`,
                 });
               }}
             />
