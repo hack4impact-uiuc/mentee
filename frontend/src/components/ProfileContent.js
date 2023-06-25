@@ -13,7 +13,7 @@ import { formatLinkForHref } from "utils/misc";
 import MentorProfileModal from "./MentorProfileModal";
 import MenteeProfileModal from "./MenteeProfileModal";
 import PublicMessageModal from "./PublicMessageModal";
-import { ACCOUNT_TYPE } from "utils/consts";
+import { ACCOUNT_TYPE, getRegions } from "utils/consts";
 import { useAuth } from "utils/hooks/useAuth";
 import { fetchMenteeByID, editFavMentorById } from "../utils/api";
 import { Rate, Tooltip, Avatar } from "antd";
@@ -88,53 +88,36 @@ function ProfileContent(props) {
     return getTranslatedOptions(languages, options.languages).join(" • ");
   };
 
-  const getSpecializationTags = (specializations) => {
-    specializations = getTranslatedOptions(
-      specializations,
-      options.specializations
+  const getTags = (tags) => {
+    tags = getTranslatedOptions(
+      tags,
+      accountType == ACCOUNT_TYPE.PARTNER
+        ? getRegions(t)
+        : options.specializations
     );
-    return specializations.map((specialization, idx) => (
+    return tags.map((tag, idx) => (
       <div className="mentor-specialization-tag" key={idx}>
-        {specialization}
+        {tag}
       </div>
     ));
   };
 
-  const getSpecializations = (isMentor) => {
-    if (accountType == ACCOUNT_TYPE.MENTOR) {
-      return (
-        <div>
-          <div className="mentor-profile-heading">
-            <b>{t("mentorProfile.specializations")}</b>
-          </div>
-          <div>{getSpecializationTags(props.mentor.specializations || [])}</div>
+  const displayTags = () => {
+    let tags = account?.specializations ?? account?.regions ?? [];
+    return (
+      <div>
+        <div className="mentor-profile-heading">
+          <b>
+            {ACCOUNT_TYPE.MENTOR == accountType
+              ? t("mentorProfile.specializations")
+              : ACCOUNT_TYPE.MENTEE == accountType
+              ? t("menteeProfile.areasOfInterest")
+              : t("partnerProfile.regionsWork")}
+          </b>
         </div>
-      );
-    } else if (accountType == ACCOUNT_TYPE.MENTEE) {
-      return (
-        <div>
-          <div className="mentor-profile-heading">
-            <b>{t("menteeProfile.areasOfInterest")}</b>
-          </div>
-          <div>{getSpecializationTags(props.mentor.specializations || [])}</div>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="mentor-profile-heading">
-            <b>{t("partnerProfile.regionsWork")}</b>
-          </div>
-          <div>
-            {account?.regions.map((regions, idx) => (
-              <div className="mentor-specialization-tag" key={idx}>
-                {regions}
-              </div>
-            )) ?? []}
-          </div>
-        </div>
-      );
-    }
+        <div>{getTags(tags)}</div>
+      </div>
+    );
   };
 
   const getEducations = (educations) => {
@@ -333,7 +316,7 @@ function ProfileContent(props) {
       )}
 
       <br />
-      {getSpecializations(props.mentor.specializations)}
+      {displayTags()}
       <br />
       {accountType != ACCOUNT_TYPE.PARTNER && (
         <>
