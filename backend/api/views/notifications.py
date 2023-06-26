@@ -5,7 +5,11 @@ from api.models.MenteeProfile import MenteeProfile, MentorProfile
 from mongoengine.queryset.visitor import Q
 from api.models import DirectMessage, PartnerProfile
 from api.utils.request_utils import send_email, send_sms
-from api.utils.constants import WEEKLY_NOTIF_REMINDER, UNREAD_MESSAGE_TEMPLATE
+from api.utils.constants import (
+    WEEKLY_NOTIF_REMINDER,
+    UNREAD_MESSAGE_TEMPLATE,
+    TRANSLATIONS,
+)
 from api.utils.require_auth import all_users
 
 notifications = Blueprint("notifications", __name__)
@@ -57,7 +61,13 @@ def send_unread_alert(id):
                 if email is not None and user_record.email_notifications:
                     res, res_msg = send_email(
                         recipient=email,
-                        data={"number_unread": str(notifications_count)},
+                        data={
+                            "number_unread": str(notifications_count),
+                            user_record.preferred_language: True,
+                            "subject": TRANSLATIONS[user_record.preferred_language][
+                                "unread_message"
+                            ],
+                        },
                         template_id=UNREAD_MESSAGE_TEMPLATE,
                     )
                     if not res:
@@ -129,7 +139,11 @@ def send_weekly_emails():
         if notifications_count > 0:
             res, res_msg = send_email(
                 recipient=user.email,
-                data={"number_unread": str(notifications_count)},
+                data={
+                    "number_unread": str(notifications_count),
+                    user.preferred_language: True,
+                    "subject": TRANSLATIONS[user.preferred_language]["weekly_notif"],
+                },
                 template_id=WEEKLY_NOTIF_REMINDER,
             )
             if not res:
@@ -149,7 +163,11 @@ def send_weekly_emails():
             res, res_msg = send_email(
                 recipient=user.email,
                 template_id=WEEKLY_NOTIF_REMINDER,
-                data={"number_unread": str(notifications_count)},
+                data={
+                    "number_unread": str(notifications_count),
+                    user.preferred_language: True,
+                    "subject": TRANSLATIONS[user.preferred_language]["weekly_notif"],
+                },
             )
             if not res:
                 msg = "Failed to send mentee email " + res_msg

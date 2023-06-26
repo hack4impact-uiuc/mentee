@@ -21,6 +21,7 @@ from api.utils.constants import (
     APP_APROVED,
     TRAINING_COMPLETED,
     PROFILE_COMPLETED,
+    TRANSLATIONS,
 )
 from api.utils.request_utils import (
     send_email,
@@ -242,10 +243,15 @@ def changestatetobuildprofile(email, role):
                 + "&email="
                 + application["email"]
             )
+
+        preferred_language = request.args.get("preferred_language", "en-US")
         success, msg = send_email(
             recipient=application["email"],
-            subject="Congratulation for completing training",
-            data={"link": target_url},
+            data={
+                "link": target_url,
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["training_complete"],
+            },
             template_id=TRAINING_COMPLETED,
         )
         if not success:
@@ -279,6 +285,7 @@ def delete_application(id):
 @admin_only
 def edit_application(id, role):
     data = request.get_json()
+    preferred_language = data.get("preferred_language", "en-US")
     role = int(role)
     logger.info(data)
     # Try to retrieve Mentor application from database
@@ -312,15 +319,21 @@ def edit_application(id, role):
             mentor_email = application.email
             success, msg = send_email(
                 recipient=mentor_email,
-                subject="MENTEE Application has been approved",
                 template_id=MENTOR_APP_SUBMITTED,
+                data={
+                    preferred_language: True,
+                    "subject": TRANSLATIONS[preferred_language]["app_approved"],
+                },
             )
         if role == Account.MENTEE:
             mentor_email = application.email
             success, msg = send_email(
                 recipient=mentor_email,
-                subject="MENTEE Application has been approved",
                 template_id=MENTEE_APP_SUBMITTED,
+                data={
+                    preferred_language: True,
+                    "subject": TRANSLATIONS[preferred_language]["app_approved"],
+                },
             )
         if not success:
             logger.info(msg)
@@ -336,8 +349,11 @@ def edit_application(id, role):
         mentor_email = application.email
         success, msg = send_email(
             recipient=mentor_email,
-            subject="MENTEE Application has been approved",
-            data={"link": target_url},
+            data={
+                "link": target_url,
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["app_approved"],
+            },
             template_id=APP_APROVED,
         )
         if not success:
@@ -350,15 +366,21 @@ def edit_application(id, role):
         mentor_email = application.email
         success, msg = send_email(
             recipient=mentor_email,
-            subject="Thank you for your interest in Mentee, " + application.name,
             template_id=MENTOR_APP_REJECTED,
+            data={
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["app_rejected"],
+            },
         )
     if application.application_state == NEW_APPLICATION_STATUS["COMPLETED"]:
         mentor_email = application.email
         success, msg = send_email(
             recipient=mentor_email,
-            subject="Your account has been successfully created " + application.name,
             template_id=PROFILE_COMPLETED,
+            data={
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["profile_completed"],
+            },
         )
         if not success:
             logger.info(msg)
@@ -374,8 +396,11 @@ def edit_application(id, role):
         mentor_email = application.email
         success, msg = send_email(
             recipient=mentor_email,
-            subject="Congratulations for completing the training",
-            data={"link": target_url},
+            data={
+                "link": target_url,
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["training_complete"],
+            },
             template_id=TRAINING_COMPLETED,
         )
         if not success:
@@ -388,6 +413,7 @@ def edit_application(id, role):
 @apply.route("/new", methods=["POST"])
 def create_application():
     data = request.get_json()
+    preferred_language = data.get("preferred_language", "en-US")
     role = data.get("role")
 
     if role == Account.MENTOR:
@@ -401,7 +427,7 @@ def create_application():
         return create_response(status=422, message=msg)
     if role == Account.MENTOR:
         applications = NewMentorApplication.objects(email=data.get("email"))
-        if len(applications) > 0 is not None:
+        if len(applications) > 0 and applications is not None:
             return create_response(
                 status=422, message="This user is already registered"
             )
@@ -432,7 +458,7 @@ def create_application():
 
     if role == Account.MENTEE:
         applications = MenteeApplication.objects(email=data.get("email"))
-        if len(applications) > 0 is not None:
+        if len(applications) > 0 and applications is not None:
             return create_response(
                 status=422, message="This user is already registered"
             )
@@ -458,13 +484,19 @@ def create_application():
     if role == Account.MENTOR:
         success, msg = send_email(
             recipient=mentor_email,
-            subject="MENTEE Application Recieved!",
+            data={
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["mentor_app_submit"],
+            },
             template_id=MENTOR_APP_SUBMITTED,
         )
     if role == Account.MENTEE:
         success, msg = send_email(
             recipient=mentor_email,
-            subject="MENTEE Application Recieved!",
+            data={
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["mentee_app_submit"],
+            },
             template_id=MENTEE_APP_SUBMITTED,
         )
     if not success:

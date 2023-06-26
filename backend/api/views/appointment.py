@@ -15,6 +15,7 @@ from api.utils.constants import (
     APPT_TIME_FORMAT,
     Account,
     APPT_STATUS,
+    TRANSLATIONS,
 )
 from api.utils.require_auth import admin_only, all_users, mentor_only
 
@@ -113,10 +114,17 @@ def send_invite_email():
         avail_htmls.append(start_time + " ~ " + end_time)
 
     if len(avail_htmls) > 0 and mentee.email_notifications:
-        res, res_msg = send_email(
-            recipient=mentee.email,
-            template_id=SEND_INVITE_TEMPLATE,
-            data={"future_availability": avail_htmls, "name": mentor.name},
+        res, res_msg = (
+            send_email(
+                recipient=mentee.email,
+                template_id=SEND_INVITE_TEMPLATE,
+                data={
+                    "future_availability": avail_htmls,
+                    "name": mentor.name,
+                    mentee.preferred_language: True,
+                    "subject": TRANSLATIONS[mentee.preferred_language]["send_invite"],
+                },
+            ),
         )
         if not res:
             msg = "Failed to send mentee email " + res_msg
@@ -174,7 +182,13 @@ def create_appointment():
         res, res_msg = send_email(
             recipient=mentee.email,
             template_id=MENTEE_APPT_TEMPLATE,
-            data={"confirmation": True, "name": mentor.name, "date": start_time},
+            data={
+                "confirmation": True,
+                "name": mentor.name,
+                "date": start_time,
+                mentee.preferred_language: True,
+                "subject": TRANSLATIONS[mentee.preferred_language]["mentee_appt"],
+            },
         )
         if not res:
             msg = "Failed to send mentee email " + res_msg
@@ -184,7 +198,12 @@ def create_appointment():
         res, res_msg = send_email(
             recipient=mentor.email,
             template_id=MENTOR_APPT_TEMPLATE,
-            data={"name": mentee.name, "date": start_time},
+            data={
+                "name": mentee.name,
+                "date": start_time,
+                mentor.preferred_language: True,
+                "subject": TRANSLATIONS[mentee.preferred_language]["mentor_appt"],
+            },
         )
 
         if not res:
@@ -231,8 +250,13 @@ def put_appointment(id):
         start_time = appointment.timeslot.start_time.strftime(APPT_TIME_FORMAT + " GMT")
         res_email = send_email(
             recipient=mentee.email,
-            subject="Mentee Appointment Notification",
-            data={"name": mentor.name, "date": start_time, "approved": True},
+            data={
+                "name": mentor.name,
+                "date": start_time,
+                "approved": True,
+                mentee.preferred_language: True,
+                "subject": TRANSLATIONS[mentee.preferred_language]["mentee_appt"],
+            },
             template_id=MENTEE_APPT_TEMPLATE,
         )
         if not res_email:
@@ -261,8 +285,13 @@ def delete_request(appointment_id):
         start_time = request.timeslot.start_time.strftime(f"{APPT_TIME_FORMAT} GMT")
         res_email = send_email(
             recipient=mentee.email,
-            subject="Mentee Appointment Notification",
-            data={"name": mentor.name, "date": start_time, "approved": False},
+            data={
+                "name": mentor.name,
+                "date": start_time,
+                "approved": False,
+                mentee.preferred_language: True,
+                "subject": TRANSLATIONS[mentee.preferred_language]["mentee_appt"],
+            },
             template_id=MENTEE_APPT_TEMPLATE,
         )
         if not res_email:
