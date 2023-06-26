@@ -20,7 +20,7 @@ from api.models import (
     NewMentorApplication,
     PartnerApplication,
 )
-from api.utils.constants import Account
+from api.utils.constants import Account, I18N_LANGUAGES
 
 wtforms_json.init()
 
@@ -201,7 +201,12 @@ def send_email(
         message.template_id = template_id
 
     if data:
+        # Set default language to English if no language is specified
+        if len(I18N_LANGUAGES.intersection(data.keys())) == 0:
+            data["en-US"] = True
         message.dynamic_template_data = data
+    else:
+        message.dynamic_template_data = {"en-US": True}
 
     try:
         sg = SendGridAPIClient(sendgrid_key)

@@ -14,8 +14,9 @@ import { formatLinkForHref } from "utils/misc";
 import MenteeButton from "./MenteeButton";
 
 import "./css/Gallery.scss";
-import { ACCOUNT_TYPE } from "utils/consts";
+import { ACCOUNT_TYPE, getRegions } from "utils/consts";
 import { useTranslation } from "react-i18next";
+import { getTranslatedOptions } from "utils/translations";
 
 const { Title, Text } = Typography;
 
@@ -88,7 +89,10 @@ function PartnerCard(props) {
           {t("gallery.regions")}:
         </h3>
         <Text className="gallery-list-items">
-          {truncate(props.regions.join(", "), 87)}
+          {truncate(
+            getTranslatedOptions(props.regions, getRegions(t)).join(", "),
+            87
+          )}
         </Text>
         {props.website && (
           <h4 className="gallery-info-section">

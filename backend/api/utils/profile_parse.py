@@ -149,6 +149,9 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.restricted = data.get("restricted", profile.restricted)
         profile.assign_mentors = data.get("assign_mentors", profile.assign_mentors)
         profile.assign_mentees = data.get("assign_mentees", profile.assign_mentees)
+        profile.preferred_language = data.get(
+            "preferred_language", profile.preferred_language
+        )
         return True
 
     if isinstance(profile, MentorProfile):
@@ -215,6 +218,9 @@ def edit_profile(data: dict = {}, profile: object = None):
     )
     profile.email_notifications = data.get(
         "email_notifications", profile.email_notifications
+    )
+    profile.preferred_language = data.get(
+        "preferred_language", profile.preferred_language
     )
 
     # Create education object
