@@ -314,10 +314,14 @@ function MenteeApplication(props) {
                 onChange={(e) => setidentify(e.target.value)}
                 value={identify}
               >
-                <Radio value={"As a male"}>As a male</Radio>
-                <Radio value={"As a female"}>As a female</Radio>
-                <Radio value={"As LGBTQ+"}>As LGBTQ+</Radio>
-                <Radio value={"other"}>Other</Radio>
+                <Radio value={"As a male"}>{t("commonApplication.male")}</Radio>
+                <Radio value={"As a female"}>
+                  {t("commonApplication.female")}
+                </Radio>
+                <Radio value={"As LGBTQ+"}>
+                  {t("commonApplication.lgbtq")}
+                </Radio>
+                <Radio value={"other"}>{t("commonApplication.other")}</Radio>
               </Radio.Group>
             </div>
           </div>

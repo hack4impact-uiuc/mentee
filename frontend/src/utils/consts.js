@@ -152,6 +152,12 @@ export const NEW_APPLICATION_STATUS = {
   REJECTED: "REJECTED",
 };
 
+export const getAppStatusOptions = () => {
+  return Object.values(NEW_APPLICATION_STATUS).map((status) => {
+    return { value: status, label: status };
+  });
+};
+
 export const OPTION_TYPE = {
   LANGUAGE: "language",
   SPECIALIZATION: "specialization",

@@ -10,7 +10,7 @@ import {
   downloadMenteeApps,
 } from "../../utils/api";
 import MentorApplicationView from "../MentorApplicationView";
-import { APP_STATUS, NEW_APPLICATION_STATUS } from "../../utils/consts";
+import { APP_STATUS, getAppStatusOptions } from "../../utils/consts";
 import { useAuth } from "utils/hooks/useAuth";
 import ModalInput from "../ModalInput";
 
@@ -63,13 +63,7 @@ function ApplicationOrganizer({ isMentor }) {
               await updateApplicationById(dataa, id, isMentor);
               await updateApps();
             }}
-            options={[
-              NEW_APPLICATION_STATUS.PENDING,
-              NEW_APPLICATION_STATUS.APPROVED,
-              NEW_APPLICATION_STATUS.BUILDPROFILE,
-              NEW_APPLICATION_STATUS.COMPLETED,
-              NEW_APPLICATION_STATUS.REJECTED,
-            ]}
+            options={getAppStatusOptions()}
             value={record.application_state}
             handleClick={() => {}}
           />
@@ -209,13 +203,8 @@ function ApplicationOrganizer({ isMentor }) {
         }}
         placeholder="Role"
         value={appState}
-      >
-        {" "}
-        {Object.keys(NEW_APPLICATION_STATUS).map((state) => {
-          return <Option value={state}>{state}</Option>;
-        })}
-        <Option value={"all"}>All</Option>
-      </Select>
+        options={[...getAppStatusOptions(), { value: "all", label: "All" }]}
+      />
       <div style={{ margin: 10 }}>
         <Table columns={columns} dataSource={filterdData} />;
       </div>
