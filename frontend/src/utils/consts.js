@@ -162,3 +162,11 @@ export const OPTION_TYPE = {
   LANGUAGE: "language",
   SPECIALIZATION: "specialization",
 };
+
+export const I18N_LANGUAGES = [
+  { value: "en-US", label: "English" },
+  { value: "es-US", label: "Spanish" },
+  { value: "ar", label: "Arabic" },
+  { value: "pt-BR", label: "Portuguese" },
+  { value: "fa-AF", label: "Farsi" },
+];

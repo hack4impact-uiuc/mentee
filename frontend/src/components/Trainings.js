@@ -7,14 +7,26 @@ import {
   getTrainings,
   getTrainVideo,
   newTrainCreate,
+  translateDocuments,
 } from "utils/api";
-import { ACCOUNT_TYPE, TRAINING_TYPE } from "utils/consts";
-import { Input, Radio, Form, Button } from "antd";
-import { Table, Popconfirm, message, Modal, Select } from "antd";
+import { ACCOUNT_TYPE, I18N_LANGUAGES, TRAINING_TYPE } from "utils/consts";
+import {
+  Table,
+  Popconfirm,
+  message,
+  Modal,
+  Select,
+  Input,
+  Radio,
+  Form,
+  Button,
+  notification,
+} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   PlusCircleOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 
 import "./css/Trains.scss";
@@ -30,6 +42,7 @@ export const Trainings = () => {
   const [trainrole, setTrainRole] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
+  const [isNewDocument, setIsNewDocument] = useState(false);
   const [errMessage, setErrorMessage] = useState(null);
   const [typee, setTypee] = useState(null);
   const [filee, setFilee] = useState(null);
@@ -39,6 +52,7 @@ export const Trainings = () => {
   const { Option } = Select;
 
   const showModal = async (id, isNew) => {
+    setIsNewDocument(false);
     if (isNew === false) {
       setIsModalVisible(true);
       setSelectedID(id);
@@ -84,14 +98,14 @@ export const Trainings = () => {
       setErr(false);
     }
     setLoading(true);
-    let isVideoo = typee !== TRAINING_TYPE.DOCUMENT;
+    let isVideo = typee !== TRAINING_TYPE.DOCUMENT;
     if (isNew === true) {
       let train = await newTrainCreate(
         name,
         url,
         desc,
         trainrole,
-        isVideoo,
+        isVideo,
         filee,
         typee
       );
@@ -100,25 +114,26 @@ export const Trainings = () => {
         setIsModalVisible2(false);
       } else {
         setErr(true);
-        setErrorMessage("Couldn' save changes");
+        setErrorMessage("Couldn't save changes");
       }
     } else {
-      let train = await EditTrainById(
-        selectedID,
+      let train = await EditTrainById({
+        id: selectedID,
         name,
         url,
         desc,
-        trainrole,
-        isVideoo,
+        role: trainrole,
+        isVideo,
         filee,
-        typee
-      );
+        typee,
+        isNewDocument,
+      });
       if (train) {
         setErr(false);
         setIsModalVisible(false);
       } else {
         setErr(true);
-        setErrorMessage("Couldn' save changes");
+        setErrorMessage("Couldn't save changes");
       }
     }
 
@@ -178,10 +193,12 @@ export const Trainings = () => {
                   </Button>
                 </p>
               )}
-              <p>File*</p>
+              <p>PDF File*</p>
               <Input
                 type="file"
+                accept="application/pdf"
                 onChange={(e) => {
+                  setIsNewDocument(true);
                   setFilee(e.target.files[0]);
                   setFileName(e.target.files[0].filename);
                 }}
@@ -217,25 +234,38 @@ export const Trainings = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (name) => <a>{name}</a>,
+      render: (name) => <>{name}</>,
     },
     {
       title: "URL",
       dataIndex: "url",
       key: "url",
       render: (url, record) => {
-        if (url) {
-          return <a>{url}</a>;
+        if (record.typee !== TRAINING_TYPE.DOCUMENT) {
+          return (
+            <a href={url} target="_blank">
+              {url}
+            </a>
+          );
         } else {
           return (
-            <Button
-              onClick={async () => {
-                let response = await getTrainVideo(record.id);
+            // TODO: Change this to a better download button UI Experience
+            <Select
+              onSelect={async (lang) => {
+                let response = await getTrainVideo(record.id, lang);
+                console.log(response);
+                if (!response) {
+                  notification.error({
+                    message: "ERROR",
+                    description: "Couldn't download file",
+                  });
+                  return;
+                }
                 downloadBlob(response, record.file_name);
               }}
-            >
-              {record.file_name}
-            </Button>
+              options={I18N_LANGUAGES}
+              placeholder="Download Document"
+            />
           );
         }
       },
@@ -244,29 +274,36 @@ export const Trainings = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      render: (description) => <a>{description}</a>,
+      render: (description) => <>{description}</>,
     },
     {
-      title: "TYPE",
+      title: "Type",
       dataIndex: "typee",
       key: "typee",
-      render: (typee) => <a>{typee}</a>,
+      render: (typee) => <>{typee}</>,
     },
     {
-      title: "Delete",
+      title: "Translate Document",
       dataIndex: "id",
       key: "id",
-      render: (id) => (
+      render: (id, record) => (
         <Popconfirm
-          title={`Are you sure you want to delete ?`}
+          title={`Are you sure you want to translate? ($0.08 per page per language)`}
           onConfirm={() => {
-            deleteTrain(id);
+            translateDocuments(id);
           }}
-          onCancel={() => message.info(`No deletion has been for `)}
+          onCancel={() =>
+            message.info(`No translation has been for ${record.name}`)
+          }
           okText="Yes"
           cancelText="No"
+          disabled={record.typee !== TRAINING_TYPE.DOCUMENT}
         >
-          <DeleteOutlined className="delete-user-btn" />
+          {record.typee === TRAINING_TYPE.DOCUMENT ? (
+            <TeamOutlined className="delete-user-btn" />
+          ) : (
+            <TeamOutlined className="disabled-user-btn" />
+          )}
         </Popconfirm>
       ),
       align: "center",
@@ -298,6 +335,25 @@ export const Trainings = () => {
         </>
       ),
 
+      align: "center",
+    },
+    {
+      title: "Delete",
+      dataIndex: "id",
+      key: "id",
+      render: (id) => (
+        <Popconfirm
+          title={`Are you sure you want to delete ?`}
+          onConfirm={() => {
+            deleteTrain(id);
+          }}
+          onCancel={() => message.info(`No deletion has been for `)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <DeleteOutlined className="delete-user-btn" />
+        </Popconfirm>
+      ),
       align: "center",
     },
   ];
@@ -352,7 +408,7 @@ export const Trainings = () => {
         </div>
       </div>
       <div className="trainTable">
-        <Table columns={columns} dataSource={data} />;
+        <Table columns={columns} dataSource={data} />
       </div>
       <Modal
         title=""

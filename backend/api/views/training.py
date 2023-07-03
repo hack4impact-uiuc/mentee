@@ -1,12 +1,19 @@
 from flask import Blueprint, request
+from werkzeug.utils import secure_filename
 from api.core import create_response, logger
-from api.models import Training, MentorProfile, MenteeProfile, PartnerProfile
+from api.models import Training, MentorProfile, MenteeProfile, PartnerProfile, Translations
 from datetime import datetime
 from api.utils.require_auth import admin_only, all_users
+from api.utils.google_translate import document_translate_all_languages, populate_translation_field, get_translation_document
 from datetime import datetime
 from flask import send_file
 from io import BytesIO
-from api.utils.constants import Account, NEW_TRAINING_TEMPLATE, TRANSLATIONS
+from api.utils.constants import (
+    Account,
+    NEW_TRAINING_TEMPLATE,
+    TRANSLATIONS,
+    I18N_LANGUAGES,
+)
 from api.utils.request_utils import send_email
 
 training = Blueprint("training", __name__)  # initialize blueprint
@@ -50,15 +57,26 @@ def get_train(id):
 @training.route("/trainVideo/<string:id>", methods=["GET"])
 # @all_users
 def get_train_file(id):
+    lang = request.args.get("lang", "en-US")
     try:
         train = Training.objects.get(id=id)
     except:
         return create_response(status=422, message="training not found")
-    file = train.filee.read()
+
+    if lang in I18N_LANGUAGES:
+        if lang == "en-US":
+            document = train.filee.read() 
+        else:
+            document = get_translation_document(train.translations, lang)
+    else:
+        return create_response(status=422, message="Language requested not supported")
+
     content_type = train.filee.content_type
 
+    if not document:
+        return create_response(status=422, message="No document found")
     return send_file(
-        BytesIO(file), download_name=train.filee.file_name, mimetype=content_type
+        BytesIO(document), download_name=train.file_name, mimetype=content_type
     )
 
 
@@ -71,7 +89,6 @@ def get_train_id_edit(id):
         isVideoo = True
     if isVideoo == "false":
         isVideoo = False
-        logger.info(isVideoo)
 
     # try:
     train = Training.objects.get(id=id)
@@ -80,10 +97,16 @@ def get_train_id_edit(id):
     train.role = str(request.form["role"])
     train.typee = request.form["typee"]
     train.isVideo = isVideoo
-    if not isVideoo:
-        filee = request.files["filee"]
-        train.filee.replace(filee)
-        train.file_name = filee.filename
+    if not isVideoo and request.form.get("isNewDocument", False) == "true":
+        document = request.files.get("document", None)
+        if not document:
+            return create_response(status=400, message="Missing file")
+        file_name = secure_filename(document.filename)
+        if file_name == "":
+            return create_response(status=400, message="Missing file name")
+
+        train.filee.replace(document, filename=file_name)
+        train.file_name = file_name
     else:
         train.url = request.form["url"]
 
@@ -118,40 +141,70 @@ def new_train(role):
             date_submitted=datetime.now(),
         )
         if not isVideoo:
-            filee = request.files["filee"]
-            train.filee.put(filee, file_name=filee.filename)
-            train.file_name = filee.filename
+            document = request.files.get("document", None)
+            if not document:
+                return create_response(status=400, message="Missing file")
+
+            file_name = secure_filename(document.filename)
+            if file_name == "":
+                return create_response(status=400, message="Missing file name")
+            
+            train.file_name = file_name
+            train.filee.put(document, filename=file_name)
         else:
             train.url = request.form["url"]
 
         train.save()
-        new_train_id = train.id
-        if int(role) == Account.MENTOR:
-            receivers = MentorProfile.objects.all()
-        elif int(role) == Account.MENTEE:
-            receivers = MenteeProfile.objects.all()
-        else:
-            receivers = PartnerProfile.objects.all()
 
-        front_url = request.form["front_url"]
-        target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
-        for receiver in receivers:
-            res, res_msg = send_email(
-                recipient=receiver.email,
-                data={
-                    "link": target_url,
-                    receiver.preferred_language: True,
-                    "subject": TRANSLATIONS[receiver.preferred_language][
-                        "new_training"
-                    ],
-                },
-                template_id=NEW_TRAINING_TEMPLATE,
-            )
-            if not res:
-                msg = "Failed to send new traing data alert email " + res_msg
-                logger.info(msg)
+        # TODO: Remove this so that it is a job in the background
+        # new_train_id = train.id
+        # if int(role) == Account.MENTOR:
+        #     receivers = MentorProfile.objects.all()
+        # elif int(role) == Account.MENTEE:
+        #     receivers = MenteeProfile.objects.all()
+        # else:
+        #     receivers = PartnerProfile.objects.all()
 
-    except:
-        return create_response(status=400, message="missing parameters")
+        # front_url = request.form["front_url"]
+        # target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
+        # for receiver in receivers:
+        #     res, res_msg = send_email(
+        #         recipient=receiver.email,
+        #         data={
+        #             "link": target_url,
+        #             receiver.preferred_language: True,
+        #             "subject": TRANSLATIONS[receiver.preferred_language][
+        #                 "new_training"
+        #             ],
+        #         },
+        #         template_id=NEW_TRAINING_TEMPLATE,
+        #     )
+        #     if not res:
+        #         msg = "Failed to send new traing data alert email " + res_msg
+        #         logger.info(msg)
+
+    except Exception as e:
+        return create_response(status=400, message=f"missing parameters {e}")
 
     return create_response(status=200, data={"train": train})
+
+@training.route("/translate/<string:id>", methods=["PUT"])
+@admin_only
+def translate_training(id):
+    try:
+        training = Training.objects.get(id=id)
+    except Exception as e:
+        return create_response(status=400, message=f"missing parameters {e}")
+
+    try:
+        document = training.filee
+        logger.info(document)
+        translations = document_translate_all_languages(document)
+        new_translations = Translations()
+        new_translations = populate_translation_field(new_translations, translations)
+        training.translations = new_translations
+        training.save()
+    except Exception as e:
+        return create_response(status=500, message=f"{e}")
+
+    return create_response(status=200, message="Successful translation")

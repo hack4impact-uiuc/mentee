@@ -7,6 +7,7 @@ from .Education import Education
 from .Video import Video
 from .Availability import Availability
 from .Image import Image
+from .Translations import Translations
 from .MentorProfile import MentorProfile
 from .MenteeApplication import MenteeApplication
 from .PartnerApplication import PartnerApplication
@@ -32,6 +33,7 @@ __all__ = [
     "MentorProfile",
     "Availability",
     "AppointmentRequest",
+    "Translations",
     "Image",
     "VerifiedEmail",
     "NewMentorApplication",
