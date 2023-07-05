@@ -24,7 +24,7 @@ from api.utils.constants import (
     NEW_TRAINING_TEMPLATE,
     TRANSLATIONS,
     I18N_LANGUAGES,
-    TRANSLATION_COST_PER_PAGE
+    TRANSLATION_COST_PER_PAGE,
 )
 from api.utils.request_utils import send_email
 
@@ -200,22 +200,27 @@ def new_train(role):
 
     return create_response(status=200, data={"train": train})
 
+
 @training.route("/translateCost/<string:id>", methods=["GET"])
 @admin_only
 def get_translation_cost(id):
     try:
         training = Training.objects.get(id=id)
     except Exception as e:
-        return create_response(status=400, message=f"Could not find training object {e}")
-    
+        return create_response(
+            status=400, message=f"Could not find training object {e}"
+        )
+
     try:
         document = training.filee
         reader = PdfReader(document)
         pages = len(reader.pages)
         cost = pages * TRANSLATION_COST_PER_PAGE * (len(I18N_LANGUAGES) - 1)
     except Exception as e:
-        return create_response(status=500, message=f"Failed to calculate translation cost {e}")
-    
+        return create_response(
+            status=500, message=f"Failed to calculate translation cost {e}"
+        )
+
     return create_response(status=200, data={"cost": cost})
 
 
@@ -225,7 +230,9 @@ def translate_training(id):
     try:
         training = Training.objects.get(id=id)
     except Exception as e:
-        return create_response(status=400, message=f"Could not find training object {e}")
+        return create_response(
+            status=400, message=f"Could not find training object {e}"
+        )
 
     try:
         document = training.filee
