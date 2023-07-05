@@ -300,6 +300,16 @@ export const translateDocuments = (id) => {
   );
 };
 
+export const getTranslateDocumentCost = (id) => {
+  const requestExtension = `/training/translateCost/${id}`;
+  return authGet(requestExtension).then(
+    (response) => response?.data,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 export const createAppointment = (appointment) => {
   const requestExtension = `/appointment/`;
   return authPost(requestExtension, appointment).then(

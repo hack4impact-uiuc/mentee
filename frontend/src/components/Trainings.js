@@ -6,8 +6,8 @@ import {
   getTrainById,
   getTrainings,
   getTrainVideo,
+  getTranslateDocumentCost,
   newTrainCreate,
-  translateDocuments,
 } from "utils/api";
 import { ACCOUNT_TYPE, I18N_LANGUAGES, TRAINING_TYPE } from "utils/consts";
 import {
@@ -30,9 +30,9 @@ import {
   TeamOutlined,
 } from "@ant-design/icons";
 
-import "./css/Trains.scss";
+import "./css/Training.scss";
 import AdminDownloadDropdown from "./AdminDownloadDropdown";
-import { parse } from "superagent";
+import TrainingTranslationModal from "./TrainingTranslationModal";
 
 export const Trainings = () => {
   const [role, setRole] = useState(null);
@@ -44,7 +44,6 @@ export const Trainings = () => {
   const [desc, setDesc] = useState(null);
   const [trainRole, setTrainRole] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [isNewDocument, setIsNewDocument] = useState(false);
   const [errMessage, setErrorMessage] = useState(null);
   const [typee, setTypee] = useState(null);
@@ -53,6 +52,9 @@ export const Trainings = () => {
   const [selectedID, setSelectedID] = useState("");
   const [loading, setLoading] = useState(false);
   const [translateLoading, setTranslateLoading] = useState(false);
+  const [translateOpen, setTranslateOpen] = useState(false);
+  const [documentCost, setDocumentCost] = useState(null);
+  const [trainingId, setTrainingId] = useState(null);
   const { Option } = Select;
 
   const showModal = async (id, isNew) => {
@@ -83,7 +85,7 @@ export const Trainings = () => {
       setFilee(null);
       setTrainRole(null);
       setTypee(null);
-      setIsModalVisible2(true);
+      setIsModalVisible(true);
     }
   };
 
@@ -101,8 +103,6 @@ export const Trainings = () => {
     } else {
       setErr(false);
     }
-
-    console.log("saving changes");
     setLoading(true);
     let isVideo = typee !== TRAINING_TYPE.DOCUMENT;
     if (isNew === true) {
@@ -117,7 +117,7 @@ export const Trainings = () => {
       );
       if (train) {
         setErr(false);
-        setIsModalVisible2(false);
+        setIsModalVisible(false);
       } else {
         setErr(true);
         setErrorMessage("Couldn't save changes");
@@ -149,7 +149,6 @@ export const Trainings = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setIsModalVisible2(false);
   };
 
   const handleTrainingDownload = async (record, lang) => {
@@ -185,6 +184,30 @@ export const Trainings = () => {
     // Appends English by default
     items.unshift(I18N_LANGUAGES[0]);
     return items;
+  };
+
+  const translateOpenChange = async (selectedId) => {
+    setTranslateLoading(true);
+    setTrainingId(selectedId);
+    const res = await getTranslateDocumentCost(selectedId);
+    if (!res?.success) {
+      notification.error({
+        message: "ERROR",
+        description: `Couldn't get translation cost`,
+      });
+      setTranslateLoading(false);
+      return;
+    }
+    const resPrice = res?.result?.cost;
+
+    let formatCost = Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumSignificantDigits: 3,
+    });
+    setDocumentCost(formatCost.format(resPrice));
+    setTranslateLoading(false);
+    setTranslateOpen(true);
   };
 
   const TrainForm = () => (
@@ -241,7 +264,6 @@ export const Trainings = () => {
                 onChange={(e) => {
                   setIsNewDocument(true);
                   setFilee(e.target.files[0]);
-                  console.log(e.target.files[0]);
                   setFileName(e.target.files[0].name);
                 }}
               ></Input>
@@ -316,41 +338,17 @@ export const Trainings = () => {
       title: "Translate Document",
       dataIndex: "id",
       key: "id",
-      render: (id, record) => (
-        <Popconfirm
-          title={`Are you sure you want to translate? ($0.08 per page per language)`}
-          onConfirm={async () => {
-            setTranslateLoading(true);
-            const res = await translateDocuments(id);
-            if (!res?.success) {
-              notification.error({
-                message: "ERROR",
-                description: `Couldn't translate file`,
-              });
-            } else {
-              notification.success({
-                message: "SUCCESS",
-                description: "Translation has been done successfully",
-              });
-            }
-            setTranslateLoading(false);
-          }}
-          onCancel={() =>
-            notification.info({
-              message: "INFO",
-              description: `No translation has been done for ${record.name}`,
-            })
-          }
-          okText="Yes"
-          cancelText="No"
-          disabled={record.typee !== TRAINING_TYPE.DOCUMENT}
-        >
+      render: (trainingId, record) => (
+        <>
           {record.typee === TRAINING_TYPE.DOCUMENT ? (
-            <TeamOutlined className="delete-user-btn" />
+            <TeamOutlined
+              className={"delete-user-btn"}
+              onClick={() => translateOpenChange(trainingId)}
+            />
           ) : (
-            <TeamOutlined className="disabled-user-btn" />
+            <></>
           )}
-        </Popconfirm>
+        </>
       ),
       align: "center",
     },
@@ -359,26 +357,10 @@ export const Trainings = () => {
       dataIndex: "id",
       key: "id",
       render: (id) => (
-        <>
-          <Modal
-            title=""
-            visible={isModalVisible}
-            onOk={() => handleOk(false)}
-            onCancel={handleCancel}
-            okText="save"
-            closable={false}
-            width={"600px"}
-            okButtonProps={{ disabled: loading ? true : false }}
-          >
-            {" "}
-            {TrainForm()}
-            {err ? <p className="error">{errMessage}</p> : ""}
-          </Modal>
-          <EditOutlined
-            className="delete-user-btn"
-            onClick={() => showModal(id, false)}
-          />
-        </>
+        <EditOutlined
+          className="delete-user-btn"
+          onClick={() => showModal(id, false)}
+        />
       ),
 
       align: "center",
@@ -393,7 +375,7 @@ export const Trainings = () => {
           onConfirm={() => {
             deleteTrain(id);
           }}
-          onCancel={() => message.info(`No deletion has been for `)}
+          onCancel={() => message.info(`No deletion has been made`)}
           okText="Yes"
           cancelText="No"
         >
@@ -450,10 +432,16 @@ export const Trainings = () => {
           <Table columns={columns} dataSource={data} />
         </Spin>
       </div>
+      <TrainingTranslationModal
+        setOpenModal={setTranslateOpen}
+        openModal={translateOpen}
+        documentCost={documentCost}
+        trainingId={trainingId}
+      />
       <Modal
         title=""
-        visible={isModalVisible2}
-        onOk={() => handleOk(true)}
+        open={isModalVisible}
+        onOk={() => handleOk(false)}
         onCancel={handleCancel}
         okText="save"
         closable={false}

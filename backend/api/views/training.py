@@ -9,6 +9,7 @@ from api.models import (
     Translations,
 )
 from datetime import datetime
+from PyPDF2 import PdfReader
 from api.utils.require_auth import admin_only, all_users
 from api.utils.google_translate import (
     document_translate_all_languages,
@@ -23,6 +24,7 @@ from api.utils.constants import (
     NEW_TRAINING_TEMPLATE,
     TRANSLATIONS,
     I18N_LANGUAGES,
+    TRANSLATION_COST_PER_PAGE
 )
 from api.utils.request_utils import send_email
 
@@ -198,6 +200,24 @@ def new_train(role):
 
     return create_response(status=200, data={"train": train})
 
+@training.route("/translateCost/<string:id>", methods=["GET"])
+@admin_only
+def get_translation_cost(id):
+    try:
+        training = Training.objects.get(id=id)
+    except Exception as e:
+        return create_response(status=400, message=f"Could not find training object {e}")
+    
+    try:
+        document = training.filee
+        reader = PdfReader(document)
+        pages = len(reader.pages)
+        cost = pages * TRANSLATION_COST_PER_PAGE * (len(I18N_LANGUAGES) - 1)
+    except Exception as e:
+        return create_response(status=500, message=f"Failed to calculate translation cost {e}")
+    
+    return create_response(status=200, data={"cost": cost})
+
 
 @training.route("/translate/<string:id>", methods=["PUT"])
 @admin_only
@@ -205,11 +225,10 @@ def translate_training(id):
     try:
         training = Training.objects.get(id=id)
     except Exception as e:
-        return create_response(status=400, message=f"missing parameters {e}")
+        return create_response(status=400, message=f"Could not find training object {e}")
 
     try:
         document = training.filee
-        logger.info(document)
         translations = document_translate_all_languages(document, training.file_name)
         new_translations = Translations()
         new_translations = populate_translation_field(
