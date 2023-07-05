@@ -37,6 +37,16 @@
   color: $theme-orange;
   font-size: 20px;
 }
+
+.disabled-user-btn {
+  color: gray;
+  font-size: 20px;
+}
+
+.disabled-user-btn:hover {
+  cursor: not-allowed;
+}
+
 .ant-table-cell {
   padding: 8px 8px !important;
 }

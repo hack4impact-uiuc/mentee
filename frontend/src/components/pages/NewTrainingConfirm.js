@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getTrainById, getTrainVideo, downloadBlob } from "../../utils/api";
 import { List, Button } from "antd";
 import ReactPlayer from "react-player/youtube";
 import { TRAINING_TYPE } from "utils/consts";
 import "../css/TrainingList.scss";
 
+// TODO: Finish trasnlating this confirm
 function NewTrainingConfirm({ accountType, id }) {
+  const { t, i18n } = useTranslation();
   const [train, setTrain] = useState({});
   const [loading, setLoading] = useState(false);
   useEffect(() => {

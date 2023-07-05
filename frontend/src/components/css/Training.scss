@@ -40,9 +40,15 @@
 .isVideo {
   margin-bottom: 25px;
 }
-.trainTable .ant-table-tbody > tr > td {
-  max-width: 100px !important;
-}
+// .trainTable .ant-table-tbody > tr > td {
+//   max-width: 200px !important;
+// }
 .margin-bell {
   margin: 20px !important;
+}
+
+.translate-modal-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
 }

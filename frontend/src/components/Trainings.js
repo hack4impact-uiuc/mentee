@@ -6,18 +6,33 @@ import {
   getTrainById,
   getTrainings,
   getTrainVideo,
+  getTranslateDocumentCost,
   newTrainCreate,
 } from "utils/api";
-import { ACCOUNT_TYPE, TRAINING_TYPE } from "utils/consts";
-import { Input, Radio, Form, Button } from "antd";
-import { Table, Popconfirm, message, Modal, Select } from "antd";
+import { ACCOUNT_TYPE, I18N_LANGUAGES, TRAINING_TYPE } from "utils/consts";
+import {
+  Table,
+  Popconfirm,
+  message,
+  Modal,
+  Select,
+  Input,
+  Radio,
+  Form,
+  Button,
+  notification,
+  Spin,
+} from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
   PlusCircleOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
 
-import "./css/Trains.scss";
+import "./css/Training.scss";
+import AdminDownloadDropdown from "./AdminDownloadDropdown";
+import TrainingTranslationModal from "./TrainingTranslationModal";
 
 export const Trainings = () => {
   const [role, setRole] = useState(null);
@@ -27,18 +42,23 @@ export const Trainings = () => {
   const [name, setName] = useState(null);
   const [url, setUrl] = useState(null);
   const [desc, setDesc] = useState(null);
-  const [trainrole, setTrainRole] = useState(null);
+  const [trainRole, setTrainRole] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isModalVisible2, setIsModalVisible2] = useState(false);
+  const [isNewDocument, setIsNewDocument] = useState(false);
   const [errMessage, setErrorMessage] = useState(null);
   const [typee, setTypee] = useState(null);
   const [filee, setFilee] = useState(null);
-  const [file_name, setFileName] = useState(null);
+  const [fileName, setFileName] = useState(null);
   const [selectedID, setSelectedID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [translateLoading, setTranslateLoading] = useState(false);
+  const [translateOpen, setTranslateOpen] = useState(false);
+  const [documentCost, setDocumentCost] = useState(null);
+  const [trainingId, setTrainingId] = useState(null);
   const { Option } = Select;
 
   const showModal = async (id, isNew) => {
+    setIsNewDocument(false);
     if (isNew === false) {
       setIsModalVisible(true);
       setSelectedID(id);
@@ -65,7 +85,7 @@ export const Trainings = () => {
       setFilee(null);
       setTrainRole(null);
       setTypee(null);
-      setIsModalVisible2(true);
+      setIsModalVisible(true);
     }
   };
 
@@ -73,7 +93,7 @@ export const Trainings = () => {
     if (
       !name ||
       !desc ||
-      !trainrole ||
+      !trainRole ||
       (typee !== TRAINING_TYPE.DOCUMENT && !url) ||
       (typee === !TRAINING_TYPE.DOCUMENT && !filee)
     ) {
@@ -84,32 +104,14 @@ export const Trainings = () => {
       setErr(false);
     }
     setLoading(true);
-    let isVideoo = typee !== TRAINING_TYPE.DOCUMENT;
+    let isVideo = typee !== TRAINING_TYPE.DOCUMENT;
     if (isNew === true) {
       let train = await newTrainCreate(
         name,
         url,
         desc,
-        trainrole,
-        isVideoo,
-        filee,
-        typee
-      );
-      if (train) {
-        setErr(false);
-        setIsModalVisible2(false);
-      } else {
-        setErr(true);
-        setErrorMessage("Couldn' save changes");
-      }
-    } else {
-      let train = await EditTrainById(
-        selectedID,
-        name,
-        url,
-        desc,
-        trainrole,
-        isVideoo,
+        trainRole,
+        isVideo,
         filee,
         typee
       );
@@ -118,7 +120,26 @@ export const Trainings = () => {
         setIsModalVisible(false);
       } else {
         setErr(true);
-        setErrorMessage("Couldn' save changes");
+        setErrorMessage("Couldn't save changes");
+      }
+    } else {
+      let train = await EditTrainById({
+        id: selectedID,
+        name,
+        url,
+        desc,
+        role: trainRole,
+        isVideo,
+        filee,
+        typee,
+        isNewDocument,
+      });
+      if (train) {
+        setErr(false);
+        setIsModalVisible(false);
+      } else {
+        setErr(true);
+        setErrorMessage("Couldn't save changes");
       }
     }
 
@@ -128,7 +149,65 @@ export const Trainings = () => {
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    setIsModalVisible2(false);
+  };
+
+  const handleTrainingDownload = async (record, lang) => {
+    let response = await getTrainVideo(record.id, lang);
+    if (!response) {
+      notification.error({
+        message: "ERROR",
+        description: "Couldn't download file",
+      });
+      return;
+    }
+    downloadBlob(response, record.file_name);
+  };
+
+  const deleteTrain = async (id) => {
+    const success = await deleteTrainbyId(id);
+    if (success) {
+      message.success(`Successfully deleted `);
+      setReload(!reload);
+    } else {
+      message.error(`Could not delete `);
+    }
+  };
+
+  const getAvailableLangs = (record) => {
+    if (!record?.translations) return [I18N_LANGUAGES[0]];
+    let items = I18N_LANGUAGES.filter((lang) => {
+      return (
+        Object.keys(record?.translations).includes(lang.value) &&
+        record?.translations[lang.value] !== null
+      );
+    });
+    // Appends English by default
+    items.unshift(I18N_LANGUAGES[0]);
+    return items;
+  };
+
+  const translateOpenChange = async (selectedId) => {
+    setTranslateLoading(true);
+    setTrainingId(selectedId);
+    const res = await getTranslateDocumentCost(selectedId);
+    if (!res?.success) {
+      notification.error({
+        message: "ERROR",
+        description: `Couldn't get translation cost`,
+      });
+      setTranslateLoading(false);
+      return;
+    }
+    const resPrice = res?.result?.cost;
+
+    let formatCost = Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumSignificantDigits: 3,
+    });
+    setDocumentCost(formatCost.format(resPrice));
+    setTranslateLoading(false);
+    setTranslateOpen(true);
   };
 
   const TrainForm = () => (
@@ -171,19 +250,21 @@ export const Trainings = () => {
                 <p>
                   <Button
                     onClick={() => {
-                      downloadBlob(filee, file_name);
+                      downloadBlob(filee, fileName);
                     }}
                   >
-                    {file_name}
+                    {fileName}
                   </Button>
                 </p>
               )}
-              <p>File*</p>
+              <p>PDF File*</p>
               <Input
                 type="file"
+                accept="application/pdf"
                 onChange={(e) => {
+                  setIsNewDocument(true);
                   setFilee(e.target.files[0]);
-                  setFileName(e.target.files[0].filename);
+                  setFileName(e.target.files[0].name);
                 }}
               ></Input>
             </>
@@ -201,7 +282,7 @@ export const Trainings = () => {
             style={{ width: 120 }}
             onChange={(value) => setTrainRole(value)}
             placeholder="Role"
-            value={trainrole}
+            value={trainRole ? parseInt(trainRole) : role}
           >
             <Option value={ACCOUNT_TYPE.MENTOR}>Mentor</Option>
             <Option value={ACCOUNT_TYPE.MENTEE}>Mentee</Option>
@@ -217,25 +298,26 @@ export const Trainings = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (name) => <a>{name}</a>,
+      render: (name) => <>{name}</>,
     },
     {
       title: "URL",
       dataIndex: "url",
       key: "url",
       render: (url, record) => {
-        if (url) {
-          return <a>{url}</a>;
+        if (record.typee !== TRAINING_TYPE.DOCUMENT) {
+          return (
+            <a href={url} target="_blank">
+              {url}
+            </a>
+          );
         } else {
           return (
-            <Button
-              onClick={async () => {
-                let response = await getTrainVideo(record.id);
-                downloadBlob(response, record.file_name);
-              }}
-            >
-              {record.file_name}
-            </Button>
+            <AdminDownloadDropdown
+              options={getAvailableLangs(record)}
+              title="Download Document"
+              onClick={(lang) => handleTrainingDownload(record, lang)}
+            />
           );
         }
       },
@@ -244,13 +326,44 @@ export const Trainings = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      render: (description) => <a>{description}</a>,
+      render: (description) => <>{description}</>,
     },
     {
-      title: "TYPE",
+      title: "Type",
       dataIndex: "typee",
       key: "typee",
-      render: (typee) => <a>{typee}</a>,
+      render: (typee) => <>{typee}</>,
+    },
+    {
+      title: "Translate Document",
+      dataIndex: "id",
+      key: "id",
+      render: (trainingId, record) => (
+        <>
+          {record.typee === TRAINING_TYPE.DOCUMENT ? (
+            <TeamOutlined
+              className={"delete-user-btn"}
+              onClick={() => translateOpenChange(trainingId)}
+            />
+          ) : (
+            <></>
+          )}
+        </>
+      ),
+      align: "center",
+    },
+    {
+      title: "Edit",
+      dataIndex: "id",
+      key: "id",
+      render: (id) => (
+        <EditOutlined
+          className="delete-user-btn"
+          onClick={() => showModal(id, false)}
+        />
+      ),
+
+      align: "center",
     },
     {
       title: "Delete",
@@ -262,7 +375,7 @@ export const Trainings = () => {
           onConfirm={() => {
             deleteTrain(id);
           }}
-          onCancel={() => message.info(`No deletion has been for `)}
+          onCancel={() => message.info(`No deletion has been made`)}
           okText="Yes"
           cancelText="No"
         >
@@ -271,45 +384,8 @@ export const Trainings = () => {
       ),
       align: "center",
     },
-    {
-      title: "Edit",
-      dataIndex: "id",
-      key: "id",
-      render: (id) => (
-        <>
-          <Modal
-            title=""
-            visible={isModalVisible}
-            onOk={() => handleOk(false)}
-            onCancel={handleCancel}
-            okText="save"
-            closable={false}
-            width={"600px"}
-            okButtonProps={{ disabled: loading ? true : false }}
-          >
-            {" "}
-            {TrainForm()}
-            {err ? <p className="error">{errMessage}</p> : ""}
-          </Modal>
-          <EditOutlined
-            className="delete-user-btn"
-            onClick={() => showModal(id, false)}
-          />
-        </>
-      ),
-
-      align: "center",
-    },
   ];
-  const deleteTrain = async (id) => {
-    const success = await deleteTrainbyId(id);
-    if (success) {
-      message.success(`Successfully deleted `);
-      setReload(!reload);
-    } else {
-      message.error(`Could not delete `);
-    }
-  };
+
   useEffect(() => {
     const getData = async () => {
       let newData = await getTrainings(role);
@@ -352,12 +428,20 @@ export const Trainings = () => {
         </div>
       </div>
       <div className="trainTable">
-        <Table columns={columns} dataSource={data} />;
+        <Spin spinning={translateLoading}>
+          <Table columns={columns} dataSource={data} />
+        </Spin>
       </div>
+      <TrainingTranslationModal
+        setOpenModal={setTranslateOpen}
+        openModal={translateOpen}
+        documentCost={documentCost}
+        trainingId={trainingId}
+      />
       <Modal
         title=""
-        visible={isModalVisible2}
-        onOk={() => handleOk(true)}
+        open={isModalVisible}
+        onOk={() => handleOk(false)}
         onCancel={handleCancel}
         okText="save"
         closable={false}

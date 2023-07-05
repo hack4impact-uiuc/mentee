@@ -221,34 +221,39 @@ export const getTrainById = async (id) => {
   const train = response.data.result.train;
   return train;
 };
-export const getTrainVideo = async (id) => {
+export const getTrainVideo = async (id, lang = i18n.language) => {
   const requestExtension = `/training/trainVideo/${id}`;
   let response = await authGet(requestExtension, {
     responseType: "blob",
+    params: {
+      lang: lang,
+    },
   }).catch(console.error);
   return response;
 };
-export const EditTrainById = async (
+export const EditTrainById = async ({
   id,
   name,
   url,
-  description,
+  desc,
   role,
   isVideo,
   filee,
-  typee
-) => {
+  typee,
+  isNewDocument,
+}) => {
   const requestExtension = `/training/${id}`;
   const formData = new FormData();
   formData.append("name", name);
   formData.append("url", url);
-  formData.append("description", description);
+  formData.append("description", desc);
   formData.append("role", role);
   formData.append("typee", typee);
+  formData.append("isNewDocument", isNewDocument);
 
   formData.append("isVideo", isVideo);
   if (!isVideo) {
-    formData.append("filee", filee);
+    formData.append("document", filee);
   }
   let response = await authPut(requestExtension, formData).catch(console.error);
   let Train = response.data.result.train;
@@ -276,7 +281,7 @@ export const newTrainCreate = async (
 
   formData.append("isVideo", isVideo);
   if (!isVideo) {
-    formData.append("filee", filee);
+    formData.append("document", filee);
   }
   let response = await authPost(requestExtension, formData).catch(
     console.error
@@ -284,6 +289,27 @@ export const newTrainCreate = async (
   let Train = response.data.result.train;
   return Train;
 };
+
+export const translateDocuments = (id) => {
+  const requestExtension = `/training/translate/${id}`;
+  return authPut(requestExtension).then(
+    (response) => response?.data,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
+export const getTranslateDocumentCost = (id) => {
+  const requestExtension = `/training/translateCost/${id}`;
+  return authGet(requestExtension).then(
+    (response) => response?.data,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 export const createAppointment = (appointment) => {
   const requestExtension = `/appointment/`;
   return authPost(requestExtension, appointment).then(

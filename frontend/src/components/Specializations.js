@@ -17,7 +17,7 @@ import {
   PlusCircleOutlined,
 } from "@ant-design/icons";
 
-import "./css/Trains.scss";
+import "./css/Training.scss";
 import { OPTION_TYPE } from "utils/consts";
 
 export const Specializations = () => {
