@@ -290,10 +290,14 @@ export const newTrainCreate = async (
   return Train;
 };
 
-export const translateDocuments = async (id) => {
+export const translateDocuments = (id) => {
   const requestExtension = `/training/translate/${id}`;
-  let response = await authPut(requestExtension).catch(console.error);
-  return response.data.result;
+  return authPut(requestExtension).then(
+    (response) => response?.data,
+    (err) => {
+      console.error(err);
+    }
+  );
 };
 
 export const createAppointment = (appointment) => {

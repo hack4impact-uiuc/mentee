@@ -35,7 +35,8 @@ def get_translation(text: str, language: str) -> dict:
     """Get translation for a given text and language."""
     return client.translate(text, language)
 
-def document_translate_all_languages(source_file) -> dict:
+
+def document_translate_all_languages(source_file, file_name) -> dict:
     """Get all translations for a given document"""
     source_file.seek(0)
     document_content = source_file.read()
@@ -49,25 +50,33 @@ def document_translate_all_languages(source_file) -> dict:
             result = translate_document(target_lang, source_file, document_content)
             pass
         except:
-            logger.exception(f"Error translating {source_file.filename} in {target_lang}")
+            logger.exception(f"Error translating {file_name} in {target_lang}")
             continue
         # TODO: Figure out the correct way to get the translated document
 
         # In case nothing works, this is the code to save the file locally
-        logger.info(f"Saving translated document to {target_lang}_{source_file.filename}")
-        f = open(f'/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{source_file.filename}', 'wb')
+        logger.info(f"Saving translated document to {target_lang}_{file_name}")
+        f = open(
+            f"/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{file_name}",
+            "wb",
+        )
         f.write(result.document_translation.byte_stream_outputs[0])
         f.close()
         # with open(f'/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{source_file.filename}', 'rb') as f:
         #     translations[target_lang] = BytesIO(f.read())
-        translations[target_lang] = BytesIO(result.document_translation.byte_stream_outputs[0])
+        translations[target_lang] = BytesIO(
+            result.document_translation.byte_stream_outputs[0]
+        )
     return translations
 
-def translate_document(target_language: str, source_file, document_content) -> client_v3:
+
+def translate_document(
+    target_language: str, source_file, document_content
+) -> client_v3:
     """Translates a document"""
     document_input_config = {
         "content": document_content,
-        "mime_type": 'application/pdf',
+        "mime_type": "application/pdf",
     }
 
     response = client_v3.translate_document(
@@ -79,18 +88,20 @@ def translate_document(target_language: str, source_file, document_content) -> c
     )
     return response
 
-def populate_translation_field(mongo_document, translations):
+
+def populate_translation_field(mongo_document, translations, file_name):
     """Populates the translations field of a document"""
     for lang in translations:
         if lang == "es-US":
-            mongo_document.es_US.put(translations[lang])
+            mongo_document.es_US.put(translations[lang], filename=file_name)
         elif lang == "pt-BR":
-            mongo_document.pt_BR.put(translations[lang])
+            mongo_document.pt_BR.put(translations[lang], filename=file_name)
         elif lang == "ar":
-            mongo_document.ar.put(translations[lang])
+            mongo_document.ar.put(translations[lang], filename=file_name)
         elif lang == "fa-AF":
-            mongo_document.fa_AF.put(translations[lang])
+            mongo_document.fa_AF.put(translations[lang], filename=file_name)
     return mongo_document
+
 
 def get_translation_document(mongo_document, target_lang):
     """Gets the translation field of a document"""

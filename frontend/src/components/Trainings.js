@@ -21,6 +21,7 @@ import {
   Form,
   Button,
   notification,
+  Spin,
 } from "antd";
 import {
   DeleteOutlined,
@@ -30,6 +31,8 @@ import {
 } from "@ant-design/icons";
 
 import "./css/Trains.scss";
+import AdminDownloadDropdown from "./AdminDownloadDropdown";
+import { parse } from "superagent";
 
 export const Trainings = () => {
   const [role, setRole] = useState(null);
@@ -39,16 +42,17 @@ export const Trainings = () => {
   const [name, setName] = useState(null);
   const [url, setUrl] = useState(null);
   const [desc, setDesc] = useState(null);
-  const [trainrole, setTrainRole] = useState(null);
+  const [trainRole, setTrainRole] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [isNewDocument, setIsNewDocument] = useState(false);
   const [errMessage, setErrorMessage] = useState(null);
   const [typee, setTypee] = useState(null);
   const [filee, setFilee] = useState(null);
-  const [file_name, setFileName] = useState(null);
+  const [fileName, setFileName] = useState(null);
   const [selectedID, setSelectedID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [translateLoading, setTranslateLoading] = useState(false);
   const { Option } = Select;
 
   const showModal = async (id, isNew) => {
@@ -87,7 +91,7 @@ export const Trainings = () => {
     if (
       !name ||
       !desc ||
-      !trainrole ||
+      !trainRole ||
       (typee !== TRAINING_TYPE.DOCUMENT && !url) ||
       (typee === !TRAINING_TYPE.DOCUMENT && !filee)
     ) {
@@ -97,6 +101,8 @@ export const Trainings = () => {
     } else {
       setErr(false);
     }
+
+    console.log("saving changes");
     setLoading(true);
     let isVideo = typee !== TRAINING_TYPE.DOCUMENT;
     if (isNew === true) {
@@ -104,7 +110,7 @@ export const Trainings = () => {
         name,
         url,
         desc,
-        trainrole,
+        trainRole,
         isVideo,
         filee,
         typee
@@ -122,7 +128,7 @@ export const Trainings = () => {
         name,
         url,
         desc,
-        role: trainrole,
+        role: trainRole,
         isVideo,
         filee,
         typee,
@@ -144,6 +150,41 @@ export const Trainings = () => {
   const handleCancel = () => {
     setIsModalVisible(false);
     setIsModalVisible2(false);
+  };
+
+  const handleTrainingDownload = async (record, lang) => {
+    let response = await getTrainVideo(record.id, lang);
+    if (!response) {
+      notification.error({
+        message: "ERROR",
+        description: "Couldn't download file",
+      });
+      return;
+    }
+    downloadBlob(response, record.file_name);
+  };
+
+  const deleteTrain = async (id) => {
+    const success = await deleteTrainbyId(id);
+    if (success) {
+      message.success(`Successfully deleted `);
+      setReload(!reload);
+    } else {
+      message.error(`Could not delete `);
+    }
+  };
+
+  const getAvailableLangs = (record) => {
+    if (!record?.translations) return [I18N_LANGUAGES[0]];
+    let items = I18N_LANGUAGES.filter((lang) => {
+      return (
+        Object.keys(record?.translations).includes(lang.value) &&
+        record?.translations[lang.value] !== null
+      );
+    });
+    // Appends English by default
+    items.unshift(I18N_LANGUAGES[0]);
+    return items;
   };
 
   const TrainForm = () => (
@@ -186,10 +227,10 @@ export const Trainings = () => {
                 <p>
                   <Button
                     onClick={() => {
-                      downloadBlob(filee, file_name);
+                      downloadBlob(filee, fileName);
                     }}
                   >
-                    {file_name}
+                    {fileName}
                   </Button>
                 </p>
               )}
@@ -200,7 +241,8 @@ export const Trainings = () => {
                 onChange={(e) => {
                   setIsNewDocument(true);
                   setFilee(e.target.files[0]);
-                  setFileName(e.target.files[0].filename);
+                  console.log(e.target.files[0]);
+                  setFileName(e.target.files[0].name);
                 }}
               ></Input>
             </>
@@ -218,7 +260,7 @@ export const Trainings = () => {
             style={{ width: 120 }}
             onChange={(value) => setTrainRole(value)}
             placeholder="Role"
-            value={trainrole}
+            value={trainRole ? parseInt(trainRole) : role}
           >
             <Option value={ACCOUNT_TYPE.MENTOR}>Mentor</Option>
             <Option value={ACCOUNT_TYPE.MENTEE}>Mentee</Option>
@@ -249,22 +291,10 @@ export const Trainings = () => {
           );
         } else {
           return (
-            // TODO: Change this to a better download button UI Experience
-            <Select
-              onSelect={async (lang) => {
-                let response = await getTrainVideo(record.id, lang);
-                console.log(response);
-                if (!response) {
-                  notification.error({
-                    message: "ERROR",
-                    description: "Couldn't download file",
-                  });
-                  return;
-                }
-                downloadBlob(response, record.file_name);
-              }}
-              options={I18N_LANGUAGES}
-              placeholder="Download Document"
+            <AdminDownloadDropdown
+              options={getAvailableLangs(record)}
+              title="Download Document"
+              onClick={(lang) => handleTrainingDownload(record, lang)}
             />
           );
         }
@@ -289,11 +319,27 @@ export const Trainings = () => {
       render: (id, record) => (
         <Popconfirm
           title={`Are you sure you want to translate? ($0.08 per page per language)`}
-          onConfirm={() => {
-            translateDocuments(id);
+          onConfirm={async () => {
+            setTranslateLoading(true);
+            const res = await translateDocuments(id);
+            if (!res?.success) {
+              notification.error({
+                message: "ERROR",
+                description: `Couldn't translate file`,
+              });
+            } else {
+              notification.success({
+                message: "SUCCESS",
+                description: "Translation has been done successfully",
+              });
+            }
+            setTranslateLoading(false);
           }}
           onCancel={() =>
-            message.info(`No translation has been for ${record.name}`)
+            notification.info({
+              message: "INFO",
+              description: `No translation has been done for ${record.name}`,
+            })
           }
           okText="Yes"
           cancelText="No"
@@ -357,15 +403,7 @@ export const Trainings = () => {
       align: "center",
     },
   ];
-  const deleteTrain = async (id) => {
-    const success = await deleteTrainbyId(id);
-    if (success) {
-      message.success(`Successfully deleted `);
-      setReload(!reload);
-    } else {
-      message.error(`Could not delete `);
-    }
-  };
+
   useEffect(() => {
     const getData = async () => {
       let newData = await getTrainings(role);
@@ -408,7 +446,9 @@ export const Trainings = () => {
         </div>
       </div>
       <div className="trainTable">
-        <Table columns={columns} dataSource={data} />
+        <Spin spinning={translateLoading}>
+          <Table columns={columns} dataSource={data} />
+        </Spin>
       </div>
       <Modal
         title=""

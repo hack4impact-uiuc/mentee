@@ -1,10 +1,20 @@
 from flask import Blueprint, request
 from werkzeug.utils import secure_filename
 from api.core import create_response, logger
-from api.models import Training, MentorProfile, MenteeProfile, PartnerProfile, Translations
+from api.models import (
+    Training,
+    MentorProfile,
+    MenteeProfile,
+    PartnerProfile,
+    Translations,
+)
 from datetime import datetime
 from api.utils.require_auth import admin_only, all_users
-from api.utils.google_translate import document_translate_all_languages, populate_translation_field, get_translation_document
+from api.utils.google_translate import (
+    document_translate_all_languages,
+    populate_translation_field,
+    get_translation_document,
+)
 from datetime import datetime
 from flask import send_file
 from io import BytesIO
@@ -65,7 +75,7 @@ def get_train_file(id):
 
     if lang in I18N_LANGUAGES:
         if lang == "en-US":
-            document = train.filee.read() 
+            document = train.filee.read()
         else:
             document = get_translation_document(train.translations, lang)
     else:
@@ -148,7 +158,7 @@ def new_train(role):
             file_name = secure_filename(document.filename)
             if file_name == "":
                 return create_response(status=400, message="Missing file name")
-            
+
             train.file_name = file_name
             train.filee.put(document, filename=file_name)
         else:
@@ -157,36 +167,37 @@ def new_train(role):
         train.save()
 
         # TODO: Remove this so that it is a job in the background
-        # new_train_id = train.id
-        # if int(role) == Account.MENTOR:
-        #     receivers = MentorProfile.objects.all()
-        # elif int(role) == Account.MENTEE:
-        #     receivers = MenteeProfile.objects.all()
-        # else:
-        #     receivers = PartnerProfile.objects.all()
+        new_train_id = train.id
+        if int(role) == Account.MENTOR:
+            receivers = MentorProfile.objects.all()
+        elif int(role) == Account.MENTEE:
+            receivers = MenteeProfile.objects.all()
+        else:
+            receivers = PartnerProfile.objects.all()
 
-        # front_url = request.form["front_url"]
-        # target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
-        # for receiver in receivers:
-        #     res, res_msg = send_email(
-        #         recipient=receiver.email,
-        #         data={
-        #             "link": target_url,
-        #             receiver.preferred_language: True,
-        #             "subject": TRANSLATIONS[receiver.preferred_language][
-        #                 "new_training"
-        #             ],
-        #         },
-        #         template_id=NEW_TRAINING_TEMPLATE,
-        #     )
-        #     if not res:
-        #         msg = "Failed to send new traing data alert email " + res_msg
-        #         logger.info(msg)
+        front_url = request.form["front_url"]
+        target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
+        for receiver in receivers:
+            res, res_msg = send_email(
+                recipient=receiver.email,
+                data={
+                    "link": target_url,
+                    receiver.preferred_language: True,
+                    "subject": TRANSLATIONS[receiver.preferred_language][
+                        "new_training"
+                    ],
+                },
+                template_id=NEW_TRAINING_TEMPLATE,
+            )
+            if not res:
+                msg = "Failed to send new traing data alert email " + res_msg
+                logger.info(msg)
 
     except Exception as e:
         return create_response(status=400, message=f"missing parameters {e}")
 
     return create_response(status=200, data={"train": train})
+
 
 @training.route("/translate/<string:id>", methods=["PUT"])
 @admin_only
@@ -199,12 +210,14 @@ def translate_training(id):
     try:
         document = training.filee
         logger.info(document)
-        translations = document_translate_all_languages(document)
+        translations = document_translate_all_languages(document, training.file_name)
         new_translations = Translations()
-        new_translations = populate_translation_field(new_translations, translations)
+        new_translations = populate_translation_field(
+            new_translations, translations, training.file_name
+        )
         training.translations = new_translations
         training.save()
     except Exception as e:
-        return create_response(status=500, message=f"{e}")
+        return create_response(status=500, message=f"Failed to translate languages {e}")
 
     return create_response(status=200, message="Successful translation")

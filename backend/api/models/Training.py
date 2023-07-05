@@ -4,6 +4,7 @@ from .base import db
 from mongoengine import *
 from api.models import Translations
 
+
 class Training(Document, Mixin):
     """Model for mentor application."""
 
