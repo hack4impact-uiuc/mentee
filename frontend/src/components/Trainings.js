@@ -39,7 +39,7 @@ export const Trainings = () => {
   const [reload, setReload] = useState(true);
   const [translateLoading, setTranslateLoading] = useState(false);
   const [translateOpen, setTranslateOpen] = useState(false);
-  const [documentCost, setDocumentCost] = useState(null);
+  // const [documentCost, setDocumentCost] = useState(null);
   const [trainingId, setTrainingId] = useState(null);
   const [openUpdateTraining, setOpenUpdateTraining] = useState(false);
   const [currentTraining, setCurrentTraining] = useState(null);
@@ -146,27 +146,27 @@ export const Trainings = () => {
   };
 
   const translateOpenChange = async (selectedId) => {
-    setTranslateLoading(true);
-    message.loading("Getting translation cost...", 4);
+    // setTranslateLoading(true);
+    // message.loading("Getting translation cost...", 4);
     setTrainingId(selectedId);
-    const res = await getTranslateDocumentCost(selectedId);
-    if (!res?.success) {
-      notification.error({
-        message: "ERROR",
-        description: `Couldn't get translation cost`,
-      });
-      setTranslateLoading(false);
-      return;
-    }
-    const resPrice = res?.result?.cost;
+    // const res = await getTranslateDocumentCost(selectedId);
+    // if (!res?.success) {
+    //   notification.error({
+    //     message: "ERROR",
+    //     description: `Couldn't get translation cost`,
+    //   });
+    //   setTranslateLoading(false);
+    //   return;
+    // }
+    // const resPrice = res?.result?.cost;
 
-    let formatCost = Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumSignificantDigits: 3,
-    });
-    setDocumentCost(formatCost.format(resPrice));
-    setTranslateLoading(false);
+    // let formatCost = Intl.NumberFormat("en-US", {
+    //   style: "currency",
+    //   currency: "USD",
+    //   maximumSignificantDigits: 3,
+    // });
+    // setDocumentCost(formatCost.format(resPrice));
+    // setTranslateLoading(false);
     setTranslateOpen(true);
   };
 
@@ -327,7 +327,7 @@ export const Trainings = () => {
       <TrainingTranslationModal
         setOpenModal={setTranslateOpen}
         openModal={translateOpen}
-        documentCost={documentCost}
+        //documentCost={documentCost}
         trainingId={trainingId}
       />
       <UpdateTrainingForm

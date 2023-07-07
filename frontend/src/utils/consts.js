@@ -1,12 +1,15 @@
-export const BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.REACT_APP_ENV === "development"
-      ? "https://mentee-dev.herokuapp.com/"
-      : "https://app.menteeglobal.org/"
-    : "http://localhost:8000/";
+export const IS_PRODUCTION = process.env.NODE_ENV === "production";
+export const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
 
-export const FRONT_BASE_URL =
-  process.env.NODE_ENV === "production" ? BASE_URL : `http://localhost:3000/`;
+export const BASE_URL = IS_PRODUCTION
+  ? IS_DEVELOPMENT
+    ? "https://mentee-dev.herokuapp.com/"
+    : "https://app.menteeglobal.org/"
+  : "http://localhost:8000/";
+
+export const FRONT_BASE_URL = IS_PRODUCTION
+  ? BASE_URL
+  : `http://localhost:3000/`;
 
 export const API_URL = BASE_URL + "api/";
 

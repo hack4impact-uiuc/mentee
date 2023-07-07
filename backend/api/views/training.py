@@ -213,27 +213,28 @@ def new_train(role):
     return create_response(status=200, data={"train": train})
 
 
-@training.route("/translateCost/<string:id>", methods=["GET"])
-@admin_only
-def get_translation_cost(id):
-    try:
-        training = Training.objects.get(id=id)
-    except Exception as e:
-        return create_response(
-            status=400, message=f"Could not find training object {e}"
-        )
+# TODO: Find a way to optimize this
+# @training.route("/translateCost/<string:id>", methods=["GET"])
+# @admin_only
+# def get_translation_cost(id):
+#     try:
+#         training = Training.objects.get(id=id)
+#     except Exception as e:
+#         return create_response(
+#             status=400, message=f"Could not find training object {e}"
+#         )
 
-    try:
-        document = training.filee
-        reader = PdfReader(document)
-        pages = len(reader.pages)
-        cost = pages * TRANSLATION_COST_PER_PAGE * len(TARGET_LANGS)
-    except Exception as e:
-        return create_response(
-            status=500, message=f"Failed to calculate translation cost {e}"
-        )
+#     try:
+#         document = training.filee
+#         reader = PdfReader(document)
+#         pages = len(reader.pages)
+#         cost = pages * TRANSLATION_COST_PER_PAGE * len(TARGET_LANGS)
+#     except Exception as e:
+#         return create_response(
+#             status=500, message=f"Failed to calculate translation cost {e}"
+#         )
 
-    return create_response(status=200, data={"cost": cost})
+#     return create_response(status=200, data={"cost": cost})
 
 
 @training.route("/translate/<string:id>", methods=["PUT"])
