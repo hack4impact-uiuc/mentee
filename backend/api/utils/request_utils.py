@@ -21,7 +21,7 @@ from api.models import (
     NewMentorApplication,
     PartnerApplication,
 )
-from api.utils.constants import Account, I18N_LANGUAGES
+from api.utils.constants import Account, TARGET_LANGS
 
 wtforms_json.init()
 
@@ -206,7 +206,7 @@ def send_email(
 
     if data:
         # Set default language to English if no language is specified
-        if len(I18N_LANGUAGES.intersection(data.keys())) == 0:
+        if len(TARGET_LANGS.intersection(data.keys())) == 0:
             data["en-US"] = True
         message.dynamic_template_data = data
     else:

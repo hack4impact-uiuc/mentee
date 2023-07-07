@@ -1,4 +1,4 @@
-from api.utils.constants import I18N_LANGUAGES
+from api.utils.constants import TARGET_LANGS
 from api.core import logger
 from google.cloud import translate_v2
 from google.cloud import translate_v3beta1 as translate_v3
@@ -17,9 +17,7 @@ parent = f"projects/{project_id}/locations/{location}"
 
 def get_all_translations(text: str) -> dict:
     """Get all translations for a given text."""
-    target_languages = I18N_LANGUAGES.copy()
-    target_languages.remove("en-US")
-    translations = {language: text for language in target_languages}
+    translations = {language: text for language in TARGET_LANGS}
 
     for language in translations:
         try:
@@ -40,9 +38,7 @@ def document_translate_all_languages(source_file, file_name) -> dict:
     """Get all translations for a given document"""
     source_file.seek(0)
     document_content = source_file.read()
-    target_languages = I18N_LANGUAGES
-    target_languages.remove("en-US")
-    translations = {language: source_file for language in target_languages}
+    translations = {language: source_file for language in TARGET_LANGS}
 
     for target_lang in translations:
         logger.info(f"Translating document to {target_lang}")
@@ -52,16 +48,16 @@ def document_translate_all_languages(source_file, file_name) -> dict:
         except:
             logger.exception(f"Error translating {file_name} in {target_lang}")
             continue
-        # TODO: Figure out the correct way to get the translated document
 
-        # In case nothing works, this is the code to save the file locally
-        logger.info(f"Saving translated document to {target_lang}_{file_name}")
-        f = open(
-            f"/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{file_name}",
-            "wb",
-        )
-        f.write(result.document_translation.byte_stream_outputs[0])
-        f.close()
+        # TODO: Figure out the correct way to get the translated document
+        # # In case nothing works, this is the code to save the file locally
+        # logger.info(f"Saving translated document to {target_lang}_{file_name}")
+        # f = open(
+        #     f"/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{file_name}",
+        #     "wb",
+        # )
+        # f.write(result.document_translation.byte_stream_outputs[0])
+        # f.close()
         # with open(f'/Users/leonardogalindo/Code/mentee/backend/{target_lang}_{source_file.filename}', 'rb') as f:
         #     translations[target_lang] = BytesIO(f.read())
         translations[target_lang] = BytesIO(

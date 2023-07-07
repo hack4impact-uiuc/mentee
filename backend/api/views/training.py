@@ -25,7 +25,7 @@ from api.utils.constants import (
     Account,
     NEW_TRAINING_TEMPLATE,
     TRANSLATIONS,
-    I18N_LANGUAGES,
+    TARGET_LANGS,
     TRANSLATION_COST_PER_PAGE,
 )
 from api.utils.request_utils import send_email
@@ -39,7 +39,7 @@ def get_trainings(role):
     trainings = Training.objects(role=str(role))
     result = []
 
-    if lang in I18N_LANGUAGES and lang != "en-US":
+    if lang in TARGET_LANGS:
         for training in trainings:
             training_dict = json.loads(training.to_json())
             training_dict["name"] = training.nameTranslated.get(lang, training.name)
@@ -87,13 +87,10 @@ def get_train_file(id):
     except:
         return create_response(status=422, message="training not found")
 
-    if lang in I18N_LANGUAGES:
-        if lang == "en-US":
-            document = train.filee.read()
-        else:
-            document = get_translation_document(train.translations, lang)
+    if lang in TARGET_LANGS:
+        document = get_translation_document(train.translations, lang)
     else:
-        return create_response(status=422, message="Language requested not supported")
+        document = train.filee.read()
 
     content_type = train.filee.content_type
 
@@ -110,19 +107,24 @@ def get_train_file(id):
 def get_train_id_edit(id):
     isVideo = True if request.form["isVideo"] == "true" else False
 
-    # try:
-    train = Training.objects.get(id=id)
-    train.name = request.form.get("name", train.name)
-    train.nameTranslated = get_all_translations(request.form.get("name", train.name))
-    train.description = request.form.get("description", train.description)
-    train.descriptionTranslated = get_all_translations(
-        request.form.get("description", train.description)
-    )
+    try:
+        train = Training.objects.get(id=id)
+    except Exception as e:
+        return create_response(status=422, message=f"Failed to get training: {e}")
+
+    new_name = request.form.get("name", train.name)
+    new_description = request.form.get("description", train.description)
+    if train.name != new_name:
+        train.name = new_name
+        train.nameTranslated = get_all_translations(new_name)
+    if train.description != new_description:
+        train.description = new_description
+        train.descriptionTranslated = get_all_translations(new_description)
+
     train.role = str(request.form.get("role", train.role))
     train.typee = request.form.get("typee", train.typee)
     train.isVideo = isVideo
     if not isVideo and request.form.get("isNewDocument", False) == "true":
-        logger.info("adding new document")
         document = request.files.get("document", None)
         if not document:
             return create_response(status=400, message="Missing file")
@@ -136,9 +138,6 @@ def get_train_id_edit(id):
         train.url = request.form.get("url", train.url)
 
     train.save()
-
-    # except:
-    #   return create_response(status=422, message="training not found")
 
     return create_response(status=200, data={"train": train})
 
@@ -228,7 +227,7 @@ def get_translation_cost(id):
         document = training.filee
         reader = PdfReader(document)
         pages = len(reader.pages)
-        cost = pages * TRANSLATION_COST_PER_PAGE * (len(I18N_LANGUAGES) - 1)
+        cost = pages * TRANSLATION_COST_PER_PAGE * len(TARGET_LANGS)
     except Exception as e:
         return create_response(
             status=500, message=f"Failed to calculate translation cost {e}"

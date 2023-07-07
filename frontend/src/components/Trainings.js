@@ -68,7 +68,6 @@ export const Trainings = () => {
         });
       }
     } else {
-      console.log("values", values);
       const res = await EditTrainById(trainingId, values);
       if (!res?.success) {
         notification.error({

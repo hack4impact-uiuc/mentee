@@ -63,8 +63,7 @@ APPT_STATUS = {
     "REJECTED": "Rejected",
 }
 
-I18N_LANGUAGES = {
-    "en-US",
+TARGET_LANGS = {
     "es-US",
     "pt-BR",
     "ar",
