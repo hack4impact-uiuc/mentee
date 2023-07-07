@@ -13,6 +13,9 @@ function TrainingTranslationModal({
 }) {
   const [translateLoading, setTranslateLoading] = useState(false);
   const blockTranslation = IS_DEVELOPMENT || !IS_PRODUCTION;
+  console.log(process.env.NODE_ENV);
+  console.log(blockTranslation);
+  console.log(process.env);
 
   const handleTranslateConfirm = async (trainingId) => {
     if (blockTranslation) {
