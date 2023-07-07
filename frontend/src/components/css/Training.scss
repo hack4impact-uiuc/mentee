@@ -1,24 +1,7 @@
 .trains {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  margin: 20px 20px;
 }
-.rolesContainer {
-  width: 100%;
-}
-.roles {
-  width: 60%;
-  height: 37.76px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 50px;
-}
-.trainTable {
-  width: 90%;
-  overflow: auto;
-}
+
 .trainForm {
   margin: 30px;
 }
@@ -28,14 +11,12 @@
   margin-bottom: 20px;
 }
 .table-button-group > .table-button {
-  margin: 0px 4px;
-  color: black;
+  margin-bottom: 1em;
+  margin-left: 0;
 }
 .table-button-group {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  margin: 10px;
 }
 .isVideo {
   margin-bottom: 25px;
@@ -50,5 +31,9 @@
 .translate-modal-container {
   display: flex;
   flex-direction: column;
+  padding: 2em;
+}
+
+.update-training-form {
   padding: 2em;
 }

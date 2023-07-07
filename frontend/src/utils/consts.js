@@ -92,6 +92,12 @@ export const AGE_RANGES = [
   "70s+",
 ];
 
+export function getAgeRanges(t) {
+  return AGE_RANGES.map((ageRange) =>
+    Object({ label: t(`ageRanges.${ageRange}`), value: ageRange })
+  );
+}
+
 export const GENDERS = ["Male", "Female", "Non-Binary", "Other"];
 
 // Keys for fields of Appointments

@@ -96,11 +96,7 @@ def get_train_file(id):
 @training.route("/<string:id>", methods=["PUT"])
 @admin_only
 def get_train_id_edit(id):
-    isVideoo = request.form["isVideo"]
-    if isVideoo == "true":
-        isVideoo = True
-    if isVideoo == "false":
-        isVideoo = False
+    isVideo = True if request.form["isVideo"] == "true" else False
 
     # try:
     train = Training.objects.get(id=id)
@@ -108,8 +104,8 @@ def get_train_id_edit(id):
     train.description = request.form["description"]
     train.role = str(request.form["role"])
     train.typee = request.form["typee"]
-    train.isVideo = isVideoo
-    if not isVideoo and request.form.get("isNewDocument", False) == "true":
+    train.isVideo = isVideo
+    if not isVideo and request.form.get("isNewDocument", False) == "true":
         document = request.files.get("document", None)
         if not document:
             return create_response(status=400, message="Missing file")
@@ -138,21 +134,17 @@ def new_train(role):
         name = request.form["name"]
         description = request.form["description"]
         typee = request.form["typee"]
-        isVideoo = request.form["isVideo"]
-        if isVideoo == "true":
-            isVideoo = True
-        if isVideoo == "false":
-            isVideoo = False
+        isVideo = True if request.form["isVideo"] == "true" else False
 
         train = Training(
             name=name,
             description=description,
             role=str(role),
             typee=typee,
-            isVideo=isVideoo,
+            isVideo=isVideo,
             date_submitted=datetime.now(),
         )
-        if not isVideoo:
+        if not isVideo:
             document = request.files.get("document", None)
             if not document:
                 return create_response(status=400, message="Missing file")
@@ -171,29 +163,31 @@ def new_train(role):
         # TODO: Remove this so that it is a job in the background
         new_train_id = train.id
         if int(role) == Account.MENTOR:
-            receivers = MentorProfile.objects.all()
+            recipients = MentorProfile.objects.only("email", "preferred_language")
         elif int(role) == Account.MENTEE:
-            receivers = MenteeProfile.objects.all()
+            recipients = MenteeProfile.objects.only("email", "preferred_language")
         else:
-            receivers = PartnerProfile.objects.all()
-
+            recipients = PartnerProfile.objects.only("email", "preferred_language")
         front_url = request.form["front_url"]
         target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
-        for receiver in receivers:
+
+        for recipient in recipients:
+            # if not recipient.preferred_language:
+            #     recipient.preferred_language = "en-US"
             res, res_msg = send_email(
-                recipient=receiver.email,
+                recipient=recipient.email,
                 data={
                     "link": target_url,
-                    receiver.preferred_language: True,
-                    "subject": TRANSLATIONS[receiver.preferred_language][
+                    recipient.preferred_language: True,
+                    "subject": TRANSLATIONS[recipient.preferred_language][
                         "new_training"
                     ],
                 },
                 template_id=NEW_TRAINING_TEMPLATE,
             )
-            if not res:
-                msg = "Failed to send new traing data alert email " + res_msg
-                logger.info(msg)
+        if not res:
+            msg = "Failed to send new traing data alert email " + res_msg
+            logger.error(msg)
 
     except Exception as e:
         return create_response(status=400, message=f"missing parameters {e}")

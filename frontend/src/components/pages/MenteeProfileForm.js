@@ -11,7 +11,7 @@ import {
   uploadMenteeImage,
 } from "utils/api";
 import { PlusCircleFilled, DeleteOutlined } from "@ant-design/icons";
-import { MENTEE_DEFAULT_VIDEO_NAME, AGE_RANGES } from "utils/consts";
+import { MENTEE_DEFAULT_VIDEO_NAME, getAgeRanges } from "utils/consts";
 import { useMediaQuery } from "react-responsive";
 import moment from "moment";
 import "../css/AntDesign.scss";
@@ -600,7 +600,7 @@ function MenteeRegisterForm(props) {
             index={4}
             handleClick={handleClick}
             onChange={handleAgeChange}
-            options={AGE_RANGES}
+            options={getAgeRanges(t)}
             value={age}
             valid={isValid[4]}
             validate={validate}

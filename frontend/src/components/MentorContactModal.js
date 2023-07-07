@@ -16,7 +16,7 @@ function MentorContactModal({
   mentorSpecializations,
 }) {
   const { t } = useTranslation();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState("");
   const [responseEmail, setResponseEmail] = useState("");
   const [interestAreas, setInterestAreas] = useState([]);
@@ -25,7 +25,7 @@ function MentorContactModal({
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   const closeModal = () => {
-    setModalVisible(false);
+    setOpenModal(false);
     setMessage(null);
     setError(false);
     setInterestAreas([]);
@@ -45,15 +45,14 @@ function MentorContactModal({
         content={<b>{t("common.contactMe")}</b>}
         borderOnClick
         onClick={() => {
-          setModalVisible(true);
+          setOpenModal(true);
         }}
         width="120px"
         style={{ marginRight: "6px" }}
       />
       <Modal
         forceRender
-        title="        " // Uses Unicode spaces to get desired heading
-        visible={modalVisible}
+        open={openModal}
         onCancel={() => closeModal()}
         className="contact-me-modal"
         style={{ overflow: "hidden" }}
@@ -170,7 +169,7 @@ function MentorContactModal({
       </Modal>
       <Modal
         forceRender
-        visible={confirmationModal}
+        open={confirmationModal}
         onCancel={() => setConfirmationModal(false)}
         className="modal-mentee-confirmation-modal"
         style={{ overflow: "hidden" }}

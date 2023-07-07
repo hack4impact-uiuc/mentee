@@ -14,14 +14,11 @@ import {
   Table,
   Popconfirm,
   message,
-  Modal,
-  Select,
-  Input,
   Radio,
-  Form,
   Button,
   notification,
   Spin,
+  Tabs,
 } from "antd";
 import {
   DeleteOutlined,
@@ -33,122 +30,78 @@ import {
 import "./css/Training.scss";
 import AdminDownloadDropdown from "./AdminDownloadDropdown";
 import TrainingTranslationModal from "./TrainingTranslationModal";
+import UpdateTrainingForm from "./UpdateTrainingModal";
 
 export const Trainings = () => {
   const [role, setRole] = useState(null);
-  const [data, setData] = useState([]);
-  const [err, setErr] = useState(false);
+  const [trainingData, setTrainingData] = useState([]);
   const [reload, setReload] = useState(true);
-  const [name, setName] = useState(null);
-  const [url, setUrl] = useState(null);
-  const [desc, setDesc] = useState(null);
-  const [trainRole, setTrainRole] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isNewDocument, setIsNewDocument] = useState(false);
-  const [errMessage, setErrorMessage] = useState(null);
-  const [typee, setTypee] = useState(null);
-  const [filee, setFilee] = useState(null);
-  const [fileName, setFileName] = useState(null);
-  const [selectedID, setSelectedID] = useState("");
-  const [loading, setLoading] = useState(false);
   const [translateLoading, setTranslateLoading] = useState(false);
   const [translateOpen, setTranslateOpen] = useState(false);
   const [documentCost, setDocumentCost] = useState(null);
   const [trainingId, setTrainingId] = useState(null);
-  const { Option } = Select;
+  const [openUpdateTraining, setOpenUpdateTraining] = useState(false);
+  const [currentTraining, setCurrentTraining] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const showModal = async (id, isNew) => {
-    setIsNewDocument(false);
-    if (isNew === false) {
-      setIsModalVisible(true);
-      setSelectedID(id);
-      let train = await getTrainById(id);
-      if (train) {
-        setName(train.name);
-        setDesc(train.description);
-        setTrainRole(train.role);
-        setTypee(train.typee);
-        if (train.isVideo) {
-          setUrl(train.url);
-        } else {
-          let response = await getTrainVideo(id);
-
-          setFilee(response);
-          setFileName(train.file_name);
-        }
-      }
-    } else {
-      setSelectedID("");
-      setName("");
-      setUrl("");
-      setDesc("");
-      setFilee(null);
-      setTrainRole(null);
-      setTypee(null);
-      setIsModalVisible(true);
-    }
+  const onCancelTrainingForm = () => {
+    setTrainingId(null);
+    setCurrentTraining(null);
+    setOpenUpdateTraining(false);
   };
 
-  const handleOk = async (isNew) => {
-    if (
-      !name ||
-      !desc ||
-      !trainRole ||
-      (typee !== TRAINING_TYPE.DOCUMENT && !url) ||
-      (typee === !TRAINING_TYPE.DOCUMENT && !filee)
-    ) {
-      setErr(true);
-      setErrorMessage("Please Fill Input Cell");
-      return;
-    } else {
-      setErr(false);
-    }
+  const onFinishTrainingForm = async (values, isNewTraining) => {
     setLoading(true);
-    let isVideo = typee !== TRAINING_TYPE.DOCUMENT;
-    if (isNew === true) {
-      let train = await newTrainCreate(
-        name,
-        url,
-        desc,
-        trainRole,
-        isVideo,
-        filee,
-        typee
-      );
-      if (train) {
-        setErr(false);
-        setIsModalVisible(false);
+    if (isNewTraining) {
+      message.loading("Announcing new training...", 3);
+      const res = await newTrainCreate(values);
+      if (!res?.success) {
+        notification.error({
+          message: "ERROR",
+          description: `Couldn't create new training`,
+        });
       } else {
-        setErr(true);
-        setErrorMessage("Couldn't save changes");
+        notification.success({
+          message: "SUCCESS",
+          description: "New training has been created successfully",
+        });
       }
     } else {
-      let train = await EditTrainById({
-        id: selectedID,
-        name,
-        url,
-        desc,
-        role: trainRole,
-        isVideo,
-        filee,
-        typee,
-        isNewDocument,
-      });
-      if (train) {
-        setErr(false);
-        setIsModalVisible(false);
+      console.log("values", values);
+      const res = await EditTrainById(trainingId, values);
+      if (!res?.success) {
+        notification.error({
+          message: "ERROR",
+          description: `Couldn't update training`,
+        });
       } else {
-        setErr(true);
-        setErrorMessage("Couldn't save changes");
+        notification.success({
+          message: "SUCCESS",
+          description: "Training has been updated successfully",
+        });
       }
     }
-
-    setReload(!reload);
     setLoading(false);
+    setTrainingId(null);
+    setReload(!reload);
+    setCurrentTraining(null);
+    setOpenUpdateTraining(false);
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  const openUpdateTrainingModal = (id = null) => {
+    if (id) {
+      setTrainingId(id);
+      getTrainById(id).then((res) => {
+        if (res) {
+          setCurrentTraining(res);
+          setOpenUpdateTraining(true);
+        }
+      });
+    } else {
+      setTrainingId(null);
+      setCurrentTraining(null);
+      setOpenUpdateTraining(true);
+    }
   };
 
   const handleTrainingDownload = async (record, lang) => {
@@ -166,10 +119,16 @@ export const Trainings = () => {
   const deleteTrain = async (id) => {
     const success = await deleteTrainbyId(id);
     if (success) {
-      message.success(`Successfully deleted `);
+      notification.success({
+        message: "SUCCESS",
+        description: "Training has been deleted successfully",
+      });
       setReload(!reload);
     } else {
-      message.error(`Could not delete `);
+      notification.error({
+        message: "ERROR",
+        description: `Couldn't delete training`,
+      });
     }
   };
 
@@ -188,6 +147,7 @@ export const Trainings = () => {
 
   const translateOpenChange = async (selectedId) => {
     setTranslateLoading(true);
+    message.loading("Getting translation cost...", 4);
     setTrainingId(selectedId);
     const res = await getTranslateDocumentCost(selectedId);
     if (!res?.success) {
@@ -209,89 +169,6 @@ export const Trainings = () => {
     setTranslateLoading(false);
     setTranslateOpen(true);
   };
-
-  const TrainForm = () => (
-    <Form className="trainForm">
-      {loading ? (
-        <h1>Loading ...</h1>
-      ) : (
-        <>
-          <p>Name *</p>
-          <Input
-            placeholder="Name *"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <p>Training Type *</p>
-          <Radio.Group
-            onChange={(e) => setTypee(e.target.value)}
-            value={typee}
-            className="isVideo"
-          >
-            <Radio value={TRAINING_TYPE.VIDEO}>Video</Radio>
-            <Radio value={TRAINING_TYPE.DOCUMENT}>Document</Radio>
-            <Radio value={TRAINING_TYPE.LINK}>External Link</Radio>
-          </Radio.Group>
-          {typee !== TRAINING_TYPE.DOCUMENT ? (
-            <>
-              <p>Url *</p>
-              <Input
-                placeholder="Url *"
-                type="text"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              />
-            </>
-          ) : (
-            <>
-              {" "}
-              {filee && (
-                <p>
-                  <Button
-                    onClick={() => {
-                      downloadBlob(filee, fileName);
-                    }}
-                  >
-                    {fileName}
-                  </Button>
-                </p>
-              )}
-              <p>PDF File*</p>
-              <Input
-                type="file"
-                accept="application/pdf"
-                onChange={(e) => {
-                  setIsNewDocument(true);
-                  setFilee(e.target.files[0]);
-                  setFileName(e.target.files[0].name);
-                }}
-              ></Input>
-            </>
-          )}
-
-          <p>Description *</p>
-          <Input
-            placeholder="Description *"
-            type="text"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
-          <p>Role *</p>
-          <Select
-            style={{ width: 120 }}
-            onChange={(value) => setTrainRole(value)}
-            placeholder="Role"
-            value={trainRole ? parseInt(trainRole) : role}
-          >
-            <Option value={ACCOUNT_TYPE.MENTOR}>Mentor</Option>
-            <Option value={ACCOUNT_TYPE.MENTEE}>Mentee</Option>
-            <Option value={ACCOUNT_TYPE.PARTNER}>Partner</Option>
-          </Select>
-        </>
-      )}
-    </Form>
-  );
 
   const columns = [
     {
@@ -359,7 +236,7 @@ export const Trainings = () => {
       render: (id) => (
         <EditOutlined
           className="delete-user-btn"
-          onClick={() => showModal(id, false)}
+          onClick={() => openUpdateTrainingModal(id)}
         />
       ),
 
@@ -390,16 +267,49 @@ export const Trainings = () => {
     const getData = async () => {
       let newData = await getTrainings(role);
       if (newData) {
-        setData(newData);
+        setTrainingData(newData);
       } else {
-        setErr(true);
+        setTrainingData([]);
+        notification.error({
+          message: "ERROR",
+          description: "Couldn't get trainings",
+        });
       }
     };
     getData();
   }, [role, reload]);
   return (
     <div className="trains">
-      <div className="rolesContainer">
+      <Tabs
+        defaultActiveKey="1"
+        onChange={(key) => setRole(key)}
+        items={[
+          {
+            label: `Mentee`,
+            key: ACCOUNT_TYPE.MENTEE,
+          },
+          {
+            label: `Mentor`,
+            key: ACCOUNT_TYPE.MENTOR,
+          },
+          {
+            label: `Partner`,
+            key: ACCOUNT_TYPE.PARTNER,
+          },
+        ]}
+      />
+      <div className="table-button-group">
+        <Button
+          className="table-button"
+          icon={<PlusCircleOutlined />}
+          onClick={() => {
+            openUpdateTrainingModal();
+          }}
+        >
+          New Training
+        </Button>
+      </div>
+      {/* <div className="rolesContainer">
         <Radio.Group
           className="roles"
           onChange={(e) => setRole(e.target.value)}
@@ -415,42 +325,23 @@ export const Trainings = () => {
             Partner
           </Radio>
         </Radio.Group>
-        <div className="table-button-group">
-          <Button
-            className="table-button"
-            icon={<PlusCircleOutlined />}
-            onClick={() => {
-              showModal("", true);
-            }}
-          >
-            New Training
-          </Button>
-        </div>
-      </div>
-      <div className="trainTable">
-        <Spin spinning={translateLoading}>
-          <Table columns={columns} dataSource={data} />
-        </Spin>
-      </div>
+      </div> */}
+      <Spin spinning={translateLoading}>
+        <Table columns={columns} dataSource={trainingData} />
+      </Spin>
       <TrainingTranslationModal
         setOpenModal={setTranslateOpen}
         openModal={translateOpen}
         documentCost={documentCost}
         trainingId={trainingId}
       />
-      <Modal
-        title=""
-        open={isModalVisible}
-        onOk={() => handleOk(false)}
-        onCancel={handleCancel}
-        okText="save"
-        closable={false}
-        width={"600px"}
-        okButtonProps={{ disabled: loading ? true : false }}
-      >
-        {TrainForm()}
-        {err ? <p className="error">{errMessage}</p> : ""}
-      </Modal>
+      <UpdateTrainingForm
+        open={openUpdateTraining}
+        onCancel={onCancelTrainingForm}
+        onFinish={onFinishTrainingForm}
+        currentTraining={currentTraining}
+        loading={loading}
+      />
     </div>
   );
 };

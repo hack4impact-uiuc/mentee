@@ -181,18 +181,21 @@ export const getTrainings = async (role) => {
   }
   return newTrain;
 };
+
 export const getNotifys = async () => {
   const requestExtension = `/notifys/`;
   const res = await authGet(requestExtension).catch(console.error);
   const notifys = res.data.result.notifys;
   return notifys;
 };
+
 export const markNotifyReaded = async (id) => {
   const requestExtension = `/notifys/${id}`;
   let response = await authGet(requestExtension).catch(console.error);
   const notify = response.data.result.notify;
   return notify;
 };
+
 export const newNotify = async (message, mentorId, readed) => {
   const requestExtension = `/notifys/newNotify`;
   const formData = new FormData();
@@ -205,6 +208,7 @@ export const newNotify = async (message, mentorId, readed) => {
   let notify = response.data.result.notify;
   return notify;
 };
+
 export const deleteTrainbyId = (id, accountType) => {
   const requestExtension = `/training/${id}`;
   return authDelete(requestExtension).then(
@@ -215,12 +219,14 @@ export const deleteTrainbyId = (id, accountType) => {
     }
   );
 };
+
 export const getTrainById = async (id) => {
   const requestExtension = `/training/train/${id}`;
   let response = await authGet(requestExtension).catch(console.error);
   const train = response.data.result.train;
   return train;
 };
+
 export const getTrainVideo = async (id, lang = i18n.language) => {
   const requestExtension = `/training/trainVideo/${id}`;
   let response = await authGet(requestExtension, {
@@ -231,63 +237,31 @@ export const getTrainVideo = async (id, lang = i18n.language) => {
   }).catch(console.error);
   return response;
 };
-export const EditTrainById = async ({
-  id,
-  name,
-  url,
-  desc,
-  role,
-  isVideo,
-  filee,
-  typee,
-  isNewDocument,
-}) => {
+
+export const EditTrainById = async (id, values = []) => {
   const requestExtension = `/training/${id}`;
   const formData = new FormData();
-  formData.append("name", name);
-  formData.append("url", url);
-  formData.append("description", desc);
-  formData.append("role", role);
-  formData.append("typee", typee);
-  formData.append("isNewDocument", isNewDocument);
-
-  formData.append("isVideo", isVideo);
-  if (!isVideo) {
-    formData.append("document", filee);
-  }
-  let response = await authPut(requestExtension, formData).catch(console.error);
-  let Train = response.data.result.train;
-  return Train;
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  let response = await authPut(requestExtension, formData).catch((err) => {
+    console.error(err);
+  });
+  return response?.data;
 };
-export const newTrainCreate = async (
-  name,
-  url,
-  description,
-  role,
-  isVideo,
-  filee,
-  typee
-) => {
+
+export const newTrainCreate = async (values) => {
+  const { role } = values;
   const requestExtension = `/training/${role}`;
   const formData = new FormData();
   formData.append("front_url", FRONT_BASE_URL);
-  formData.append("name", name);
-  formData.append("url", url);
-  formData.append("typee", typee);
-
-  formData.append("description", description);
-
-  formData.append("role", role);
-
-  formData.append("isVideo", isVideo);
-  if (!isVideo) {
-    formData.append("document", filee);
-  }
-  let response = await authPost(requestExtension, formData).catch(
-    console.error
-  );
-  let Train = response.data.result.train;
-  return Train;
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  let response = await authPost(requestExtension, formData).catch((err) => {
+    console.error(err);
+  });
+  return response?.data;
 };
 
 export const translateDocuments = (id) => {
