@@ -1,5 +1,5 @@
 export const IS_PRODUCTION = process.env.NODE_ENV === "production";
-export const IS_DEVELOPMENT = process.env.NODE_ENV === "development";
+export const IS_DEVELOPMENT = process.env.DEPLOYMENT === "dev";
 
 export const BASE_URL = IS_PRODUCTION
   ? IS_DEVELOPMENT
