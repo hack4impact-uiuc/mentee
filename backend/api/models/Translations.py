@@ -2,7 +2,8 @@ from api.core import Mixin
 from .base import db
 from mongoengine import *
 
-#TODO: Change this to a TranslatedFile model
+
+# TODO: Change this to a TranslatedFile model
 class Translations(EmbeddedDocument, Mixin):
     """Model for Translated File/Document"""
 
