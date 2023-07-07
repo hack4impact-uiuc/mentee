@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   deleteTrainbyId,
   downloadBlob,
@@ -19,6 +19,7 @@ import {
   notification,
   Spin,
   Tabs,
+  Skeleton,
 } from "antd";
 import {
   DeleteOutlined,
@@ -33,7 +34,7 @@ import TrainingTranslationModal from "./TrainingTranslationModal";
 import UpdateTrainingForm from "./UpdateTrainingModal";
 
 export const Trainings = () => {
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState(ACCOUNT_TYPE.MENTEE);
   const [trainingData, setTrainingData] = useState([]);
   const [reload, setReload] = useState(true);
   const [translateLoading, setTranslateLoading] = useState(false);
@@ -170,6 +171,24 @@ export const Trainings = () => {
     setTranslateOpen(true);
   };
 
+  useMemo(() => {
+    const getData = async () => {
+      setLoading(true);
+      let newData = await getTrainings(role);
+      if (newData) {
+        setTrainingData(newData);
+      } else {
+        setTrainingData([]);
+        notification.error({
+          message: "ERROR",
+          description: "Couldn't get trainings",
+        });
+      }
+      setLoading(false);
+    };
+    getData();
+  }, [role, reload]);
+
   const columns = [
     {
       title: "Name",
@@ -263,40 +282,31 @@ export const Trainings = () => {
     },
   ];
 
-  useEffect(() => {
-    const getData = async () => {
-      let newData = await getTrainings(role);
-      if (newData) {
-        setTrainingData(newData);
-      } else {
-        setTrainingData([]);
-        notification.error({
-          message: "ERROR",
-          description: "Couldn't get trainings",
-        });
-      }
-    };
-    getData();
-  }, [role, reload]);
+  const tabItems = [
+    {
+      label: `Mentee`,
+      key: ACCOUNT_TYPE.MENTEE,
+      disabled: translateLoading,
+    },
+    {
+      label: `Mentor`,
+      key: ACCOUNT_TYPE.MENTOR,
+      disabled: translateLoading,
+    },
+    {
+      label: `Partner`,
+      key: ACCOUNT_TYPE.PARTNER,
+      disabled: translateLoading,
+    },
+  ];
+
   return (
     <div className="trains">
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey={ACCOUNT_TYPE.MENTEE}
         onChange={(key) => setRole(key)}
-        items={[
-          {
-            label: `Mentee`,
-            key: ACCOUNT_TYPE.MENTEE,
-          },
-          {
-            label: `Mentor`,
-            key: ACCOUNT_TYPE.MENTOR,
-          },
-          {
-            label: `Partner`,
-            key: ACCOUNT_TYPE.PARTNER,
-          },
-        ]}
+        d
+        items={tabItems}
       />
       <div className="table-button-group">
         <Button
@@ -305,29 +315,15 @@ export const Trainings = () => {
           onClick={() => {
             openUpdateTrainingModal();
           }}
+          disabled={translateLoading}
         >
           New Training
         </Button>
       </div>
-      {/* <div className="rolesContainer">
-        <Radio.Group
-          className="roles"
-          onChange={(e) => setRole(e.target.value)}
-          value={role}
-        >
-          <Radio className="role" value={ACCOUNT_TYPE.MENTEE}>
-            Mentee
-          </Radio>
-          <Radio className="role" value={ACCOUNT_TYPE.MENTOR}>
-            Mentor
-          </Radio>
-          <Radio className="role" value={ACCOUNT_TYPE.PARTNER}>
-            Partner
-          </Radio>
-        </Radio.Group>
-      </div> */}
       <Spin spinning={translateLoading}>
-        <Table columns={columns} dataSource={trainingData} />
+        <Skeleton loading={loading} active>
+          <Table columns={columns} dataSource={trainingData} />
+        </Skeleton>
       </Spin>
       <TrainingTranslationModal
         setOpenModal={setTranslateOpen}

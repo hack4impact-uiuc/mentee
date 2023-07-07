@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+import json
 from werkzeug.utils import secure_filename
 from api.core import create_response, logger
 from api.models import (
@@ -15,6 +16,7 @@ from api.utils.google_translate import (
     document_translate_all_languages,
     populate_translation_field,
     get_translation_document,
+    get_all_translations,
 )
 from datetime import datetime
 from flask import send_file
@@ -33,12 +35,22 @@ training = Blueprint("training", __name__)  # initialize blueprint
 
 @training.route("/<role>", methods=["GET"])
 def get_trainings(role):
+    lang = request.args.get("lang", "en-US")
     trainings = Training.objects(role=str(role))
-    trainings = list(trainings)
-    for train in trainings:
-        train.id = train.id
+    result = []
 
-    return create_response(data={"trainings": trainings})
+    if lang in I18N_LANGUAGES and lang != "en-US":
+        for training in trainings:
+            training_dict = json.loads(training.to_json())
+            training_dict["name"] = training.nameTranslated.get(lang, training.name)
+            training_dict["description"] = training.descriptionTranslated.get(
+                lang, training.description
+            )
+            result.append(training_dict)
+    else:
+        result = trainings
+
+    return create_response(data={"trainings": result})
 
 
 @training.route("/<string:id>", methods=["DELETE"])
@@ -100,12 +112,17 @@ def get_train_id_edit(id):
 
     # try:
     train = Training.objects.get(id=id)
-    train.name = request.form["name"]
-    train.description = request.form["description"]
-    train.role = str(request.form["role"])
-    train.typee = request.form["typee"]
+    train.name = request.form.get("name", train.name)
+    train.nameTranslated = get_all_translations(request.form.get("name", train.name))
+    train.description = request.form.get("description", train.description)
+    train.descriptionTranslated = get_all_translations(
+        request.form.get("description", train.description)
+    )
+    train.role = str(request.form.get("role", train.role))
+    train.typee = request.form.get("typee", train.typee)
     train.isVideo = isVideo
     if not isVideo and request.form.get("isNewDocument", False) == "true":
+        logger.info("adding new document")
         document = request.files.get("document", None)
         if not document:
             return create_response(status=400, message="Missing file")
@@ -116,7 +133,7 @@ def get_train_id_edit(id):
         train.filee.replace(document, filename=file_name)
         train.file_name = file_name
     else:
-        train.url = request.form["url"]
+        train.url = request.form.get("url", train.url)
 
     train.save()
 
@@ -132,13 +149,17 @@ def get_train_id_edit(id):
 def new_train(role):
     try:
         name = request.form["name"]
+        nameTranslated = get_all_translations(request.form["description"])
         description = request.form["description"]
+        descriptionTranslated = get_all_translations(request.form["description"])
         typee = request.form["typee"]
         isVideo = True if request.form["isVideo"] == "true" else False
 
         train = Training(
             name=name,
+            nameTranslated=nameTranslated,
             description=description,
+            descriptionTranslated=descriptionTranslated,
             role=str(role),
             typee=typee,
             isVideo=isVideo,
@@ -172,8 +193,6 @@ def new_train(role):
         target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
 
         for recipient in recipients:
-            # if not recipient.preferred_language:
-            #     recipient.preferred_language = "en-US"
             res, res_msg = send_email(
                 recipient=recipient.email,
                 data={

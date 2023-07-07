@@ -17,7 +17,7 @@ parent = f"projects/{project_id}/locations/{location}"
 
 def get_all_translations(text: str) -> dict:
     """Get all translations for a given text."""
-    target_languages = I18N_LANGUAGES
+    target_languages = I18N_LANGUAGES.copy()
     target_languages.remove("en-US")
     translations = {language: text for language in target_languages}
 

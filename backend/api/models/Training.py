@@ -11,6 +11,8 @@ class Training(Document, Mixin):
     name = StringField(required=True)
     url = StringField()
     description = StringField(required=True)
+    nameTranslated = DictField(required=False)
+    descriptionTranslated = DictField(required=False)
     date_submitted = DateTimeField(required=True)
     role = StringField(required=True)
     filee = FileField()

@@ -170,9 +170,14 @@ export const isHaveAccount = async (email, role) => {
   return { isHave, isHaveProfile, isVerified };
 };
 
-export const getTrainings = async (role) => {
+export const getTrainings = async (role, lang = i18n.language) => {
   const requestExtension = `/training/${role}`;
-  const res = await authGet(requestExtension).catch(console.error);
+
+  const res = await authGet(requestExtension, {
+    params: {
+      lang: lang,
+    },
+  }).catch(console.error);
   const trains = res.data.result.trainings;
   let newTrain = [];
   for (let train of trains) {
