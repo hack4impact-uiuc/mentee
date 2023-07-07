@@ -1,12 +1,33 @@
 from flask import Blueprint, request
+import json
+from werkzeug.utils import secure_filename
 from api.core import create_response, logger
-from api.models import Training, MentorProfile, MenteeProfile, PartnerProfile
+from api.models import (
+    Training,
+    MentorProfile,
+    MenteeProfile,
+    PartnerProfile,
+    Translations,
+)
 from datetime import datetime
+from PyPDF2 import PdfReader
 from api.utils.require_auth import admin_only, all_users
+from api.utils.google_translate import (
+    document_translate_all_languages,
+    populate_translation_field,
+    get_translation_document,
+    get_all_translations,
+)
 from datetime import datetime
 from flask import send_file
 from io import BytesIO
-from api.utils.constants import Account, NEW_TRAINING_TEMPLATE, TRANSLATIONS
+from api.utils.constants import (
+    Account,
+    NEW_TRAINING_TEMPLATE,
+    TRANSLATIONS,
+    I18N_LANGUAGES,
+    TRANSLATION_COST_PER_PAGE,
+)
 from api.utils.request_utils import send_email
 
 training = Blueprint("training", __name__)  # initialize blueprint
@@ -14,12 +35,22 @@ training = Blueprint("training", __name__)  # initialize blueprint
 
 @training.route("/<role>", methods=["GET"])
 def get_trainings(role):
+    lang = request.args.get("lang", "en-US")
     trainings = Training.objects(role=str(role))
-    trainings = list(trainings)
-    for train in trainings:
-        train.id = train.id
+    result = []
 
-    return create_response(data={"trainings": trainings})
+    if lang in I18N_LANGUAGES and lang != "en-US":
+        for training in trainings:
+            training_dict = json.loads(training.to_json())
+            training_dict["name"] = training.nameTranslated.get(lang, training.name)
+            training_dict["description"] = training.descriptionTranslated.get(
+                lang, training.description
+            )
+            result.append(training_dict)
+    else:
+        result = trainings
+
+    return create_response(data={"trainings": result})
 
 
 @training.route("/<string:id>", methods=["DELETE"])
@@ -50,15 +81,26 @@ def get_train(id):
 @training.route("/trainVideo/<string:id>", methods=["GET"])
 # @all_users
 def get_train_file(id):
+    lang = request.args.get("lang", "en-US")
     try:
         train = Training.objects.get(id=id)
     except:
         return create_response(status=422, message="training not found")
-    file = train.filee.read()
+
+    if lang in I18N_LANGUAGES:
+        if lang == "en-US":
+            document = train.filee.read()
+        else:
+            document = get_translation_document(train.translations, lang)
+    else:
+        return create_response(status=422, message="Language requested not supported")
+
     content_type = train.filee.content_type
 
+    if not document:
+        return create_response(status=422, message="No document found")
     return send_file(
-        BytesIO(file), download_name=train.filee.file_name, mimetype=content_type
+        BytesIO(document), download_name=train.file_name, mimetype=content_type
     )
 
 
@@ -66,26 +108,32 @@ def get_train_file(id):
 @training.route("/<string:id>", methods=["PUT"])
 @admin_only
 def get_train_id_edit(id):
-    isVideoo = request.form["isVideo"]
-    if isVideoo == "true":
-        isVideoo = True
-    if isVideoo == "false":
-        isVideoo = False
-        logger.info(isVideoo)
+    isVideo = True if request.form["isVideo"] == "true" else False
 
     # try:
     train = Training.objects.get(id=id)
-    train.name = request.form["name"]
-    train.description = request.form["description"]
-    train.role = str(request.form["role"])
-    train.typee = request.form["typee"]
-    train.isVideo = isVideoo
-    if not isVideoo:
-        filee = request.files["filee"]
-        train.filee.replace(filee)
-        train.file_name = filee.filename
+    train.name = request.form.get("name", train.name)
+    train.nameTranslated = get_all_translations(request.form.get("name", train.name))
+    train.description = request.form.get("description", train.description)
+    train.descriptionTranslated = get_all_translations(
+        request.form.get("description", train.description)
+    )
+    train.role = str(request.form.get("role", train.role))
+    train.typee = request.form.get("typee", train.typee)
+    train.isVideo = isVideo
+    if not isVideo and request.form.get("isNewDocument", False) == "true":
+        logger.info("adding new document")
+        document = request.files.get("document", None)
+        if not document:
+            return create_response(status=400, message="Missing file")
+        file_name = secure_filename(document.filename)
+        if file_name == "":
+            return create_response(status=400, message="Missing file name")
+
+        train.filee.replace(document, filename=file_name)
+        train.file_name = file_name
     else:
-        train.url = request.form["url"]
+        train.url = request.form.get("url", train.url)
 
     train.save()
 
@@ -101,57 +149,114 @@ def get_train_id_edit(id):
 def new_train(role):
     try:
         name = request.form["name"]
+        nameTranslated = get_all_translations(request.form["description"])
         description = request.form["description"]
+        descriptionTranslated = get_all_translations(request.form["description"])
         typee = request.form["typee"]
-        isVideoo = request.form["isVideo"]
-        if isVideoo == "true":
-            isVideoo = True
-        if isVideoo == "false":
-            isVideoo = False
+        isVideo = True if request.form["isVideo"] == "true" else False
 
         train = Training(
             name=name,
+            nameTranslated=nameTranslated,
             description=description,
+            descriptionTranslated=descriptionTranslated,
             role=str(role),
             typee=typee,
-            isVideo=isVideoo,
+            isVideo=isVideo,
             date_submitted=datetime.now(),
         )
-        if not isVideoo:
-            filee = request.files["filee"]
-            train.filee.put(filee, file_name=filee.filename)
-            train.file_name = filee.filename
+        if not isVideo:
+            document = request.files.get("document", None)
+            if not document:
+                return create_response(status=400, message="Missing file")
+
+            file_name = secure_filename(document.filename)
+            if file_name == "":
+                return create_response(status=400, message="Missing file name")
+
+            train.file_name = file_name
+            train.filee.put(document, filename=file_name)
         else:
             train.url = request.form["url"]
 
         train.save()
+
+        # TODO: Remove this so that it is a job in the background
         new_train_id = train.id
         if int(role) == Account.MENTOR:
-            receivers = MentorProfile.objects.all()
+            recipients = MentorProfile.objects.only("email", "preferred_language")
         elif int(role) == Account.MENTEE:
-            receivers = MenteeProfile.objects.all()
+            recipients = MenteeProfile.objects.only("email", "preferred_language")
         else:
-            receivers = PartnerProfile.objects.all()
-
+            recipients = PartnerProfile.objects.only("email", "preferred_language")
         front_url = request.form["front_url"]
         target_url = front_url + "new_training/" + role + "/" + str(new_train_id)
-        for receiver in receivers:
+
+        for recipient in recipients:
             res, res_msg = send_email(
-                recipient=receiver.email,
+                recipient=recipient.email,
                 data={
                     "link": target_url,
-                    receiver.preferred_language: True,
-                    "subject": TRANSLATIONS[receiver.preferred_language][
+                    recipient.preferred_language: True,
+                    "subject": TRANSLATIONS[recipient.preferred_language][
                         "new_training"
                     ],
                 },
                 template_id=NEW_TRAINING_TEMPLATE,
             )
-            if not res:
-                msg = "Failed to send new traing data alert email " + res_msg
-                logger.info(msg)
+        if not res:
+            msg = "Failed to send new traing data alert email " + res_msg
+            logger.error(msg)
 
-    except:
-        return create_response(status=400, message="missing parameters")
+    except Exception as e:
+        return create_response(status=400, message=f"missing parameters {e}")
 
     return create_response(status=200, data={"train": train})
+
+
+@training.route("/translateCost/<string:id>", methods=["GET"])
+@admin_only
+def get_translation_cost(id):
+    try:
+        training = Training.objects.get(id=id)
+    except Exception as e:
+        return create_response(
+            status=400, message=f"Could not find training object {e}"
+        )
+
+    try:
+        document = training.filee
+        reader = PdfReader(document)
+        pages = len(reader.pages)
+        cost = pages * TRANSLATION_COST_PER_PAGE * (len(I18N_LANGUAGES) - 1)
+    except Exception as e:
+        return create_response(
+            status=500, message=f"Failed to calculate translation cost {e}"
+        )
+
+    return create_response(status=200, data={"cost": cost})
+
+
+@training.route("/translate/<string:id>", methods=["PUT"])
+@admin_only
+def translate_training(id):
+    try:
+        training = Training.objects.get(id=id)
+    except Exception as e:
+        return create_response(
+            status=400, message=f"Could not find training object {e}"
+        )
+
+    try:
+        document = training.filee
+        translations = document_translate_all_languages(document, training.file_name)
+        new_translations = Translations()
+        new_translations = populate_translation_field(
+            new_translations, translations, training.file_name
+        )
+        training.translations = new_translations
+        training.save()
+    except Exception as e:
+        return create_response(status=500, message=f"Failed to translate languages {e}")
+
+    return create_response(status=200, message="Successful translation")

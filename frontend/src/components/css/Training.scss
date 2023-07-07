@@ -1,0 +1,39 @@
+.trains {
+  margin: 20px 20px;
+}
+
+.trainForm {
+  margin: 30px;
+}
+.trainForm input {
+  height: 45px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+.table-button-group > .table-button {
+  margin-bottom: 1em;
+  margin-left: 0;
+}
+.table-button-group {
+  display: flex;
+  flex-direction: row;
+}
+.isVideo {
+  margin-bottom: 25px;
+}
+// .trainTable .ant-table-tbody > tr > td {
+//   max-width: 200px !important;
+// }
+.margin-bell {
+  margin: 20px !important;
+}
+
+.translate-modal-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+
+.update-training-form {
+  padding: 2em;
+}

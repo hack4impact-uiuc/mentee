@@ -2,6 +2,7 @@ from tokenize import String
 from api.core import Mixin
 from .base import db
 from mongoengine import *
+from api.models import Translations
 
 
 class Training(Document, Mixin):
@@ -10,9 +11,12 @@ class Training(Document, Mixin):
     name = StringField(required=True)
     url = StringField()
     description = StringField(required=True)
+    nameTranslated = DictField(required=False)
+    descriptionTranslated = DictField(required=False)
     date_submitted = DateTimeField(required=True)
     role = StringField(required=True)
     filee = FileField()
+    translations = EmbeddedDocumentField(Translations, required=False)
     isVideo = BooleanField(required=True)
     typee = StringField(required=True)
     file_name = StringField()

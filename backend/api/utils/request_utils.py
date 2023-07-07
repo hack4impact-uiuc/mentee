@@ -1,4 +1,5 @@
 import os
+from typing import List, Optional, Union
 from wtforms import Form
 from wtforms.fields import StringField, BooleanField, FieldList, IntegerField, FormField
 
@@ -163,7 +164,10 @@ def is_invalid_form(form_data) -> Tuple[str, bool]:
 
 
 def send_email(
-    recipient: str = "", subject: str = "", data: dict = None, template_id: str = ""
+    recipient: Optional[Union[str, List[str]]],
+    subject: str = "",
+    data: dict = None,
+    template_id: str = "",
 ) -> Tuple[bool, str]:
     """Sends an email to a specific email address from the official MENTEE email
     :param recipient - a single recipient's email address

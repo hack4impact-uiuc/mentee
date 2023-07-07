@@ -158,3 +158,5 @@ TRANSLATIONS = {
         "profile_complete": "پروفایل منتی کامل شده است - لطفا وارد شوید",
     },
 }
+
+TRANSLATION_COST_PER_PAGE = 0.08

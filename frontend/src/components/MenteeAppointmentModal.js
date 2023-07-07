@@ -254,8 +254,8 @@ function MenteeAppointmentModal(props) {
       />
       <Modal
         forceRender
-        title="        " // Uses Unicode spaces to get desired heading
-        visible={calendarModalVisible}
+        // title="        " // Uses Unicode spaces to get desired heading
+        open={calendarModalVisible}
         onCancel={() => closeModals()}
         className="appointment-date-modal"
         style={{ overflow: "hidden" }}
@@ -342,7 +342,7 @@ function MenteeAppointmentModal(props) {
       <Modal
         forceRender
         title={t("menteeAppointmentModal.meetingInfoTitle")}
-        visible={formModalVisible}
+        open={formModalVisible}
         onCancel={closeModals}
         className="appointment-info-modal"
         style={{ overflow: "hidden" }}

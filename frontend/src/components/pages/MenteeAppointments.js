@@ -50,8 +50,8 @@ function MenteeAppointments() {
     return (
       <div className="mentee-appt-card">
         <div className="status-section">
-          {t(`menteeAppointments.${info.status}`) ??
-            t("menteeAppointments.pending")}{" "}
+          {t(`appointmentStatus.${info.status}`) ??
+            t("appointmentStatus.pending")}{" "}
           <div className={`status-${info.status ?? "pending"}`} />
         </div>
         <div className="mentee-appt-card-header">

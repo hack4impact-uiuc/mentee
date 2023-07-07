@@ -40,13 +40,13 @@ function UploadEmails(props) {
   }, []);
 
   const success = () => {
-    message.success("This is a success message");
+    message.success("Successfully added users!");
     props.setUploadModalVisible(false);
   };
 
   return (
     <Modal
-      visible={props.uploadModalVisible}
+      open={props.uploadModalVisible}
       setUploadModalVisible={props.setUploadModalVisible}
       footer={<div></div>}
       onCancel={() => props.setUploadModalVisible(false)}

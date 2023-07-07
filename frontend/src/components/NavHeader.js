@@ -364,6 +364,7 @@ function NavHeader({ history }) {
               }}
             />
           )}
+          <LanguageSelect />
         </Drawer>
       </div>
     );
