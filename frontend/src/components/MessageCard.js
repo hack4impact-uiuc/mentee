@@ -48,6 +48,16 @@ function MessageCard(props) {
         account = await fetchAccountById(otherId, ACCOUNT_TYPE.MENTEE);
         setAccountData(account);
       }
+      if (isMobile) {
+        setTimeout(() => {
+          var message_container = document.getElementsByClassName(
+            "conversation-container"
+          );
+          if (message_container.length > 0) {
+            message_container[0].style.display = "none";
+          }
+        }, 1000);
+      }
     }
     fetchAccount();
     if (isMobile) {
