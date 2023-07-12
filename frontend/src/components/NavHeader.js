@@ -104,6 +104,9 @@ function NavHeader({ history }) {
         })
       );
     }
+    if (isMobile) {
+      setDrawerVisible(false);
+    }
   };
 
   const LanguageSelect = () => {
@@ -246,6 +249,7 @@ function NavHeader({ history }) {
                 theme="light"
                 content={<b>{t("common.apply")}</b>}
                 onClick={() => {
+                  setDrawerVisible(false);
                   history.push({
                     pathname: "/application-page",
                   });
@@ -260,6 +264,7 @@ function NavHeader({ history }) {
               theme="light"
               width="9em"
               onVerified={() => {
+                setDrawerVisible(false);
                 history.push({
                   pathname: "/gallery",
                   state: { verified: true },
@@ -274,6 +279,7 @@ function NavHeader({ history }) {
               theme="light"
               width="9em"
               onVerified={() => {
+                setDrawerVisible(false);
                 history.push({
                   pathname: "/mentee-gallery",
                   state: { verified: true },
@@ -285,10 +291,12 @@ function NavHeader({ history }) {
             <>
               <span className="navigation-header-button">
                 <LoginVerificationModal
+                  className="mobile-nav-btn-login-modal"
                   content={<b>{t("navHeader.findPartner")}</b>}
                   theme="light"
                   width="9em"
                   onVerified={() => {
+                    setDrawerVisible(false);
                     history.push({
                       pathname: "/partner-gallery",
                       state: { verified: true },
@@ -318,6 +326,7 @@ function NavHeader({ history }) {
                   } else if (isPartner) {
                     redirect = "/profile";
                   }
+                  setDrawerVisible(false);
                   history.push({
                     pathname: isLoggedIn() ? redirect : "/login",
                   });
@@ -345,6 +354,7 @@ function NavHeader({ history }) {
                 } else if (isPartner) {
                   redirect = "/profile";
                 }
+                setDrawerVisible(false);
                 history.push({
                   pathname: isLoggedIn() ? redirect : "/login",
                 });
@@ -358,6 +368,7 @@ function NavHeader({ history }) {
               content={<b>{t("common.messages")}</b>}
               width="9em"
               onClick={() => {
+                setDrawerVisible(false);
                 history.push({
                   pathname: `/messages/${role}`,
                 });
