@@ -160,8 +160,9 @@ def login():
     email = data.get("email")
     password = data.get("password")
     role = data.get("role")
+    role = int(role)
     firebase_user = None
-    profile_model = get_profile_model(int(role))
+    profile_model = get_profile_model(role)
 
     try:
         firebase_user = firebase_client.auth().sign_in_with_email_and_password(
@@ -211,7 +212,7 @@ def login():
             profile.firebase_uid = firebase_uid
             profile.save()
     except:
-        if role != Account.ADMIN:
+        if role != Account.ADMIN and role != Account.GUEST:
             # user failed to create profile during registration phase
             # prompt frontend to return user to appropriate phase
 
