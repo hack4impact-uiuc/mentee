@@ -38,7 +38,7 @@ function MessagesChatArea(props) {
   const [appointments, setAppointments] = useState([]);
   const [availabeInFuture, setAvailabeInFuture] = useState([]);
   const [bookedData, setBookedData] = useState({});
-  const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+  const isMobile = useMediaQuery({ query: `(max-width: 761px)` });
   var total_index = 0;
   const {
     messages,
@@ -545,7 +545,7 @@ function MessagesChatArea(props) {
       <Modal
         className="calendar-modal"
         title={t("messages.availabilityTitle")}
-        visible={isOpenCalendarModal}
+        open={isOpenCalendarModal}
         onCancel={() => setIsOpenCalendarModal(false)}
         footer={[
           <MenteeButton

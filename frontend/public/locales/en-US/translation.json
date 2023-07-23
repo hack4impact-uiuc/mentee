@@ -25,7 +25,15 @@
     "emailPrompt": "Please enter your email to start the application process",
     "errorConnection": "Something went wrong check your internet connection",
     "existingAccount": "You Already have account you will be redirect to login page",
-    "partnerVerify": "Your email is not pre-registered as a Partner. Please contact an administrator admin@menteeglobal.org"
+    "partnerVerify": "Your email is not pre-registered as a Partner. Please contact an administrator admin@menteeglobal.org",
+    "buildProfile": "Build Profile",
+    "training": "Training",
+    "message": {
+      "haveAccount": "You already have an account... redirecting to login"
+    },
+    "error": {
+      "role": "Please select a role"
+    }
   },
   "availability": {
     "addHours": "Add hours",
@@ -70,7 +78,7 @@
   },
   "verifyEmail": {
     "header": "Account Verification",
-    "error": "Error, please try again!",
+    "error": "Error verifying email, please try again!",
     "emailResent": "Email resent!",
     "body": "A verification email has been sent to your email. Please click the link contained inside to verify your account.",
     "refresh": "(Refresh this page if you verified your email)",
@@ -116,7 +124,7 @@
     "whatsapp": "WhatsApp",
     "yes": "Yes",
     "no": "No",
-    "confirm": "Confirm"
+    "role": "Role"
   },
   "commonProfile": {
     "accountCreated": "Your account has been created now you can login to Mentee",
@@ -151,7 +159,11 @@
     "videoIntroduction": "Introduction",
     "videos": "Videos",
     "website": "Website",
-    "welcome": "Welcome. Tell us about yourself."
+    "welcome": "Welcome. Tell us about yourself.",
+    "error": {
+      "save": "Failed to save profile",
+      "uploadImage": "Failed to upload image"
+    }
   },
   "forgotPassword": {
     "emailResent": "Email resent!",
@@ -179,11 +191,11 @@
     "viewProfile": "View Profile"
   },
   "homepage": {
-    "existingAccountDesc": "PLATFORM LOGIN",
-    "existingAccountTitle": "EXISTING",
+    "existingAccountDesc": "Platform Login",
+    "existingAccountTitle": "Existing",
     "isExistingUser": "Are you a new or existing user?",
-    "newAccountDesc": "APPLY - TRAIN - BUILD",
-    "newAccountTitle": "NEW"
+    "newAccountDesc": "Apply - Train - Build",
+    "newAccountTitle": "New"
   },
   "languages": {
     "ar": "العربية",
@@ -197,7 +209,9 @@
     "clickLoginPrompt": "Please click on your role to continue on",
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
-    "resetPassword": "Reset it"
+    "resetPassword": "Reset it",
+    "passwordPlaceholder": "Enter your password",
+    "emailPlaceholder": "Enter your email"
   },
   "loginErrors": {
     "existingEmail": "This email is already in use in another role",
@@ -205,7 +219,10 @@
     "reregisterAccount": "Please re-register your account.",
     "resetPassword": "Please reset password. A link to reset your password has been sent to your email.",
     "serverError": "Something went wrong.",
-    "wrongRole": "Wrong role please choose account right role"
+    "wrongRole": "Wrong role please choose account right role",
+    "noRole": "Please choose a role",
+    "emailError": "Please enter email",
+    "passwordError": "Please enter password"
   },
   "menteeApplication": {
     "agePrompt": "Let us know more about you",
@@ -440,7 +457,8 @@
   "sidebars": {
     "appointments": "Appointments",
     "profile": "Profile",
-    "videos": "Your Videos"
+    "videos": "Your Videos",
+    "explore": "Explore"
   },
   "emailSubjects": {
     "unread_message": "MENTEE: You have received a new Message!",

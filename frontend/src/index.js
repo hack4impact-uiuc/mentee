@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-import "antd/dist/antd.css";
 import "./index.scss";
 import App from "app/App";
 import * as serviceWorker from "utils/serviceWorker";
@@ -12,15 +11,19 @@ import "moment/locale/ar";
 import "moment/locale/fa";
 import "moment/locale/pt";
 import i18n from "utils/i18n";
+import { ProvideAuth } from "utils/hooks/useAuth";
+import { ConfigProvider } from "antd";
 
 moment.locale(i18n.language);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Suspense>
-        <App />
-      </Suspense>
+      <ProvideAuth>
+        <Suspense>
+          <App />
+        </Suspense>
+      </ProvideAuth>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
