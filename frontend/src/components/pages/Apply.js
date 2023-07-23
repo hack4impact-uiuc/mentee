@@ -98,7 +98,7 @@ function Apply({ history }) {
         case NEW_APPLICATION_STATUS.APPROVED:
           setCurrentState(stepNumeration.training);
           break;
-        case NEW_APPLICATION_STATUS.BUILD_PROFILE:
+        case NEW_APPLICATION_STATUS.BUILDPROFILE:
           setCurrentState(stepNumeration.buildProfile);
           break;
         default:
