@@ -105,12 +105,9 @@
   justify-content: center;
   padding: 12px;
   position: fixed;
+  position: sticky;
   bottom: 0;
-  width: calc(80% - var(--messages-sidebar));
-
-  @media (max-width: 991px) {
-    width: calc(95% - var(--messages-sidebar));
-  }
+  width: 100%;
 }
 
 .conversation-container {
