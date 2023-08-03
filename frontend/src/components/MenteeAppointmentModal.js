@@ -49,7 +49,7 @@ function MenteeAppointmentModal(props) {
   const [inputClicked, setInputClicked] = useState(
     new Array(numInputs).fill(false)
   ); // each index represents an input box, respectively
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(dayjs());
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [dateHeading, setDateHeading] = useState();
   const [time, setTime] = useState();
@@ -120,12 +120,12 @@ function MenteeAppointmentModal(props) {
   useEffect(() => {
     let daySlots = [];
     timeSlots.forEach((timeSlot) => {
-      if (dayjs(timeSlot.start_time.$date).format("YYYY-MM-DD") === date) {
+      if (dayjs(timeSlot.start_time.$date).isSame(date, "day")) {
         daySlots.push(timeSlot);
       }
     });
     setDayTimeSlots(daySlots);
-  }, [date, timeSlots]);
+  }, [date, timeSlots, calendarModalVisible]);
 
   function handleClick(index) {
     // Sets only the clicked input box to true to change color, else false
@@ -308,7 +308,7 @@ function MenteeAppointmentModal(props) {
                   justify-content: center;
                 `}
               >
-                {!isAvailable ? (
+                {!isAvailable || !dayTimeSlots.length ? (
                   <h1>{t("menteeAppointmentModal.noAvailability")}</h1>
                 ) : (
                   <Select

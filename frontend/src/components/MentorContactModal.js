@@ -90,11 +90,11 @@ function MentorContactModal({
           </Form.Item>
           <Form.Item
             name="Choose Interest Areas"
-            label={t("mentorContactModal.communicationMethod")}
+            label={t("mentorContactModal.areaInterest")}
             rules={[
               {
                 required: true,
-                message: t("mentorContactModal.communicationMethodValidate"),
+                message: t("mentorContactModal.areaInterstValidate"),
               },
             ]}
           >

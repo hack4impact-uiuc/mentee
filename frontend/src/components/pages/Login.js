@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import SelectCard from "components/SelectCard";
 import { css } from "@emotion/css";
 import LoginForm from "components/LoginForm";
+import useQuery from "utils/hooks/useQuery";
 
 const StepNumeration = {
   role: 0,
@@ -20,8 +21,9 @@ const StepNumeration = {
 
 function Login({ location }) {
   const { t } = useTranslation();
-  const [role, setRole] = useState(location?.state?.role);
-  const email = location?.state?.email;
+  const query = useQuery();
+  const [role, setRole] = useState(location?.state?.role ?? query.get("role"));
+  const email = location?.state?.email ?? query.get("email");
   const [current, setCurrent] = useState(
     role ? StepNumeration.login : StepNumeration.role
   );
