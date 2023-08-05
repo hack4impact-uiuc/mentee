@@ -120,6 +120,7 @@
 .conversation-content {
   background-color: white;
   overflow-y: auto;
+  flex: 1;
   padding: 12px;
   max-height: calc(100vh - #{$nav-header-height} - var(--chat-header-height));
 }
