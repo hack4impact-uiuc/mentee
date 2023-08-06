@@ -1,13 +1,16 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Space, Tooltip } from "antd";
 import { useHistory, withRouter } from "react-router-dom";
 import { css } from "@emotion/css";
 import LanguageDropdown from "components/LanguageDropdown";
 import { ReactComponent as Logo } from "resources/mentee.svg";
 import { ReactComponent as SmallLogo } from "resources/menteeSmall.svg";
 import { useMediaQuery } from "react-responsive";
+import { FormOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 function HomeLayout({ children, ignoreHomeLayout, location }) {
+  const { t } = useTranslation();
   const isTablet = useMediaQuery({ query: `(max-width: 991px)` });
   const history = useHistory();
 
@@ -70,15 +73,26 @@ function HomeLayout({ children, ignoreHomeLayout, location }) {
           `}
           onClick={() => history.push("/")}
         />
-        <LanguageDropdown
+        <Space
           className={css`
             position: absolute;
             top: 1em;
             right: 1em;
             cursor: pointer;
           `}
-          size="large"
-        />
+          size="middle"
+        >
+          <Tooltip title={t("common.bug")}>
+            <FormOutlined
+              className={css`
+                font-size: large;
+              `}
+              onClick={() => window.open("https://forms.gle/DCCFR6du9YckbnhY8")}
+            />
+          </Tooltip>
+          <LanguageDropdown size="large" />
+        </Space>
+
         <div
           className={css`
             display: flex;

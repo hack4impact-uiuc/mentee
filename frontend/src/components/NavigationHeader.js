@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Layout, theme, Dropdown, Space } from "antd";
+import { Avatar, Layout, theme, Dropdown, Space, Tooltip } from "antd";
 import { withRouter, useHistory } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,11 @@ import { useAuth } from "utils/hooks/useAuth";
 import { collapse, resetUser } from "features/userSlice";
 import "components/css/Navigation.scss";
 import { ACCOUNT_TYPE } from "utils/consts";
-import { MenuFoldOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  FormOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const { Header } = Layout;
 
@@ -84,6 +88,11 @@ function NavigationHeader() {
           </Space>
         </Dropdown>
         {role !== ACCOUNT_TYPE.ADMIN && <LanguageDropdown />}
+        <Tooltip title={t("common.bug")}>
+          <FormOutlined
+            onClick={() => window.open("https://forms.gle/DCCFR6du9YckbnhY8")}
+          />
+        </Tooltip>
       </Space>
     </Header>
   );

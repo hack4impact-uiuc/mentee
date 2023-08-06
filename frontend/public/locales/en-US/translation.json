@@ -107,7 +107,7 @@
     "mentee": "Mentee",
     "mentor": "Mentor",
     "guest": "Guest",
-    "name" : "Name",
+    "name": "Name",
     "message": "Message",
     "messages": "Messages",
     "other": "Other",
@@ -124,7 +124,8 @@
     "whatsapp": "WhatsApp",
     "yes": "Yes",
     "no": "No",
-    "role": "Role"
+    "role": "Role",
+    "bug": "Report a Bug"
   },
   "commonProfile": {
     "accountCreated": "Your account has been created now you can login to Mentee",
