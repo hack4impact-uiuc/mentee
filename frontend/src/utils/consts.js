@@ -39,6 +39,22 @@ export const ACCOUNT_TYPE = {
   GUEST: 4,
 };
 
+export const ACCOUNT_TYPE_LABELS = {
+  [ACCOUNT_TYPE.ADMIN]: "admin",
+  [ACCOUNT_TYPE.MENTOR]: "mentor",
+  [ACCOUNT_TYPE.MENTEE]: "mentee",
+  [ACCOUNT_TYPE.PARTNER]: "partner",
+  [ACCOUNT_TYPE.GUEST]: "guest",
+};
+
+export const REDIRECTS = {
+  [ACCOUNT_TYPE.MENTOR]: "/appointments",
+  [ACCOUNT_TYPE.MENTEE]: "/mentee-appointments",
+  [ACCOUNT_TYPE.PARTNER]: "/partner-gallery",
+  [ACCOUNT_TYPE.ADMIN]: "/account-data",
+  [ACCOUNT_TYPE.GUEST]: "/gallery",
+};
+
 export const PLURAL_TYPE = {
   MENTORS: "mentors",
   MENTEES: "mentees",
@@ -77,9 +93,25 @@ export const REGIONS = [
   "Oceana",
 ];
 
+// TODO: Get a better way to map regions to i18n keys
+const regionI18NMapping = {
+  "N. America": "northAmerica",
+  "Central America": "centralAmerica",
+  "S. America": "southAmerica",
+  Caribbean: "caribbean",
+  Europe: "europe",
+  "Middle East": "middleEast",
+  "N. Africa": "northAfrica",
+  "Sub-Sahara Africa": "subSaharaAfrica",
+  "Central Asia": "centralAsia",
+  "East Asia": "eastAsia",
+  "South/SE Asia": "southAsia",
+  Oceana: "oceana",
+};
+
 export function getRegions(t) {
   return REGIONS.map((region) =>
-    Object({ label: t(`regions.${region}`), value: region })
+    Object({ label: t(`regions.${regionI18NMapping[region]}`), value: region })
   );
 }
 
