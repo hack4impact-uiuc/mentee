@@ -153,10 +153,7 @@ function MentorProfileForm({
             tag: MENTEE_DEFAULT_VIDEO_NAME,
             date_uploaded: moment().format(),
           }
-        : undefined;
-    if (newData.video === undefined) {
-      delete newData.video;
-    }
+        : null;
     newData.preferred_language = i18n.language;
     newData.image = image;
     newData.changedImage = changedImage;
