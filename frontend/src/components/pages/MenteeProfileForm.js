@@ -158,9 +158,6 @@ function MenteeProfileForm({
             date_uploaded: moment().format(),
           }
         : null;
-    if (!newData.video) {
-      delete newData.video;
-    }
     newData.preferred_language = i18n.language;
     newData.image = image;
     newData.changedImage = changedImage;

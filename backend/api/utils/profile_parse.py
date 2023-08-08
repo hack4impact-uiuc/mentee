@@ -173,29 +173,38 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.website = data.get("website", profile.website)
         if "video" in data:
             video_data = data.get("video")
-            profile.video = Video(
-                title=video_data.get("title"),
-                url=video_data.get("url"),
-                tag=video_data.get("tag"),
-                date_uploaded=video_data.get("date_uploaded"),
-            )
-            if profile.videos:
-                profile.videos[0] = profile.video
+            if video_data:
+                profile.video = Video(
+                    title=video_data.get("title"),
+                    url=video_data.get("url"),
+                    tag=video_data.get("tag"),
+                    date_uploaded=video_data.get("date_uploaded"),
+                )
+                if profile.videos:
+                    profile.videos[0] = profile.video
+                else:
+                    profile.videos = [profile.video]
             else:
-                profile.videos = [profile.video]
+                profile.video = None
+                if profile.videos:
+                    profile.videos = profile.videos[1:]
         # Create video objects for each item in list
         if "videos" in data:
             video_data = data.get("videos")
-            profile.videos = [
-                Video(
-                    title=video.get("title"),
-                    url=video.get("url"),
-                    tag=video.get("tag"),
-                    date_uploaded=video.get("date_uploaded"),
-                )
-                for video in video_data
-            ]
-            profile.video = profile.videos[0]
+            if video_data:
+                profile.videos = [
+                    Video(
+                        title=video.get("title"),
+                        url=video.get("url"),
+                        tag=video.get("tag"),
+                        date_uploaded=video.get("date_uploaded"),
+                    )
+                    for video in video_data
+                ]
+                profile.video = profile.videos[0]
+            else:
+                profile.videos = []
+                profile.video = None
     elif isinstance(profile, MenteeProfile):
         profile.age = data.get("age", profile.age)
         profile.gender = data.get("gender", profile.gender)
@@ -205,12 +214,16 @@ def edit_profile(data: dict = {}, profile: object = None):
 
         if "video" in data:
             video_data = data.get("video")
-            profile.video = Video(
-                title=video_data.get("title"),
-                url=video_data.get("url"),
-                tag=video_data.get("tag"),
-                date_uploaded=video_data.get("date_uploaded"),
-            )
+
+            if video_data:
+                profile.video = Video(
+                    title=video_data.get("title"),
+                    url=video_data.get("url"),
+                    tag=video_data.get("tag"),
+                    date_uploaded=video_data.get("date_uploaded"),
+                )
+            else:
+                profile.video = None
 
     profile.name = data.get("name", profile.name)
     profile.location = data.get("location", profile.location)
