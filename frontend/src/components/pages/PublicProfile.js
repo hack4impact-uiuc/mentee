@@ -54,7 +54,7 @@ function PublicProfile({ match }) {
             accountType={parseInt(accountType)}
           />
         </div>
-        {accountType == ACCOUNT_TYPE.MENTEE && (
+        {accountType == ACCOUNT_TYPE.MENTEE && account.video && (
           <MenteeVideo video={account.video} />
         )}
       </div>
