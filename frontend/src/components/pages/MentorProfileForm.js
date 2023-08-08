@@ -142,26 +142,27 @@ function MentorProfileForm({
   );
 
   const onFinish = async (values) => {
-    let profileData = values;
-    profileData.email = email;
-    profileData.role = ACCOUNT_TYPE.MENTOR;
-    profileData.video = values.video
-      ? {
-          title: MENTEE_DEFAULT_VIDEO_NAME,
-          url: values.video,
-          tag: MENTEE_DEFAULT_VIDEO_NAME,
-          date_uploaded: moment().format(),
-        }
-      : undefined;
-    if (!profileData.video) {
-      delete profileData.video;
+    let newData = values;
+    newData.email = email;
+    newData.role = ACCOUNT_TYPE.MENTOR;
+    newData.video =
+      values.video && values.video !== ""
+        ? {
+            title: MENTEE_DEFAULT_VIDEO_NAME,
+            url: values.video,
+            tag: MENTEE_DEFAULT_VIDEO_NAME,
+            date_uploaded: moment().format(),
+          }
+        : undefined;
+    if (newData.video === undefined) {
+      delete newData.video;
     }
-    profileData.preferred_language = i18n.language;
-    profileData.image = image;
-    profileData.changedImage = changedImage;
-    profileData.edited = edited;
+    newData.preferred_language = i18n.language;
+    newData.image = image;
+    newData.changedImage = changedImage;
+    newData.edited = edited;
 
-    onSubmit(profileData);
+    onSubmit(newData);
   };
 
   return (

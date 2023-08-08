@@ -47,11 +47,11 @@
   overflow: hidden;
   margin-bottom: 75px;
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 1550px) {
     grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 1200px) {
     grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
   }
   @media only screen and (max-width: 600px) {
