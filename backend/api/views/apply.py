@@ -36,6 +36,7 @@ from api.utils.request_utils import (
 )
 from api.utils.constants import Account
 from firebase_admin import auth as firebase_admin_auth
+import urllib
 
 apply = Blueprint("apply", __name__)
 
@@ -248,7 +249,7 @@ def change_state_to_build_profile(email, role):
         if "front_url" in request.args:
             front_url = request.args["front_url"]
             target_url = (
-                front_url + "apply?role=" + str(role) + "&email=" + application["email"]
+                front_url + "apply?role=" + str(role) + "&email=" + urllib.parse.quote(application["email"])
             )
 
         preferred_language = request.args.get("preferred_language", "en-US")
@@ -370,10 +371,10 @@ def edit_application(id, role):
         front_url = data.get("front_url", "")
         target_url = (
             front_url
-            + "application-page?role="
+            + "apply?role="
             + str(role)
             + "&email="
-            + application.email
+            + urllib.parse.quote(application.email)
         )
         mentor_email = application.email
         success, msg = send_email(
@@ -432,10 +433,10 @@ def edit_application(id, role):
         front_url = data.get("front_url", "")
         target_url = (
             front_url
-            + "application-page?role="
+            + "apply?role="
             + str(role)
             + "&email="
-            + application.email
+            + urllib.parse.quote(application.email)
         )
         mentor_email = application.email
         success, msg = send_email(
