@@ -24,11 +24,7 @@ from api.utils.constants import (
     TRAINING_COMPLETED,
     PROFILE_COMPLETED,
     TRANSLATIONS,
-<<<<<<< HEAD
     ALERT_TO_ADMINS,
-=======
-    ALERT_TO_ADMINS
->>>>>>> origin
 )
 from api.utils.request_utils import (
     send_email,

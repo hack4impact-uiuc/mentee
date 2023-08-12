@@ -81,11 +81,7 @@ def new_profile(data: dict = {}, profile_type: int = -1):
             is_private=data.get("is_private", True),
         )
 
-<<<<<<< HEAD
         if "video" in data and data.get("video") is not None:
-=======
-        if "video" in data and data.get('video') is not None:
->>>>>>> origin
             video_data = data.get("video")
             new_profile.video = Video(
                 title=video_data["title"],
@@ -217,11 +213,7 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.is_private = data.get("is_private", profile.is_private)
         profile.specializations = data.get("specializations", profile.specializations)
 
-<<<<<<< HEAD
         if "video" in data and data.get("video") is not None:
-=======
-        if "video" in data and data.get('video') is not None:
->>>>>>> origin
             video_data = data.get("video")
 
             if video_data:
