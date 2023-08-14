@@ -97,6 +97,7 @@ def get_application_mentee_by_id(id):
 @apply.route("/email/status/<email>/<role>", methods=["GET"])
 def get_email_status_by_role(email, role):
     role = int(role)
+    email = email.lower()
     response_data = {
         "inFirebase": False,
         "isVerified": False,
@@ -228,6 +229,9 @@ def change_state_to_build_profile(email, role):
 
     application = null
     role = int(role)
+    print('333333333333')
+    print(email)
+    print(role)
     try:
         if role == Account.MENTOR:
             try:
@@ -250,7 +254,7 @@ def change_state_to_build_profile(email, role):
             front_url = request.args["front_url"]
             target_url = (
                 front_url
-                + "apply?role="
+                + "application-training?role="
                 + str(role)
                 + "&email="
                 + urllib.parse.quote(application["email"])
@@ -294,19 +298,29 @@ def change_state_to_build_profile(email, role):
 
 
 # DELETE request for mentor application by object ID
-@apply.route("/<id>", methods=["DELETE"])
+@apply.route("/<id>/<role>", methods=["DELETE"])
 @admin_only
-def delete_application(id):
-    try:
+def delete_application(id, role):
+    role = int(role)
+    if role == Account.MENTOR:
         try:
-            application = NewMentorApplication.objects.get(id=id)
+            try:
+                application = NewMentorApplication.objects.get(id=id)
+            except:
+                application = MentorApplication.objects.get(id=id)
         except:
-            application = MentorApplication.objects.get(id=id)
-    except:
-        msg = "The application you attempted to delete was not found"
-        logger.info(msg)
-        return create_response(status=422, message=msg)
+            msg = "The application you attempted to delete was not found"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
 
+    if role == Account.MENTEE:
+        try:
+            application = MenteeApplication.objects.get(id=id)
+        except:
+            msg = "No application with that object id"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+    
     application.delete()
     return create_response(status=200, message=f"Success")
 
@@ -368,13 +382,14 @@ def edit_application(id, role):
                     "subject": TRANSLATIONS[preferred_language]["app_approved"],
                 },
             )
+        
         if not success:
             logger.info(msg)
     if application.application_state == NEW_APPLICATION_STATUS["APPROVED"]:
         front_url = data.get("front_url", "")
         target_url = (
             front_url
-            + "apply?role="
+            + "application-training?role="
             + str(role)
             + "&email="
             + urllib.parse.quote(application.email)
@@ -436,7 +451,7 @@ def edit_application(id, role):
         front_url = data.get("front_url", "")
         target_url = (
             front_url
-            + "apply?role="
+            + "application-training?role="
             + str(role)
             + "&email="
             + urllib.parse.quote(application.email)
