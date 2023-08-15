@@ -229,7 +229,7 @@ def change_state_to_build_profile(email, role):
 
     application = null
     role = int(role)
-    print('333333333333')
+    print("333333333333")
     print(email)
     print(role)
     try:
@@ -320,7 +320,7 @@ def delete_application(id, role):
             msg = "No application with that object id"
             logger.info(msg)
             return create_response(status=422, message=msg)
-    
+
     application.delete()
     return create_response(status=200, message=f"Success")
 
@@ -382,7 +382,7 @@ def edit_application(id, role):
                     "subject": TRANSLATIONS[preferred_language]["app_approved"],
                 },
             )
-        
+
         if not success:
             logger.info(msg)
     if application.application_state == NEW_APPLICATION_STATUS["APPROVED"]:
