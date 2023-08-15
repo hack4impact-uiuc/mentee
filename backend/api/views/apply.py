@@ -229,9 +229,7 @@ def change_state_to_build_profile(email, role):
 
     application = null
     role = int(role)
-    print("333333333333")
-    print(email)
-    print(role)
+
     try:
         if role == Account.MENTOR:
             try:
@@ -297,7 +295,6 @@ def change_state_to_build_profile(email, role):
         return create_response(data={"state": application.application_state})
 
 
-# DELETE request for mentor application by object ID
 @apply.route("/<id>/<role>", methods=["DELETE"])
 @admin_only
 def delete_application(id, role):
@@ -312,12 +309,11 @@ def delete_application(id, role):
             msg = "The application you attempted to delete was not found"
             logger.info(msg)
             return create_response(status=422, message=msg)
-
-    if role == Account.MENTEE:
+    elif role == Account.MENTEE:
         try:
             application = MenteeApplication.objects.get(id=id)
         except:
-            msg = "No application with that object id"
+            msg = "The application you attempted to delete was not found"
             logger.info(msg)
             return create_response(status=422, message=msg)
 
@@ -451,7 +447,7 @@ def edit_application(id, role):
         front_url = data.get("front_url", "")
         target_url = (
             front_url
-            + "application-training?role="
+            + "apply?role="
             + str(role)
             + "&email="
             + urllib.parse.quote(application.email)

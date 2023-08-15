@@ -11,19 +11,14 @@ import { NEW_APPLICATION_STATUS } from "utils/consts";
 import useQuery from "utils/hooks/useQuery";
 
 function Training({ location, history }) {
+  const query = useQuery();
   const [messageApi, contextHolder] = message.useMessage();
   const [loading, setLoading] = useState(false);
   const { t, i18n } = useTranslation();
-  const query = useQuery();
-  var role = null;
-  var email = null;
-  if (location && location.state) {
-    role = location.state.role;
-    email = location.state.email;
-  } else {
-    email = query.get("email");
-    role = query.get("role") && parseInt(query.get("role"));
-  }
+
+  const role = location.state?.role || parseInt(query.get("role"));
+  const email = location.state?.email || query.get("email");
+  if (!role || !email) history.push("/");
 
   const onCompleteTraining = async () => {
     if (!role || !email)
