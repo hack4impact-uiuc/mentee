@@ -145,17 +145,6 @@ export const APPOINTMENT_FORM_KEYS = [
   "allow_texts",
 ];
 
-// Keys for fields of Message
-export const MESSAGE_FORM_KEYS = [
-  "message",
-  "user_name",
-  "user_id",
-  "recipient_name",
-  "recipient_id",
-  "email",
-  "link",
-  "time",
-];
 export const SDGS = [
   "SDG1",
   "SDG2",

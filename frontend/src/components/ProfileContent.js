@@ -188,10 +188,10 @@ function ProfileContent(props) {
               profileId && (
                 <PublicMessageModal
                   menteeName={props.mentor.name}
-                  menteeID={
+                  menteeId={
                     props.mentor && props.mentor._id && props.mentor._id["$oid"]
                   }
-                  mentorID={profileId}
+                  mentorId={profileId}
                 />
               )}
           </div>
