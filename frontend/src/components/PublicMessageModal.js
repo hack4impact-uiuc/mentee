@@ -3,7 +3,6 @@ import { Button, Form, Input, Modal, message } from "antd";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import { sendMessage } from "../utils/api";
-import "./css/AntDesign.scss";
 import "./css/Modal.scss";
 import "./css/MenteeModal.scss";
 import { useTranslation } from "react-i18next";

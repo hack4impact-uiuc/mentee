@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Result, Checkbox, Spin, theme, Tabs } from "antd";
+import {
+  Form,
+  Button,
+  Result,
+  Checkbox,
+  Spin,
+  theme,
+  Tabs,
+  Card,
+  Typography,
+  Divider,
+  Switch,
+  Space,
+} from "antd";
 import {
   ClockCircleOutlined,
   InfoCircleFilled,
@@ -50,7 +63,6 @@ function Appointments() {
   );
   const [manualModalvisible, setManualModalvisible] = useState(false);
   const [currentTab, setCurrentTab] = useState("upcoming");
-  const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const tabLabels = {
@@ -154,38 +166,35 @@ function Appointments() {
   };
   const AvailabilityTab = ({ data }) => {
     return (
-      <div>
-        <div className="availability-container"></div>
-        <div
-          className="availability-container"
-          style={{
-            opacity: user?.taking_appointments ? 1 : 0.25,
-            pointerEvents: user?.taking_appointments ? "initial" : "none",
-          }}
-        >
-          <div className="calendar-header">{t("availability.title")}</div>
-          <div className="calendar-container">
-            <AvailabilityCalendar appointmentdata={data} />
-          </div>
-        </div>
-      </div>
+      <Card>
+        <Typography.Paragraph>
+          <Space>
+            {t("mentorAppointmentPage.takingAppointments")}
+            <Switch
+              onClick={() => {
+                handleTakeAppointments(!takeAppoinment);
+                setTakeappoinment((state) => !state);
+              }}
+              checked={takeAppoinment}
+            />
+          </Space>
+        </Typography.Paragraph>
+        <Typography.Title level={5}>{t("availability.title")}</Typography.Title>
+        <Divider />
+        <AvailabilityCalendar appointmentdata={data} />
+      </Card>
     );
   };
   const Appointments = ({ data }) => {
-    if (!data || !data.length) {
-      return (
-        <div className="empty-appointments-list appointments-background">
+    return (
+      <Card>
+        {!data?.length ? (
           <Result
             icon={<SmileOutlined style={{ color: colorPrimary }} />}
             title={t("mentorAppointmentPage.noAppointments")}
           />
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className="appointments-background">
-          {data.map((appointmentsObject, index) => (
+        ) : (
+          data.map((appointmentsObject, index) => (
             <div key={index} className="appointments-date-block">
               <div className="appointments-date-text-block">
                 <h1 className="appointments-date-number">
@@ -200,9 +209,9 @@ function Appointments() {
                 ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+          ))
+        )}
+      </Card>
     );
   };
 
@@ -235,23 +244,11 @@ function Appointments() {
       />
       <div className="appointments-column">
         <div className="appointments-welcome-box">
-          <div className="appointments-welcome-text">
+          <Typography.Title level={2}>
             {t("mentorAppointmentPage.welcome", { name: user?.name })}
-          </div>
-          <Checkbox
-            className="modal-availability-checkbox-text t-a-c-b"
-            onChange={(e) => {
-              setTakeappoinment(e.target.checked);
-              handleTakeAppointments(e.target.checked);
-            }}
-            checked={takeAppoinment}
-            style={{ marginLeft: "1%" }}
-          >
-            {t("mentorAppointmentPage.takingAppointments")}
-          </Checkbox>
+          </Typography.Title>
           <div
             style={{
-              marginLeft: "1%",
               marginTop: "12px",
             }}
           >

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Radio, Space, Form, Select, Input, Button } from "antd";
 import { sendMenteeMentorEmail } from "../utils/api";
-import MenteeButton from "./MenteeButton";
 import thankYouImage from "../resources/thankYou.png";
 
-import "./css/AntDesign.scss";
 import "./css/Modal.scss";
 import "./css/MenteeModal.scss";
 import { useTranslation } from "react-i18next";

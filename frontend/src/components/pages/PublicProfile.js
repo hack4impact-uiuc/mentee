@@ -3,9 +3,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import { withRouter } from "react-router-dom";
 
-import ProfileContent from "../ProfileContent";
-import ProfileVideos from "../ProfileVideos";
-import { fetchAccountById } from "../../utils/api";
+import ProfileContent from "components/ProfileContent";
+import ProfileVideos from "components/ProfileVideos";
+import { fetchAccountById } from "utils/api";
 
 import "../css/PublicProfile.scss";
 import { ACCOUNT_TYPE } from "utils/consts";

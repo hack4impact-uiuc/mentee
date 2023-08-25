@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Fragment } from "react";
+import { useMediaQuery } from "react-responsive";
 import moment from "moment";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { Calendar, Modal, Badge, TimePicker, Button } from "antd";
+import { Calendar, Modal, Badge, TimePicker, Button, Typography } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 import MenteeButton from "./MenteeButton.js";
@@ -15,6 +16,7 @@ import "./css/AvailabilityCalendar.scss";
  * Moment.js documentation: {@link https://momentjs.com/docs/}
  */
 function AvailabilityCalendar(props) {
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const { t } = useTranslation();
   const { profileId } = useAuth();
   const [saved, setSaved] = useState({}); //  Days with set appointments
@@ -344,7 +346,8 @@ function AvailabilityCalendar(props) {
         value={value}
         onPanelChange={onPanelChange}
         onSelect={onSelect}
-        cellRender={cellRender}
+        // cellRender={cellRender}
+        fullscreen={!isMobile}
       />
       <Modal
         title={t("availability.title")}
@@ -359,25 +362,20 @@ function AvailabilityCalendar(props) {
           </Button>,
         ]}
       >
-        <h3 className="hours">
-          <b>{t("availability.hours")} </b> | <i>{tz.replace("_", " ")}</i>
-        </h3>
-        <br></br>
-        <div className="date-header">
-          <h2 className="date">{date && date.format("MM/DD")} </h2>
-          <h5 className="date">{date.format("dddd")}</h5>
-        </div>
+        <Typography.Title level={5}>
+          {date && date.format("MM/DD")} | <i>{tz.replace("_", " ")}</i>
+        </Typography.Title>
         <div className="all-timeslots-wrapper">
           {getBookedTimeSlots(date.format("YYYY-MM-DD")).map(
             (bookedTimeSlot, index) => (
               <Fragment key={`${index}`}>
-                <div className="timeslot-wrapper">
+                <div>
                   <TimePicker
                     format="h:mm A"
                     value={dayjs(bookedTimeSlot[0][0], "HH:mm")}
                     disabled={true}
                   />
-                  <h1 className="timeslot"> - </h1>
+                  <div className="timeslot"> - </div>
                   <TimePicker
                     format="h:mm A"
                     value={dayjs(bookedTimeSlot[0][1])}
@@ -389,7 +387,7 @@ function AvailabilityCalendar(props) {
           )}
           {getTimeSlots(date.format("YYYY-MM-DD")).map((timeSlot, index) => (
             <Fragment key={`${index}`}>
-              <div className="timeslot-wrapper">
+              <div>
                 <TimePicker
                   use12Hours={false}
                   format="h:mm A"
@@ -398,7 +396,7 @@ function AvailabilityCalendar(props) {
                   // disabledHours={() => disabledHours(null, timeSlot[0][1], index)}
                   // disabledMinutes={() => disabledMinutes()}
                 />
-                <h1 className="timeslot"> - </h1>
+                <div className="timeslot"> - </div>
                 <TimePicker
                   use12Hours={false}
                   format="h:mm A"

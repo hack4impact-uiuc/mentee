@@ -10,12 +10,12 @@ import {
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { formatLinkForHref } from "utils/misc";
-import PublicMessageModal from "./PublicMessageModal";
+import PublicMessageModal from "components/PublicMessageModal";
 import { ACCOUNT_TYPE, getRegions } from "utils/consts";
-import { fetchMenteeByID, editFavMentorById } from "../utils/api";
+import { fetchMenteeByID, editFavMentorById } from "utils/api";
 import { Rate, Tooltip, Avatar } from "antd";
 import { useSelector } from "react-redux";
-import MentorContactModal from "./MentorContactModal";
+import MentorContactModal from "components/MentorContactModal";
 
 import "./css/Profile.scss";
 import { getTranslatedOptions } from "utils/translations";

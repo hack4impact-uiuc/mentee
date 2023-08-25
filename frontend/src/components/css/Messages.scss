@@ -211,14 +211,6 @@
 .calendar-modal {
   top: 30px;
   width: 770px !important;
-  .ant-modal-body {
-    padding: 10px;
-    max-height: 600px;
-    overflow-y: auto;
-  }
-  .ant-modal-content {
-    border-radius: 0px;
-  }
 }
 .link-book-availability {
   cursor: pointer;

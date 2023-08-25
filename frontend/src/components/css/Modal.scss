@@ -184,25 +184,6 @@
   display: inline;
 }
 
-// This is probably bad coding practice so probably want to replace
-.ant-form-item-has-error {
-  background-color: inherit !important;
-  border-color: inherit !important;
-}
-
-// .ant-form-item {
-//   margin: 0;
-// }
-
-// .ant-input {
-//   background-color: #fffdf5 !important;
-// }
-
-ant-form-item-has-error,
-.ant-input:focus {
-  box-shadow: none !important;
-}
-
 @media only screen and (max-width: 1100px) {
   .large-textarea {
     height: 24em !important;

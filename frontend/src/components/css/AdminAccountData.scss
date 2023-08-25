@@ -47,9 +47,6 @@
   cursor: not-allowed;
 }
 
-.ant-table-cell {
-  padding: 8px 8px !important;
-}
 .link-td {
   max-width: 150px;
   text-overflow: ellipsis;
@@ -82,9 +79,7 @@
   .main-body {
     display: flex;
     width: 100%;
-    .ant-select-multiple {
-      max-height: none !important;
-    }
+
     .w-50 {
       width: 50%;
       padding: 20px;

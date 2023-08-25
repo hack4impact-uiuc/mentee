@@ -16,7 +16,6 @@ import MenteeButton from "./MenteeButton";
 import { APPOINTMENT_FORM_KEYS, APPOINTMENT_STATUS } from "../utils/consts";
 import { useSelector } from "react-redux";
 import { createAppointment, editAvailability } from "utils/api";
-import "./css/AntDesign.scss";
 import "./css/Modal.scss";
 import "./css/MenteeModal.scss";
 import MenteeVerificationModal from "./MenteeVerificationModal";
