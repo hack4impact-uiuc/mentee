@@ -307,12 +307,13 @@ function MessagesChatArea(props) {
   };
 
   const sendMessage = (e) => {
-    if (!messageText.replace(/\s/g, "").length) {
+    let currentMessage = messageText;
+    if (!currentMessage.trim().length) {
       return;
     }
     let dateTime = moment().utc();
     const msg = {
-      body: messageText,
+      body: currentMessage,
       message_read: false,
       sender_id: profileId,
       recipient_id: activeMessageId,
@@ -453,9 +454,9 @@ function MessagesChatArea(props) {
                           className={css`
                             padding: 5px 15px;
                             border-radius: 5px;
-                            max-width: 300px;
                             margin-left: 8px;
                             width: fit-content;
+                            white-space: pre-wrap;
                             ${block.sender_id.$oid === profileId
                               ? styles.bubbleSent
                               : styles.bubbleReceived}
