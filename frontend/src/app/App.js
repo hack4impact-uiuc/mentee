@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Layout, ConfigProvider, FloatButton } from "antd";
+import { Layout, ConfigProvider } from "antd";
 import { useTranslation } from "react-i18next";
 import { getAntdLocale } from "utils/translations";
 import Appointments from "components/pages/Appointments";

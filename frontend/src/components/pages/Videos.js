@@ -105,7 +105,7 @@ function Videos() {
       dataIndex: "title",
       key: "title",
       render: (_, record) => (
-        <a href={record.url} target="_blank">
+        <a href={record.url} target="_blank" rel="noreferrer">
           {record.title}
         </a>
       ),

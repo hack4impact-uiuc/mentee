@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { Avatar, Typography, Button, Rate, Tooltip, theme } from "antd";
+import { Avatar, Typography, Button, Tooltip, theme } from "antd";
 import {
   EnvironmentOutlined,
   UserOutlined,
-  MessageOutlined,
-  YoutubeOutlined,
   GlobalOutlined,
 } from "@ant-design/icons";
 
-import MenteeButton from "./MenteeButton";
 import { ACCOUNT_TYPE } from "utils/consts";
 import "./css/Gallery.scss";
-import { formatLinkForHref } from "utils/misc";
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
 const { Title, Paragraph } = Typography;
