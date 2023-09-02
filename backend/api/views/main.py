@@ -32,7 +32,7 @@ from api.utils.request_utils import (
     is_invalid_form,
     imgur_client,
     application_model,
-    get_profile_model
+    get_profile_model,
 )
 from api.utils.constants import NEW_APPLICATION_STATUS
 from api.utils.profile_parse import new_profile, edit_profile
@@ -533,7 +533,9 @@ def uploadImage(id):
             delete_image_from_storage(account.image.file_name)
     except:
         delete_image_from_storage(new_file_name)
-        return create_response(status=500, message=f"Old image deletion failed, deleting new image")
+        return create_response(
+            status=500, message=f"Old image deletion failed, deleting new image"
+        )
 
     new_image = Image(
         url=public_url,
@@ -542,6 +544,7 @@ def uploadImage(id):
     account.image = new_image
     account.save()
     return create_response(status=200, message=f"Success")
+
 
 # GET request for /account/<id>/private
 @main.route("/account/<id>/private", methods=["GET"])

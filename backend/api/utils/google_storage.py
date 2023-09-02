@@ -6,12 +6,14 @@ from io import BytesIO
 client = storage.Client()
 BUCKET = "app-mentee-global-images"
 
+
 def upload_image_to_storage(image, filename):
     """Upload image to Google Cloud Storage"""
     bucket = client.get_bucket(BUCKET)
     blob = bucket.blob(filename)
-    blob.upload_from_string(image.read(), content_type='application/jpg')
+    blob.upload_from_string(image.read(), content_type="application/jpg")
     return blob.public_url
+
 
 def delete_image_from_storage(filename):
     """Delete image from Google Cloud Storage"""
@@ -19,6 +21,7 @@ def delete_image_from_storage(filename):
     blob = bucket.blob(filename)
     blob.delete()
     return True
+
 
 def get_image_from_storage(filename):
     """Get image from Google Cloud Storage and use it to create a signed URL"""
@@ -32,6 +35,7 @@ def get_image_from_storage(filename):
         method="GET",
     )
     return url
+
 
 def compress_image(image):
     """Compress image to reduce size"""
