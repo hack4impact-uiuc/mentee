@@ -118,6 +118,7 @@ zope-event = "4.6"
 zope-interface = "5.5.2"
 google-cloud-translate = "^3.11.1"
 pypdf2 = "^3.0.1"
+pillow = "^10.0.0"
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.812"

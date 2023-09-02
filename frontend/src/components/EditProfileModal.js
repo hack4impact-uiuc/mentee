@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Drawer, Modal, Result, Typography } from "antd";
-import MenteeButton from "./MenteeButton";
-import {
-  editAccountProfile,
-  editMenteeProfile,
-  uploadAccountImage,
-  uploadMenteeImage,
-} from "../utils/api";
+import { editAccountProfile, uploadAccountImage } from "../utils/api";
 import { useTranslation } from "react-i18next";
 import MentorProfileForm from "./pages/MentorProfileForm";
 import { getProfileId } from "utils/auth.service";
@@ -22,6 +16,7 @@ function EditProfileModal({ profileData, onSave, role }) {
   const [open, setOpen] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const [saving, setSaving] = useState(false);
+  const [resetFields, setResetFields] = useState(false);
   const email = profileData.email;
 
   const getProfileForm = () => {
@@ -33,6 +28,7 @@ function EditProfileModal({ profileData, onSave, role }) {
             onSubmit={onSubmit}
             loading={saving}
             profileData={profileData}
+            resetFields={resetFields}
           />
         );
       case ACCOUNT_TYPE.MENTEE:
@@ -42,6 +38,7 @@ function EditProfileModal({ profileData, onSave, role }) {
             onSubmit={onSubmit}
             loading={saving}
             profileData={profileData}
+            resetFields={resetFields}
           />
         );
       case ACCOUNT_TYPE.PARTNER:
@@ -52,6 +49,7 @@ function EditProfileModal({ profileData, onSave, role }) {
             onSubmit={onSubmit}
             loading={saving}
             profileData={profileData}
+            resetFields={resetFields}
           />
         );
       default:
@@ -79,6 +77,7 @@ function EditProfileModal({ profileData, onSave, role }) {
       await uploadAccountImage(newData.image, menteeID, role);
     }
 
+    setResetFields(!resetFields);
     onSave();
     setSaving(false);
     setOpen(false);
@@ -98,6 +97,7 @@ function EditProfileModal({ profileData, onSave, role }) {
           open={open}
           onClose={() => {
             setOpen(false);
+            setResetFields(!resetFields);
           }}
           children={getProfileForm()}
         />
@@ -116,6 +116,7 @@ function EditProfileModal({ profileData, onSave, role }) {
           open={open}
           onCancel={() => {
             setOpen(false);
+            setResetFields(!resetFields);
           }}
           width={800}
           footer={null}

@@ -1,8 +1,12 @@
 from flask import Blueprint, request
 from sqlalchemy import true
+from datetime import datetime
+import requests
+from io import BytesIO
+from uuid import uuid4
+from api.utils.google_storage import upload_image_to_storage, compress_image
 from api.views.auth import create_firebase_user
 from api.utils.request_utils import PartnerForm
-from datetime import datetime
 
 from api.models import (
     db,
@@ -28,6 +32,7 @@ from api.utils.request_utils import (
     is_invalid_form,
     imgur_client,
     application_model,
+    get_profile_model
 )
 from api.utils.constants import NEW_APPLICATION_STATUS
 from api.utils.profile_parse import new_profile, edit_profile
@@ -499,11 +504,6 @@ def uploadImage(id):
     account = None
 
     try:
-        image_response = imgur_client.send_image(image)
-    except:
-        return create_response(status=400, message=f"Image upload failed")
-
-    try:
         if account_type == Account.MENTEE:
             account = MenteeProfile.objects.get(id=id)
         elif account_type == Account.MENTOR:
@@ -522,23 +522,26 @@ def uploadImage(id):
         logger.info(msg)
         return create_response(status=422, message=msg)
 
+    new_file_name = f"{uuid4()}.jpg"
     try:
-        if account.image is True and account.image.image_hash is True:
-            image_response = imgur_client.delete_image(account.image.image_hash)
+        public_url = upload_image_to_storage(compress_image(image), new_file_name)
     except:
-        logger.info("Failed to delete image but saving new image")
+        return create_response(status=500, message=f"Image upload failed")
+
+    try:
+        if account.image is True and account.image.url is not None:
+            delete_image_from_storage(account.image.file_name)
+    except:
+        delete_image_from_storage(new_file_name)
+        return create_response(status=500, message=f"Old image deletion failed, deleting new image")
 
     new_image = Image(
-        url=image_response["data"]["link"],
-        image_hash=image_response["data"]["deletehash"],
+        url=public_url,
+        file_name=new_file_name,
     )
-
     account.image = new_image
-    if account_type == Account.MENTOR and "taking_appointments" not in account:
-        account.taking_appointments = False
     account.save()
     return create_response(status=200, message=f"Success")
-
 
 # GET request for /account/<id>/private
 @main.route("/account/<id>/private", methods=["GET"])

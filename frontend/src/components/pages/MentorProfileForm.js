@@ -44,6 +44,7 @@ function MentorProfileForm({
   onSubmit,
   loading,
   profileData,
+  resetFields,
 }) {
   const { t, i18n } = useTranslation();
   const options = useSelector((state) => state.options);
@@ -58,7 +59,7 @@ function MentorProfileForm({
       form.setFieldValue("video", profileData.video?.url);
       setImage(profileData.image);
     }
-  }, [profileData, form]);
+  }, [profileData, form, resetFields]);
 
   const educationSubForm = () => (
     <Form.List name="education">
@@ -171,7 +172,7 @@ function MentorProfileForm({
       onValuesChange={() => setEdited(true)}
     >
       <Form.Item>
-        <ImgCrop rotate aspect={5 / 3}>
+        <ImgCrop rotate aspect={1}>
           <Upload
             onChange={async (file) => {
               setImage(file.file.originFileObj);
