@@ -16,9 +16,7 @@ function MentorContactModal({
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const [message, setMessage] = useState("");
-  const [responseEmail, setResponseEmail] = useState("");
   const [interestAreas, setInterestAreas] = useState([]);
-  const [communicationMethod, setCommunicationMethod] = useState("");
   const [error, setError] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -27,7 +25,6 @@ function MentorContactModal({
     setMessage(null);
     setError(false);
     setInterestAreas([]);
-    setCommunicationMethod(null);
   };
 
   const addInterestArea = (e) => {
@@ -63,9 +60,7 @@ function MentorContactModal({
             const res = await sendMenteeMentorEmail(
               mentorId,
               menteeId,
-              responseEmail,
               interestAreas,
-              communicationMethod,
               message
             );
             if (!res) {
@@ -108,28 +103,6 @@ function MentorContactModal({
                 </Select.Option>
               ))}
             </Select>
-          </Form.Item>
-          <Form.Item
-            name="Preferred communication method"
-            label={t("mentorContactModal.communicationMethod")}
-            style={{ paddingTop: "12px" }}
-            rules={[
-              {
-                required: true,
-                message: t("mentorContactModal.communicationMethodValidate"),
-              },
-            ]}
-          >
-            <Radio.Group
-              onChange={(e) => setCommunicationMethod(e.target.value)}
-            >
-              <Space direction="vertical">
-                <Radio value={"Email"}>{t("common.email")}</Radio>
-                <Radio value={"Phone"}>{t("common.phone")}</Radio>
-                <Radio value={"WhatsApp"}>{t("common.whatsapp")}</Radio>
-                <Radio value={"Other"}>{t("common.other")}</Radio>
-              </Space>
-            </Radio.Group>
           </Form.Item>
           <Form.Item
             label={t("mentorContactModal.introPrompt")}

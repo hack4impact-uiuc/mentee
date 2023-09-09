@@ -710,20 +710,11 @@ export const getMenteePrivateStatus = (profileId) => {
   );
 };
 
-export const sendMenteeMentorEmail = (
-  mentorId,
-  menteeId,
-  responseEmail,
-  interestAreas,
-  communicationMethod,
-  message
-) => {
+export const sendMenteeMentorEmail = (mentorId, menteeId, interestAreas, message) => {
   const requestExtension = `/messages/mentor/${mentorId}`;
   const data = {
     mentee_id: menteeId,
-    response_email: responseEmail,
     interest_areas: interestAreas,
-    communication_method: communicationMethod,
     message: message,
   };
   return authPost(requestExtension, data).then(

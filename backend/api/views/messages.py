@@ -139,9 +139,7 @@ def contact_mentor(mentor_id):
     res, res_msg = send_email(
         mentor.email,
         data={
-            "response_email": mentee.email,
             "interest_areas": ", ".join(translated_interest_areas),
-            "communication_method": data.get("communication_method", ""),
             "message": data.get("message", ""),
             "name": mentee.name,
             mentor.preferred_language: True,
