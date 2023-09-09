@@ -1,0 +1,4089 @@
+{
+  "sheetTranslations": [
+    {
+      "name": "translation.json",
+      "keys": [
+        {
+          "name": "SDGS.SDG1",
+          "values": {
+            "en-US": "SDG 1: No poverty",
+            "ar": "الهدف 1 للتنمية المستدامة: القضاء على الفقر",
+            "fa-AF": "اهداف توسعه پایدار 1: مبارزه با فقر",
+            "pt-BR": "ODS 1: Erradicação da pobreza",
+            "es-US": "ODS 1: Fin de la pobreza"
+          }
+        },
+        {
+          "name": "SDGS.SDG10",
+          "values": {
+            "en-US": "SDG 10: Reduced Inequality",
+            "ar": "الهدف 10 للتنمية المستدامة: الحد من أوجه عدم المساواة",
+            "fa-AF": "اهداف توسعه پایدار 10: کاهش نابرابری‌",
+            "pt-BR": "ODS 10: Redução das desigualdades",
+            "es-US": "ODS 10: Reducción de las desigualdades"
+          }
+        },
+        {
+          "name": "SDGS.SDG11",
+          "values": {
+            "en-US": "SDG 11: Sustainable Cities and Communities",
+            "ar": "الهدف 11 للتنمية المستدامة: المدن والمجتمعات المحلية المستدامة",
+            "fa-AF": "اهداف توسعه پایدار 11: شهرها و جوامع پایدار",
+            "pt-BR": "ODS 11: Cidades e comunidades sustentáveis",
+            "es-US": "ODS 11: Ciudades y comunidades sostenibles"
+          }
+        },
+        {
+          "name": "SDGS.SDG12",
+          "values": {
+            "en-US": "SDG 12: Responsible Consumption and Production",
+            "ar": "الهدف 12 للتنمية المستدامة: الاستهلاك والإنتاج المسؤولان",
+            "fa-AF": "اهداف توسعه پایدار 12: مصرف و تولید مسئولانه",
+            "pt-BR": "ODS 12: Consumo e produção responsáveis",
+            "es-US": "ODS 12: Producción y consumo responsables"
+          }
+        },
+        {
+          "name": "SDGS.SDG13",
+          "values": {
+            "en-US": "SDG 13: Climate Action",
+            "ar": "الهدف 13 للتنمية المستدامة: العمل المناخي",
+            "fa-AF": "اهداف توسعه پایدار 13:  اقدام برای جلوگیری از تغییرات آب و هوایی",
+            "pt-BR": "ODS 13: Ação contra a mudança global do clima",
+            "es-US": "ODS 13: Acción por el clima"
+          }
+        },
+        {
+          "name": "SDGS.SDG14",
+          "values": {
+            "en-US": "SDG 14: Life Below Water",
+            "ar": "الهدف 14 للتنمية المستدامة: الحياة تحت الماء",
+            "fa-AF": "اهداف توسعه پایدار 14: زندگی زیر آب",
+            "pt-BR": "ODS 14: Vida na água",
+            "es-US": "ODS 14: Vida submarina"
+          }
+        },
+        {
+          "name": "SDGS.SDG15",
+          "values": {
+            "en-US": "SDG 15: Life on Land",
+            "ar": "الهدف 15 للتنمية المستدامة: الحياة في البر",
+            "fa-AF": "اهداف توسعه پایدار 15: زندگی بر روی زمین",
+            "pt-BR": "ODS 15: Vida terrestre",
+            "es-US": "ODS 15: Vida de ecosistemas terrestres"
+          }
+        },
+        {
+          "name": "SDGS.SDG16",
+          "values": {
+            "en-US": "SDG 16: Peace and Justice Strong Institutions",
+            "ar": "الهدف 16 للتنمية المستدامة: السلام والعدل والمؤسسات القوية",
+            "fa-AF": "اهداف توسعه پایدار 16: صلح، عدالت و نهادهای توانمند",
+            "pt-BR": "ODS 16: Paz, Justiça e instituições eficazes",
+            "es-US": "ODS 16: Paz, justicia e instituciones sólidas"
+          }
+        },
+        {
+          "name": "SDGS.SDG17",
+          "values": {
+            "en-US": "SDG 17: Partnership to Achieve the Goals",
+            "ar": "الهدف 17 للتنمية المستدامة: عقد الشراكات لتحقيق الأهداف",
+            "fa-AF": "اهداف توسعه پایدار 17: مشارکت برای رسیدن به اهداف",
+            "pt-BR": "ODS 17: Parcerias e meios de implementação",
+            "es-US": "ODS 17: Alianzas para lograr los objetivos"
+          }
+        },
+        {
+          "name": "SDGS.SDG2",
+          "values": {
+            "en-US": "SDG 2: Zero Hunger",
+            "ar": "الهدف 2 للتنمية المستدامة: القضاء التام على الجوع",
+            "fa-AF": "اهداف توسعه پایدار 2: ریشه کن کردن گرسنگی",
+            "pt-BR": "ODS 2: Fome zero e agricultura sustentável",
+            "es-US": "ODS 2: Hambre cero"
+          }
+        },
+        {
+          "name": "SDGS.SDG3",
+          "values": {
+            "en-US": "SDG 3: Good Health & Well-being",
+            "ar": "الهدف 3 للتنمية المستدامة: الصحة الجيدة والرفاه",
+            "fa-AF": "اهداف توسعه پایدار 3: سلامتی و تندرستی",
+            "pt-BR": "ODS 3: Saúde e bem-estar",
+            "es-US": "ODS 3: Salud y bienestar"
+          }
+        },
+        {
+          "name": "SDGS.SDG4",
+          "values": {
+            "en-US": "SDG 4: Quality Education",
+            "ar": "الهدف 4 للتنمية المستدامة: التعليم الجيد",
+            "fa-AF": "اهداف توسعه پایدار 4: تعلیم با کیفیت",
+            "pt-BR": "ODS 4: Educação de qualidade",
+            "es-US": "ODS 4: Educación de calidad"
+          }
+        },
+        {
+          "name": "SDGS.SDG5",
+          "values": {
+            "en-US": "SDG 5: Gender Equality",
+            "ar": "الهدف 5 للتنمية المستدامة: المساواة بين الجنسين",
+            "fa-AF": "اهداف توسعه پایدار 5: برابری جنسیتی",
+            "pt-BR": "ODS 5: Igualdade de gênero",
+            "es-US": "ODS 5: Igualdad de género"
+          }
+        },
+        {
+          "name": "SDGS.SDG6",
+          "values": {
+            "en-US": "SDG 6: Clean Water and Sanitation",
+            "ar": "الهدف 6 للتنمية المستدامة: المياة النظيفة والنظافة الصحية",
+            "fa-AF": "اهداف توسعه پایدار 6: آب پاک و سیستم تخلیه فاضلاب",
+            "pt-BR": "ODS 6: Água potável e saneamento",
+            "es-US": "ODS 6: Agua limpia y saneamiento"
+          }
+        },
+        {
+          "name": "SDGS.SDG7",
+          "values": {
+            "en-US": "SDG 7: Affordable and Clean Energy",
+            "ar": "الهدف 7 للتنمية المستدامة: طاقة نظيفة وبأسعار معقولة",
+            "fa-AF": "اهداف توسعه پایدار 7: انرژی قابل دسترس و پاک",
+            "pt-BR": "ODS 7: Energia limpa e acessível",
+            "es-US": "ODS 7: Energía asequible y no contaminante"
+          }
+        },
+        {
+          "name": "SDGS.SDG8",
+          "values": {
+            "en-US": "SDG 8: Decent Work and Economic Growth",
+            "ar": "الهدف 8 للتنمية المستدامة: العمل اللائق ونمو الاقتصاد",
+            "fa-AF": "اهداف توسعه پایدار 8: کار شایسته و رشد اقتصادی",
+            "pt-BR": "ODS 8: Trabalho decente e crescimento econômico",
+            "es-US": "ODS 8: Trabajo decente y crecimiento económico"
+          }
+        },
+        {
+          "name": "SDGS.SDG9",
+          "values": {
+            "en-US": "SDG 9: Industry, Innovation and Infrastructures",
+            "ar": "الهدف 9 للتنمية المستدامة: الصناعة والابتكار والهياكل الأساسية",
+            "fa-AF": "اهداف توسعه پایدار 9: صنعت، نوآوری و زیرساخت‌ها",
+            "pt-BR": "ODS 9: Indústria, inovação e infraestrutura",
+            "es-US": "ODS 9: Industria, innovación e infraestructura"
+          }
+        },
+        {
+          "name": "ageRanges.16-18",
+          "values": {
+            "en-US": "16-18",
+            "ar": "16-18",
+            "fa-AF": "16-18",
+            "pt-BR": "16-18",
+            "es-US": "16-18"
+          }
+        },
+        {
+          "name": "ageRanges.19-22",
+          "values": {
+            "en-US": "19-22",
+            "ar": "19-22",
+            "fa-AF": "19-22",
+            "pt-BR": "19-22",
+            "es-US": "19-22"
+          }
+        },
+        {
+          "name": "ageRanges.23-25",
+          "values": {
+            "en-US": "23-25",
+            "ar": "23-25",
+            "fa-AF": "23-25",
+            "pt-BR": "23-25",
+            "es-US": "23-25"
+          }
+        },
+        {
+          "name": "ageRanges.26-30",
+          "values": {
+            "en-US": "26-30",
+            "ar": "26-30",
+            "fa-AF": "26-30",
+            "pt-BR": "26-30",
+            "es-US": "26-30"
+          }
+        },
+        {
+          "name": "ageRanges.30s",
+          "values": {
+            "en-US": "30s",
+            "ar": "30s",
+            "fa-AF": "30s",
+            "pt-BR": "30s",
+            "es-US": "30s"
+          }
+        },
+        {
+          "name": "ageRanges.40s",
+          "values": {
+            "en-US": "40s",
+            "ar": "40s",
+            "fa-AF": "40s",
+            "pt-BR": "40s",
+            "es-US": "40s"
+          }
+        },
+        {
+          "name": "ageRanges.50s",
+          "values": {
+            "en-US": "50s",
+            "ar": "50s",
+            "fa-AF": "50s",
+            "pt-BR": "50s",
+            "es-US": "50s"
+          }
+        },
+        {
+          "name": "ageRanges.60s",
+          "values": {
+            "en-US": "60s",
+            "ar": "60s",
+            "fa-AF": "60s",
+            "pt-BR": "60s",
+            "es-US": "60s"
+          }
+        },
+        {
+          "name": "ageRanges.70s+",
+          "values": {
+            "en-US": "70s+",
+            "ar": "70s+",
+            "fa-AF": "70s+",
+            "pt-BR": "70s+",
+            "es-US": "70s+"
+          }
+        },
+        {
+          "name": "apply.approved",
+          "values": {
+            "en-US": "Your application has been approved continue to training",
+            "ar": "تمت الموافقة على طلبك استمر في التدريب",
+            "fa-AF": "درخواست شما تایید شده است؛ ترینینگ را ادامه دهید",
+            "pt-BR": "A sua aplicação foi aprovada! Prossiga para o treinamento",
+            "es-US": "Tu solicitud ha sido aprobada continúa entrenando"
+          }
+        },
+        {
+          "name": "apply.buildProfile",
+          "values": {
+            "en-US": "Build Profile",
+            "ar": "بناء ملفك الشخصي",
+            "fa-AF": "پروفایل خود را بسازید",
+            "pt-BR": "Construa seu perfil",
+            "es-US": "Construye tu perfil"
+          }
+        },
+        {
+          "name": "apply.completeTrainings",
+          "values": {
+            "en-US": "I confirm I have completed all trainings",
+            "ar": "أؤكد أنني أكملت جميع التدريبات",
+            "fa-AF": "من تمام ترینینگ ها را انجام داده ام.",
+            "pt-BR": "Confirmo que concluí todos os treinamentos",
+            "es-US": "Confirmo que he completado todos los entrenamientos"
+          }
+        },
+        {
+          "name": "apply.confirmation",
+          "values": {
+            "en-US": "Thank you for applying! Your application will be reviewed and you will be contacted shortly.",
+            "ar": " شكرا للتقديم! سيتم مراجعة الطلب وسيتم الاتصال بك قريبا. ",
+            "fa-AF": "تشکر بابت ثبت نام کردن شما! درخواست شما بررسی خواهد شد و به زودی با شما تماس خواهیم گرفت.",
+            "pt-BR": "Obrigado por se inscrever! Seu cadastro será avaliado e você será contatado em breve!",
+            "es-US": "¡Gracias por aplicar! "
+          }
+        },
+        {
+          "name": "apply.emailPrompt",
+          "values": {
+            "en-US": "Please enter your email to start the application process",
+            "ar": "يرجى إدخال بريدك الإلكتروني لبدء عملية التقديم",
+            "fa-AF": "ایمیل خود را برای شروع ثبت نام وارد کنید",
+            "pt-BR": "Por favor, insira o seu e-mail para iniciar o processo de aplicação.",
+            "es-US": "Por favor ingrese su correo electrónico para iniciar el proceso de solicitud"
+          }
+        },
+        {
+          "name": "apply.error.role",
+          "values": {
+            "en-US": "Please select a role",
+            "ar": "يرجى تحديد دورك",
+            "fa-AF": "لطفا نقش خود را انتخاب کنید",
+            "pt-BR": "Por favor, selecione um papel",
+            "es-US": "Por favor seleccione un rol"
+          }
+        },
+        {
+          "name": "apply.errorConnection",
+          "values": {
+            "en-US": "Something went wrong check your internet connection",
+            "ar": "حدث خطأ ما تحقق من اتصالك بالإنترنت",
+            "fa-AF": "شما با مشکل برخوردید، لطفا شبکه اینترنیتی خود را بررسی کنید",
+            "pt-BR": "Algo deu errado. Verifique sua conexão com a internet",
+            "es-US": "Algo salió mal revisa tu conexión a internet"
+          }
+        },
+        {
+          "name": "apply.existingAccount",
+          "values": {
+            "en-US": "You Already have account you will be redirect to login page",
+            "ar": "لديك حساب بالفعل ستتم إعادة توجيهك إلى صفحة تسجيل الدخول",
+            "fa-AF": "شما از قبل حساب دارید و به صفحه ورود هدایت می شوید",
+            "pt-BR": "Você já possui uma conta. Você será redirecionado para a página de login",
+            "es-US": "Ya tiene una cuenta, será redirigido a la página de inicio de sesión"
+          }
+        },
+        {
+          "name": "apply.message.haveAccount",
+          "values": {
+            "en-US": "You already have an account... redirecting to login",
+            "ar": "لديك حساب بالفعل؟",
+            "fa-AF": "حساب دارید؟",
+            "pt-BR": "Já possui uma conta?",
+            "es-US": "Ya tienes una cuenta..."
+          }
+        },
+        {
+          "name": "apply.partnerVerify",
+          "values": {
+            "en-US": "Your email is not pre-registered as a Partner. Please contact an administrator admin@menteeglobal.org",
+            "ar": "لم يتم تسجيل بريدك الإلكتروني مسبقًا كشريك.  الرجاء الاتصال بمسؤول admin@menteeglobal.org ",
+            "fa-AF": "ایمیل شما از قبل به عنوان شریک ثبت نشده است. لطفا با یک نماینده تماس بگیرید: admin@menteeglobal.org",
+            "pt-BR": "Seu e-mail não está pré-cadastrado como Parceiro. Por favor, contate um de nossos administradores pelo e-mail admin@menteeglobal.org",
+            "es-US": "Su correo electrónico no está pre-registrado como Partner. Por favor contacte un administrador al email admin@menteeglobal.org"
+          }
+        },
+        {
+          "name": "apply.training",
+          "values": {
+            "en-US": "Training",
+            "ar": "تدريبات",
+            "fa-AF": "من ترینینگ را انجام داده ام",
+            "pt-BR": "Treinamento",
+            "es-US": "Entrenamiento"
+          }
+        },
+        {
+          "name": "appointmentStatus.accepted",
+          "values": {
+            "en-US": "accepted",
+            "ar": "مقبول",
+            "fa-AF": "تایید شده",
+            "pt-BR": "Aceito",
+            "es-US": "aceptado"
+          }
+        },
+        {
+          "name": "appointmentStatus.denied",
+          "values": {
+            "en-US": "denied",
+            "ar": "مرفوض",
+            "fa-AF": "رد شده",
+            "pt-BR": "Negado",
+            "es-US": "denegado"
+          }
+        },
+        {
+          "name": "appointmentStatus.pending",
+          "values": {
+            "en-US": "pending",
+            "ar": "معلق",
+            "fa-AF": "در انتظار",
+            "pt-BR": "Pendente",
+            "es-US": "pendiente"
+          }
+        },
+        {
+          "name": "availability.addHours",
+          "values": {
+            "en-US": "Add hours",
+            "ar": "أضف ساعات",
+            "fa-AF": "ساعات تانرا اضافه کنید",
+            "pt-BR": "Adicionar horas",
+            "es-US": "Agregar horas"
+          }
+        },
+        {
+          "name": "availability.errorInvalid",
+          "values": {
+            "en-US": "Invalid Times. Please select times correctly",
+            "ar": "أوقات غير صحيحة.  يرجى تحديد الأوقات بشكل صحيح ",
+            "fa-AF": "زمان نامعتبر. لطفا زمان ها را به درستی انتخاب کنید",
+            "pt-BR": "Horários inválidos. Por favor, selecione horários válidos.",
+            "es-US": "Tiempos no válidos.  Por favor seleccione correctamente. "
+          }
+        },
+        {
+          "name": "availability.hours",
+          "values": {
+            "en-US": "Hours",
+            "ar": "ساعات",
+            "fa-AF": "ساعات",
+            "pt-BR": "Horas",
+            "es-US": "Horas"
+          }
+        },
+        {
+          "name": "availability.title",
+          "values": {
+            "en-US": "Select times for each available session per day",
+            "ar": "حدد الأوقات لكل جلسة متاحة في اليوم",
+            "fa-AF": "برای هر یک از جلسه موجود در روز زمان انتخاب کنید",
+            "pt-BR": "Selecione horários para cada sessão disponível por dia",
+            "es-US": "Seleccionar horarios para cada sesión disponible por día"
+          }
+        },
+        {
+          "name": "bookmarkSidebar.addMentors",
+          "values": {
+            "en-US": "Add Mentors +",
+            "ar": "أضف الموجهين",
+            "fa-AF": "مربیان را اضافه کنید",
+            "pt-BR": "Adicionar Mentores",
+            "es-US": "Agregar mentores"
+          }
+        },
+        {
+          "name": "bookmarkSidebar.favoriteContacts",
+          "values": {
+            "en-US": "Favorite Contacts",
+            "ar": "جهات الاتصال المفضلة",
+            "fa-AF": "مخاطبین مورد علاقه",
+            "pt-BR": "Contatos favoritos",
+            "es-US": "Contactos favoritos"
+          }
+        },
+        {
+          "name": "bookmarkSidebar.noFavorites",
+          "values": {
+            "en-US": "No favorited Mentors",
+            "ar": "لا يوجد موجهون مفضلون",
+            "fa-AF": "نبود مربی مورد علاقه",
+            "pt-BR": "Nenhum Mentor favorito",
+            "es-US": "No hay mentores favoritos"
+          }
+        },
+        {
+          "name": "common.admin",
+          "values": {
+            "en-US": "Admin",
+            "ar": "مسؤل",
+            "fa-AF": "مدیر",
+            "pt-BR": "Administrador",
+            "es-US": "Administrador"
+          }
+        },
+        {
+          "name": "common.apply",
+          "values": {
+            "en-US": "Apply",
+            "ar": "تطبيق",
+            "fa-AF": "ثبت نام کردن",
+            "pt-BR": "Aplicar",
+            "es-US": "Aplicar"
+          }
+        },
+        {
+          "name": "common.back",
+          "values": {
+            "en-US": "Back",
+            "ar": " الرجوع للخلف ",
+            "fa-AF": "بازگشت",
+            "pt-BR": "Voltar",
+            "es-US": "Atrás"
+          }
+        },
+        {
+          "name": "common.bug",
+          "values": {
+            "en-US": "Report a Bug",
+            "ar": "تقرير خطأ",
+            "fa-AF": "گزارش باگ",
+            "pt-BR": "Reportar um bug",
+            "es-US": "Reportar un error"
+          }
+        },
+        {
+          "name": "common.cancel",
+          "values": {
+            "en-US": "Cancel",
+            "ar": "إلغاء ",
+            "fa-AF": "لغو",
+            "pt-BR": "Cancelar",
+            "es-US": "Cancelar"
+          }
+        },
+        {
+          "name": "common.clear",
+          "values": {
+            "en-US": "Clear",
+            "ar": "امسح",
+            "fa-AF": "پاک کردن",
+            "pt-BR": "Limpar ",
+            "es-US": "Borrar"
+          }
+        },
+        {
+          "name": "common.clearAll",
+          "values": {
+            "en-US": "Clear All",
+            "ar": "امسح الكل",
+            "fa-AF": "همه را پاک کنید",
+            "pt-BR": "Limpar tudo",
+            "es-US": "Limpiar todo"
+          }
+        },
+        {
+          "name": "common.confirm",
+          "values": {
+            "en-US": "Confirm",
+            "ar": "",
+            "fa-AF": "",
+            "pt-BR": "",
+            "es-US": ""
+          }
+        },
+        {
+          "name": "common.contactMe",
+          "values": {
+            "en-US": "Contact Me",
+            "ar": "اتصل بي",
+            "fa-AF": "با من تماس بگیرید",
+            "pt-BR": "Entre em contato comigo",
+            "es-US": "Contáctame"
+          }
+        },
+        {
+          "name": "common.continue",
+          "values": {
+            "en-US": "Continue",
+            "ar": "استمر",
+            "fa-AF": "ادامه دهید",
+            "pt-BR": "Continuar",
+            "es-US": "Continuar"
+          }
+        },
+        {
+          "name": "common.delete",
+          "values": {
+            "en-US": "Delete",
+            "ar": "حذف",
+            "fa-AF": "حذف",
+            "pt-BR": "Excluir",
+            "es-US": "Eliminar"
+          }
+        },
+        {
+          "name": "common.deny",
+          "values": {
+            "en-US": "Deny",
+            "ar": "رفض",
+            "fa-AF": "انکار",
+            "pt-BR": "Negar",
+            "es-US": "Rechazar"
+          }
+        },
+        {
+          "name": "common.email",
+          "values": {
+            "en-US": "Email",
+            "ar": "بريد إلكتروني",
+            "fa-AF": "ایمیل",
+            "pt-BR": "E-mail",
+            "es-US": "Email"
+          }
+        },
+        {
+          "name": "common.firstName",
+          "values": {
+            "en-US": "First Name",
+            "ar": "الاسم الشخصي",
+            "fa-AF": "نام کوچک",
+            "pt-BR": "Primeiro nome",
+            "es-US": "Nombre"
+          }
+        },
+        {
+          "name": "common.guest",
+          "values": {
+            "en-US": "Guest",
+            "ar": "زائر",
+            "fa-AF": "مهمان",
+            "pt-BR": "Convidado",
+            "es-US": "Invitado"
+          }
+        },
+        {
+          "name": "common.inputPrompt",
+          "values": {
+            "en-US": "Please add input",
+            "ar": "الرجاء إضافة مدخلات",
+            "fa-AF": "لطفا ورودی اضافه کنید",
+            "pt-BR": "Por favor, adicione as informações necessárias.",
+            "es-US": "Por favor ingrese"
+          }
+        },
+        {
+          "name": "common.invalidUrl",
+          "values": {
+            "en-US": "Invalid URL",
+            "ar": "عنوان URL غير صالح",
+            "fa-AF": "URL نامعتبر",
+            "pt-BR": "URL inválida",
+            "es-US": "URL inválida"
+          }
+        },
+        {
+          "name": "common.languages",
+          "values": {
+            "en-US": "Languages",
+            "ar": "اللغات",
+            "fa-AF": "زبان ها",
+            "pt-BR": "Idiomas",
+            "es-US": "Idiomas"
+          }
+        },
+        {
+          "name": "common.lastName",
+          "values": {
+            "en-US": "Last Name",
+            "ar": "الاسم العائلي ",
+            "fa-AF": "تخلص",
+            "pt-BR": "Sobrenome",
+            "es-US": "Apellido"
+          }
+        },
+        {
+          "name": "common.login",
+          "values": {
+            "en-US": "Login",
+            "ar": "تسجيل الدخول",
+            "fa-AF": "وارد شدن",
+            "pt-BR": "Entrar",
+            "es-US": "Inicio de sesión"
+          }
+        },
+        {
+          "name": "common.logout",
+          "values": {
+            "en-US": "Logout",
+            "ar": "تسجيل الخروج",
+            "fa-AF": "خروج",
+            "pt-BR": "Sair",
+            "es-US": "Cerrar sesión"
+          }
+        },
+        {
+          "name": "common.mentee",
+          "values": {
+            "en-US": "Mentee",
+            "ar": "متدرب",
+            "fa-AF": "شاگرد",
+            "pt-BR": "Mentorado",
+            "es-US": "Mentee"
+          }
+        },
+        {
+          "name": "common.mentor",
+          "values": {
+            "en-US": "Mentor",
+            "ar": "مُرشِد",
+            "fa-AF": "مربی",
+            "pt-BR": "Mentor",
+            "es-US": "Mentor"
+          }
+        },
+        {
+          "name": "common.message",
+          "values": {
+            "en-US": "Message",
+            "ar": "رسالة",
+            "fa-AF": "پیام",
+            "pt-BR": "Mensagem",
+            "es-US": "Mensaje"
+          }
+        },
+        {
+          "name": "common.messages",
+          "values": {
+            "en-US": "Messages",
+            "ar": "رسائل",
+            "fa-AF": "پیام ها",
+            "pt-BR": "Mensagens",
+            "es-US": "Mensajes"
+          }
+        },
+        {
+          "name": "common.name",
+          "values": {
+            "en-US": "Name",
+            "ar": "الاسم",
+            "fa-AF": "نام",
+            "pt-BR": "Nome",
+            "es-US": "Nombre"
+          }
+        },
+        {
+          "name": "common.no",
+          "values": {
+            "en-US": "No",
+            "ar": "لا",
+            "fa-AF": "نه",
+            "pt-BR": "Não",
+            "es-US": "No"
+          }
+        },
+        {
+          "name": "common.other",
+          "values": {
+            "en-US": "Other",
+            "ar": "آخر",
+            "fa-AF": "سایر",
+            "pt-BR": "Outro(s)",
+            "es-US": "Otro"
+          }
+        },
+        {
+          "name": "common.partner",
+          "values": {
+            "en-US": "Partner",
+            "ar": "شريك",
+            "fa-AF": "شریک",
+            "pt-BR": "Parceiro",
+            "es-US": "Socio"
+          }
+        },
+        {
+          "name": "common.password",
+          "values": {
+            "en-US": "Password",
+            "ar": "كلمة المرور",
+            "fa-AF": "کلمه عبور",
+            "pt-BR": "Senha",
+            "es-US": "Contraseña"
+          }
+        },
+        {
+          "name": "common.phone",
+          "values": {
+            "en-US": "Phone",
+            "ar": "هاتف",
+            "fa-AF": "تلفن",
+            "pt-BR": "Telefone",
+            "es-US": "Teléfono"
+          }
+        },
+        {
+          "name": "common.phoneNumber",
+          "values": {
+            "en-US": "Phone Number",
+            "ar": "رقم التليفون",
+            "fa-AF": "شماره تماس",
+            "pt-BR": "Número de telefone",
+            "es-US": "Número de teléfono"
+          }
+        },
+        {
+          "name": "common.pleaseSelect",
+          "values": {
+            "en-US": "Please Select",
+            "ar": "الرجاء التحديد",
+            "fa-AF": "لطفا انتخاب کنید",
+            "pt-BR": "Por favor, selecione",
+            "es-US": "Por favor seleccione"
+          }
+        },
+        {
+          "name": "common.role",
+          "values": {
+            "en-US": "Role",
+            "ar": "الدور",
+            "fa-AF": "نقش",
+            "pt-BR": "Papel",
+            "es-US": "Rol"
+          }
+        },
+        {
+          "name": "common.save",
+          "values": {
+            "en-US": "Save",
+            "ar": "حفظ",
+            "fa-AF": "صرفه جویی",
+            "pt-BR": "Salvar",
+            "es-US": "Guardar"
+          }
+        },
+        {
+          "name": "common.selectPrompt",
+          "values": {
+            "en-US": "Please select an option",
+            "ar": "الرجاء تحديد خيار",
+            "fa-AF": "لطفا یک گزینه را انتخاب کنید",
+            "pt-BR": "Por favor, selecione uma opção",
+            "es-US": "Por favor seleccione una opción"
+          }
+        },
+        {
+          "name": "common.specializations",
+          "values": {
+            "en-US": "Specializations",
+            "ar": "التخصصات",
+            "fa-AF": "تخصصات",
+            "pt-BR": "Especializações",
+            "es-US": "Especializaciones"
+          }
+        },
+        {
+          "name": "common.submit",
+          "values": {
+            "en-US": "Submit",
+            "ar": "إرسال",
+            "fa-AF": "ارسال",
+            "pt-BR": "Enviar",
+            "es-US": "Enviar"
+          }
+        },
+        {
+          "name": "common.welcome",
+          "values": {
+            "en-US": "Welcome to <1>MENTEE!</1>",
+            "ar": "مرحبا بك في <1>MENTEE!</1>",
+            "fa-AF": "به <1>MENTEE!</1> خوش آمدید",
+            "pt-BR": "Bem-vindo ao <1>MENTEE!</1>",
+            "es-US": "¡Bienvenido a <1>MENTEE!</1>"
+          }
+        },
+        {
+          "name": "common.whatsapp",
+          "values": {
+            "en-US": "WhatsApp",
+            "ar": "ال WhatsApp (واتساب)",
+            "fa-AF": "واتساپ",
+            "pt-BR": "WhatsApp",
+            "es-US": "WhatsApp"
+          }
+        },
+        {
+          "name": "common.yes",
+          "values": {
+            "en-US": "Yes",
+            "ar": "نعم",
+            "fa-AF": "بله",
+            "pt-BR": "Sim",
+            "es-US": "Sí"
+          }
+        },
+        {
+          "name": "commonApplication.genderIdentification",
+          "values": {
+            "en-US": "What do you identify as?",
+            "ar": "الجنس",
+            "fa-AF": "شناسایی جنسیت",
+            "pt-BR": "Como você se identifica?",
+            "es-US": "¿Cómo te identificas?"
+          }
+        },
+        {
+          "name": "commonApplication.lgbtq",
+          "values": {
+            "en-US": "as LGBTQ+",
+            "ar": "افضل عدم الاجابة",
+            "fa-AF": "LGBTQ",
+            "pt-BR": "Me identifico como LGBTQIAPN+",
+            "es-US": "LGBTQ"
+          }
+        },
+        {
+          "name": "commonApplication.man",
+          "values": {
+            "en-US": "as a man",
+            "ar": "ذكر",
+            "fa-AF": "مرد",
+            "pt-BR": "Me identifico como homem",
+            "es-US": "Hombre"
+          }
+        },
+        {
+          "name": "commonApplication.other",
+          "values": {
+            "en-US": "as other",
+            "ar": "افضل عدم الاجابة",
+            "fa-AF": "سایر",
+            "pt-BR": "Outro(s)",
+            "es-US": "Otro"
+          }
+        },
+        {
+          "name": "commonApplication.woman",
+          "values": {
+            "en-US": "as a woman",
+            "ar": "أنثى ",
+            "fa-AF": "زن",
+            "pt-BR": "Me identifico como mulher",
+            "es-US": "Mujer"
+          }
+        },
+        {
+          "name": "commonProfile.accountCreated",
+          "values": {
+            "en-US": "Your account has been created now you can login to Mentee",
+            "ar": "تم إنشاء حسابك الآن يمكنك تسجيل الدخول إلى Mentee",
+            "fa-AF": "حساب شما ایجاد شده است و می توانید به Mentee وارد شوید",
+            "pt-BR": "Sua conta foi criada! Agora você pode entrar no Mentee!",
+            "es-US": "Su cuenta ha sido creada ahora puede iniciar sesión en Mentee"
+          }
+        },
+        {
+          "name": "commonProfile.addMoreEducation",
+          "values": {
+            "en-US": "Add more",
+            "ar": "أضف المزيد",
+            "fa-AF": "بیشتر اضافه کنید",
+            "pt-BR": "Adicionar mais",
+            "es-US": "Añadir más"
+          }
+        },
+        {
+          "name": "commonProfile.addVideos",
+          "values": {
+            "en-US": "Add Videos",
+            "ar": "أضف مقاطع فيديو",
+            "fa-AF": "افزودن ویدیوها",
+            "pt-BR": "Adicionar vídeos",
+            "es-US": "Agregar videos"
+          }
+        },
+        {
+          "name": "commonProfile.biography",
+          "values": {
+            "en-US": "Biography",
+            "ar": "سيرة شخصية",
+            "fa-AF": "زندگی نامه",
+            "pt-BR": "Biografia",
+            "es-US": "Biografía"
+          }
+        },
+        {
+          "name": "commonProfile.confirm",
+          "values": {
+            "en-US": "Confirm",
+            "ar": "أكد",
+            "fa-AF": "تایید",
+            "pt-BR": "Confirmar",
+            "es-US": "Confirmar"
+          }
+        },
+        {
+          "name": "commonProfile.confirmPassword",
+          "values": {
+            "en-US": "Confirm Password",
+            "ar": "تأكيد كلمة المرور",
+            "fa-AF": "رمز عبور را تایید کنید",
+            "pt-BR": "Confirmar senha",
+            "es-US": "confirmar Contraseña"
+          }
+        },
+        {
+          "name": "commonProfile.degree",
+          "values": {
+            "en-US": "Degree",
+            "ar": "الدرجة العلمية",
+            "fa-AF": "درجه",
+            "pt-BR": "Grau",
+            "es-US": "Grado"
+          }
+        },
+        {
+          "name": "commonProfile.degreeExample",
+          "values": {
+            "en-US": "Ex. Bachelor's",
+            "ar": "بكالوريوس على سبيل المثال",
+            "fa-AF": "به عنوان مثال، درجه تحصیلی لیسانس",
+            "pt-BR": "Exemplo: Bacharel",
+            "es-US": "Ej. Universitario"
+          }
+        },
+        {
+          "name": "commonProfile.delete",
+          "values": {
+            "en-US": "Delete",
+            "ar": "حذف",
+            "fa-AF": "حذف",
+            "pt-BR": "Excluir",
+            "es-US": "Borrar"
+          }
+        },
+        {
+          "name": "commonProfile.editProfile",
+          "values": {
+            "en-US": "Edit Profile",
+            "ar": "تعديل الملف الشخصي",
+            "fa-AF": "ویرایش پروفایل",
+            "pt-BR": "Editar Perfil",
+            "es-US": "Editar perfil"
+          }
+        },
+        {
+          "name": "commonProfile.education",
+          "values": {
+            "en-US": "Education",
+            "ar": " المستوى التعليمي ",
+            "fa-AF": "تحصیلات",
+            "pt-BR": "Educação",
+            "es-US": "Educación"
+          }
+        },
+        {
+          "name": "commonProfile.error.save",
+          "values": {
+            "en-US": "Failed to save profile",
+            "ar": "حدث خطأ ما أثناء حفظ الملف الشخصي",
+            "fa-AF": "خطا در ذخیره سازی پروفایل",
+            "pt-BR": "Erro ao salvar perfil. Por favor, tente novamente.",
+            "es-US": "Error al guardar, inténtalo de nuevo"
+          }
+        },
+        {
+          "name": "commonProfile.error.uploadImage",
+          "values": {
+            "en-US": "Failed to upload image",
+            "ar": "حدث خطأ ما أثناء تحميل الصورة",
+            "fa-AF": "خطا در بارگذاری تصویر",
+            "pt-BR": "Erro ao enviar imagem. Por favor, tente novamente.",
+            "es-US": "Error al cargar la imagen, inténtalo de nuevo"
+          }
+        },
+        {
+          "name": "commonProfile.errorTrainingSteps",
+          "values": {
+            "en-US": "Please complete apply and training steps first",
+            "ar": "يرجى إكمال خطوات التقديم والتدريب أولاً",
+            "fa-AF": "لطفا ابتدا مراحل ثبت نام و ترینینگ را تمام کنید",
+            "pt-BR": "Conclua as etapas de inscrição e treinamento primeiro",
+            "es-US": "Complete los pasos de solicitud y capacitación primero"
+          }
+        },
+        {
+          "name": "commonProfile.fieldTooLong",
+          "values": {
+            "en-US": "Field is too long",
+            "ar": "الحقل ـ الموقع المطلوب طويل جدًا",
+            "fa-AF": "زمینه خیلی طولانی است",
+            "pt-BR": "O campo é muito extenso",
+            "es-US": "El campo es demasiado largo"
+          }
+        },
+        {
+          "name": "commonProfile.fullName",
+          "values": {
+            "en-US": "Full Name",
+            "ar": "الاسم الكامل",
+            "fa-AF": "نام تکمیل",
+            "pt-BR": "Nome completo",
+            "es-US": "Nombre completo"
+          }
+        },
+        {
+          "name": "commonProfile.graduationYear",
+          "values": {
+            "en-US": "End Year/Expected",
+            "ar": "نهاية العام / المتوقع",
+            "fa-AF": "پایان سال / مورد انتظار",
+            "pt-BR": "Ano de conclusão (esperado)",
+            "es-US": "Fin de año/esperado"
+          }
+        },
+        {
+          "name": "commonProfile.introductionVideo",
+          "values": {
+            "en-US": "Introduce yourself via YouTube video!",
+            "ar": "قدم نفسك عبر فيديو يوتيوب!",
+            "fa-AF": "خود را از طریق ویدیوی یوتیوب معرفی کنید!",
+            "pt-BR": "Apresente-se através de um vídeo do YouTube!",
+            "es-US": "¡Preséntate a través de un video de YouTube!"
+          }
+        },
+        {
+          "name": "commonProfile.languages",
+          "values": {
+            "en-US": "Languages(s)",
+            "ar": " اللغة (أو اللغات) ",
+            "fa-AF": "زبان(ها)",
+            "pt-BR": "Idioma(s)",
+            "es-US": "Idiomas"
+          }
+        },
+        {
+          "name": "commonProfile.languagesExample",
+          "values": {
+            "en-US": "Ex. English, Spanish",
+            "ar": " على سبيل المثال: الإنجليزية, الإسبانية ",
+            "fa-AF": "به عنوان مثال، انگلیسی، اسپانیایی",
+            "pt-BR": "Ex. Inglês, Espanhol",
+            "es-US": "Ex. Inglés, Español"
+          }
+        },
+        {
+          "name": "commonProfile.linkedin",
+          "values": {
+            "en-US": "LinkedIn",
+            "ar": "LinkedIn (لينكد إن)",
+            "fa-AF": "لینکدین",
+            "pt-BR": "LinkedIn",
+            "es-US": "LinkedIn"
+          }
+        },
+        {
+          "name": "commonProfile.location",
+          "values": {
+            "en-US": "Location",
+            "ar": "موقع",
+            "fa-AF": "موقعیت",
+            "pt-BR": "Localização",
+            "es-US": "Ubicación"
+          }
+        },
+        {
+          "name": "commonProfile.majors",
+          "values": {
+            "en-US": "Major(s)",
+            "ar": "تخصص (أو تخصصات ماجستير)",
+            "fa-AF": "رشته(ها) تحصیلی",
+            "pt-BR": "Formações",
+            "es-US": "Master(s)"
+          }
+        },
+        {
+          "name": "commonProfile.majorsExamples",
+          "values": {
+            "en-US": "Ex. Computer Science, Biology",
+            "ar": " على سبيل المثال علوم الكمبيوتر، علم الأحياء ",
+            "fa-AF": "به عنوان مثال، کمپیوتر ساینس، بیالوژی",
+            "pt-BR": "Exemplo: Ciência da computação, Biologia",
+            "es-US": "Ej. Ciencias de Computación, Biología"
+          }
+        },
+        {
+          "name": "commonProfile.missingFields",
+          "values": {
+            "en-US": "Error or missing fields, try again.",
+            "ar": "خطأ أو حقل ـ موقع مفقودة من الاكتمال، حاول مجددا.",
+            "fa-AF": "خطا یا نبود فیلدها، دوباره امتحان کنید.",
+            "pt-BR": "Erro ou campos ausentes, tente novamente.",
+            "es-US": "Error o faltan campos, inténtalo de nuevo."
+          }
+        },
+        {
+          "name": "commonProfile.passwordMismatch",
+          "values": {
+            "en-US": "Passwords do NOT match",
+            "ar": " كلمات المرور غير متطابقة ",
+            "fa-AF": "رمزهای ورود مطابقت ندارند",
+            "pt-BR": "As senhas NÃO coincidem",
+            "es-US": "Las contraseñas no coinciden"
+          }
+        },
+        {
+          "name": "commonProfile.pasteLink",
+          "values": {
+            "en-US": "Paste Link",
+            "ar": " الصق الرابط ",
+            "fa-AF": "لینک را اضافه کنید",
+            "pt-BR": "Colar link",
+            "es-US": "Pegue el enlace"
+          }
+        },
+        {
+          "name": "commonProfile.phone",
+          "values": {
+            "en-US": "Phone",
+            "ar": "الهاتف",
+            "fa-AF": "تلفن",
+            "pt-BR": "Telefone",
+            "es-US": "Teléfono"
+          }
+        },
+        {
+          "name": "commonProfile.school",
+          "values": {
+            "en-US": "School",
+            "ar": "المدرسة",
+            "fa-AF": "مکتب",
+            "pt-BR": "Escola",
+            "es-US": "Escuela"
+          }
+        },
+        {
+          "name": "commonProfile.sendMessage",
+          "values": {
+            "en-US": "Send Message",
+            "ar": "أرسل رسالة",
+            "fa-AF": "پیام فرستادن",
+            "pt-BR": "Enviar mensagem",
+            "es-US": "Enviar mensaje"
+          }
+        },
+        {
+          "name": "commonProfile.video",
+          "values": {
+            "en-US": "Video",
+            "ar": "الفيديو",
+            "fa-AF": "ویدئو",
+            "pt-BR": "Vídeo",
+            "es-US": "Video"
+          }
+        },
+        {
+          "name": "commonProfile.videoIntroduction",
+          "values": {
+            "en-US": "Introduction",
+            "ar": "مقدمة",
+            "fa-AF": "معرفی",
+            "pt-BR": "Apresentação",
+            "es-US": "Introducción"
+          }
+        },
+        {
+          "name": "commonProfile.videos",
+          "values": {
+            "en-US": "Videos",
+            "ar": "أشرطة فيديو",
+            "fa-AF": "ویدئوها ",
+            "pt-BR": "Vídeos",
+            "es-US": "Vídeos"
+          }
+        },
+        {
+          "name": "commonProfile.website",
+          "values": {
+            "en-US": "Website",
+            "ar": "الموقع الإلكتروني",
+            "fa-AF": "سایت اینترنتی",
+            "pt-BR": "Site",
+            "es-US": "Sitio web"
+          }
+        },
+        {
+          "name": "commonProfile.welcome",
+          "values": {
+            "en-US": "Welcome. Tell us about yourself.",
+            "ar": "أهلًا وسهلًا. أخبرنا عن نفسك.  ",
+            "fa-AF": "خوش آمدید. در مورد خودتان برای مه بگویید.",
+            "pt-BR": "Bem-vindo(a)! Conte-nos sobre você",
+            "es-US": "Bienvenido. Cuentenos sobre usted."
+          }
+        },
+        {
+          "name": "emailSubjects.app_approved",
+          "values": {
+            "en-US": "MENTEE Application Status - Approved",
+            "ar": "حالة طلب MENTEE - تمت الموافقة",
+            "fa-AF": "وضعیت درخواست منتی - تایید شده",
+            "pt-BR": "Status da solicitação de MENTEE - Aprovado",
+            "es-US": "Estado de la solicitud de MENTEE - Aprobada"
+          }
+        },
+        {
+          "name": "emailSubjects.app_rejected",
+          "values": {
+            "en-US": "Thank you for your interest in MENTEE",
+            "ar": "شكرًا لاهتمامك في MENTEE",
+            "fa-AF": "از علاقه‌مندی شما در منتی سپاسگزاریم",
+            "pt-BR": "Obrigado pelo seu interesse na MENTEE",
+            "es-US": "Gracias por tu interés en MENTEE"
+          }
+        },
+        {
+          "name": "emailSubjects.forgot_password",
+          "values": {
+            "en-US": "MENTEE Password Reset",
+            "ar": "إعادة تعيين كلمة المرور MENTEE",
+            "fa-AF": "بازیابی رمز عبور منتی",
+            "pt-BR": "Redefinição de senha da MENTEE",
+            "es-US": "Restablecimiento de contraseña de mentee"
+          }
+        },
+        {
+          "name": "emailSubjects.mentee_app_submit",
+          "values": {
+            "en-US": "MENTEE Application Status",
+            "ar": "حالة طلب MENTEE",
+            "fa-AF": "وضعیت درخواست منتی",
+            "pt-BR": "Status da solicitação da MENTEE",
+            "es-US": "Estado de la solicitud de MENTEE"
+          }
+        },
+        {
+          "name": "emailSubjects.mentee_appt",
+          "values": {
+            "en-US": "Mentor Appointment Request",
+            "ar": "طلب موعد مع المرشد",
+            "fa-AF": "درخواست قرار مربی",
+            "pt-BR": "Solicitação de agendamento do Mentor",
+            "es-US": "Solicitud de cita de mentor"
+          }
+        },
+        {
+          "name": "emailSubjects.mentor_app_submit",
+          "values": {
+            "en-US": "MENTEE Application Status",
+            "ar": "حالة طلب MENTEE",
+            "fa-AF": "وضعیت درخواست منتی",
+            "pt-BR": "Status da solicitação de MENTEE",
+            "es-US": "Estado de la solicitud de MENTEE"
+          }
+        },
+        {
+          "name": "emailSubjects.mentor_appt",
+          "values": {
+            "en-US": "Mentee Appointment Request",
+            "ar": "طلب موعد مع المتدرب",
+            "fa-AF": "درخواست قرار منتی",
+            "pt-BR": "Solicitação de agendamento do Mentee",
+            "es-US": "Solicitud de cita de mentee"
+          }
+        },
+        {
+          "name": "emailSubjects.mentor_contact_me",
+          "values": {
+            "en-US": "Mentor: A Mentee has requested to contact you",
+            "ar": "مرشد: طلب أحد المتدربين الاتصال بك",
+            "fa-AF": "مربی: یک منتی درخواست تماس با شما داشته است",
+            "pt-BR": "Mentor: Um Mentorado solicitou entrar em contato com você",
+            "es-US": "Mentor: Un mentee ha solicitado ponerse en contacto contigo"
+          }
+        },
+        {
+          "name": "emailSubjects.new_training",
+          "values": {
+            "en-US": "MENTEE! New training materials available",
+            "ar": "MENTEE! مواد تدريبية جديدة متاحة",
+            "fa-AF": "منتی! منابع آموزشی جدید در دسترس است",
+            "pt-BR": "MENTEE! Novos materiais de treinamento disponíveis",
+            "es-US": "¡MENTEE! Nuevos materiales de capacitación disponibles"
+          }
+        },
+        {
+          "name": "emailSubjects.profile_complete",
+          "values": {
+            "en-US": "MENTEE Profile Completed - Please login",
+            "ar": "الملف الشخصي لـ MENTEE مكتمل - يرجى تسجيل الدخول",
+            "fa-AF": "پروفایل منتی کامل شده است - لطفا وارد شوید",
+            "pt-BR": "Perfil da MENTEE completo - Faça login, por favor",
+            "es-US": "Perfil de MENTEE completado: por favor, inicia sesión"
+          }
+        },
+        {
+          "name": "emailSubjects.send_invite",
+          "values": {
+            "en-US": "Mentee Appointment Appointment Invite",
+            "ar": "دعوة موعد MENTEE",
+            "fa-AF": "دعوت به قرار ملاقات منتی",
+            "pt-BR": "Convite para agendamento do Mentorado",
+            "es-US": "Invitación a cita de mentee"
+          }
+        },
+        {
+          "name": "emailSubjects.training_complete",
+          "values": {
+            "en-US": "Congratulations for completing the training",
+            "ar": "تهانينا على إتمام التدريب",
+            "fa-AF": "تبریک بابت تکمیل آموزش",
+            "pt-BR": "Parabéns por concluir o treinamento",
+            "es-US": "Felicitaciones por completar la capacitación"
+          }
+        },
+        {
+          "name": "emailSubjects.unread_message",
+          "values": {
+            "en-US": "MENTEE: You have received a new Message!",
+            "ar": "MENTEE: لديك رسالة جديدة!",
+            "fa-AF": "منتی: شما یک پیام جدید دریافت کرده اید!",
+            "pt-BR": "MENTEE: Você recebeu uma nova mensagem!",
+            "es-US": "MENTEE: ¡Has recibido un nuevo mensaje!"
+          }
+        },
+        {
+          "name": "emailSubjects.verify_email",
+          "values": {
+            "en-US": "MENTEE Email Verification",
+            "ar": "التحقق من البريد الإلكتروني MENTEE",
+            "fa-AF": "تأیید ایمیل منتی",
+            "pt-BR": "Verificação de e-mail do Mentorado",
+            "es-US": "Verificación de correo electrónico de mentee"
+          }
+        },
+        {
+          "name": "emailSubjects.weekly_notif",
+          "values": {
+            "en-US": "MENTEE: You Have Unread Messages",
+            "ar": "MENTEE: لديك رسائل غير مقروءة",
+            "fa-AF": "منتی: شما پیام های خوانده نشده دارید",
+            "pt-BR": "MENTEE: Você tem mensagens não lidas",
+            "es-US": "MENTEE: Tienes mensajes sin leer"
+          }
+        },
+        {
+          "name": "forgotPassword.emailResent",
+          "values": {
+            "en-US": "Email resent!",
+            "ar": " تم إعادة إرسال البريد الإلكتروني!",
+            "fa-AF": "ایمیل دوباره ارسال شد!",
+            "pt-BR": "E-mail reenviado!",
+            "es-US": "¡Reenvío de correo electrónico!"
+          }
+        },
+        {
+          "name": "forgotPassword.error",
+          "values": {
+            "en-US": "Error, please try again!",
+            "ar": "خطأ ، يرجى المحاولة مرة أخرى!",
+            "fa-AF": "خطا، لطفا دوباره امتحان کنید!",
+            "pt-BR": "Erro, tente novamente!",
+            "es-US": "¡Error, inténtalo de nuevo!"
+          }
+        },
+        {
+          "name": "forgotPassword.notReceiveEmail",
+          "values": {
+            "en-US": "Didn't receive an email?",
+            "ar": "ألم تتلق بريدًا إلكترونيًا؟",
+            "fa-AF": "ایمیلی دریافت نکردید؟",
+            "pt-BR": "Não recebeu um e-mail?",
+            "es-US": "¿No recibiste un correo electrónico?"
+          }
+        },
+        {
+          "name": "forgotPassword.promptEmail",
+          "values": {
+            "en-US": "Please enter email for the password reset link to be sent to.",
+            "ar": " يرجى إدخال البريد الإلكتروني لإرسال رابط إعادة تعيين كلمة المرور إليه. ",
+            "fa-AF": "لطفا ایمیل را وارد کنید تا لینک تغییر رمز عبور به آن ارسال شود.",
+            "pt-BR": "Por favor, digite o e-mail para o qual o link de redefinição de senha será enviado.",
+            "es-US": "Ingrese el correo electrónico para enviar el enlace de restablecimiento de contraseña."
+          }
+        },
+        {
+          "name": "forgotPassword.resend",
+          "values": {
+            "en-US": "Resend",
+            "ar": "إعادة إرسال",
+            "fa-AF": "ارسال مجدد",
+            "pt-BR": "Reenviar",
+            "es-US": "Reenviar"
+          }
+        },
+        {
+          "name": "forgotPassword.sendLink",
+          "values": {
+            "en-US": "Send Link",
+            "ar": "أرسل الرابط",
+            "fa-AF": "ارسال لینک",
+            "pt-BR": "Enviar Link",
+            "es-US": "Enviar enlace"
+          }
+        },
+        {
+          "name": "forgotPassword.sent",
+          "values": {
+            "en-US": "Sent!",
+            "ar": "مرسل!",
+            "fa-AF": "ارسال شد!",
+            "pt-BR": "Enviado!",
+            "es-US": "¡Enviado!"
+          }
+        },
+        {
+          "name": "forgotPassword.title",
+          "values": {
+            "en-US": "Forgot Password",
+            "ar": "هل نسيت كلمة السر",
+            "fa-AF": "فراموش رمز عبور",
+            "pt-BR": "Esqueci minha senha",
+            "es-US": "Has olvidado tu contraseña"
+          }
+        },
+        {
+          "name": "gallery.filter",
+          "values": {
+            "en-US": "Filter",
+            "ar": "تصفية نتائج البحث",
+            "fa-AF": "فیلتر کنید",
+            "pt-BR": "Filtro",
+            "es-US": "Filtrar"
+          }
+        },
+        {
+          "name": "gallery.filterBy",
+          "values": {
+            "en-US": "Filter by:",
+            "ar": "تصفية حسب:",
+            "fa-AF": "فیلتر توسط:",
+            "pt-BR": "Filtrar por:",
+            "es-US": "Filtrado por:"
+          }
+        },
+        {
+          "name": "gallery.menteeInterests",
+          "values": {
+            "en-US": "Mentee Interests",
+            "ar": "اهتمامات المتدرب",
+            "fa-AF": "منافع شاگرد",
+            "pt-BR": "Interesses do mentorado",
+            "es-US": "Intereses de los aprendices"
+          }
+        },
+        {
+          "name": "gallery.organization",
+          "values": {
+            "en-US": "Organization",
+            "ar": "المنظمة",
+            "fa-AF": "موسسه ",
+            "pt-BR": "Organização",
+            "es-US": "Organización"
+          }
+        },
+        {
+          "name": "gallery.organizationPlaceholder",
+          "values": {
+            "en-US": "Search by organization",
+            "ar": "البحث عن طريق المنظمة",
+            "fa-AF": "جستجو بر اساس موسسه",
+            "pt-BR": "Pesquisar por organização",
+            "es-US": "Buscar por organización"
+          }
+        },
+        {
+          "name": "gallery.projectTopics",
+          "values": {
+            "en-US": "Project Topics",
+            "ar": "مواضيع المشروع",
+            "fa-AF": "موضوعات پروژه",
+            "pt-BR": "Temas de Projeto",
+            "es-US": "Temas del proyecto"
+          }
+        },
+        {
+          "name": "gallery.projectTopicsPlaceholder",
+          "values": {
+            "en-US": "Search by project Topics",
+            "ar": "البحث عن طريق مواضيع المشروع",
+            "fa-AF": "جستجو بر اساس موضوعات پروژه",
+            "pt-BR": "Pesquise por temas de projeto",
+            "es-US": "Buscar por tema de proyecto"
+          }
+        },
+        {
+          "name": "gallery.regions",
+          "values": {
+            "en-US": "Regions",
+            "ar": "المناطق",
+            "fa-AF": "مناطق",
+            "pt-BR": "Regiões",
+            "es-US": "Regiones"
+          }
+        },
+        {
+          "name": "gallery.sdgs",
+          "values": {
+            "en-US": "SDGS",
+            "ar": "أهداف التنمية المستدامة",
+            "fa-AF": "اهداف توسعه پایدار",
+            "pt-BR": "ODS (Objetivos de Desenvolvimento Sustentável)",
+            "es-US": "ODS"
+          }
+        },
+        {
+          "name": "gallery.searchByName",
+          "values": {
+            "en-US": "Search by name",
+            "ar": "البحث عن طريق الإسم",
+            "fa-AF": "جستجو براساس نام",
+            "pt-BR": "Busca por nome",
+            "es-US": "Buscar por nombre"
+          }
+        },
+        {
+          "name": "gallery.speaks",
+          "values": {
+            "en-US": "Speaks:",
+            "ar": "اللغات التي تتحدثها:",
+            "fa-AF": "صحبت می کند:",
+            "pt-BR": "Idiomas que fala:",
+            "es-US": "Idiomas que habla:"
+          }
+        },
+        {
+          "name": "gallery.unauthorizedAccess",
+          "values": {
+            "en-US": "Sorry, you are not authorized to access this page.",
+            "ar": "عذرا ، أنت غير مصرح لك للوصول إلى هذه الصفحة.",
+            "fa-AF": "با عذر، شما شما مجاز به دسترسی به این صفحه نیستید.",
+            "pt-BR": "Desculpe, você não está autorizado a acessar esta página.",
+            "es-US": "Lo sentimos, no está autorizado para acceder a esta página."
+          }
+        },
+        {
+          "name": "gallery.viewProfile",
+          "values": {
+            "en-US": "View Profile",
+            "ar": "عرض الصفحة الشخصية",
+            "fa-AF": "مشاهده پروفایل ",
+            "pt-BR": "Ver perfil",
+            "es-US": "Ver perfil"
+          }
+        },
+        {
+          "name": "homepage.existingAccountDesc",
+          "values": {
+            "en-US": "Platform Login",
+            "ar": "منصة تسجيل الدخول",
+            "fa-AF": "ورود به پلت فرم",
+            "pt-BR": "LOGIN",
+            "es-US": "INICIO DE SESIÓN"
+          }
+        },
+        {
+          "name": "homepage.existingAccountTitle",
+          "values": {
+            "en-US": "Existing",
+            "ar": "موجود",
+            "fa-AF": "موجود",
+            "pt-BR": "JÁ SOU CADASTRADO",
+            "es-US": "EXISTENTE"
+          }
+        },
+        {
+          "name": "homepage.isExistingUser",
+          "values": {
+            "en-US": "Are you a new or existing user?",
+            "ar": "هل أنت مستخدم جديد أو موجود؟",
+            "fa-AF": "آیا شما یک کاربر موجود هستید یا جدید؟",
+            "pt-BR": "Você é um usuário novo ou já tem cadastro?",
+            "es-US": "¿Es usted un usuario nuevo o existente?"
+          }
+        },
+        {
+          "name": "homepage.newAccountDesc",
+          "values": {
+            "en-US": "Apply - Train - Build",
+            "ar": " تطبيق - تدريب - بناء ",
+            "fa-AF": "تطبيق - تمرین - ساخت",
+            "pt-BR": "APLICAR",
+            "es-US": "APLICAR"
+          }
+        },
+        {
+          "name": "homepage.newAccountTitle",
+          "values": {
+            "en-US": "New",
+            "ar": "جديد",
+            "fa-AF": "جدید",
+            "pt-BR": "NOVO",
+            "es-US": "NUEVO"
+          }
+        },
+        {
+          "name": "languages.ar",
+          "values": {
+            "en-US": "العربية",
+            "ar": "العربية",
+            "fa-AF": "عربی",
+            "pt-BR": "العربية",
+            "es-US": "Arabe"
+          }
+        },
+        {
+          "name": "languages.en",
+          "values": {
+            "en-US": "English",
+            "ar": "English",
+            "fa-AF": "English",
+            "pt-BR": "Inglês",
+            "es-US": "English"
+          }
+        },
+        {
+          "name": "languages.es",
+          "values": {
+            "en-US": "Español",
+            "ar": "Español",
+            "fa-AF": "اسپانیا",
+            "pt-BR": "Espanhol",
+            "es-US": "Español"
+          }
+        },
+        {
+          "name": "languages.fa",
+          "values": {
+            "en-US": "فارسی",
+            "ar": "فارسی",
+            "fa-AF": "فارسی",
+            "pt-BR": "فارسی",
+            "es-US": "Farsi"
+          }
+        },
+        {
+          "name": "languages.pt",
+          "values": {
+            "en-US": "Português",
+            "ar": "Português",
+            "fa-AF": "پرتغالی",
+            "pt-BR": "Português",
+            "es-US": "Português"
+          }
+        },
+        {
+          "name": "login.apply",
+          "values": {
+            "en-US": "Apply",
+            "ar": "تقدم ",
+            "fa-AF": "ثبت نام کردن",
+            "pt-BR": "Inscrever-se",
+            "es-US": "Aplicar"
+          }
+        },
+        {
+          "name": "login.clickLoginPrompt",
+          "values": {
+            "en-US": "Please click on your role to continue on",
+            "ar": " يرجى اختيار دورك للمتابعة ",
+            "fa-AF": "برای ادامه لطفا نقش خود انتخاب کنید",
+            "pt-BR": "Clique no seu tipo de conta para continuar",
+            "es-US": "Haga clic en su función para continuar"
+          }
+        },
+        {
+          "name": "login.emailPlaceholder",
+          "values": {
+            "en-US": "Enter your email",
+            "ar": "البريد الإلكتروني",
+            "fa-AF": "ایمیل",
+            "pt-BR": "E-mail",
+            "es-US": "Correo electrónico"
+          }
+        },
+        {
+          "name": "login.forgotPassword",
+          "values": {
+            "en-US": "Forgot password?",
+            "ar": "هل نسيت كلمة السر؟",
+            "fa-AF": "آیا رمز عبور را فراموش کرده اید؟",
+            "pt-BR": "Esqueceu sua senha?",
+            "es-US": "¿Has olvidado tu contraseña?"
+          }
+        },
+        {
+          "name": "login.noAccount",
+          "values": {
+            "en-US": "Don't have an account?",
+            "ar": "ليس لديك حساب؟",
+            "fa-AF": "حساب کاربری ندارید؟",
+            "pt-BR": "Não tem uma conta?",
+            "es-US": "¿No tienes una cuenta?"
+          }
+        },
+        {
+          "name": "login.passwordPlaceholder",
+          "values": {
+            "en-US": "Enter your password",
+            "ar": "كلمة المرور",
+            "fa-AF": "رمز عبور",
+            "pt-BR": "Senha",
+            "es-US": "Contraseña"
+          }
+        },
+        {
+          "name": "login.resetPassword",
+          "values": {
+            "en-US": "Reset it",
+            "ar": " إعادة تعيين كلمة المرور ",
+            "fa-AF": "تغییر رمز عبود",
+            "pt-BR": "Reiniciar",
+            "es-US": "Restablecer la contraseña"
+          }
+        },
+        {
+          "name": "loginErrors.emailError",
+          "values": {
+            "en-US": "Please enter email",
+            "ar": "الرجاء إدخال البريد الإلكتروني",
+            "fa-AF": "لطفاً ایمیل را وارد کنید",
+            "pt-BR": "Por favor, digite o e-mail",
+            "es-US": "Por favor ingrese el correo electrónico"
+          }
+        },
+        {
+          "name": "loginErrors.existingEmail",
+          "values": {
+            "en-US": "This email is already in use in another role",
+            "ar": "هذا البريد الإلكتروني قيد الاستخدام بالفعل في دور آخر",
+            "fa-AF": "این ایمیل در حال حاضر در نقش دیگری استفاده می شود",
+            "pt-BR": "Este e-mail já está em uso em um outro tipo de conta.",
+            "es-US": "Este correo electrónico ya está en uso en otro rol"
+          }
+        },
+        {
+          "name": "loginErrors.incorrectCredentials",
+          "values": {
+            "en-US": "Incorrect username and/or password. Please try again.",
+            "ar": "اسم المستخدم و / أو كلمة المرور غير صحيح. ",
+            "fa-AF": "نام کاربری و/یا رمز عبور اشتباه است. لطفا دوباره تلاش کنید.",
+            "pt-BR": "Nome de usuário e/ou senha incorretos. Por favor, tente novamente",
+            "es-US": "Nombre de usuario y / o contraseña incorrectos. "
+          }
+        },
+        {
+          "name": "loginErrors.noRole",
+          "values": {
+            "en-US": "Please choose a role",
+            "ar": "يرجى اختيار دورك للمتابعة",
+            "fa-AF": "لطفاً نقش خود را انتخاب کنید",
+            "pt-BR": "Por favor, selecione um tipo de conta",
+            "es-US": "Porfavor elija un rol"
+          }
+        },
+        {
+          "name": "loginErrors.passwordError",
+          "values": {
+            "en-US": "Please enter password",
+            "ar": "الرجاء إدخال كلمة المرور",
+            "fa-AF": "لطفاً رمز عبور را وارد کنید",
+            "pt-BR": "Por favor, digite a senha",
+            "es-US": "Por favor ingrese la contraseña"
+          }
+        },
+        {
+          "name": "loginErrors.reregisterAccount",
+          "values": {
+            "en-US": "Please re-register your account.",
+            "ar": "يرجى إعادة تسجيل حسابك.",
+            "fa-AF": "لطفاً حساب خود را مجدداً ثبت کنید.",
+            "pt-BR": "Por favor, registre sua conta novamente.",
+            "es-US": "Vuelva a registrar su cuenta."
+          }
+        },
+        {
+          "name": "loginErrors.resetPassword",
+          "values": {
+            "en-US": "Please reset password. A link to reset your password has been sent to your email.",
+            "ar": " يرجى إعادة تعيين كلمة المرور. تم إرسال رابط لإعادة تعيين كلمة المرور الخاصة بك إلى بريدك الإلكتروني. ",
+            "fa-AF": "لطفا رمز عبور خود را تغییر دهید. لینک برای تغییر رمز عبور به ایمیل شما ارسال شده است.",
+            "pt-BR": "Por favor, redefina a senha. Um link de redefinição de senha foi enviado para o seu e-mail.",
+            "es-US": "Por favor, restablezca la contraseña. "
+          }
+        },
+        {
+          "name": "loginErrors.serverError",
+          "values": {
+            "en-US": "Something went wrong.",
+            "ar": "هناك خطأ ما.",
+            "fa-AF": "مشکلی پیش آمد.",
+            "pt-BR": "Algo deu errado.",
+            "es-US": "Algo salió mal."
+          }
+        },
+        {
+          "name": "loginErrors.wrongRole",
+          "values": {
+            "en-US": "Wrong role please choose account right role",
+            "ar": "دور خاطئ الرجاء اختيار الدور الصحيح للحساب",
+            "fa-AF": "نقش اشتباه؛ لطفاً نقش درست حساب را انتخاب کنید.",
+            "pt-BR": "Por favor, selecione corretamente o tipo de conta.",
+            "es-US": "Rol incorrecto, elija el rol correcto de la cuenta"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer1",
+          "values": {
+            "en-US": "I am 18-22",
+            "ar": "عمري 18-22",
+            "fa-AF": "من 18-22 هستم",
+            "pt-BR": "Eu tenho entre 18 e 22 anos",
+            "es-US": "Tengo 18-22"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer2",
+          "values": {
+            "en-US": "I am 23-26",
+            "ar": "عمري 23-26",
+            "fa-AF": "من 23-26 هستم",
+            "pt-BR": "Eu tenho entre 23 e 26 anos",
+            "es-US": "Tengo 23-26"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer3",
+          "values": {
+            "en-US": "I am 27-30",
+            "ar": "عمري 27-30",
+            "fa-AF": "من 27-30 هستم",
+            "pt-BR": "Eu tenho entre 27 e 30 anos",
+            "es-US": "Tengo 27-30"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer4",
+          "values": {
+            "en-US": "I am 31-35",
+            "ar": "عمري 31-35 ",
+            "fa-AF": "من 31-35 هستم",
+            "pt-BR": "Eu tenho entre 31 e 35 anos",
+            "es-US": "Tengo 31-35"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer5",
+          "values": {
+            "en-US": "I am 36-40",
+            "ar": "عمري 36-40",
+            "fa-AF": "من 36-40 هستم",
+            "pt-BR": "Eu tenho entre 36 e 40 anos",
+            "es-US": "Tengo 36-40"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer6",
+          "values": {
+            "en-US": "I am 41-50",
+            "ar": "عمري 41-50",
+            "fa-AF": "من 41-50 هستم",
+            "pt-BR": "Eu tenho entre 41 e 50 anos",
+            "es-US": "Tengo 41-50"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer7",
+          "values": {
+            "en-US": "I am 51-60",
+            "ar": "عمري 51-60",
+            "fa-AF": "من 51-60 هستم",
+            "pt-BR": "Eu tenho entre 51 e 60 anos",
+            "es-US": "Tengo 51-60"
+          }
+        },
+        {
+          "name": "menteeApplication.ageAnswer8",
+          "values": {
+            "en-US": "I am 61 or older",
+            "ar": "عمري 61 أو أكبر",
+            "fa-AF": "من 61 ساله هستم",
+            "pt-BR": "Eu tenho mais de 61 anos",
+            "es-US": "Tengo 61 o mas"
+          }
+        },
+        {
+          "name": "menteeApplication.agePrompt",
+          "values": {
+            "en-US": "Let us know more about you",
+            "ar": "دعنا نعرف المزيد عنك",
+            "fa-AF": "اطلاعات بیشتری در مورد خود ارایه کنید.",
+            "pt-BR": "Deixe-nos saber mais sobre você",
+            "es-US": "Háganos saber más sobre usted"
+          }
+        },
+        {
+          "name": "menteeApplication.countryOrigin",
+          "values": {
+            "en-US": "What country are you or your family originally from, if you are a refugee or immigrant?",
+            "ar": "من أي بلد أنت أو عائلتك في الأصل ، إذا كنت لاجئا أو مهاجرا؟",
+            "fa-AF": "در صورتیکه پناهنده یا مهاجر هستید، اصالتاً شما یا خانواده تان از کدام کشور هستید؟",
+            "pt-BR": "Se você é um(a) refugiado(a) ou imigrante, de que país você ou sua família são originários? ",
+            "es-US": "¿De qué país es originario usted o su familia, si es refugiado o inmigrante?"
+          }
+        },
+        {
+          "name": "menteeApplication.countryPlaceholder",
+          "values": {
+            "en-US": "Country",
+            "ar": "دولة",
+            "fa-AF": "کشور",
+            "pt-BR": "País",
+            "es-US": "País"
+          }
+        },
+        {
+          "name": "menteeApplication.genderIdentification",
+          "values": {
+            "en-US": "What do you identify as?",
+            "ar": " كيف تعرف نفسك؟ ",
+            "fa-AF": "خود را چگونه تعریف می کنید؟",
+            "pt-BR": "Como você se identifica?",
+            "es-US": "¿Cómo te identificas?"
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption1",
+          "values": {
+            "en-US": "I am a refugee",
+            "ar": "أنا لاجئ",
+            "fa-AF": "من پناهنده هستم",
+            "pt-BR": "Eu sou refugiado(a)",
+            "es-US": "Soy un refugiado"
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption2",
+          "values": {
+            "en-US": "I am an immigrant (I am newly arrived or my parents are newly arrived in the country I am in)",
+            "ar": " أنا مهاجر (وصلت حديثا أو وصل والداي حديثا إلى البلد الذي أنا فيه) ",
+            "fa-AF": "من یک مهاجر هستم (من تازه وارد شده ام یا والدینم تازه وارد کشور شده ام که در آن هستم)",
+            "pt-BR": "Eu sou um(a) imigrante (eu ou meus pais chegamos recentemente no país em que estou agora)",
+            "es-US": "Soy un immigrant"
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption3",
+          "values": {
+            "en-US": "I am black.",
+            "ar": "أنا أسود.",
+            "fa-AF": "من سیاه هستم.",
+            "pt-BR": "Eu sou negro",
+            "es-US": "Soy africano/moreno"
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption4",
+          "values": {
+            "en-US": "I am Hispanic/Latino.",
+            "ar": "أنا من أصل إسباني / لاتيني.",
+            "fa-AF": "من اسپانیایی/لاتین هستم.",
+            "pt-BR": "Eu sou hispânico/latinoamericano",
+            "es-US": "Soy hispano/latino"
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption5",
+          "values": {
+            "en-US": "I am of native/ aboriginal/indigenous origins.",
+            "ar": "أنا من أصول أصلية / من السكان الأصليين/ أصول السكان الأصليين.",
+            "fa-AF": "من از منشأ بومی/ بومی/ بومی هستم.",
+            "pt-BR": "Eu sou nativo/aborígene/origem indígena",
+            "es-US": "Soy de orígenes nativos/ aborígenes/ indígenas."
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption6",
+          "values": {
+            "en-US": "I identify as LGTBQ.",
+            "ar": "آخر",
+            "fa-AF": "من به عنوان LGTBQ شناخته می شوم.",
+            "pt-BR": "Eu me identifico como LGBTQIAPN+",
+            "es-US": "Me identifico como LGTBQ."
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption7",
+          "values": {
+            "en-US": "I have economic hardship.",
+            "ar": "لدي ضائقة اقتصادية.",
+            "fa-AF": "من مشکلات اقتصادی دارم.",
+            "pt-BR": "Eu tenho dificuldades financeiras.",
+            "es-US": "Tengo dificultades económicas."
+          }
+        },
+        {
+          "name": "menteeApplication.immigrantOption8",
+          "values": {
+            "en-US": "I come from a country at war.",
+            "ar": "لقد جئت من بلد في حالة حرب.",
+            "fa-AF": "من از یک کشور در جنگ آمده ام.",
+            "pt-BR": "Eu venho de um país em guerra",
+            "es-US": "Vengo de un país en la guerra."
+          }
+        },
+        {
+          "name": "menteeApplication.immigrationStatus",
+          "values": {
+            "en-US": "Let us know more about you. Check ALL of the boxes that apply. When filling out other, please be very specific.",
+            "ar": "دعنا نعرف المزيد عنك. حدد جميع المربعات التي تنطبق. عند ملء أخرى ، يرجى أن تكون محددة للغاية.",
+            "fa-AF": "اطلاعات بیشتری در مورد خود ارایه کنید. همه گزینه های که اعمال می شوند را انتخاب کنید. هنگام پر کردن موارد دیگر لطفاً بسیار دقیق باشید.",
+            "pt-BR": "Deixe-nos saber mais sobre você. Assinale todos os itens que se aplicam a você! Caso você selecione o item \"outro(s)\", por favor, seja específico!",
+            "es-US": "Háganos saber más sobre usted. "
+          }
+        },
+        {
+          "name": "menteeApplication.introduction",
+          "values": {
+            "en-US": "We appreciate your interest in becoming part of the MENTEE community! You will gain access to our global mentors and supportive programs. We can't wait to see all you will achieve. Remember, as a mentee you can stay here and actively seek mentorship, learning, and development for life, if you'd like to stay with us that long. :)",
+            "ar": "نحن نقدر اهتمامك بأن تصبح جزءًا من مجتمع MENTEE!  ستتمكن من الوصول إلى الموجهين العالميين والبرامج الداعمة. لا يسعنا الانتظار لرؤية كل ما ستحققه.  تذكر ، بصفتك متدربا ، يمكنك البقاء هنا والبحث بنشاط عن الإرشاد والتعلم والتطوير مدى الحياة ، إذا كنت ترغب في البقاء معنا لفترة طويلة. :) ",
+            "fa-AF": "ما از علاقه شما برای تبدیل شدن به بخشی از جامعه MENTEE قدردانی می کنیم! ",
+            "pt-BR": "Agradecemos o seu interesse em fazer parte da comunidade MENTEE! Você receberá acesso aos nossos mentores globais e aos programas de suporte! Mal podemos esperar para ver o que você vai alcançar! Lembre-se: como mentorado, você pode ficar aqui e buscar mentorias, aprendizado e desenvolvimento pelo resto de sua vida, caso você queira ficar conosco por todo este tempo :)",
+            "es-US": "¡Agradecemos su interés en formar parte de la comunidad MENTEE! "
+          }
+        },
+        {
+          "name": "menteeApplication.languageBackground",
+          "values": {
+            "en-US": "What is your native language?",
+            "ar": "ما هي لغتك الأم؟",
+            "fa-AF": "زبان مادری شما چیست؟",
+            "pt-BR": "Qual é o seu idioma nativo?",
+            "es-US": "Cuál es tu idioma nativo?"
+          }
+        },
+        {
+          "name": "menteeApplication.orgAffiliation",
+          "values": {
+            "en-US": "What organization is supporting you locally or what organization are you affiliated with?",
+            "ar": "ما هي المنظمة التي تدعمك محليًا أو ما هي المنظمة التي تنتمي إليها؟",
+            "fa-AF": "چه سازمانی به صورت محلی از شما حمایت می کند یا به چه سازمانی وابسته هستید؟",
+            "pt-BR": "Qual organização está apoiando você localmente ou a qual organização você está afiliado?",
+            "es-US": "¿Qué organización lo está apoyando localmente o a qué organización está afiliado?"
+          }
+        },
+        {
+          "name": "menteeApplication.otherPlaceholder",
+          "values": {
+            "en-US": "Other",
+            "ar": "آخر",
+            "fa-AF": "دیگر",
+            "pt-BR": "Outro(s)",
+            "es-US": "Otro"
+          }
+        },
+        {
+          "name": "menteeApplication.otherQuestions",
+          "values": {
+            "en-US": "Do you have any questions?",
+            "ar": "هل لديك اسئلة؟",
+            "fa-AF": "آیا هیچ سوالی دارید؟",
+            "pt-BR": "Você tem alguma pergunta?",
+            "es-US": "¿Tiene usted alguna pregunta?"
+          }
+        },
+        {
+          "name": "menteeApplication.questionsPlaceholder",
+          "values": {
+            "en-US": "Questions",
+            "ar": " الاسئله ",
+            "fa-AF": "سوالات",
+            "pt-BR": "Perguntas",
+            "es-US": "Preguntas"
+          }
+        },
+        {
+          "name": "menteeApplication.socialMedia",
+          "values": {
+            "en-US": "Would you be interested in being highlighted as one of our mentees on social media?",
+            "ar": "هل أنت مهتم بأن يتم تسليط الضوء عليك كواحد من المتدربين لدينا على وسائل التواصل الاجتماعي؟",
+            "fa-AF": "آیا مایلید به عنوان یکی از منتی ما در رسانه های اجتماعی برجسته شوید؟",
+            "pt-BR": "Você estaria interessado em ser destacado como um de nossos mentorados em nossas redes sociais?",
+            "es-US": "¿Le interesaría ser destacado como uno de nuestros aprendices en las redes sociales?"
+          }
+        },
+        {
+          "name": "menteeApplication.socialMediaOption1",
+          "values": {
+            "en-US": "Yes!",
+            "ar": "نعم!",
+            "fa-AF": "آره!",
+            "pt-BR": "Sim!",
+            "es-US": "¡Sí!"
+          }
+        },
+        {
+          "name": "menteeApplication.socialMediaOption2",
+          "values": {
+            "en-US": "No, thank you",
+            "ar": "لا شكرًا",
+            "fa-AF": "نه ، متشکرم",
+            "pt-BR": "Não, obrigado(a)",
+            "es-US": "No gracias"
+          }
+        },
+        {
+          "name": "menteeApplication.submitError",
+          "values": {
+            "en-US": "Something went wrong -- check your email at the top",
+            "ar": "حدث خطأ ما - تحقق من بريدك الإلكتروني في الأعلى",
+            "fa-AF": "مشکلی پیش آمد -- ایمیل خود را در بالا بررسی کنید",
+            "pt-BR": "Algo deu errado - verifique seu e-mail na parte superior",
+            "es-US": "Algo salió mal: revisa tu correo electrónico en la parte superior"
+          }
+        },
+        {
+          "name": "menteeApplication.topicInterests",
+          "values": {
+            "en-US": "What special topics would you be interested in? If one is not on the list please add it in other:",
+            "ar": " ما هي الموضوعات الخاصة التي قد تكون مهتما بها؟ إذا لم يكن أحدها مدرجا في القائمة ، فيرجى إضافته في الآخر: ",
+            "fa-AF": "به چه موضوعات خاصی علاقه دارید؟ ",
+            "pt-BR": "Em quais tópicos de especialização você estaria interessado? Se algum deles não estiver na lista, por favor adicione outro.",
+            "es-US": "¿Qué temas especiales le interesarían? "
+          }
+        },
+        {
+          "name": "menteeApplication.workOption1",
+          "values": {
+            "en-US": "I work part-time.",
+            "ar": "أنا أعمل بدوام جزئي.",
+            "fa-AF": "من پاره وقت کار می کنم",
+            "pt-BR": "Eu trabalho meio período",
+            "es-US": "Trabajo a tiempo parcial."
+          }
+        },
+        {
+          "name": "menteeApplication.workOption2",
+          "values": {
+            "en-US": "I work full-time.",
+            "ar": "أنا أعمل بدوام كامل.",
+            "fa-AF": "من تمام وقت کار می کنم",
+            "pt-BR": "Eu trabalho em período integral",
+            "es-US": "Trabajo a tiempo completo."
+          }
+        },
+        {
+          "name": "menteeApplication.workOption3",
+          "values": {
+            "en-US": "I attend technical school.",
+            "ar": " أذهب إلى مدرسة تقنية. ",
+            "fa-AF": "من در دانشکده فنی شرکت می کنم.",
+            "pt-BR": "Eu estudo numa escola técnica",
+            "es-US": "Asisto a la escuela técnica."
+          }
+        },
+        {
+          "name": "menteeApplication.workOption4",
+          "values": {
+            "en-US": "I am a college/university student attaining my first degree.",
+            "ar": "أنا طالب كلية / جامعة أحصل على شهادتي الأولى.",
+            "fa-AF": "من یک دانشجوی کالج/دانشگاه هستم که به درجه اول خود می رسم.",
+            "pt-BR": "Eu sou estudante universitário buscando meu primeiro diploma.",
+            "es-US": "Soy un estudiante universitario/universitario que alcanza mi primer título."
+          }
+        },
+        {
+          "name": "menteeApplication.workOption5",
+          "values": {
+            "en-US": "I am a college/university students attaining my second or third degree.",
+            "ar": " أنا طالب كلية / جامعة أحصل على شهادتي الثانية أو الثالثة. ",
+            "fa-AF": "من یک دانشجوی کالج/دانشگاه هستم که به درجه دوم یا سوم خود می رسند.",
+            "pt-BR": "Eu sou estudante universitário buscando meu segundo ou terceiro diploma.",
+            "es-US": "Soy un estudiante universitario/universitario que alcanza mi segundo o tercer grado."
+          }
+        },
+        {
+          "name": "menteeApplication.workOptions",
+          "values": {
+            "en-US": "What do you currently do? Please check ALL the options that apply to you. If you select ''other'', please be specific:",
+            "ar": " ماذا تفعل حاليا؟ يرجى التحقق من جميع الخيارات التي تنطبق عليك. إذا حددت \"أخرى\" ، فيرجى التحديد: ",
+            "fa-AF": "در حال حاضر چه کار می کنید؟ ",
+            "pt-BR": "O que você faz atualmente? Por favor, selecione TODAS as opções que se encaixam em você. Caso você selecione \"outro\", por favor, seja específico:",
+            "es-US": "¿Qué haces actualmente? "
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.allowCall",
+          "values": {
+            "en-US": "Allow Calls",
+            "ar": "السماح بالمكالمات",
+            "fa-AF": "اجازه تماس ها",
+            "pt-BR": "Permitir chamadas",
+            "es-US": "Permitir llamadas"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.allowText",
+          "values": {
+            "en-US": "Allow Texts",
+            "ar": "السماح بالنصوص",
+            "fa-AF": "متن‌ها را مجاز کنید",
+            "pt-BR": "Permitir Textos",
+            "es-US": "Permitir textos"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.bookAppointment",
+          "values": {
+            "en-US": "Book Appointment",
+            "ar": " حجز موعد ",
+            "fa-AF": "قرار رزرو",
+            "pt-BR": "Agendar compromisso.",
+            "es-US": "Reservar una cita"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.bookingButton",
+          "values": {
+            "en-US": "Book Appointment",
+            "ar": " حجز موعد ",
+            "fa-AF": "قرار رزرو",
+            "pt-BR": "Agendar compromisso.",
+            "es-US": "Reservar una cita"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.errorBooking",
+          "values": {
+            "en-US": "Error, please try again!",
+            "ar": "خطأ ، يرجى المحاولة مرة أخرى!",
+            "fa-AF": "خطا، لطفا دوباره امتحان کنید!",
+            "pt-BR": "Erro, tente novamente!",
+            "es-US": "¡Error, inténtalo de nuevo!"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.meetingInfoTitle",
+          "values": {
+            "en-US": "Meeting Information",
+            "ar": "معلومات الاجتماع",
+            "fa-AF": "اطلاعات جلسه",
+            "pt-BR": "Informações da reunião",
+            "es-US": "Información de la reunión"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.meetingTopic",
+          "values": {
+            "en-US": "Meeting Topic",
+            "ar": "موضوع الاجتماع",
+            "fa-AF": "موضوع جلسه",
+            "pt-BR": "Tema da reunião",
+            "es-US": "Tema de la reunión"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.messageToMentor",
+          "values": {
+            "en-US": "Message to Mentor",
+            "ar": "رسالة إلى المرشد",
+            "fa-AF": "پیام به منتور",
+            "pt-BR": "Mensagem para o Mentor",
+            "es-US": "Mensaje al mentor"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.noAvailability",
+          "values": {
+            "en-US": "No Availability",
+            "ar": "لا يوجد توافر",
+            "fa-AF": "موجود نیست",
+            "pt-BR": "Sem disponibilidade",
+            "es-US": "No disponible"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.noChosenAppointment",
+          "values": {
+            "en-US": "Appointment Time Not Chosen",
+            "ar": "لم يتم اختيار وقت الموعد",
+            "fa-AF": "زمان قرار انتخاب نشده است",
+            "pt-BR": "Hora do compromisso não escolhida",
+            "es-US": "Hora de la cita no elegida"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.selectDateTime",
+          "values": {
+            "en-US": "Select a Date & Time",
+            "ar": " حدد التاريخ والوقت ",
+            "fa-AF": "یک تاریخ را انتخاب کنید",
+            "pt-BR": "Selecione uma data e horário",
+            "es-US": "Seleccione una fecha"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.selectTime",
+          "values": {
+            "en-US": "Select a Time",
+            "ar": " حدد الوقت ",
+            "fa-AF": "یک زمان را انتخاب کنید",
+            "pt-BR": "Selecione um horário",
+            "es-US": "Seleccione una hora"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.selectTopic",
+          "values": {
+            "en-US": "Please select a topic",
+            "ar": "الرجاء اختيار موضوع",
+            "fa-AF": "لطفا موضوعی را انتخاب کنید",
+            "pt-BR": "Por favor, selecione um tema",
+            "es-US": "Por favor seleccione un tema"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.sessionTitle",
+          "values": {
+            "en-US": "Mentoring Session with {{mentorName}}",
+            "ar": "جلسة توجيه مع {{mentorName}}",
+            "fa-AF": "جلسه مشاوره با {{mentorName}}",
+            "pt-BR": "Sessão de mentoria com {{mentorName}}",
+            "es-US": "Sesión de Mentoría con {{mentorName}}"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.sessionWith",
+          "values": {
+            "en-US": "Mentoring Session with {{mentorName}}",
+            "ar": "جلسة توجيه مع {{mentorName}}",
+            "fa-AF": "جلسه مشاوره با {{mentorName}}",
+            "pt-BR": "Sessão de mentoria com {{mentorName}}",
+            "es-US": "Sesión de Mentoría con {{mentorName}}"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.successBooking",
+          "values": {
+            "en-US": "You Have Successfully Booked an Appointment!",
+            "ar": "لقد حجزت موعدًا بنجاح!",
+            "fa-AF": "شما با موفقیت یک قرار ملاقات رزرو کردید!",
+            "pt-BR": "Você agendou um compromisso com sucesso!",
+            "es-US": "¡Ha reservado una cita con éxito!"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.successBookingDescription",
+          "values": {
+            "en-US": "Appointment with {{mentorName}} on {{notifDate}} from {{timeInterval}}",
+            "ar": "موعد مع {{mentorName}} على {{notifDate}} من {{timeInterval}}",
+            "fa-AF": "ملاقات با {{mentorName}} بر {{notifDate}} از جانب {{timeInterval}}",
+            "pt-BR": "Encontro com {{mentorName}} em {{notifDate}} de {{timeInterval}}",
+            "es-US": "Cita con {{mentorName}} en {{notifDate}} de {{timeInterval}}"
+          }
+        },
+        {
+          "name": "menteeAppointmentModal.successBookingMessage",
+          "values": {
+            "en-US": "You Have Successfully Booked an Appointment with {{mentorName}} on {{notifDate}} from {{timeInterval}}",
+            "ar": "لقد قمت بحجز موعد بنجاح مع {{mentorName}} في {{notifDate}} في الفترة الزمنية {{timeInterval}}",
+            "fa-AF": "شما با موفقیت یک قرار ملاقات با {{mentorName}} در {{notifDate}} از بازه زمانی {{timeInterval}} رزرو کرده اید",
+            "pt-BR": "Você reservou com sucesso um compromisso com {{mentorName}} em {{notifDate}} de {{timeInterval}}",
+            "es-US": "Has reservado exitosamente una cita con {{mentorName}} el {{notifDate}} en el horario {{timeInterval}}"
+          }
+        },
+        {
+          "name": "menteeAppointments.allPastTab",
+          "values": {
+            "en-US": "All Past",
+            "ar": "كل الماضي",
+            "fa-AF": "همه گذشته",
+            "pt-BR": "Compromissos passados",
+            "es-US": "Reuniones pasadas"
+          }
+        },
+        {
+          "name": "menteeAppointments.allUpcomingTab",
+          "values": {
+            "en-US": "All Upcoming",
+            "ar": "كل قادم",
+            "fa-AF": "همه آینده",
+            "pt-BR": "Próximos compromissos",
+            "es-US": "Reuniones futuras"
+          }
+        },
+        {
+          "name": "menteeAppointments.meetingWith",
+          "values": {
+            "en-US": "Meeting with",
+            "ar": " اجتماع مع",
+            "fa-AF": "ملاقات با",
+            "pt-BR": "Reunião com",
+            "es-US": "Reunirse con"
+          }
+        },
+        {
+          "name": "menteeAppointments.noAppointments",
+          "values": {
+            "en-US": "There are currently no appointments",
+            "ar": "لا يوجد حاليا أي مواعيد",
+            "fa-AF": "در حال حاضر هیچ قرار ملاقاتی وجود ندارد",
+            "pt-BR": "No momento não há agendamentos",
+            "es-US": "Actualmente no hay citas"
+          }
+        },
+        {
+          "name": "menteeAppointments.noMentorFound",
+          "values": {
+            "en-US": "Mentor Not Found",
+            "ar": "لم يتم العثور على مرشد",
+            "fa-AF": "مربی یافت نشد",
+            "pt-BR": "Mentor não encontrado",
+            "es-US": "Mentor no encontrado"
+          }
+        },
+        {
+          "name": "menteeAppointments.pending",
+          "values": {
+            "en-US": "pending",
+            "ar": "قيد الانتظار",
+            "fa-AF": "انتظار",
+            "pt-BR": "Pendente",
+            "es-US": "pendiente"
+          }
+        },
+        {
+          "name": "menteeAppointments.welcome",
+          "values": {
+            "en-US": "Welcome {{name}}!",
+            "ar": "مرحباً {{name}}!",
+            "fa-AF": "خوش آمدی {{name}}!",
+            "pt-BR": "Bem-vindo(a), {{name}}!",
+            "es-US": "Bienvenido {{name}}!"
+          }
+        },
+        {
+          "name": "menteeInterestsModal.error",
+          "values": {
+            "en-US": "Please choose atleast one interest",
+            "ar": "الرجاء اختيار مصلحة واحدة على الأقل",
+            "fa-AF": "لطفا حداقل یک علاقه را انتخاب کنید",
+            "pt-BR": "Escolha pelo menos uma área de interesse",
+            "es-US": "Por favor, elija al menos un interés"
+          }
+        },
+        {
+          "name": "menteeInterestsModal.interestsTitle",
+          "values": {
+            "en-US": "Areas of interests",
+            "ar": "مجالات الاهتمام",
+            "fa-AF": "حوزه های مورد علاقه",
+            "pt-BR": "Áreas de interesse",
+            "es-US": "Áreas de interés"
+          }
+        },
+        {
+          "name": "menteeInterestsModal.title",
+          "values": {
+            "en-US": "Please Update your interests",
+            "ar": "يرجى تحديث اهتماماتك",
+            "fa-AF": "لطفا علایق خود را به روز کنید",
+            "pt-BR": "Por favor, atualize seus interesses",
+            "es-US": "Actualiza tus intereses"
+          }
+        },
+        {
+          "name": "menteeProfile.accountPrivacy",
+          "values": {
+            "en-US": "Account Privacy",
+            "ar": "خصوصية الحساب",
+            "fa-AF": "حریم خصوصی حساب",
+            "pt-BR": "Privacidade",
+            "es-US": "Privacidad de la cuenta"
+          }
+        },
+        {
+          "name": "menteeProfile.age",
+          "values": {
+            "en-US": "Age",
+            "ar": "عمر",
+            "fa-AF": "سن",
+            "pt-BR": "Idade",
+            "es-US": "Edad"
+          }
+        },
+        {
+          "name": "menteeProfile.areasOfInterest",
+          "values": {
+            "en-US": "Areas of interest",
+            "ar": "مجالات الاهتمام",
+            "fa-AF": "مناطق مورد علاقه",
+            "pt-BR": "Áreas de interesse",
+            "es-US": "Áreas de interés"
+          }
+        },
+        {
+          "name": "menteeProfile.gender",
+          "values": {
+            "en-US": "Gender",
+            "ar": "جنس",
+            "fa-AF": "جنسیت",
+            "pt-BR": "Gênero",
+            "es-US": "Género"
+          }
+        },
+        {
+          "name": "menteeProfile.missingFields",
+          "values": {
+            "en-US": "Missing Fields",
+            "ar": "حقول مفقودة",
+            "fa-AF": "فیلدهای گمشده",
+            "pt-BR": "Campos ausentes",
+            "es-US": "Campos faltantes"
+          }
+        },
+        {
+          "name": "menteeProfile.organizationAffiliation",
+          "values": {
+            "en-US": "Organization Affliation",
+            "ar": "الانتساب إلى منظمة",
+            "fa-AF": "وابستگی سازمانی",
+            "pt-BR": "Afiliação da organização",
+            "es-US": "Organización Afiliación"
+          }
+        },
+        {
+          "name": "menteeProfile.privateAccount",
+          "values": {
+            "en-US": "Private Account",
+            "ar": "حساب خاص",
+            "fa-AF": "حساب خصوصی",
+            "pt-BR": "Conta privada",
+            "es-US": "Cuenta privada"
+          }
+        },
+        {
+          "name": "menteeProfile.privateAccountInfo",
+          "values": {
+            "en-US": "You'll be able to see your information, but your account will not show up when people are browsing accounts.",
+            "ar": "ستتمكن من رؤية معلوماتك ، لكن حسابك لن يظهر عندما يتصفح الأشخاص الحسابات.",
+            "fa-AF": "می‌توانید اطلاعات خود را ببینید، اما وقتی افراد در حال مرور حساب‌ها هستند، حساب شما نمایش داده نمی‌شود.",
+            "pt-BR": "Você poderá ver suas informações, mas sua conta não aparecerá quando as pessoas estiverem buscando outras contas.",
+            "es-US": "Podrá ver su información, pero su cuenta no aparecerá cuando las personas estén buscando cuentas."
+          }
+        },
+        {
+          "name": "mentorApplication.canDonate",
+          "values": {
+            "en-US": "MENTEE is a volunteer organization and we are sustained by donations. Are you able to offer a donation for one year?",
+            "ar": " MENTEE هي منظمة تطوعية ونحن مدعومون بالتبرعات. هل أنت قادر على تقديم تبرع لمدة عام واحد؟ ",
+            "fa-AF": "MENTEE یک سازمان داوطلبانه است و ما با کمک های مالی حمایت می کنیم. ",
+            "pt-BR": "A MENTEE é uma organização voluntária e somos sustentados por doações. Você teria condição de nos fazer doações por um ano?",
+            "es-US": "MENTEE es una organización de voluntarios y nos sustentan las donaciones. "
+          }
+        },
+        {
+          "name": "mentorApplication.commitDuration",
+          "values": {
+            "en-US": "If you are accepted as a global mentor, would you like to commit to...",
+            "ar": " إذا تم قبولك كمرشد عالمي ، فهل ترغب في الالتزام بـ ...",
+            "fa-AF": "اگر به عنوان یک مربی جهانی پذیرفته شده اید، آیا می خواهید متعهد شوید که...",
+            "pt-BR": "Se você for aceito como mentor global, gostaria de se dedicar a...",
+            "es-US": "Si es aceptado como mentor global, ¿le gustaría comprometerse a..."
+          }
+        },
+        {
+          "name": "mentorApplication.commitDuration1",
+          "values": {
+            "en-US": "One years with us",
+            "ar": "سنة معنا",
+            "fa-AF": "یک سال با ما",
+            "pt-BR": "Um ano conosco",
+            "es-US": "Un año con nosotros"
+          }
+        },
+        {
+          "name": "mentorApplication.commitDuration2",
+          "values": {
+            "en-US": "Two years with us",
+            "ar": "سنتان معنا",
+            "fa-AF": "دو سال با ما",
+            "pt-BR": "Dois anos conosco",
+            "es-US": "Dos años con nosotros"
+          }
+        },
+        {
+          "name": "mentorApplication.commitDuration3",
+          "values": {
+            "en-US": "For as long as you'll have me!",
+            "ar": "ما دمت معي",
+            "fa-AF": "تا زمانی که من را داشته باشید!",
+            "pt-BR": "Pelo resto da minha vida!",
+            "es-US": "¡Mientras me tengas!"
+          }
+        },
+        {
+          "name": "mentorApplication.communityStatus",
+          "values": {
+            "en-US": "Are you or your family from a native or aboriginal community?",
+            "ar": "هل أنت أو عائلتك من مجتمع أصلي أو مجتمع أصلي؟",
+            "fa-AF": "آیا شما یا خانواده تان از یک جامعه بومی یا بومی هستید؟",
+            "pt-BR": "Você ou sua família são de uma comunidade nativa ou aborígine?",
+            "es-US": "¿Es usted o su familia de una comunidad nativa o aborigen?"
+          }
+        },
+        {
+          "name": "mentorApplication.duration1",
+          "values": {
+            "en-US": "Less than one year",
+            "ar": "أقل من سنة",
+            "fa-AF": "کمتر از یک سال",
+            "pt-BR": "Menos de um ano",
+            "es-US": "Menos de un año"
+          }
+        },
+        {
+          "name": "mentorApplication.duration2",
+          "values": {
+            "en-US": "1-4 years",
+            "ar": " بين 1-4 سنوات ",
+            "fa-AF": "1-4 سال",
+            "pt-BR": "Entre 1 e 4 anos",
+            "es-US": "1-4 años"
+          }
+        },
+        {
+          "name": "mentorApplication.duration3",
+          "values": {
+            "en-US": "5-10 years",
+            "ar": " بين 5-10 سنوات ",
+            "fa-AF": "5-10 سال",
+            "pt-BR": "Entre 5 e 10 anos",
+            "es-US": "5-10 años"
+          }
+        },
+        {
+          "name": "mentorApplication.duration4",
+          "values": {
+            "en-US": "10-20 years",
+            "ar": " بين 10-20 سنوات ",
+            "fa-AF": "10-20 سال",
+            "pt-BR": "Entre 10 e 20 anos",
+            "es-US": "10-20 años"
+          }
+        },
+        {
+          "name": "mentorApplication.duration5",
+          "values": {
+            "en-US": "21+ years",
+            "ar": "21 سنة أو أكثر",
+            "fa-AF": "21+ سال",
+            "pt-BR": "Mais de 21 anos",
+            "es-US": "Más de 21 años"
+          }
+        },
+        {
+          "name": "mentorApplication.economicBackground",
+          "values": {
+            "en-US": "Did you grow up economically challenged?",
+            "ar": "هل نشأت وأنت تواجه تحديات اقتصادية؟",
+            "fa-AF": "آیا از نظر اقتصادی با چالش بزرگ شده اید؟",
+            "pt-BR": "Você (em sua família ou individualmente) enfrentou dificuldades financeiras no decorrer de sua vida?",
+            "es-US": "¿Creciste con desafíos económicos?"
+          }
+        },
+        {
+          "name": "mentorApplication.employerName",
+          "values": {
+            "en-US": "Full name of your company/employer",
+            "ar": "الاسم الكامل لشركتك / صاحب العمل",
+            "fa-AF": "نام کامل شرکت/کارفرمای شما",
+            "pt-BR": "Nome completo da sua empresa/empregador",
+            "es-US": "Nombre completo de su empresa/empleador"
+          }
+        },
+        {
+          "name": "mentorApplication.filloutPrompt",
+          "values": {
+            "en-US": "Please fill out the application below",
+            "ar": "يرجى ملء الطلب أدناه",
+            "fa-AF": "لطفا درخواست زیر را پر کنید",
+            "pt-BR": "Por favor, preencha o formulário abaixo",
+            "es-US": "Por favor complete la solicitud a continuación"
+          }
+        },
+        {
+          "name": "mentorApplication.genderIdentification",
+          "values": {
+            "en-US": "What do you identify as?",
+            "ar": "كيف تعرف؟",
+            "fa-AF": "چگونه تشخیص می دهید؟",
+            "pt-BR": "Como você se identifica?",
+            "es-US": "¿Cómo te identificas?"
+          }
+        },
+        {
+          "name": "mentorApplication.hearAboutUs",
+          "values": {
+            "en-US": "From whom or where did you hear about us?",
+            "ar": "من من او من اين سمعت عنا؟",
+            "fa-AF": "از چه کسی یا از کجا درباره ما شنیدی؟",
+            "pt-BR": "Por meio de quem ou onde você ouviu falar sobre nós?",
+            "es-US": "¿De quién o cómo supiste de nosotros?"
+          }
+        },
+        {
+          "name": "mentorApplication.immigrationStatus",
+          "values": {
+            "en-US": "Are you an immigrant or refugee or do you come from an immigrant family or refugee family?",
+            "ar": "هل أنت مهاجر أو لاجئ أو هل أنت من عائلة مهاجرة أو عائلة لاجئة؟",
+            "fa-AF": "آیا شما یک مهاجر یا پناهنده هستید یا از یک خانواده مهاجر یا خانواده پناهنده هستید؟",
+            "pt-BR": "Você é imigrante ou refugiado ou vem de uma família imigrante ou refugiada?",
+            "es-US": "¿Eres inmigrante o refugiado o vienes de una familia inmigrante o refugiada?"
+          }
+        },
+        {
+          "name": "mentorApplication.introduction",
+          "values": {
+            "en-US": "We appreciate your interest in becoming a volunteer Global Mentor for MENTEE, a global nonprofit accelerating personal and professional growth to make the world a better, healthier place.",
+            "ar": "نحن نقدر اهتمامك بأن تصبح موجهًا عالميًا متطوعًا لـ MENTEE ، وهي منظمة عالمية غير ربحية تعمل على تسريع النمو الشخصي والمهني لجعل العالم مكانًا أفضل وأكثر صحة.",
+            "fa-AF": "ما از علاقه شما برای تبدیل شدن به یک مربی داوطلب جهانی برای MENTEE، یک سازمان غیرانتفاعی جهانی که رشد شخصی و حرفه‌ای را برای تبدیل جهان به مکانی بهتر و سالم‌تر سرعت می‌بخشد، قدردانی می‌کنیم.",
+            "pt-BR": "Agradecemos seu interesse em se tornar um Mentor Global voluntário da MENTEE, uma organização global sem fins lucrativos que acelera o crescimento pessoal e profissional para tornar o mundo um lugar melhor e mais próspero.",
+            "es-US": "Agradecemos su interés en convertirse en mentor global voluntario para MENTEE, una organización global sin fines de lucro que acelera el crecimiento personal y profesional para hacer del mundo un lugar mejor y más saludable."
+          }
+        },
+        {
+          "name": "mentorApplication.isMarginalized",
+          "values": {
+            "en-US": "Would you define yourself as having been or currently marginalized",
+            "ar": "هل تعرّف نفسك على أنك  لقد كنت مهمش أوأنك مهمش حاليًا؟",
+            "fa-AF": "آیا خودتان را به عنوان حاشیه نشین یا در حال حاضر تعریف می کنید؟",
+            "pt-BR": "Você se definiria como tendo sido ou sendo atualmente marginalizado?",
+            "es-US": "¿Se definiría a sí mismo como marginado o actualmente marginado?"
+          }
+        },
+        {
+          "name": "mentorApplication.isPersonOfColor",
+          "values": {
+            "en-US": "Would you consider yourself of person of color",
+            "ar": "هل تعتبر نفسك شخصًا ملونًا",
+            "fa-AF": "آیا خود را جزو افراد رنگین پوست می دانید؟",
+            "pt-BR": "Você se considera parte de uma minoria?",
+            "es-US": "¿Te considerarías una persona de color?"
+          }
+        },
+        {
+          "name": "mentorApplication.jobDescription",
+          "values": {
+            "en-US": "Your full title and a brief description of your role",
+            "ar": "المسمى الوظيفي الكامل ووصف موجز لدورك",
+            "fa-AF": "عنوان کامل شما و توضیح مختصری از نقش شما",
+            "pt-BR": "O nome completo do seu cargo e uma breve descrição de sua função nele",
+            "es-US": "Su título completo y una breve descripción de su función."
+          }
+        },
+        {
+          "name": "mentorApplication.jobDuration",
+          "values": {
+            "en-US": "How long have you been with this company?",
+            "ar": "منذ متى وانت مع هذه الشركة؟",
+            "fa-AF": "چه مدت با این شرکت بودید؟",
+            "pt-BR": "Há quanto tempo você trabalha nesta empresa?",
+            "es-US": "¿Cuánto tiempo llevas con esta empresa?"
+          }
+        },
+        {
+          "name": "mentorApplication.knowledgeLocation",
+          "values": {
+            "en-US": "Please share which region(s), country(s), state(s), cities your knowledge is based in",
+            "ar": "يرجى مشاركة المنطقة (المناطق) ، والبلد (البلدان) ، والولاية (الدول) ، والمدن التي تستند معرفتك فيها",
+            "fa-AF": "لطفاً به اشتراک بگذارید که دانش شما در کدام منطقه(ها)، کشور(ها)، ایالت(ها)، شهرها قرار دارد",
+            "pt-BR": "Compartilhe em qual(is) região(ões), país(es), estado(s), cidade(s) seu conhecimento está baseado. Por exemplo: Conhecimento em Direito brasileiro; Conhecimento em Gastronomia Francesa, etc.",
+            "es-US": "Comparta en qué región(es), país(es), estado(s), ciudades se basa su conocimiento"
+          }
+        },
+        {
+          "name": "mentorApplication.languageBackground",
+          "values": {
+            "en-US": "Do you speak a language(s) other than English? If yes, please write the language(s) below and include your fluency level (conversational, fluent, native)",
+            "ar": "هل تتحدث لغة (لغات) أخرى غير الإنجليزية؟ إذا كانت الإجابة بنعم ، يرجى كتابة اللغة (اللغات) أدناه وتضمين مستوى طلاقتك (مستوى المحادثة أو مستوى الطلاقة أو متحدث الأصلي) ",
+            "fa-AF": "آیا به زبانی غیر از انگلیسی صحبت می کنید؟ ",
+            "pt-BR": "Você fala outro(s) idioma(s) além do inglês? Se sim, escreva abaixo qual o idioma e o seu nível de domínio sobre ele (fluente, nativo, conversacional, etc.)",
+            "es-US": "¿Habla otro idioma además del inglés? Si responde \"Si\", por favor indique los idiomas e incluya su nivel de conocimiento (conversacional, nativo, etc)"
+          }
+        },
+        {
+          "name": "mentorApplication.laterDonate",
+          "values": {
+            "en-US": "No, unfortunately I cannot offer a donation now but please ask me again.",
+            "ar": "لا ، للأسف لا يمكنني تقديم تبرع الآن ولكن من فضلك اسألني مرة أخرى.",
+            "fa-AF": "من می خواهم بعداً کمک مالی کنم",
+            "pt-BR": "Não, infelizmente eu não posso fazer uma doação agora, mas pergunte-me novamente no futuro, por favor",
+            "es-US": "Donar más tarde"
+          }
+        },
+        {
+          "name": "mentorApplication.noDonate",
+          "values": {
+            "en-US": "I'm unable to offer a donation.",
+            "ar": "أنا غير قادر على تقديم تبرع.",
+            "fa-AF": "من نمی خواهم کمک مالی کنم",
+            "pt-BR": "Eu estou impossibilitado de oferecer uma doação",
+            "es-US": "No donar"
+          }
+        },
+        {
+          "name": "mentorApplication.previousLocations",
+          "values": {
+            "en-US": "Where have you lived in your life besides where you live now?",
+            "ar": "أين عشت في حياتك غير المكان الذي تعيش فيه الآن؟",
+            "fa-AF": "به غیر از جایی که الان زندگی می کنید، در کجای زندگی خود زندگی کرده اید؟",
+            "pt-BR": "Onde você morou em sua vida além de onde você mora agora?",
+            "es-US": "¿Dónde has vivido en tu vida además de donde vives ahora?"
+          }
+        },
+        {
+          "name": "mentorApplication.referral",
+          "values": {
+            "en-US": "If you know someone who would be a great global mentor, please share their name, email, and we'll contact them!",
+            "ar": "إذا كنت تعرف شخصا سيكون مرشدا عالميا رائعا ، فيرجى مشاركة اسمه وبريده الإلكتروني وسنتصل به!",
+            "fa-AF": "اگر کسی را می شناسید که می تواند یک مربی بزرگ جهانی باشد، لطفا نام، ایمیل او را به اشتراک بگذارید و ما با او تماس خواهیم گرفت!",
+            "pt-BR": "Se você conhece alguém que seria um ótimo mentor global, compartilhe seu nome e e-mail conosco que entraremos em contato!",
+            "es-US": "Si conoce a alguien que sería un gran mentor global, comparta su nombre, correo electrónico y nos pondremos en contacto con ellos."
+          }
+        },
+        {
+          "name": "mentorApplication.submitError",
+          "values": {
+            "en-US": "Something went wrong -- check your email at the top",
+            "ar": "حدث خطأ ما - تحقق من بريدك الإلكتروني في الأعلى",
+            "fa-AF": "مشکلی پیش آمد -- ایمیل خود را در بالا بررسی کنید",
+            "pt-BR": "Algo deu errado - verifique seu e-mail na parte superior",
+            "es-US": "Algo salió mal: revisa tu correo electrónico en la parte superior"
+          }
+        },
+        {
+          "name": "mentorApplication.yesDonate",
+          "values": {
+            "en-US": "Yes, I can offer a donation now to help support this work!",
+            "ar": "نعم ، يمكنني تقديم تبرع الآن للمساعدة في دعم هذا العمل!",
+            "fa-AF": "من می خواهم کمک مالی کنم",
+            "pt-BR": "Sim, eu posso fazer uma doação agora para apoiar este projeto!",
+            "es-US": "Sí, donar"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.addAppointment",
+          "values": {
+            "en-US": "Add Appointment",
+            "ar": "أضف موعد",
+            "fa-AF": "قرار ملاقات را اضافه کنید",
+            "pt-BR": "Adicionar compromisso",
+            "es-US": "Agregar cita"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.allowCall",
+          "values": {
+            "en-US": "Allow Calls",
+            "ar": "السماح بالمكالمات",
+            "fa-AF": "اجازه تماس ها",
+            "pt-BR": "Permitir chamadas",
+            "es-US": "Permitir llamadas"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.allowCallText",
+          "values": {
+            "en-US": "Allow Calls & Texts",
+            "ar": " السماح بالمكالمات والرسائل النصية ",
+            "fa-AF": "اجازه تماس ها",
+            "pt-BR": "Permitir chamadas",
+            "es-US": "Permitir llamadas"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.allowText",
+          "values": {
+            "en-US": "Allow Texts",
+            "ar": "السماح بالنصوص",
+            "fa-AF": "متن‌ها را مجاز کنید",
+            "pt-BR": "Permitir Textos",
+            "es-US": "Permitir textos"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.availability",
+          "values": {
+            "en-US": "Availability",
+            "ar": "التوفر",
+            "fa-AF": "دسترسی",
+            "pt-BR": "Disponibilidade",
+            "es-US": "Disponibilidad"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.endTime",
+          "values": {
+            "en-US": "End Time",
+            "ar": "وقت النهاية",
+            "fa-AF": "زمان پایان",
+            "pt-BR": "Horário de término",
+            "es-US": "Hora de finalización"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.errorBooking",
+          "values": {
+            "en-US": "Error, please try again!",
+            "ar": "خطأ ، يرجى المحاولة مرة أخرى!",
+            "fa-AF": "خطا، لطفا دوباره امتحان کنید!",
+            "pt-BR": "Erro, tente novamente!",
+            "es-US": "¡Error, inténtalo de nuevo!"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.invalidTimeslot",
+          "values": {
+            "en-US": "Invalid Times. Please select times correctly",
+            "ar": "الأوقات غير صالحة. يرجى تحديد الأوقات بشكل صحيح",
+            "fa-AF": "زمان نامعتبر ",
+            "pt-BR": "Horários inválidos. Por favor, selecione os horários corretamente.",
+            "es-US": "Horarios no válidos. Seleccione horario en forma correcta."
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.meetingDate",
+          "values": {
+            "en-US": "Meeting Date",
+            "ar": "تاريخ الاجتماع",
+            "fa-AF": "تاریخ جلسه",
+            "pt-BR": "Data da reunião",
+            "es-US": "Fecha de la reunión"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.meetingSummary",
+          "values": {
+            "en-US": "Meeting Summary",
+            "ar": "ملخص الاجتماع",
+            "fa-AF": "خلاصه جلسه",
+            "pt-BR": "Resumo da reunião",
+            "es-US": "Resumen de la reunión"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.meetingTopic",
+          "values": {
+            "en-US": "Meeting Topic",
+            "ar": "موضوع الاجتماع",
+            "fa-AF": "موضوع جلسه",
+            "pt-BR": "Tema da reunião",
+            "es-US": "Tema de la reunión"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.noAppointments",
+          "values": {
+            "en-US": "There are currently no appointments",
+            "ar": "لا يوجد حاليا أي مواعيد",
+            "fa-AF": "در حال حاضر هیچ قرار ملاقاتی وجود ندارد",
+            "pt-BR": "No momento não há agendamentos",
+            "es-US": "Actualmente no hay citas"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.noPhone",
+          "values": {
+            "en-US": "No Phone Number",
+            "ar": "لا يوجد رقم هاتف",
+            "fa-AF": "بدون شماره تلفن",
+            "pt-BR": "Sem número de telefone",
+            "es-US": "Sin número de teléfono"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.note",
+          "values": {
+            "en-US": "Note",
+            "ar": "ملحوظة",
+            "fa-AF": "توجه داشته باشید",
+            "pt-BR": "Observação",
+            "es-US": "Nota"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.past",
+          "values": {
+            "en-US": "All Past",
+            "ar": "كل الماضي",
+            "fa-AF": "همه گذشته",
+            "pt-BR": "Compromissos passados",
+            "es-US": "Reuniones pasadas."
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.seekingHelpIn",
+          "values": {
+            "en-US": "Seeking Help In",
+            "ar": "طلب المساعدة في",
+            "fa-AF": "جستجوی کمک در",
+            "pt-BR": "Procurando ajuda em",
+            "es-US": "Buscando ayuda en"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.selectDate",
+          "values": {
+            "en-US": "Select Date",
+            "ar": "حدد تاريخ",
+            "fa-AF": "تاریخ را انتخاب کنید",
+            "pt-BR": "Selecione a data",
+            "es-US": "Seleccione fecha"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.selectMentee",
+          "values": {
+            "en-US": "Please select a Mentee",
+            "ar": "يرجى اختيار مرشد ",
+            "fa-AF": "لطفا منتی را انتخاب کنید",
+            "pt-BR": "Por favor, selecione um Mentor",
+            "es-US": "Por favor, seleccione un Aprendiz"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.selectTopic",
+          "values": {
+            "en-US": "Please select a topic",
+            "ar": "يرجى اختيار موضوع",
+            "fa-AF": "لطفا موضوعی را انتخاب کنید",
+            "pt-BR": "Por favor, selecione um tema",
+            "es-US": "Por favor seleccione un tema"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.startTime",
+          "values": {
+            "en-US": "Start Time",
+            "ar": "وقت البدء",
+            "fa-AF": "زمان شروع",
+            "pt-BR": "Horário de início",
+            "es-US": "Hora de inicio"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.successBooking",
+          "values": {
+            "en-US": "You Have Successfully Booked an Appointment!",
+            "ar": "لقد حجزت موعدًا بنجاح!",
+            "fa-AF": "شما با موفقیت یک قرار ملاقات رزرو کردید!",
+            "pt-BR": "Você agendou um compromisso com sucesso!",
+            "es-US": "¡Ha reservado una cita con éxito!"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.takingAppointments",
+          "values": {
+            "en-US": "Taking Appointments?",
+            "ar": "أخذ المواعيد؟",
+            "fa-AF": "گرفتن قرار ملاقات؟",
+            "pt-BR": "Marcar compromissos?",
+            "es-US": "Tomando citas?"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.upcoming",
+          "values": {
+            "en-US": "All Upcoming",
+            "ar": "كل قادم",
+            "fa-AF": "همه آینده",
+            "pt-BR": "Próximos compromissos",
+            "es-US": "Reuniones futuras."
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.validEmail",
+          "values": {
+            "en-US": "Not a valid email",
+            "ar": "ليس بريدًا إلكترونيًا صالحًا",
+            "fa-AF": "ایمیل معتبری نیست",
+            "pt-BR": "O e-mail não é válido",
+            "es-US": "No es un correo electrónico válido"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.validName",
+          "values": {
+            "en-US": "Please enter name",
+            "ar": "الرجاء إدخال الاسم",
+            "fa-AF": "لطفا نام را وارد کنید",
+            "pt-BR": "Por favor, insira o nome",
+            "es-US": "Por favor ingrese el nombre"
+          }
+        },
+        {
+          "name": "mentorAppointmentPage.welcome",
+          "values": {
+            "en-US": "Welcome, {{name}}!",
+            "ar": "مرحباً، {{name}}!",
+            "fa-AF": "خوش آمدی، {{name}}!",
+            "pt-BR": "Bem-vindo(a), {{name}}!",
+            "es-US": "Bienvenido, {{name}}!"
+          }
+        },
+        {
+          "name": "mentorContactModal.areaInterest",
+          "values": {
+            "en-US": "Choose Interest Areas",
+            "ar": "اختر مجالات الاهتمام",
+            "fa-AF": "مناطق مورد علاقه را انتخاب کنید",
+            "pt-BR": "Escolha suas Áreas de Interesse",
+            "es-US": "Elija áreas de interés"
+          }
+        },
+        {
+          "name": "mentorContactModal.areaInterstValidate",
+          "values": {
+            "en-US": "Please select an interest area!",
+            "ar": "الرجاء تحديد منطقة اهتمام!",
+            "fa-AF": "لطفاً یک منطقه مورد علاقه را انتخاب کنید!",
+            "pt-BR": "Por favor, selecione uma área de interesse!",
+            "es-US": "¡Seleccione un área de interés!"
+          }
+        },
+        {
+          "name": "mentorContactModal.basicInfoNotice",
+          "values": {
+            "en-US": "Your name and email will be sent to this mentor",
+            "ar": "سيتم إرسال اسمك والبريد الإلكتروني إلى هذا المرشد",
+            "fa-AF": "نام و ایمیل شما برای این استاد راهنما ارسال خواهد شد",
+            "pt-BR": "Seu nome e e-mail serão enviados para este(a) mentor(a)",
+            "es-US": "Su nombre y correo electrónico serán enviados a este mentor"
+          }
+        },
+        {
+          "name": "mentorContactModal.communicationMethod",
+          "values": {
+            "en-US": "What is your preferred communication method?",
+            "ar": "ما هي طريقة الاتصال المفضلة لديك؟",
+            "fa-AF": "روش ارتباطی ترجیحی شما چیست؟",
+            "pt-BR": "Qual é o seu método de comunicação preferido?",
+            "es-US": "¿Cuál es su método de comunicación preferido?"
+          }
+        },
+        {
+          "name": "mentorContactModal.communicationMethodValidate",
+          "values": {
+            "en-US": "Please select communication method!",
+            "ar": "الرجاء تحديد طريقة الاتصال!",
+            "fa-AF": "لطفا روش ارتباطی را انتخاب کنید!",
+            "pt-BR": "Selecione o método de comunicação!",
+            "es-US": "¡Seleccione el método de comunicación!"
+          }
+        },
+        {
+          "name": "mentorContactModal.confirmationText",
+          "values": {
+            "en-US": "Your mentor will be getting back to you soon! Feel free to browse the mentor page and reach out to other mentors.",
+            "ar": " سوف يعود مرشدك إليك قريبا! لا تتردد في تصفح صفحة المرشد والتواصل مع الموجهين الآخرين. ",
+            "fa-AF": "مربی شما به زودی با شما تماس خواهد گرفت! ",
+            "pt-BR": "Seu mentor entrará em contato com você em breve! Sinta-se à vontade para navegar pela página do Mentor e para entrar em contato com outros mentores!",
+            "es-US": "¡Tu mentor se pondrá en contacto contigo pronto! "
+          }
+        },
+        {
+          "name": "mentorContactModal.introExample",
+          "values": {
+            "en-US": "Hi Jim! I’m a junior at Oxford University studying Economics. I saw that you’re knowledgeable in Personal Finance, which is something I’m interested in, and I’d love to learn more about your experiences. Thank you for your time!",
+            "ar": "مرحبا جيم! أنا طالب مبتدئ في جامعة أكسفورد أدرس الاقتصاد. رأيت أنك على دراية بالتمويل الشخصي ، وهو شيء أهتم به ، وأود معرفة المزيد عن تجاربك. شكرا لك على وقتك! ",
+            "fa-AF": "سلام جیم! ",
+            "pt-BR": "Olá Jim! Eu estou no segundo ano do curso de Economia da Universidade de Oxford. Eu notei que você é um grande conhecedor de Finanças Particulares, assunto este pelo qual eu sou interessado e adoraria aprender um pouco mais sobre as suas experiências neste sentido! Muito obrigado pela atenção!",
+            "es-US": "¡Hola Jim! soy un estudiante de la Universidad de Oxford, estudiando Economía.  Vi que tienes conocimiento en Finanzas Personales, que es algo que me interesa, y me gustaría aprender más sobre tus experiencias.  Gracias por tu tiempo!"
+          }
+        },
+        {
+          "name": "mentorContactModal.introPrompt",
+          "values": {
+            "en-US": "Briefly introduce yourself and what you are looking to gain from a Mentor.",
+            "ar": "قدم نفسك بإيجاز وما الذي تتطلع إلى اكتسابه من المرشد.",
+            "fa-AF": "به طور خلاصه خود را معرفی کنید و به دنبال چه چیزی از یک مربی هستید.",
+            "pt-BR": "Apresente-se brevemente ao seu Mentor e informe o que você espera obter dele.",
+            "es-US": "Preséntese brevemente y lo que busca obtener de un Mentor."
+          }
+        },
+        {
+          "name": "mentorContactModal.introPromptValidate",
+          "values": {
+            "en-US": "Please write an introduction!",
+            "ar": "الرجاء كتابة مقدمة!",
+            "fa-AF": "لطفا یک مقدمه بنویسید!",
+            "pt-BR": "Por favor, apresente-se para nós!",
+            "es-US": "¡Por favor escribe una introducción!"
+          }
+        },
+        {
+          "name": "mentorContactModal.reachOutTo",
+          "values": {
+            "en-US": "Reach out to {{mentorName}}",
+            "ar": "وصول إلى {{mentorName}}",
+            "fa-AF": "رسیدن به {{mentorName}}",
+            "pt-BR": "Entre em contato com o(a) {{Nome do(a) Mentor(a)}}",
+            "es-US": "Llegar a {{mentorName}}"
+          }
+        },
+        {
+          "name": "mentorContactModal.thankYou",
+          "values": {
+            "en-US": "Thank you!",
+            "ar": "شكرًا لك!",
+            "fa-AF": "متشکرم!",
+            "pt-BR": "Obrigado(a)!",
+            "es-US": "¡Gracias!"
+          }
+        },
+        {
+          "name": "mentorProfile.availableGroupAppointments",
+          "values": {
+            "en-US": "Available for group appointments?",
+            "ar": "متاح لمواعيد المجموعة؟",
+            "fa-AF": "برای قرارهای گروهی موجود است؟",
+            "pt-BR": "Disponível para compromissos em grupo?",
+            "es-US": "¿Disponible para citas de grupo?"
+          }
+        },
+        {
+          "name": "mentorProfile.availableInPerson",
+          "values": {
+            "en-US": "Available in-person?",
+            "ar": "متاح شخصيًا؟",
+            "fa-AF": "حضوری موجود است؟",
+            "pt-BR": "Disponível pessoalmente?",
+            "es-US": "¿Disponible en persona?"
+          }
+        },
+        {
+          "name": "mentorProfile.group",
+          "values": {
+            "en-US": "group",
+            "ar": "مجموعة",
+            "fa-AF": "گروه",
+            "pt-BR": "Grupo",
+            "es-US": "grupo"
+          }
+        },
+        {
+          "name": "mentorProfile.inPerson",
+          "values": {
+            "en-US": "in person",
+            "ar": "شخصيا",
+            "fa-AF": "به صورت حضوری",
+            "pt-BR": "Pessoalmente",
+            "es-US": "en persona"
+          }
+        },
+        {
+          "name": "mentorProfile.oneOnOne",
+          "values": {
+            "en-US": "1-on-1",
+            "ar": "1 على 1",
+            "fa-AF": "1 به 1",
+            "pt-BR": "1 a 1 (reunião particular entre duas pessoas)",
+            "es-US": "1 en 1"
+          }
+        },
+        {
+          "name": "mentorProfile.professionalTitle",
+          "values": {
+            "en-US": "Professional Title",
+            "ar": "اسم محترف",
+            "fa-AF": "عنوان حرفه ای",
+            "pt-BR": "Título profissional",
+            "es-US": "Título profesional"
+          }
+        },
+        {
+          "name": "mentorProfile.specializations",
+          "values": {
+            "en-US": "Specializations",
+            "ar": "التخصصات",
+            "fa-AF": "تخصص ها",
+            "pt-BR": "Especializações",
+            "es-US": "Especializaciones"
+          }
+        },
+        {
+          "name": "mentorProfile.takingAppointments",
+          "values": {
+            "en-US": "Taking Appointments?",
+            "ar": "أخذ المواعيد؟",
+            "fa-AF": "گرفتن قرار ملاقات؟",
+            "pt-BR": "Agendar compromissos?",
+            "es-US": "Tomando citas?"
+          }
+        },
+        {
+          "name": "mentorProfile.virtual",
+          "values": {
+            "en-US": "virtual",
+            "ar": "افتراضي",
+            "fa-AF": "مجازی",
+            "pt-BR": "Virtual",
+            "es-US": "virtual"
+          }
+        },
+        {
+          "name": "mentorVideoPage.addVideo",
+          "values": {
+            "en-US": "Add Video",
+            "ar": "أضف فيديو",
+            "fa-AF": "افزودن ویدیو",
+            "pt-BR": "Adicionar vídeo",
+            "es-US": "Añadir video"
+          }
+        },
+        {
+          "name": "mentorVideoPage.specializationTag",
+          "values": {
+            "en-US": "Specializations Tag",
+            "ar": "علامة التخصصات",
+            "fa-AF": "تگ تخصص ها",
+            "pt-BR": "Etiqueta de Especializações",
+            "es-US": "Etiqueta de especializaciones"
+          }
+        },
+        {
+          "name": "mentorVideoPage.videoLink",
+          "values": {
+            "en-US": "Video Link",
+            "ar": "رابط الفيديو",
+            "fa-AF": "لینک ویدیو",
+            "pt-BR": "Link de vídeo",
+            "es-US": "Enlace de video"
+          }
+        },
+        {
+          "name": "mentorVideoPage.videoTagValidate",
+          "values": {
+            "en-US": "Please select a tag",
+            "ar": "الرجاء تحديد علامة",
+            "fa-AF": "لطفا یک برچسب انتخاب کنید",
+            "pt-BR": "Por favor, selecione uma etiqueta",
+            "es-US": "Seleccione una etiqueta"
+          }
+        },
+        {
+          "name": "mentorVideoPage.videoTitle",
+          "values": {
+            "en-US": "Title",
+            "ar": "عنوان",
+            "fa-AF": "عنوان",
+            "pt-BR": "Título",
+            "es-US": "Título"
+          }
+        },
+        {
+          "name": "mentorVideoPage.videoTitlePlaceholder",
+          "values": {
+            "en-US": "Enter a title",
+            "ar": "أدخل عنوانًا",
+            "fa-AF": "عنوانی را وارد کنید",
+            "pt-BR": "Insira um título",
+            "es-US": "Introduce un título"
+          }
+        },
+        {
+          "name": "mentorVideoPage.videoTitleValidate",
+          "values": {
+            "en-US": "Please enter a title",
+            "ar": "الرجاء إدخال عنوان",
+            "fa-AF": "لطفا یک عنوان وارد کنید",
+            "pt-BR": "Por favor, insira um título",
+            "es-US": "Por favor ingrese un título"
+          }
+        },
+        {
+          "name": "mentorVideoPage.welcome",
+          "values": {
+            "en-US": "Welcome, {{name}}!",
+            "ar": "مرحباً، {{name}}!",
+            "fa-AF": "خوش آمدی، {{name}}!",
+            "pt-BR": "Bem-vindo(a), {{nome}}!",
+            "es-US": "Bienvenido, {{name}}!"
+          }
+        },
+        {
+          "name": "mentorVideoPage.yourUploads",
+          "values": {
+            "en-US": "Your Uploads",
+            "ar": "تحميلاتك",
+            "fa-AF": "آپلودهای شما",
+            "pt-BR": "Seus envios",
+            "es-US": "Tus archivos cargados."
+          }
+        },
+        {
+          "name": "messages.availability",
+          "values": {
+            "en-US": "Availability",
+            "ar": "التوفر",
+            "fa-AF": "دسترسی",
+            "pt-BR": "Disponibilidade",
+            "es-US": "Disponibilidad"
+          }
+        },
+        {
+          "name": "messages.availabilityTitle",
+          "values": {
+            "en-US": "Select available hours by specific date",
+            "ar": "حدد الساعات المتاحة حسب تاريخ محدد",
+            "fa-AF": "ساعات در دسترس را بر اساس تاریخ مشخص انتخاب کنید",
+            "pt-BR": "Selecione as horas disponíveis por data específica",
+            "es-US": "Seleccione las horas disponibles por fecha específica"
+          }
+        },
+        {
+          "name": "messages.sendInvite",
+          "values": {
+            "en-US": "Send invite",
+            "ar": "ارسل دعوة",
+            "fa-AF": "ارسال دعوتنامه",
+            "pt-BR": "Enviar convite",
+            "es-US": "Enviar invitación"
+          }
+        },
+        {
+          "name": "messages.sendInviteBody",
+          "values": {
+            "en-US": "Thank you for reaching out for a session! You can select any option that works for you in the below links and book an appointment.",
+            "ar": " شكرا لك على التواصل للحصول على جلسة! يمكنك تحديد أي خيار يناسبك في الروابط أدناه وحجز موعد. ",
+            "fa-AF": "از اینکه برای یک جلسه تماس گرفتید متشکرم! ",
+            "pt-BR": "Obrigado por entrar em contato para uma sessão! Você pode selecionar qualquer opção que lhe seja conveniente nos links abaixo e agendar um compromisso.",
+            "es-US": "¡Gracias por contactarnos para una sesión! "
+          }
+        },
+        {
+          "name": "messages.sendMessagePlaceholder",
+          "values": {
+            "en-US": "Send a message",
+            "ar": "ارسل رسالة",
+            "fa-AF": "ارسال یک پیام",
+            "pt-BR": "Envie uma mensagem",
+            "es-US": "Enviar un mensaje"
+          }
+        },
+        {
+          "name": "messages.sidebarTitle",
+          "values": {
+            "en-US": "My Messages",
+            "ar": "رسائلي",
+            "fa-AF": "پیام های من",
+            "pt-BR": "Minhas mensagens",
+            "es-US": "Mis mensajes"
+          }
+        },
+        {
+          "name": "messages.startConversation",
+          "values": {
+            "en-US": "Start a conversation today!",
+            "ar": "ابدأ محادثة اليوم!",
+            "fa-AF": "امروز یک مکالمه را شروع کنید!",
+            "pt-BR": "Comece uma conversa hoje!",
+            "es-US": "¡Comienza una conversación hoy!"
+          }
+        },
+        {
+          "name": "navHeader.editProfile",
+          "values": {
+            "en-US": "Edit Profile",
+            "ar": "تعديل الملف الشخصي",
+            "fa-AF": "ویرایش نمایه",
+            "pt-BR": "Editar Perfil",
+            "es-US": "Editar perfil"
+          }
+        },
+        {
+          "name": "navHeader.findMentee",
+          "values": {
+            "en-US": "Find a Mentee",
+            "ar": "ابحث عن متدرب",
+            "fa-AF": "یک مربی پیدا کنید",
+            "pt-BR": "Encontre um mentorado",
+            "es-US": "Buscar Aprendiz"
+          }
+        },
+        {
+          "name": "navHeader.findMentor",
+          "values": {
+            "en-US": "Find a Mentor",
+            "ar": "ابحث عن مرشد",
+            "fa-AF": "یک مربی پیدا کنید",
+            "pt-BR": "Encontre um(a) mentor(a)",
+            "es-US": "Buscar Mentor"
+          }
+        },
+        {
+          "name": "navHeader.findPartner",
+          "values": {
+            "en-US": "Find a Partner",
+            "ar": "ابحث عن شريك",
+            "fa-AF": "یک شریک پیدا کنید",
+            "pt-BR": "Encontre um(a) parceiro(a)",
+            "es-US": "Buscar Socio"
+          }
+        },
+        {
+          "name": "navHeader.yourPortal",
+          "values": {
+            "en-US": "Your Portal",
+            "ar": "بوابتك",
+            "fa-AF": "پورتال شما",
+            "pt-BR": "Seu Portal",
+            "es-US": "Tu Portal"
+          }
+        },
+        {
+          "name": "partnerApplication.buildTogether",
+          "values": {
+            "en-US": "How else do you think we could build together going forward?",
+            "ar": "كيف تعتقد أننا يمكن أن نبني معًا للمضي قدمًا؟",
+            "fa-AF": "فکر می‌کنید چگونه می‌توانیم در آینده با هم بسازیم؟",
+            "pt-BR": "De que outro modo você acha que poderíamos trabalhar juntos daqui para frente?",
+            "es-US": "¿De qué otra manera crees que podríamos construir juntos en el futuro?"
+          }
+        },
+        {
+          "name": "partnerApplication.contactEmail",
+          "values": {
+            "en-US": "What is their email?",
+            "ar": "ما هو بريدهم الإلكتروني؟",
+            "fa-AF": "ایمیلشون چیه؟",
+            "pt-BR": "Qual é o e-mail deles(as)?",
+            "es-US": "¿Cuál es su correo electrónico?"
+          }
+        },
+        {
+          "name": "partnerApplication.introduction",
+          "values": {
+            "en-US": "We appreciate your interest in becoming a volunteer Global Partner for MENTEE, a global nonprofit accelerating personal and professional growth to make the world a better, healthier place.",
+            "ar": "نحن نقدر اهتمامك بأن تصبح شريكًا عالميًا متطوعًا لـ MENTEE ، وهي منظمة عالمية غير ربحية تعمل على تسريع النمو الشخصي والمهني لجعل العالم مكانًا أفضل وأكثر صحة.",
+            "fa-AF": "ما از علاقه شما برای تبدیل شدن به یک شریک جهانی داوطلب برای MENTEE، یک سازمان غیرانتفاعی جهانی که رشد شخصی و حرفه‌ای را برای تبدیل جهان به مکانی بهتر و سالم‌تر سرعت می‌بخشد، قدردانی می‌کنیم.",
+            "pt-BR": "Agradecemos seu interesse em se tornar um Parceiro Global voluntário da MENTEE, uma organização global sem fins lucrativos que acelera o crescimento pessoal e profissional para tornar o mundo um lugar melhor e mais saudável.",
+            "es-US": "Agradecemos su interés en convertirse en un socio global voluntario de MENTEE, una organización global sin fines de lucro que acelera el crecimiento personal y profesional para hacer del mundo un lugar mejor y más saludable."
+          }
+        },
+        {
+          "name": "partnerApplication.otherPlaceholder",
+          "values": {
+            "en-US": "Other",
+            "ar": "آخر",
+            "fa-AF": "دیگر",
+            "pt-BR": "Outro(s)",
+            "es-US": "Otro"
+          }
+        },
+        {
+          "name": "partnerApplication.partnerName",
+          "values": {
+            "en-US": "What is your organization/institutions/company's name?",
+            "ar": "ما هو اسم منظمتك / مؤسستك / شركتك؟",
+            "fa-AF": "نام سازمان/موسسات/شرکت شما چیست؟",
+            "pt-BR": "Qual é o nome da sua Organização/Instituição/Empresa?",
+            "es-US": "¿Cuál es el nombre de su organización/institución/empresa?"
+          }
+        },
+        {
+          "name": "partnerApplication.partnersConcerns",
+          "values": {
+            "en-US": "What SDGs does your organization/institution/company care about?",
+            "ar": "ما هي أهداف التنمية المستدامة التي تهتم بها منظمتك / مؤسستك / شركتك؟",
+            "fa-AF": "سازمان/موسسه/شرکت شما به چه اهداف توسعه پایدار اهمیت می دهد؟",
+            "pt-BR": "Com quais Objetivos Desenvolvimento Sustentável (ODS) sua organização/instituição/empresa se preocupa?",
+            "es-US": "¿Qué ODS le importan a su organización/institución/empresa?"
+          }
+        },
+        {
+          "name": "partnerApplication.partnershipRelation",
+          "values": {
+            "en-US": "What is our partnership relationship?",
+            "ar": "ما هي علاقة الشراكة بيننا؟",
+            "fa-AF": "رابطه شراکتی ما چیست؟",
+            "pt-BR": "Qual é a nossa relação de parceria?",
+            "es-US": "¿Cuál es nuestra relación de asociación?"
+          }
+        },
+        {
+          "name": "partnerApplication.pointOfContact",
+          "values": {
+            "en-US": "Who is the best contact person?",
+            "ar": "من هو أفضل شخص يمكن الاتصال به؟",
+            "fa-AF": "بهترین فرد تماس کیست؟",
+            "pt-BR": "Quem é a melhor pessoa para contato?",
+            "es-US": "¿Quién es la mejor persona de contacto?"
+          }
+        },
+        {
+          "name": "partnerApplication.submitError",
+          "values": {
+            "en-US": "Something went wrong -- check your email at the top",
+            "ar": "حدث خطأ ما - تحقق من بريدك الإلكتروني في الأعلى",
+            "fa-AF": "مشکلی پیش آمد -- ایمیل خود را در بالا بررسی کنید",
+            "pt-BR": "Algo deu errado - verifique seu e-mail na parte superior",
+            "es-US": "Algo salió mal: revisa tu correo electrónico en la parte superior"
+          }
+        },
+        {
+          "name": "partnerProfile.briefIntro",
+          "values": {
+            "en-US": "Brief Introduction to Your Org/Inst/Corp",
+            "ar": "مقدمة موجزة عن منظمتك / مؤسستك / شركتك",
+            "fa-AF": "معرفی مختصر به سازمان/اینست/شرکت شما",
+            "pt-BR": "Breve introdução à sua Organização/Instituição/Corporação",
+            "es-US": "Breve introducción a su organización/institución/corporación"
+          }
+        },
+        {
+          "name": "partnerProfile.collaborationGrants",
+          "values": {
+            "en-US": "Open to Collaboration on Grants",
+            "ar": "منفتح على التعاون في المنح",
+            "fa-AF": "برای همکاری در زمینه کمک هزینه ها باز است",
+            "pt-BR": "Aberto à colaboração em subsídios",
+            "es-US": "Abierto a la colaboración en subvenciones"
+          }
+        },
+        {
+          "name": "partnerProfile.collaborationProjects",
+          "values": {
+            "en-US": "Open to Collaboration on Projects",
+            "ar": "مفتوح للتعاون في المشاريع",
+            "fa-AF": "برای همکاری در پروژه ها باز است",
+            "pt-BR": "Aberto à colaboração em projetos",
+            "es-US": "Abierto a la colaboración en proyectos"
+          }
+        },
+        {
+          "name": "partnerProfile.contactFullName",
+          "values": {
+            "en-US": "Contact Person's Full Name (First Last)",
+            "ar": "الاسم الكامل لجهة الاتصال (الاسم واللقب)",
+            "fa-AF": "نام کامل شخص تماس (نام خانوادگی)",
+            "pt-BR": "Nome completo da pessoa para contato ",
+            "es-US": "Nombre completo de la persona de contacto (nombre y apellido)"
+          }
+        },
+        {
+          "name": "partnerProfile.developmentGoals",
+          "values": {
+            "en-US": "Sustainable Development Goals Your Work Supports",
+            "ar": "أهداف التنمية المستدامة التي يدعمها عملك",
+            "fa-AF": "اهداف توسعه پایدار که کار شما از آنها حمایت می کند",
+            "pt-BR": "Objetivos de Desenvolvimento Sustentável (ODS) que seu trabalho apoia",
+            "es-US": "Objetivos de desarrollo sostenible que apoya su trabajo"
+          }
+        },
+        {
+          "name": "partnerProfile.location",
+          "values": {
+            "en-US": "Headquarters Location (City, Country)",
+            "ar": "موقع المقر (المدينة ، الدولة)",
+            "fa-AF": "محل دفتر مرکزی (شهر، کشور)",
+            "pt-BR": "Localização da Sede (Cidade, País)",
+            "es-US": "Ubicación de la sede (ciudad, país)"
+          }
+        },
+        {
+          "name": "partnerProfile.organizationName",
+          "values": {
+            "en-US": "Organization/Institution/Corporation Full Name",
+            "ar": "اسم المنظمة / المؤسسة / الشركة بالكامل",
+            "fa-AF": "نام کامل سازمان/موسسه/شرکت",
+            "pt-BR": "Nome Completo da Organização/Instituição/Corporação",
+            "es-US": "Organización/Institución/Corporación Nombre Completo"
+          }
+        },
+        {
+          "name": "partnerProfile.projectNames",
+          "values": {
+            "en-US": "Current & Upcoming Project Topics",
+            "ar": " موضوعات المشروع الحالية والقادمة ",
+            "fa-AF": "جاری",
+            "pt-BR": "Temas de projetos atuais e futuros",
+            "es-US": "Topicos de proyectos actuales y futuros"
+          }
+        },
+        {
+          "name": "partnerProfile.regionsWork",
+          "values": {
+            "en-US": "Regions Work In",
+            "ar": "المناطق تعمل فيها",
+            "fa-AF": "مناطق کار می کنند",
+            "pt-BR": "Regiões em que trabalho",
+            "es-US": "Regiones donde trabajar"
+          }
+        },
+        {
+          "name": "profile.contactInfo",
+          "values": {
+            "en-US": "Contact Info",
+            "ar": "معلومات الاتصال",
+            "fa-AF": "اطلاعات تماس",
+            "pt-BR": "Informações de contato",
+            "es-US": "Datos de contacto"
+          }
+        },
+        {
+          "name": "profile.edit",
+          "values": {
+            "en-US": "Edit",
+            "ar": "تحرير",
+            "fa-AF": "ویرایش کنید",
+            "pt-BR": "Editar",
+            "es-US": "Editar"
+          }
+        },
+        {
+          "name": "profile.emailNotifications",
+          "values": {
+            "en-US": "Email notifications",
+            "ar": "اشعارات البريد الالكتروني",
+            "fa-AF": "اعلان های ایمیل",
+            "pt-BR": "Notificações por e-mail",
+            "es-US": "Notificaciónes de Correo Electrónico"
+          }
+        },
+        {
+          "name": "profile.textNotifications",
+          "values": {
+            "en-US": "Text notifications",
+            "ar": "إخطارات نصية",
+            "fa-AF": "اعلان های متنی",
+            "pt-BR": "Notificações de texto",
+            "es-US": "notificaciones de texto"
+          }
+        },
+        {
+          "name": "profile.validateEmail",
+          "values": {
+            "en-US": "Please input a valid email!",
+            "ar": "الرجاء إدخال بريد إلكتروني صالح!",
+            "fa-AF": "لطفا یک ایمیل معتبر وارد کنید!",
+            "pt-BR": "Por favor, insira um e-mail válido!",
+            "es-US": "¡Por favor ingrese un correo electrónico válido!"
+          }
+        },
+        {
+          "name": "profile.validatePhone",
+          "values": {
+            "en-US": "Please input a valid phone number!",
+            "ar": "الرجاء إدخال رقم هاتف صحيح!",
+            "fa-AF": "لطفا یک شماره تلفن معتبر وارد کنید!",
+            "pt-BR": "Por favor, insira um número de telefone válido!",
+            "es-US": "¡Ingrese un número de teléfono válido!"
+          }
+        },
+        {
+          "name": "regions.caribbean",
+          "values": {
+            "en-US": "Caribbean",
+            "ar": "جزر الكاريبي",
+            "fa-AF": "کارائیب",
+            "pt-BR": "Caribe",
+            "es-US": "Caribe"
+          }
+        },
+        {
+          "name": "regions.centralAmerica",
+          "values": {
+            "en-US": "Central America",
+            "ar": "أمريكا الوسطى",
+            "fa-AF": "آمریکای مرکزی",
+            "pt-BR": "América Central",
+            "es-US": "América Central"
+          }
+        },
+        {
+          "name": "regions.centralAsia",
+          "values": {
+            "en-US": "Central Asia",
+            "ar": "آسيا الوسطى",
+            "fa-AF": "آسیای مرکزی",
+            "pt-BR": "Ásia Central",
+            "es-US": "Asia Central"
+          }
+        },
+        {
+          "name": "regions.eastAsia",
+          "values": {
+            "en-US": "East Asia",
+            "ar": "شرق آسيا",
+            "fa-AF": "آسیای شرقی",
+            "pt-BR": "Ásia Oriental",
+            "es-US": "Asia Oriental"
+          }
+        },
+        {
+          "name": "regions.europe",
+          "values": {
+            "en-US": "Europe",
+            "ar": "أوروبا",
+            "fa-AF": "اروپا",
+            "pt-BR": "Europa",
+            "es-US": "Europa"
+          }
+        },
+        {
+          "name": "regions.middleEast",
+          "values": {
+            "en-US": "Middle East",
+            "ar": "الشرق الأوسط",
+            "fa-AF": "خاورمیانه",
+            "pt-BR": "Oriente Médio",
+            "es-US": "Medio Oriente"
+          }
+        },
+        {
+          "name": "regions.northAfrica",
+          "values": {
+            "en-US": "N. Africa",
+            "ar": "شمال أفريقيا",
+            "fa-AF": "شمال آفریقا",
+            "pt-BR": "Norte da África",
+            "es-US": "Norte de África"
+          }
+        },
+        {
+          "name": "regions.northAmerica",
+          "values": {
+            "en-US": "N. America",
+            "ar": "أمريكا الشمالية",
+            "fa-AF": "آمریکای شمالی",
+            "pt-BR": "América do Norte",
+            "es-US": "Norteamérica"
+          }
+        },
+        {
+          "name": "regions.oceana",
+          "values": {
+            "en-US": "Oceana",
+            "ar": "أوقيانوسيا",
+            "fa-AF": "اقیانوسیه",
+            "pt-BR": "Oceania",
+            "es-US": "Oceanía"
+          }
+        },
+        {
+          "name": "regions.southAmerica",
+          "values": {
+            "en-US": "S. America",
+            "ar": "أمريكا الجنوبية",
+            "fa-AF": "آمریکای جنوبی",
+            "pt-BR": "América do Sul",
+            "es-US": "Sudamérica"
+          }
+        },
+        {
+          "name": "regions.southAsia",
+          "values": {
+            "en-US": "South/SE Asia",
+            "ar": "جنوب آسيا",
+            "fa-AF": "آسیای جنوبی",
+            "pt-BR": "Ásia do Sul",
+            "es-US": "Asia del Sur/Sureste"
+          }
+        },
+        {
+          "name": "regions.subSaharaAfrica",
+          "values": {
+            "en-US": "Sub-Sahara Africa",
+            "ar": "أفريقيا جنوب الصحراء الكبرى",
+            "fa-AF": "زیر صحرای آفریقا",
+            "pt-BR": "África Subsaariana",
+            "es-US": "África subsahariana"
+          }
+        },
+        {
+          "name": "sidebars.appointments",
+          "values": {
+            "en-US": "Appointments",
+            "ar": "تعيينات",
+            "fa-AF": "قرار ملاقات ها",
+            "pt-BR": "Compromissos",
+            "es-US": "Citas"
+          }
+        },
+        {
+          "name": "sidebars.explore",
+          "values": {
+            "en-US": "Explore",
+            "ar": "استكشاف",
+            "fa-AF": "کاویدن ",
+            "pt-BR": "Explorar",
+            "es-US": "Explorar"
+          }
+        },
+        {
+          "name": "sidebars.profile",
+          "values": {
+            "en-US": "Profile",
+            "ar": "حساب تعريفي",
+            "fa-AF": "مشخصات",
+            "pt-BR": "Perfil",
+            "es-US": "Perfil"
+          }
+        },
+        {
+          "name": "sidebars.videos",
+          "values": {
+            "en-US": "Your Videos",
+            "ar": "مقاطع الفيديو الخاصة بك",
+            "fa-AF": "ویدیوهای شما",
+            "pt-BR": "Seus vídeos",
+            "es-US": "Tus vídeos"
+          }
+        },
+        {
+          "name": "verifyEmail.body",
+          "values": {
+            "en-US": "A verification email has been sent to your email. Please click the link contained inside to verify your account.",
+            "ar": " تم إرسال رسالة تحقق إلى بريدك الإلكتروني. الرجاء النقر فوق الارتباط الموجود بالداخل للتحقق من حسابك. ",
+            "fa-AF": "لطفا ایمیل خود را برای تایید ایمیل خود بررسی کنید",
+            "pt-BR": "Um e-mail de verificação foi enviado para o seu e-mail. Por favor, clique no link contido nele para verificar sua conta.",
+            "es-US": "¡Gracias por registrarte!  Por favor, compruebe su correo electrónico para verificar su cuenta."
+          }
+        },
+        {
+          "name": "verifyEmail.emailResent",
+          "values": {
+            "en-US": "Email resent!",
+            "ar": " تم إعادة إرسال البريد الإلكتروني! ",
+            "fa-AF": "ایمیل ارسال شد",
+            "pt-BR": "E-mail reenviado",
+            "es-US": "¡Correo electrónico reenviado!"
+          }
+        },
+        {
+          "name": "verifyEmail.error",
+          "values": {
+            "en-US": "Error verifying email, please try again!",
+            "ar": "خطأ ، يرجى المحاولة مرة أخرى!",
+            "fa-AF": "مشکلی پیش آمد",
+            "pt-BR": "Erro. Por favor, tente novamente!",
+            "es-US": "Algo salió mal: revisa tu correo electrónico en la parte superior"
+          }
+        },
+        {
+          "name": "verifyEmail.header",
+          "values": {
+            "en-US": "Account Verification",
+            "ar": "التحقق من الحساب",
+            "fa-AF": "تایید ایمیل",
+            "pt-BR": "Verificação de conta",
+            "es-US": "Verificar correo electrónico"
+          }
+        },
+        {
+          "name": "verifyEmail.noEmail",
+          "values": {
+            "en-US": "Didn't receive an email?",
+            "ar": "ألم تتلق بريدًا إلكترونيًا؟",
+            "fa-AF": "ایمیلی دریافت نشد؟",
+            "pt-BR": "Não recebeu o e-mail?",
+            "es-US": "No recibió un correo electrónico?"
+          }
+        },
+        {
+          "name": "verifyEmail.refresh",
+          "values": {
+            "en-US": "(Refresh this page if you verified your email)",
+            "ar": " (قم بتحديث هذه الصفحة إذا قمت بالتحقق من بريدك الإلكتروني) ",
+            "fa-AF": "صفحه را تازه کنید",
+            "pt-BR": "Recarregue esta página se você verificou o seu e-mail",
+            "es-US": "Actualizar"
+          }
+        },
+        {
+          "name": "verifyEmail.resend",
+          "values": {
+            "en-US": "Resend",
+            "ar": "إعادة إرسال",
+            "fa-AF": "ارسال مجدد ایمیل",
+            "pt-BR": "Reenviar",
+            "es-US": "Reenviar correo electrónico"
+          }
+        }
+      ]
+    }
+  ]
+}
