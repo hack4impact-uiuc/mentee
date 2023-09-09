@@ -118,7 +118,9 @@ def get_translation_document(mongo_document, target_lang):
         return None
 
 
-def get_translated_options(target_lang: str, selected_options: List[str], options: Document):
+def get_translated_options(
+    target_lang: str, selected_options: List[str], options: Document
+):
     """Gets the translated options for a given language"""
     if target_lang == "en-US":
         return selected_options

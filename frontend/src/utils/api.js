@@ -710,7 +710,12 @@ export const getMenteePrivateStatus = (profileId) => {
   );
 };
 
-export const sendMenteeMentorEmail = (mentorId, menteeId, interestAreas, message) => {
+export const sendMenteeMentorEmail = (
+  mentorId,
+  menteeId,
+  interestAreas,
+  message
+) => {
   const requestExtension = `/messages/mentor/${mentorId}`;
   const data = {
     mentee_id: menteeId,
