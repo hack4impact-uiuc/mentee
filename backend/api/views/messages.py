@@ -6,10 +6,12 @@ from api.models import (
     DirectMessage,
     PartnerProfile,
     Availability,
+    Specializations,
 )
 from api.utils.request_utils import send_email
 from api.utils.constants import Account, MENTOR_CONTACT_ME, TRANSLATIONS
 from api.utils.require_auth import all_users
+from api.utils.translate import get_translated_options
 from api.core import create_response, logger
 import json
 from datetime import datetime
@@ -129,11 +131,16 @@ def contact_mentor(mentor_id):
         msg = "Could not find mentor or mentee for given ids"
         return create_response(status=422, message=msg)
 
+    interest_areas = data.get("interest_areas", [])
+    translated_interest_areas = get_translated_options(
+        mentor.preferred_language, interest_areas, Specializations
+    )
+
     res, res_msg = send_email(
         mentor.email,
         data={
             "response_email": mentee.email,
-            "interest_areas": data.get("interest_areas", ""),
+            "interest_areas": ", ".join(translated_interest_areas),
             "communication_method": data.get("communication_method", ""),
             "message": data.get("message", ""),
             "name": mentee.name,

@@ -14,7 +14,7 @@ from api.models import (
 )
 from api.utils.require_auth import admin_only, all_users
 from pymongo import collation
-from api.utils.google_translate import get_all_translations, get_translation
+from api.utils.translate import get_all_translations, get_translation
 
 masters = Blueprint("masters", __name__)
 

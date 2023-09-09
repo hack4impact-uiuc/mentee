@@ -1,5 +1,7 @@
+from typing import List
 from api.utils.constants import TARGET_LANGS
 from api.core import logger
+from mongoengine import Document
 from google.cloud import translate_v2
 from google.cloud import translate_v3beta1 as translate_v3
 from google.oauth2 import service_account
@@ -114,3 +116,15 @@ def get_translation_document(mongo_document, target_lang):
         return mongo_document.fa_AF.read()
     else:
         return None
+
+
+def get_translated_options(target_lang: str, selected_options: List[str], options: Document):
+    """Gets the translated options for a given language"""
+    if target_lang == "en-US":
+        return selected_options
+
+    option_objects = options.objects.filter(name__in=selected_options)
+    translated_options = []
+    for cur_option in option_objects:
+        translated_options.append(cur_option.translations[target_lang])
+    return translated_options

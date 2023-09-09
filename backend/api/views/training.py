@@ -12,7 +12,7 @@ from api.models import (
 from datetime import datetime
 from PyPDF2 import PdfReader
 from api.utils.require_auth import admin_only, all_users
-from api.utils.google_translate import (
+from api.utils.translate import (
     document_translate_all_languages,
     populate_translation_field,
     get_translation_document,
