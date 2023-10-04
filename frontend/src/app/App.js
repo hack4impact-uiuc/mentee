@@ -22,6 +22,7 @@ import Messages from "components/pages/Messages";
 import ApplicationForm from "components/pages/ApplicationForm";
 import SocketComponent from "components/SocketComponent";
 import AdminTraining from "components/pages/AdminTraining";
+import EventDetail from "components/pages/EventDetail";
 import { Languages } from "components/Languages";
 import { Specializations } from "components/Specializations";
 import { AdminMessages } from "components/pages/AdminSeeMessages";
@@ -37,6 +38,7 @@ import { getRole } from "utils/auth.service";
 import PublicRoute from "components/PublicRoute";
 import Training from "components/pages/Training";
 import BuildProfile from "components/pages/BuildProfile";
+import Events from "components/pages/Events";
 import { useSelector } from "react-redux";
 
 const { Content } = Layout;
@@ -157,6 +159,12 @@ function App() {
             </PrivateRoute>
             <PrivateRoute path="/messages/:receiverId">
               <Messages />
+            </PrivateRoute>
+            <PrivateRoute path="/events">
+              <Events />
+            </PrivateRoute>
+            <PrivateRoute path="/event/:id">
+              <EventDetail />
             </PrivateRoute>
           </Content>
         </Layout>

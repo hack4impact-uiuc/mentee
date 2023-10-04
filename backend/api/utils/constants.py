@@ -19,6 +19,7 @@ UNREAD_MESSAGE_TEMPLATE = "d-7c75b1b696bb49a7850430d6a1b81ad4"
 NEW_TRAINING_TEMPLATE = "d-0716a65e079843b59eef281809e07f5b"
 SEND_INVITE_TEMPLATE = "d-f6405bbbafd144efa76a58814ac2f8f3"
 ALERT_TO_ADMINS = "d-1808cac1e196446ca8be2ef3ecf93bdb"
+EVENT_TEMPLATE = "d-5be889d30c0b40aebfa3b569aa5b40f0"
 # This lacks timezone so you'll need to add that according to whatever code you're working with
 APPT_TIME_FORMAT = "%m-%d-%Y at %I:%M%p"
 
@@ -77,6 +78,7 @@ TRANSLATIONS = {
         "unread_message": "MENTEE: You have received a new Message!",
         "weekly_notif": "MENTEE: You Have Unread Messages",
         "new_training": "MENTEE! New training materials available",
+        "new_event": "MENTEE! New event was created",
         "mentor_contact_me": "Mentor: A Mentee has requested to contact you",
         "verify_email": "MENTEE Email Verification",
         "forgot_password": "MENTEE Password Reset",
@@ -94,6 +96,7 @@ TRANSLATIONS = {
         "unread_message": "MENTEE: ¡Has recibido un nuevo mensaje!",
         "weekly_notif": "MENTEE: Tienes mensajes sin leer",
         "new_training": "¡MENTEE! Nuevos materiales de capacitación disponibles",
+        "new_event": "¡MENTEE! Se creó un nuevo evento",
         "mentor_contact_me": "Mentor: Un mentee ha solicitado ponerse en contacto contigo",
         "verify_email": "Verificación de correo electrónico de mentee",
         "forgot_password": "Restablecimiento de contraseña de mentee",
@@ -111,6 +114,7 @@ TRANSLATIONS = {
         "unread_message": "MENTEE: Você recebeu uma nova mensagem!",
         "weekly_notif": "MENTEE: Você tem mensagens não lidas",
         "new_training": "MENTEE! Novos materiais de treinamento disponíveis",
+        "new_event": "MENTEE! Novo evento foi criado",
         "mentor_contact_me": "Mentor: Um Mentee solicitou entrar em contato com você",
         "verify_email": "Verificação de e-mail do Mentee",
         "forgot_password": "Redefinição de senha do Mentee",
@@ -128,6 +132,7 @@ TRANSLATIONS = {
         "unread_message": "متدرب: لديك رسالة جديدة!",
         "weekly_notif": "متدرب: لديك رسائل غير مقروءة",
         "new_training": "MENTEE! مواد تدريبية جديدة متاحة",
+        "new_event": "MENTEE! تم إنشاء حدث جديد",
         "mentor_contact_me": "مرشد: طلب أحد المتدربين الاتصال بك",
         "verify_email": "تحقق من بريد المتدرب الإلكتروني",
         "forgot_password": "إعادة تعيين كلمة مرور المتدرب",
@@ -145,6 +150,7 @@ TRANSLATIONS = {
         "unread_message": "منتی: شما یک پیام جدید دریافت کرده اید!",
         "weekly_notif": "منتی: شما پیام های خوانده نشده دارید",
         "new_training": "منتی! منابع آموزشی جدید در دسترس است",
+        "new_event": "رویداد جدید ایجاد شد!MENTEE",
         "mentor_contact_me": "مربی: یک منتی درخواست تماس با شما داشته است",
         "verify_email": "تأیید ایمیل منتی",
         "forgot_password": "بازیابی رمز عبور منتی",
