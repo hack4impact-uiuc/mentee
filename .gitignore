@@ -6,6 +6,10 @@ package-lock.json
 package.json
 yarn.lock
 .venv
+poetry.lock
+heroku-logs.txt
+heroku-logs-prod.txt
+pyproject.toml000
 
 # macos
 .DS_Store
