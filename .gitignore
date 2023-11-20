@@ -5,6 +5,7 @@ backend/firebase_service_key.json
 package-lock.json
 package.json
 yarn.lock
+.venv
 
 # macos
 .DS_Store
