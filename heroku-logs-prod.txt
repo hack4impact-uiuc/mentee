@@ -1,0 +1,100 @@
+2023-05-10T18:55:33.235333+00:00 app[web.1]: [2023-05-10 18:55:33 +0000] [8] [DEBUG] GET / 200 OK
+2023-05-10T18:55:33.235361+00:00 app[web.1]: 2023-05-10 18:55:33,234 10.1.32.50: requested https://app.menteeglobal.org/: DEBUG in [manage: 16]: GET / 200 OK
+2023-05-10T18:55:33.235870+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:33 +0000] "GET / HTTP/1.1" 200 0 "https://www.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:33.325697+00:00 app[web.1]: [2023-05-10 18:55:33,325] DEBUG in manage: GET /static/js/main.cbd613aa.js 200 OK
+2023-05-10T18:55:33.325900+00:00 app[web.1]: [2023-05-10 18:55:33 +0000] [8] [DEBUG] GET /static/js/main.cbd613aa.js 200 OK
+2023-05-10T18:55:33.325929+00:00 app[web.1]: 2023-05-10 18:55:33,325 10.1.32.50: requested https://app.menteeglobal.org/static/js/main.cbd613aa.js: DEBUG in [manage: 16]: GET /static/js/main.cbd613aa.js 200 OK
+2023-05-10T18:55:33.329705+00:00 app[web.1]: [2023-05-10 18:55:33,329] DEBUG in manage: GET /static/css/main.eefa6785.css 200 OK
+2023-05-10T18:55:33.329964+00:00 app[web.1]: [2023-05-10 18:55:33 +0000] [8] [DEBUG] GET /static/css/main.eefa6785.css 200 OK
+2023-05-10T18:55:33.330041+00:00 app[web.1]: 2023-05-10 18:55:33,329 10.1.57.252: requested https://app.menteeglobal.org/static/css/main.eefa6785.css: DEBUG in [manage: 16]: GET /static/css/main.eefa6785.css 200 OK
+2023-05-10T18:55:33.332222+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:33 +0000] "GET /static/js/main.cbd613aa.js HTTP/1.1" 200 0 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:33.332997+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:33 +0000] "GET /static/css/main.eefa6785.css HTTP/1.1" 200 0 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.275799+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:34 +0000] "GET /socket.io/?EIO=4&transport=polling&t=OW71Cbb HTTP/1.1" 200 97 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.298226+00:00 app[web.1]: [2023-05-10 18:55:34,298] DEBUG in manage: GET /static/media/mentee.3eebad817d5a1ff44084.png 200 OK
+2023-05-10T18:55:34.298527+00:00 app[web.1]: [2023-05-10 18:55:34 +0000] [8] [DEBUG] GET /static/media/mentee.3eebad817d5a1ff44084.png 200 OK
+2023-05-10T18:55:34.298564+00:00 app[web.1]: 2023-05-10 18:55:34,298 10.1.32.50: requested https://app.menteeglobal.org/static/media/mentee.3eebad817d5a1ff44084.png: DEBUG in [manage: 16]: GET /static/media/mentee.3eebad817d5a1ff44084.png 200 OK
+2023-05-10T18:55:34.299295+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:34 +0000] "GET /static/media/mentee.3eebad817d5a1ff44084.png HTTP/1.1" 200 0 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.346014+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:34 +0000] "POST /socket.io/?EIO=4&transport=polling&t=OW71Ccj&sid=UicIgb7IBpMKp-iNAAAS HTTP/1.1" 200 2 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.356623+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:34 +0000] "GET /socket.io/?EIO=4&transport=polling&t=OW71Ccq&sid=UicIgb7IBpMKp-iNAAAS HTTP/1.1" 200 32 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.653025+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:34 +0000] "GET /socket.io/?EIO=4&transport=polling&t=OW71Cdn&sid=UicIgb7IBpMKp-iNAAAS HTTP/1.1" 200 1 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.717983+00:00 app[web.1]: [2023-05-10 18:55:34,717] DEBUG in manage: GET /manifest.json 200 OK
+2023-05-10T18:55:34.718203+00:00 app[web.1]: [2023-05-10 18:55:34 +0000] [8] [DEBUG] GET /manifest.json 200 OK
+2023-05-10T18:55:34.718224+00:00 app[web.1]: 2023-05-10 18:55:34,717 10.1.58.84: requested https://app.menteeglobal.org/manifest.json: DEBUG in [manage: 16]: GET /manifest.json 200 OK
+2023-05-10T18:55:34.718729+00:00 app[web.1]: 10.1.58.84 - - [10/May/2023:18:55:34 +0000] "GET /manifest.json HTTP/1.1" 200 0 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:34.766936+00:00 app[web.1]: [2023-05-10 18:55:34,766] DEBUG in manage: GET /logo192.png 200 OK
+2023-05-10T18:55:34.767191+00:00 app[web.1]: [2023-05-10 18:55:34 +0000] [8] [DEBUG] GET /logo192.png 200 OK
+2023-05-10T18:55:34.767222+00:00 app[web.1]: 2023-05-10 18:55:34,766 10.1.57.252: requested https://app.menteeglobal.org/logo192.png: DEBUG in [manage: 16]: GET /logo192.png 200 OK
+2023-05-10T18:55:34.767669+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:34 +0000] "GET /logo192.png HTTP/1.1" 200 0 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:35.143996+00:00 app[web.1]: [2023-05-10 18:55:35,143] DEBUG in manage: GET /api/notifys/ 200 OK
+2023-05-10T18:55:35.144315+00:00 app[web.1]: [2023-05-10 18:55:35 +0000] [8] [DEBUG] GET /api/notifys/ 200 OK
+2023-05-10T18:55:35.144354+00:00 app[web.1]: 2023-05-10 18:55:35,143 10.1.32.50: requested https://app.menteeglobal.org/api/notifys/: DEBUG in [manage: 16]: GET /api/notifys/ 200 OK
+2023-05-10T18:55:35.145060+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:35 +0000] "GET /api/notifys/ HTTP/1.1" 200 1601 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:35.146229+00:00 app[web.1]: [2023-05-10 18:55:35,146] DEBUG in manage: GET /api/admin/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.146415+00:00 app[web.1]: [2023-05-10 18:55:35 +0000] [8] [DEBUG] GET /api/admin/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.146448+00:00 app[web.1]: 2023-05-10 18:55:35,146 10.1.57.252: requested https://app.menteeglobal.org/api/admin/60773c2d554535423be0523a: DEBUG in [manage: 16]: GET /api/admin/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.146873+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:35 +0000] "GET /api/admin/60773c2d554535423be0523a HTTP/1.1" 200 191 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:35.259345+00:00 app[web.1]: [2023-05-10 18:55:35,259] DEBUG in manage: GET /api/notifications/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.259569+00:00 app[web.1]: [2023-05-10 18:55:35 +0000] [8] [DEBUG] GET /api/notifications/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.259594+00:00 app[web.1]: 2023-05-10 18:55:35,259 10.1.32.50: requested https://app.menteeglobal.org/api/notifications/60773c2d554535423be0523a: DEBUG in [manage: 16]: GET /api/notifications/60773c2d554535423be0523a 200 OK
+2023-05-10T18:55:35.260122+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:35 +0000] "GET /api/notifications/60773c2d554535423be0523a HTTP/1.1" 200 59 "https://app.menteeglobal.org/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:37.334941+00:00 app[web.1]: [2023-05-10 18:55:37,334] DEBUG in manage: GET /api/appointment/mentors 200 OK
+2023-05-10T18:55:37.335204+00:00 app[web.1]: [2023-05-10 18:55:37 +0000] [8] [DEBUG] GET /api/appointment/mentors 200 OK
+2023-05-10T18:55:37.335230+00:00 app[web.1]: 2023-05-10 18:55:37,334 10.1.32.50: requested https://app.menteeglobal.org/api/appointment/mentors: DEBUG in [manage: 16]: GET /api/appointment/mentors 200 OK
+2023-05-10T18:55:37.335892+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:37 +0000] "GET /api/appointment/mentors HTTP/1.1" 200 79060 "https://app.menteeglobal.org/account-data" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:38.666228+00:00 app[web.1]: [2023-05-10 18:55:38,666] DEBUG in manage: GET /api/application/ 200 OK
+2023-05-10T18:55:38.666467+00:00 app[web.1]: [2023-05-10 18:55:38 +0000] [8] [DEBUG] GET /api/application/ 200 OK
+2023-05-10T18:55:38.666503+00:00 app[web.1]: 2023-05-10 18:55:38,666 10.1.57.252: requested https://app.menteeglobal.org/api/application/: DEBUG in [manage: 16]: GET /api/application/ 200 OK
+2023-05-10T18:55:38.667081+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:18:55:38 +0000] "GET /api/application/ HTTP/1.1" 200 46400 "https://app.menteeglobal.org/organizer" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:41.446624+00:00 app[web.1]: [2023-05-10 18:55:41,446] DEBUG in manage: GET /api/accounts/1 200 OK
+2023-05-10T18:55:41.446852+00:00 app[web.1]: [2023-05-10 18:55:41 +0000] [8] [DEBUG] GET /api/accounts/1 200 OK
+2023-05-10T18:55:41.446875+00:00 app[web.1]: 2023-05-10 18:55:41,446 10.1.32.50: requested https://app.menteeglobal.org/api/accounts/1: DEBUG in [manage: 16]: GET /api/accounts/1 200 OK
+2023-05-10T18:55:41.447436+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:41 +0000] "GET /api/accounts/1 HTTP/1.1" 200 118943 "https://app.menteeglobal.org/account-data" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:43.079664+00:00 app[web.1]: [2023-05-10 18:55:43,079] DEBUG in manage: GET /api/masters/languages 200 OK
+2023-05-10T18:55:43.079926+00:00 app[web.1]: [2023-05-10 18:55:43 +0000] [8] [DEBUG] GET /api/masters/languages 200 OK
+2023-05-10T18:55:43.079978+00:00 app[web.1]: 2023-05-10 18:55:43,079 10.1.22.52: requested https://app.menteeglobal.org/api/masters/languages: DEBUG in [manage: 16]: GET /api/masters/languages 200 OK
+2023-05-10T18:55:43.080557+00:00 app[web.1]: 10.1.22.52 - - [10/May/2023:18:55:43 +0000] "GET /api/masters/languages HTTP/1.1" 200 2703 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:43.141535+00:00 app[web.1]: [2023-05-10 18:55:43,141] DEBUG in manage: GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.141768+00:00 app[web.1]: [2023-05-10 18:55:43 +0000] [8] [DEBUG] GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.141785+00:00 app[web.1]: 2023-05-10 18:55:43,141 10.1.22.52: requested https://app.menteeglobal.org/api/accounts/3: DEBUG in [manage: 16]: GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.142516+00:00 app[web.1]: 10.1.22.52 - - [10/May/2023:18:55:43 +0000] "GET /api/accounts/3 HTTP/1.1" 200 14076 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:43.189108+00:00 app[web.1]: [2023-05-10 18:55:43,188] DEBUG in manage: GET /api/masters/specializations 200 OK
+2023-05-10T18:55:43.189345+00:00 app[web.1]: [2023-05-10 18:55:43 +0000] [8] [DEBUG] GET /api/masters/specializations 200 OK
+2023-05-10T18:55:43.189371+00:00 app[web.1]: 2023-05-10 18:55:43,188 10.1.22.52: requested https://app.menteeglobal.org/api/masters/specializations: DEBUG in [manage: 16]: GET /api/masters/specializations 200 OK
+2023-05-10T18:55:43.189901+00:00 app[web.1]: 10.1.22.52 - - [10/May/2023:18:55:43 +0000] "GET /api/masters/specializations HTTP/1.1" 200 4975 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:43.536058+00:00 app[web.1]: [2023-05-10 18:55:43,535] DEBUG in manage: GET /api/appointment/mentees 200 OK
+2023-05-10T18:55:43.536302+00:00 app[web.1]: [2023-05-10 18:55:43 +0000] [8] [DEBUG] GET /api/appointment/mentees 200 OK
+2023-05-10T18:55:43.536330+00:00 app[web.1]: 2023-05-10 18:55:43,535 10.1.32.50: requested https://app.menteeglobal.org/api/appointment/mentees: DEBUG in [manage: 16]: GET /api/appointment/mentees 200 OK
+2023-05-10T18:55:43.536859+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:43 +0000] "GET /api/appointment/mentees HTTP/1.1" 200 30791 "https://app.menteeglobal.org/organizer" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:43.676887+00:00 app[web.1]: [2023-05-10 18:55:43,676] DEBUG in manage: GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.677196+00:00 app[web.1]: [2023-05-10 18:55:43 +0000] [8] [DEBUG] GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.677261+00:00 app[web.1]: 2023-05-10 18:55:43,676 10.1.32.50: requested https://app.menteeglobal.org/api/accounts/3: DEBUG in [manage: 16]: GET /api/accounts/3 200 OK
+2023-05-10T18:55:43.678338+00:00 app[web.1]: 10.1.32.50 - - [10/May/2023:18:55:43 +0000] "GET /api/accounts/3 HTTP/1.1" 200 14076 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:47.673431+00:00 app[web.1]: [2023-05-10 18:55:47,673] DEBUG in manage: GET /api/accounts/1 200 OK
+2023-05-10T18:55:47.673733+00:00 app[web.1]: [2023-05-10 18:55:47 +0000] [8] [DEBUG] GET /api/accounts/1 200 OK
+2023-05-10T18:55:47.673777+00:00 app[web.1]: 2023-05-10 18:55:47,673 10.1.22.207: requested https://app.menteeglobal.org/api/accounts/1: DEBUG in [manage: 16]: GET /api/accounts/1 200 OK
+2023-05-10T18:55:47.674401+00:00 app[web.1]: 10.1.22.207 - - [10/May/2023:18:55:47 +0000] "GET /api/accounts/1 HTTP/1.1" 200 118943 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T18:55:47.870854+00:00 app[web.1]: [2023-05-10 18:55:47,870] DEBUG in manage: GET /api/accounts/3 200 OK
+2023-05-10T18:55:47.872608+00:00 app[web.1]: [2023-05-10 18:55:47 +0000] [8] [DEBUG] GET /api/accounts/3 200 OK
+2023-05-10T18:55:47.872644+00:00 app[web.1]: 2023-05-10 18:55:47,870 10.1.22.207: requested https://app.menteeglobal.org/api/accounts/3?restricted=true: DEBUG in [manage: 16]: GET /api/accounts/3 200 OK
+2023-05-10T18:55:47.873261+00:00 app[web.1]: 10.1.22.207 - - [10/May/2023:18:55:47 +0000] "GET /api/accounts/3?restricted=true HTTP/1.1" 200 14076 "https://app.menteeglobal.org/gallery" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+2023-05-10T19:55:24.539462+00:00 app[web.1]: [2023-05-10 19:55:24,539] DEBUG in manage: GET /robots.txt 200 OK
+2023-05-10T19:55:24.539774+00:00 app[web.1]: [2023-05-10 19:55:24 +0000] [8] [DEBUG] GET /robots.txt 200 OK
+2023-05-10T19:55:24.539811+00:00 app[web.1]: 2023-05-10 19:55:24,539 10.1.57.252: requested https://app.menteeglobal.org/robots.txt: DEBUG in [manage: 16]: GET /robots.txt 200 OK
+2023-05-10T19:55:24.540612+00:00 app[web.1]: 10.1.57.252 - - [10/May/2023:19:55:24 +0000] "GET /robots.txt HTTP/1.1" 200 0 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+2023-05-10T19:55:24.670013+00:00 app[web.1]: [2023-05-10 19:55:24,669] DEBUG in manage: GET /mentee-logo.ico 200 OK
+2023-05-10T19:55:24.670228+00:00 app[web.1]: [2023-05-10 19:55:24 +0000] [8] [DEBUG] GET /mentee-logo.ico 200 OK
+2023-05-10T19:55:24.670259+00:00 app[web.1]: 2023-05-10 19:55:24,669 10.1.31.118: requested https://app.menteeglobal.org/mentee-logo.ico: DEBUG in [manage: 16]: GET /mentee-logo.ico 200 OK
+2023-05-10T19:55:24.670747+00:00 app[web.1]: 10.1.31.118 - - [10/May/2023:19:55:24 +0000] "GET /mentee-logo.ico HTTP/1.1" 200 0 "-" "Googlebot-Image/1.0"
+2023-05-10T20:24:44.373449+00:00 app[api]: Release v199 created by user h4i.mentee.auth@gmail.com
+2023-05-10T20:24:44.373449+00:00 app[api]: Set LOG_RETENTION_DAYS config vars by user h4i.mentee.auth@gmail.com
+2023-05-10T20:24:45.569244+00:00 app[web.1]: [2023-05-10 20:24:45 +0000] [2] [INFO] Handling signal: term
+2023-05-10T20:24:45.707928+00:00 app[web.1]: [2023-05-10 20:24:45 +0000] [8] [INFO] Worker exiting (pid: 8)
+2023-05-10T20:24:46.571838+00:00 app[web.1]: [2023-05-10 20:24:46 +0000] [2] [INFO] Shutting down: Master
+2023-05-10T20:24:54.066228+00:00 app[web.1]: [2023-05-10 20:24:54 +0000] [2] [INFO] Starting gunicorn 20.1.0
+2023-05-10T20:24:54.066583+00:00 app[web.1]: [2023-05-10 20:24:54 +0000] [2] [INFO] Listening at: http://0.0.0.0:45611 (2)
+2023-05-10T20:24:54.066628+00:00 app[web.1]: [2023-05-10 20:24:54 +0000] [2] [INFO] Using worker: eventlet
+2023-05-10T20:24:54.069785+00:00 app[web.1]: [2023-05-10 20:24:54 +0000] [8] [INFO] Booting worker with pid: 8
+2023-05-10T20:24:56.245528+00:00 app[web.1]: /app/backend/api/views/apply.py:386: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+2023-05-10T20:24:56.245540+00:00 app[web.1]: if len(applications) > 0 is not None:
+2023-05-10T20:24:56.245553+00:00 app[web.1]: /app/backend/api/views/apply.py:415: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+2023-05-10T20:24:56.245554+00:00 app[web.1]: if len(applications) > 0 is not None:
