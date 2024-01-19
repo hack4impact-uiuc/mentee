@@ -1,10 +1,10 @@
 import TrainingList from "components/TrainingList";
 import { withRouter, Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { css } from "@emotion/css";
 import { Button, Space, Typography, message } from "antd";
 import { useTranslation } from "react-i18next";
-import { changeStateBuildProfile } from "utils/api";
+import { changeStateBuildProfile, getApplicationStatus } from "utils/api";
 import LanguageDropdown from "components/LanguageDropdown";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { NEW_APPLICATION_STATUS } from "utils/consts";
@@ -17,7 +17,31 @@ function Training({ location, history }) {
   const query = useQuery();
   const role = location.state?.role || parseInt(query.get("role"));
   const email = location.state?.email || query.get("email");
+  const [applicationData, setApplicationData] = useState(
+    location.state?.applicationData
+  );
+
+  const [flag, setFlag] = useState(false);
+
+  const [buttonFlag, setButtonFlag] = useState(false);
   if (!role || !email) history.push("/");
+
+  useEffect(() => {
+    async function getApplicationData() {
+      var result = await getApplicationStatus(email, role);
+      setApplicationData(result.application_data);
+      if (
+        result.application_state === "BuildProfile" ||
+        result.application_state === "COMPLETED"
+      ) {
+        setButtonFlag(false);
+      }
+      setFlag(!flag);
+    }
+    if (!applicationData) {
+      getApplicationData();
+    }
+  }, []);
 
   const onCompleteTraining = async () => {
     if (!role || !email)
@@ -43,6 +67,17 @@ function Training({ location, history }) {
       );
     }
     setLoading(false);
+  };
+
+  const allChecked = (value) => {
+    if (
+      applicationData.application_state === "BuildProfile" ||
+      applicationData.application_state === "COMPLETED"
+    ) {
+      setButtonFlag(false);
+    } else {
+      setButtonFlag(value);
+    }
   };
 
   return (
@@ -97,13 +132,18 @@ function Training({ location, history }) {
           <LanguageDropdown size="large" />
         </div>
         <Typography.Title level={2}>{t("apply.training")}</Typography.Title>
-        <TrainingList role={role} />
+        <TrainingList
+          role={role}
+          applicationData={applicationData}
+          allChecked={allChecked}
+        />
         <br />
         <Button
           type="primary"
           style={{ width: "100%" }}
           loading={loading}
           onClick={onCompleteTraining}
+          disabled={!buttonFlag}
         >
           {t("apply.completeTrainings")}
         </Button>
