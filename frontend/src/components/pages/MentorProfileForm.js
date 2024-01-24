@@ -9,7 +9,7 @@ import {
   Select,
   Divider,
   Typography,
-  Switch,
+  Radio,
 } from "antd";
 import { useSelector } from "react-redux";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
@@ -45,6 +45,7 @@ function MentorProfileForm({
   loading,
   profileData,
   resetFields,
+  applicationData,
 }) {
   const { t, i18n } = useTranslation();
   const options = useSelector((state) => state.options);
@@ -59,10 +60,23 @@ function MentorProfileForm({
       form.setFieldValue("video", profileData.video?.url);
       setImage(profileData.image);
     }
-  }, [profileData, form, resetFields]);
+    if (applicationData && applicationData.specializations) {
+      form.setFieldValue("specializations", applicationData.specializations);
+    }
+  }, [profileData, form, resetFields, applicationData]);
 
   const educationSubForm = () => (
-    <Form.List name="education">
+    <Form.List
+      name="education"
+      initialValue={[
+        {
+          school: "",
+          graduation_year: "",
+          majors: undefined,
+          education_level: "",
+        },
+      ]}
+    >
       {(fields, { add, remove }) => (
         <>
           {fields.map(({ key, name, ...restField }) => (
@@ -78,7 +92,12 @@ function MentorProfileForm({
                   {...restField}
                   label={t("commonProfile.school")}
                   name={[name, "school"]}
-                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: t("common.requiredSchool"),
+                    },
+                  ]}
                 >
                   <Input />
                 </Form.Item>
@@ -87,7 +106,12 @@ function MentorProfileForm({
                   {...restField}
                   name={[name, "graduation_year"]}
                   label={t("commonProfile.graduationYear")}
-                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: t("common.requiredGraduationYear"),
+                    },
+                  ]}
                 >
                   <Input type="number" />
                 </Form.Item>
@@ -98,7 +122,12 @@ function MentorProfileForm({
                   className={styles.formGroupItem}
                   name={[name, "majors"]}
                   label={t("commonProfile.majors")}
-                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: t("common.requiredMajors"),
+                    },
+                  ]}
                 >
                   <Select
                     placeholder={t("commonProfile.majorsExamples")}
@@ -112,18 +141,25 @@ function MentorProfileForm({
                   name={[name, "education_level"]}
                   className={styles.formGroupItem}
                   label={t("commonProfile.degree")}
-                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: t("common.requiredDegree"),
+                    },
+                  ]}
                 >
                   <Input placeholder={t("commonProfile.degreeExample")} />
                 </Form.Item>
               </div>
-              <DeleteOutlined
-                onClick={() => remove(name)}
-                className={css`
-                  float: right;
-                  color: #ff4d4f;
-                `}
-              />
+              {key !== 0 && (
+                <DeleteOutlined
+                  onClick={() => remove(name)}
+                  className={css`
+                    float: right;
+                    color: #ff4d4f;
+                  `}
+                />
+              )}
               <Divider />
             </div>
           ))}
@@ -159,7 +195,6 @@ function MentorProfileForm({
     newData.image = image;
     newData.changedImage = changedImage;
     newData.edited = edited;
-
     onSubmit(newData);
   };
 
@@ -207,15 +242,25 @@ function MentorProfileForm({
         <Form.Item
           label={t("commonProfile.fullName")}
           name="name"
-          required
           className={styles.formGroupItem}
+          rules={[
+            {
+              required: true,
+              message: t("common.requiredFullName"),
+            },
+          ]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label={t("mentorProfile.professionalTitle")}
           name="professional_title"
-          required
+          rules={[
+            {
+              required: true,
+              message: t("common.requiredProfessionalTitle"),
+            },
+          ]}
           className={styles.formGroupItem}
         >
           <Input />
@@ -227,7 +272,12 @@ function MentorProfileForm({
             label={t("common.password")}
             name="password"
             hasFeedback
-            required
+            rules={[
+              {
+                required: true,
+                message: t("common.requiredPassword"),
+              },
+            ]}
             className={styles.formGroupItem}
           >
             <Input.Password />
@@ -263,20 +313,37 @@ function MentorProfileForm({
         <Form.Item
           label={t("mentorProfile.availableInPerson")}
           name="offers_in_person"
-          required
+          rules={[
+            {
+              required: true,
+              message: t("common.requiredAvailableInPerson"),
+            },
+          ]}
           className={styles.formGroupItem}
           valuePropName="checked"
         >
-          <Switch />
+          {/* <Switch /> */}
+          <Radio.Group>
+            <Radio value={true}>{t("common.yes")}</Radio>
+            <Radio value={false}>{t("common.no")}</Radio>
+          </Radio.Group>
         </Form.Item>
         <Form.Item
           label={t("mentorProfile.availableGroupAppointments")}
           name="offers_group_appointments"
-          required
+          rules={[
+            {
+              required: true,
+              message: t("common.requiredAvailableGroupAppointments"),
+            },
+          ]}
           className={styles.formGroupItem}
           valuePropName="checked"
         >
-          <Switch />
+          <Radio.Group>
+            <Radio value={true}>{t("common.yes")}</Radio>
+            <Radio value={false}>{t("common.no")}</Radio>
+          </Radio.Group>
         </Form.Item>
       </div>
       <div className={styles.formGroup}>
@@ -305,7 +372,12 @@ function MentorProfileForm({
         <Form.Item
           label={t("commonProfile.languages")}
           name="languages"
-          required
+          rules={[
+            {
+              required: true,
+              message: t("common.requiredLanguage"),
+            },
+          ]}
           className={styles.formGroupItem}
         >
           <Select
@@ -331,12 +403,18 @@ function MentorProfileForm({
       <Form.Item
         label={t("mentorProfile.specializations")}
         name="specializations"
-        required
+        rules={[
+          {
+            required: true,
+            message: t("common.requiredSpecializations"),
+          },
+        ]}
       >
         <Select
           options={options.specializations}
-          mode="multiple"
+          mode="tags"
           placeholder={t("common.pleaseSelect")}
+          tokenSeparators={[","]}
         />
       </Form.Item>
       <Typography.Title level={4}>
