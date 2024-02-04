@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
-import { Modal, Form, Input, Button, message, Typography } from "antd";
+import { Modal, Form, Input, Button, message, Typography, Radio } from "antd";
 import { adminUploadEmailsText } from "utils/api";
-import { validateEmail } from "utils/misc";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { ACCOUNT_TYPE } from "utils/consts";
 import { useTranslation } from "react-i18next";
@@ -11,34 +10,32 @@ function AddGuestModal(props) {
   const [form] = Form.useForm();
   const { t } = useTranslation();
   const [valuesChanged, setValuesChanged] = useState(false);
+  const [role, setRole] = useState(ACCOUNT_TYPE.GUEST);
 
   useEffect(() => {
     form.resetFields();
     setValuesChanged(false);
   }, [props.guestModalVisible]);
 
-  const onFinish = useCallback((valuesChanged) => {
-    async function addGuestUser(name, email, password) {
-      await adminUploadEmailsText(
-        email,
-        ACCOUNT_TYPE.GUEST,
-        password,
-        name
-      ).then((res) => {
-        if (res.status === 200) {
-          success();
-        } else {
-          if (res.response && res.response.status === 422) {
-            alert("Failed create firebase account");
+  const onFinish = useCallback((valuesChanged, user_role) => {
+    async function addGuestUser(name, email, password, user_role) {
+      await adminUploadEmailsText(email, user_role, password, name).then(
+        (res) => {
+          if (res.status === 200) {
+            success();
           } else {
-            alert("Already registered Email: " + email);
+            if (res.response && res.response.status === 422) {
+              alert("Failed create firebase account");
+            } else {
+              alert("Already registered Email: " + email);
+            }
           }
         }
-      });
+      );
     }
     if (valuesChanged) {
       form.validateFields().then((values) => {
-        addGuestUser(values.name, values.email, values.password);
+        addGuestUser(values.name, values.email, values.password, user_role);
       });
     } else {
       props.setGuestModalVisible(false);
@@ -62,6 +59,12 @@ function AddGuestModal(props) {
 
     return Promise.resolve();
   };
+
+  const onChangeRole = (e) => {
+    console.log("eee", e.target.value);
+    setRole(e.target.value);
+  };
+
   return (
     <Modal
       open={props.guestModalVisible}
@@ -69,12 +72,20 @@ function AddGuestModal(props) {
       onCancel={() => props.setGuestModalVisible(false)}
     >
       <div className="dragdrops">
-        <Title>Add Guest User</Title>
+        <Title>Add Guest/Support User</Title>
+        <Radio.Group
+          style={{ marginBottom: "15px" }}
+          onChange={onChangeRole}
+          value={role}
+        >
+          <Radio value={ACCOUNT_TYPE.GUEST}>Guest</Radio>
+          <Radio value={ACCOUNT_TYPE.SUPPORT}>Support</Radio>
+        </Radio.Group>
         <div>
           <Form
             form={form}
             onValuesChange={handleValuesChange}
-            onFinish={() => onFinish(valuesChanged)}
+            onFinish={() => onFinish(valuesChanged, role)}
           >
             <Form.Item
               name="name"

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
 import { Avatar, Typography, Button, Rate, Tooltip, theme } from "antd";
 import {
-  LinkOutlined,
-  LinkedinOutlined,
   StarOutlined,
   EnvironmentOutlined,
   UserOutlined,
@@ -13,14 +11,14 @@ import {
 import { formatLinkForHref } from "utils/misc";
 import { useAuth } from "../utils/hooks/useAuth";
 
-import MenteeButton from "./MenteeButton";
-
 import "./css/Gallery.scss";
-import { ACCOUNT_TYPE } from "utils/consts";
+import { ACCOUNT_TYPE, REDIRECTS } from "utils/consts";
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "features/userSlice";
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
 const styles = {
   title: {
@@ -48,8 +46,12 @@ function MentorCard(props) {
     token: { colorPrimary, colorPrimaryBg },
   } = theme.useToken();
   const { t } = useTranslation();
-  const { isMentee } = useAuth();
+  const { isMentee, resetRoleState, role } = useAuth();
   const [favorite, setFavorite] = useState(props.favorite);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user } = useSelector((state) => state.user);
+
   function getImage(image) {
     if (!image) {
       return <UserOutlined />;
@@ -71,6 +73,20 @@ function MentorCard(props) {
     );
   }
 
+  function loginOtherUser(e, user_data) {
+    localStorage.setItem("support_user_id", user._id.$oid);
+    localStorage.setItem("role", ACCOUNT_TYPE.MENTOR);
+    localStorage.setItem("profileId", user_data.id);
+    resetRoleState(user_data.id, ACCOUNT_TYPE.MENTOR);
+    dispatch(
+      fetchUser({
+        id: user_data.id,
+        role: ACCOUNT_TYPE.MENTOR,
+      })
+    );
+    history.push(REDIRECTS[ACCOUNT_TYPE.MENTOR]);
+  }
+
   return (
     <div
       className={css`
@@ -78,7 +94,7 @@ function MentorCard(props) {
         border: 2px solid ${colorPrimaryBg};
         border-radius: 8px;
         position: relative;
-        height: 35em;
+        height: 37em;
         padding: 20px;
         padding-top: 0px;
         :hover {
@@ -182,11 +198,21 @@ function MentorCard(props) {
           width: 90%;
         `}
       >
-        <NavLink to={`/gallery/${ACCOUNT_TYPE.MENTOR}/${props.id}`}>
-          <div className="gallery-button">
-            <Button type="primary">{t("gallery.viewProfile")}</Button>
-          </div>
-        </NavLink>
+        {props.isSupport ? (
+          <>
+            <div className="gallery-button">
+              <Button onClick={(e) => loginOtherUser(e, props)} type="primary">
+                {t("common.impersonate")}
+              </Button>
+            </div>
+          </>
+        ) : (
+          <NavLink to={`/gallery/${ACCOUNT_TYPE.MENTOR}/${props.id}`}>
+            <div className="gallery-button">
+              <Button type="primary">{t("gallery.viewProfile")}</Button>
+            </div>
+          </NavLink>
+        )}
       </div>
     </div>
   );

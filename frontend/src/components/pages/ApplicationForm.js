@@ -110,7 +110,7 @@ const ApplicationForm = ({ location, history }) => {
             flex-direction: row;
           `}
         >
-          <Link to={"/"}>
+          <Link to={"/"} id="back">
             <Space>
               <ArrowLeftOutlined />
               {t("common.back")}
@@ -120,6 +120,7 @@ const ApplicationForm = ({ location, history }) => {
         </div>
         <Typography>
           <Title
+            id="welcome"
             level={2}
             className={css`
               span {

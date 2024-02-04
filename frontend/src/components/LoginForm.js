@@ -24,7 +24,7 @@ function LoginForm({ role, defaultEmail }) {
     setLoading(true);
 
     // Non-admin checking for status of account
-    if (role !== ACCOUNT_TYPE.ADMIN) {
+    if (role !== ACCOUNT_TYPE.ADMIN && role !== ACCOUNT_TYPE.SUPPORT) {
       const { profileExists, rightRole } = await checkProfileExists(
         email,
         role
@@ -143,6 +143,7 @@ function LoginForm({ role, defaultEmail }) {
         <Form.Item>
           <Button
             type="primary"
+            id="submit"
             htmlType="submit"
             style={{ width: "100%" }}
             loading={loading}
