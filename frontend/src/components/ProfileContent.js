@@ -310,9 +310,47 @@ function ProfileContent(props) {
             <b>{t("commonProfile.education")}</b>
           </div>
           <div>{getEducations(props.mentor.education)}</div>
+          {accountType == ACCOUNT_TYPE.MENTEE && (
+            <>
+              <div>
+                {props.mentor.education_level &&
+                  t("common." + props.mentor.education_level)}
+              </div>
+            </>
+          )}
         </>
       )}
       <br />
+      {accountType == ACCOUNT_TYPE.MENTEE && (
+        <>
+          {props.mentor.languages && (
+            <>
+              <div className="mentor-profile-heading">
+                <b>{t("menteeApplication.preferredLanguage")}</b>
+              </div>
+              <div>{getTags(props.mentor.languages)}</div>
+              <br />
+            </>
+          )}
+          {props.mentor.immigrant_status && (
+            <>
+              <div className="mentor-profile-heading">
+                <b>{t("common.immigrationStatus")}</b>
+              </div>
+              <div>{getTags(props.mentor.immigrant_status)}</div>
+              <br />
+            </>
+          )}
+          {props.mentor.workstate && (
+            <>
+              <div className="mentor-profile-heading">
+                <b>{t("common.workOptions")}</b>
+              </div>
+              <div>{getTags(props.mentor.workstate)}</div>
+            </>
+          )}
+        </>
+      )}
       {accountType === ACCOUNT_TYPE.PARTNER && (
         <>
           <div className="mentor-profile-heading">

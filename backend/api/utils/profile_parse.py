@@ -79,6 +79,10 @@ def new_profile(data: dict = {}, profile_type: int = -1):
             age=data["age"],
             gender=data["gender"],
             is_private=data.get("is_private", False),
+            isStudent=data.get("isStudent", "No"),
+            education_level=data.get("education_level", "elementary"),
+            immigrant_status=data.get("immigrant_status"),
+            workstate=data.get("workstate"),
         )
 
         if "video" in data and data.get("video") is not None:
@@ -213,6 +217,10 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.organization = data.get("organization", profile.organization)
         profile.is_private = data.get("is_private", profile.is_private)
         profile.specializations = data.get("specializations", profile.specializations)
+        profile.workstate = data.get("workstate", profile.workstate)
+        profile.immigrant_status = data.get(
+            "immigrant_status", profile.immigrant_status
+        )
         if ex_organization != profile.organization:
             # for old data---------------------------------
             pair_partner_data = PartnerProfile.objects(

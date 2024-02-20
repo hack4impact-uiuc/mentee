@@ -12,7 +12,7 @@ from api.models import (
 )
 from flask import send_file, Blueprint, request
 from api.utils.require_auth import admin_only
-from api.utils.constants import Account
+from api.utils.constants import Account, EDUCATION_LEVEL
 
 download = Blueprint("download", __name__)
 
@@ -87,10 +87,15 @@ def download_accounts_info():
         admins = Admin.objects()
         admin_ids = [admin.firebase_uid for admin in admins]
 
+        partner_object = {}
+
         if account_type == Account.MENTOR:
             accounts = MentorProfile.objects(firebase_uid__nin=admin_ids)
         elif account_type == Account.MENTEE:
             accounts = MenteeProfile.objects(firebase_uid__nin=admin_ids)
+            partner_data = PartnerProfile.objects(firebase_uid__nin=admin_ids)
+            for partner_item in partner_data:
+                partner_object[str(partner_item.id)] = partner_item.organization
         elif account_type == Account.PARTNER:
             accounts = PartnerProfile.objects(firebase_uid__nin=admin_ids)
 
@@ -102,7 +107,7 @@ def download_accounts_info():
     if account_type == Account.MENTOR:
         return download_mentor_accounts(accounts)
     elif account_type == Account.MENTEE:
-        return download_mentee_accounts(accounts)
+        return download_mentee_accounts(accounts, partner_object)
     elif account_type == Account.PARTNER:
         return download_partner_accounts(accounts)
 
@@ -118,11 +123,15 @@ def download_apps_info():
     account_type = int(data.get("account_type", 0))
     apps = None
 
+    partner_object = {}
     try:
         if account_type == Account.MENTOR:
             apps = NewMentorApplication.objects
         elif account_type == Account.MENTEE:
             apps = MenteeApplication.objects
+            partner_data = PartnerProfile.objects
+            for partner_item in partner_data:
+                partner_object[str(partner_item.id)] = partner_item.organization
 
     except:
         msg = "Failed to get accounts"
@@ -132,7 +141,7 @@ def download_apps_info():
     if account_type == Account.MENTOR:
         return download_mentor_apps(apps)
     elif account_type == Account.MENTEE:
-        return download_mentee_apps(apps)
+        return download_mentee_apps(apps, partner_object)
 
     msg = "Invalid input"
     logger.info(msg)
@@ -196,7 +205,7 @@ def download_mentor_apps(apps):
     return generate_sheet("accounts", accts, columns)
 
 
-def download_mentee_apps(apps):
+def download_mentee_apps(apps, partner_object):
     accts = []
 
     for acct in apps:
@@ -204,23 +213,27 @@ def download_mentee_apps(apps):
             [
                 acct.name,
                 acct.email,
-                acct.age,
                 ",".join(acct.immigrant_status),
                 acct.Country,
                 acct.identify,
-                acct.language,
+                acct.language
+                if isinstance(acct.language, str)
+                else ",".join(acct.language),
                 ",".join(acct.topics),
                 ",".join(acct.workstate),
                 acct.isSocial,
                 acct.questions,
                 acct.application_state,
                 acct.notes,
+                partner_object[acct.partner]
+                if acct.partner in partner_object
+                else acct.partner,
             ]
         )
     columns = [
         " Full Name",
         "email",
-        "age",
+        # "age",
         "immigrant status",
         "Country",
         "identify",
@@ -231,6 +244,7 @@ def download_mentee_apps(apps):
         "questions",
         "application state",
         "notes",
+        "Organization Affiliation",
     ]
     return generate_sheet("accounts", accts, columns)
 
@@ -337,7 +351,7 @@ def download_partner_accounts(accounts):
     return generate_sheet("accounts", accts, columns)
 
 
-def download_mentee_accounts(accounts):
+def download_mentee_accounts(accounts, partner_object):
     accts = []
 
     for acct in accounts:
@@ -351,6 +365,8 @@ def download_mentee_accounts(accounts):
                     edu.graduation_year,
                 )
             )
+        if acct.education_level is not None:
+            educations.append(EDUCATION_LEVEL[acct.education_level])
         accts.append(
             [
                 acct.name,
@@ -364,7 +380,9 @@ def download_mentee_accounts(accounts):
                 ",".join(acct.languages),
                 "|".join(acct.specializations),
                 acct.biography,
-                acct.organization,
+                partner_object[acct.organization]
+                if acct.organization in partner_object
+                else acct.organization,
                 "Yes" if acct.image and acct.image.url else "No",
                 "Yes" if acct.video else "No",
                 int(acct.text_notifications)

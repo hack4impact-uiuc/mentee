@@ -17,6 +17,8 @@ class MenteeProfile(Document, Mixin):
     phone_number = StringField()
     image = EmbeddedDocumentField(Image)
     education = ListField(EmbeddedDocumentField(Education))
+    isStudent = StringField()
+    education_level = StringField()
     languages = ListField(StringField(), required=True)
     biography = StringField()
     organization = StringField(required=False)
@@ -27,6 +29,8 @@ class MenteeProfile(Document, Mixin):
     favorite_mentors_ids = ListField(StringField())
     specializations = ListField(StringField())
     pair_partner = DictField(required=False)
+    immigrant_status = ListField(StringField(), required=False)
+    workstate = ListField(StringField(), required=False)
     preferred_language = StringField(required=False, default="en-US")
 
     def __repr__(self):
