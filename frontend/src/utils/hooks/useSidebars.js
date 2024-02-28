@@ -13,13 +13,20 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons";
 import { ACCOUNT_TYPE } from "utils/consts";
-
+import { getLoginPath } from "utils/auth.service";
 /**
  * @param {ACCOUNT_TYPE} userType constant for user type
  * @param {Function} t translation function
  * @returns Sidebar for user type
  */
 export default function useSidebars(userType, t) {
+  var url_prefix_hub = "";
+  if (parseInt(userType) == ACCOUNT_TYPE.HUB) {
+    url_prefix_hub = getLoginPath();
+    if (url_prefix_hub && url_prefix_hub.charAt(0) == "/") {
+      url_prefix_hub = url_prefix_hub.slice(1);
+    }
+  }
   const mentorSidebar = [
     {
       label: t("common.messages"),
@@ -176,6 +183,40 @@ export default function useSidebars(userType, t) {
       icon: <PartitionOutlined />,
     },
   ];
+  const hubSidebar = [
+    {
+      label: "Explore",
+      key: "galleries",
+      icon: <SearchOutlined />,
+      children: [
+        {
+          label: "Find a Partner",
+          key: url_prefix_hub + "/partner-gallery",
+        },
+      ],
+    },
+    {
+      label: "Events",
+      key: url_prefix_hub + "/events",
+      icon: <InfoCircleOutlined />,
+    },
+    // {
+    //   label: "Reports",
+    //   key: "reports",
+    //   icon: <DatabaseOutlined />,
+    //   children: [
+    //     {
+    //       label: "Account Data",
+    //       key: "account-data",
+    //     },
+    //   ],
+    // },
+    {
+      label: t("sidebars.training"),
+      key: url_prefix_hub + "/partner/training",
+      icon: <VideoCameraOutlined />,
+    },
+  ];
   const adminSidebar = [
     {
       label: "Explore",
@@ -209,6 +250,10 @@ export default function useSidebars(userType, t) {
         {
           label: "Account Data",
           key: "account-data",
+        },
+        {
+          label: "Hub Data",
+          key: "hub-data",
         },
         {
           label: "All Appointments",
@@ -270,6 +315,8 @@ export default function useSidebars(userType, t) {
       return supportSidebar;
     case ACCOUNT_TYPE.ADMIN:
       return adminSidebar;
+    case ACCOUNT_TYPE.HUB:
+      return hubSidebar;
     default:
       return [];
   }

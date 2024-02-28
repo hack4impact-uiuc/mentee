@@ -68,14 +68,18 @@ export const sendPasswordResetEmail = (email) => {
   return post("/forgotPassword", { email, preferred_language: i18n.language });
 };
 
-export const login = async (email, password, role) =>
+export const login = async (email, password, role, path = undefined) =>
   await post("/login", {
     email: email && email.trim(),
     password: password && password.trim(),
     role: String(role) && String(role).trim(),
+    path: path,
   }).then(async (data) => {
     if (data && data.success && data.result.token) {
       localStorage.setItem("role", role);
+      if (path) {
+        localStorage.setItem("login_path", path);
+      }
       await fireauth
         .auth()
         .signInWithCustomToken(data.result.token)
@@ -89,6 +93,7 @@ export const login = async (email, password, role) =>
 
 export const logout = async () => {
   localStorage.removeItem("role");
+  localStorage.removeItem("login_path");
   localStorage.removeItem("support_user_id");
   localStorage.removeItem("profileId");
   await fireauth
@@ -100,6 +105,7 @@ export const logout = async () => {
       console.error(message);
       return false;
     });
+  localStorage.removeItem("login_path");
 };
 
 export const refreshToken = async () => {
@@ -161,6 +167,9 @@ export const isUserPartner = async () => {
 
 export const getRole = () => {
   return localStorage.getItem("role");
+};
+export const getLoginPath = () => {
+  return localStorage.getItem("login_path");
 };
 
 export const getProfileId = () => {
