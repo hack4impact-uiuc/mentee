@@ -16,7 +16,11 @@ import {
   fetchAccounts,
   downloadPartnersData,
 } from "../../utils/api";
-import { MenteeMentorDropdown, SortByApptDropdown } from "../AdminDropdowns";
+import {
+  MenteeMentorDropdown,
+  SortByApptDropdown,
+  HubsDropdown,
+} from "../AdminDropdowns";
 import UploadEmails from "../UploadEmails";
 import AddGuestModal from "../AddGuestModal";
 import AdminDataTable from "../AdminDataTable";
@@ -47,6 +51,22 @@ function AdminAccountData() {
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
   const [guestModalVisible, setGuestModalVisible] = useState(false);
   const { onAuthStateChanged } = useAuth();
+  const [hubOptions, setHubOptions] = useState([]);
+  const [resetFilters, setResetFilters] = useState(false);
+  const [searchHubUserId, setSearchHubUserId] = useState(null);
+
+  useEffect(() => {
+    async function getHubData() {
+      var temp = [];
+      const hub_data = await fetchAccounts(ACCOUNT_TYPE.HUB);
+      hub_data.map((hub_item) => {
+        temp.push({ label: hub_item.name, value: hub_item._id.$oid });
+        return true;
+      });
+      setHubOptions(temp);
+    }
+    getHubData();
+  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -149,7 +169,7 @@ function AdminAccountData() {
   };
   const handlePartnersDownload = async () => {
     setIsPartnerDownload(true);
-    const file = await downloadPartnersData();
+    const file = await downloadPartnersData(searchHubUserId);
     setDownloadFile(file);
     setIsPartnerDownload(false);
   };
@@ -173,7 +193,21 @@ function AdminAccountData() {
 
   const handleAccountDisplay = (key) => {
     setDisplayOption(key);
+    handleResetFilters();
     setReload(!reload);
+  };
+
+  const searchbyHub = (key) => {
+    if (!key || displayOption !== keys.PARTNER) {
+      setFilterData(displayData);
+      return;
+    }
+    setSearchHubUserId(key);
+    let newFiltered = [];
+    newFiltered = displayData.filter((account) => {
+      return account.hub_id === key;
+    });
+    setFilterData(newFiltered);
   };
 
   const handleSearchAccount = (name) => {
@@ -194,6 +228,14 @@ function AdminAccountData() {
     setFilterData(newFiltered);
   };
 
+  const handleResetFilters = () => {
+    setResetFilters(!resetFilters);
+    setSearchHubUserId(null);
+    if (displayOption === keys.PARTNER) {
+      setFilterData(displayData);
+    }
+  };
+
   return (
     <div className="account-data-body">
       <div style={{ display: "none" }}>
@@ -205,7 +247,10 @@ function AdminAccountData() {
           <a href="account-data">Account Data</a>
         </Breadcrumb.Item>
       </Breadcrumb>
-      <div className="table-search">
+      <div
+        className="table-search flex table-button-group"
+        style={{ width: "25rem" }}
+      >
         <Input.Search
           placeholder="Search by name"
           id="search"
@@ -214,6 +259,16 @@ function AdminAccountData() {
           size="medium"
           onSearch={(value) => handleSearchAccount(value)}
         />
+        <div style={{ lineHeight: "30px", marginLeft: "1rem" }}>Hub</div>
+        <HubsDropdown
+          className="table-button hub-drop-down"
+          options={hubOptions}
+          onChange={(key) => searchbyHub(key)}
+          onReset={resetFilters}
+        />
+        <Button className="" onClick={() => handleResetFilters()}>
+          Clear Filters
+        </Button>
       </div>
       <div className="table-header">
         <div className="table-title">

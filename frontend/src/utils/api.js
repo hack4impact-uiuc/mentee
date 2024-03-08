@@ -82,11 +82,16 @@ export const fetchEvents = async (type) => {
   );
 };
 
-export const fetchAccounts = (type, restricted = undefined) => {
+export const fetchAccounts = (
+  type,
+  restricted = undefined,
+  hub_user_id = ""
+) => {
   const requestExtension = `/accounts/${type}`;
   return authGet(requestExtension, {
     params: {
       restricted: restricted,
+      hub_user_id: hub_user_id,
     },
   }).then(
     (response) => response.data.result.accounts,
@@ -571,12 +576,13 @@ export const downloadMenteesData = async () => {
 
   downloadBlob(response, "mentee_data.xlsx");
 };
-export const downloadPartnersData = async () => {
+export const downloadPartnersData = async (searchHubUserId = null) => {
   const requestExtension = "/download/accounts/all";
   let response = await authGet(requestExtension, {
     responseType: "blob",
     params: {
       account_type: ACCOUNT_TYPE.PARTNER,
+      hub_user_id: searchHubUserId,
     },
   }).catch(console.error);
 
@@ -1010,8 +1016,11 @@ export const fetchMenteeByID = async (id) => {
 export const fetchMentors = async () => {
   return await fetchAccounts(ACCOUNT_TYPE.MENTOR);
 };
-export const fetchPartners = async (restricted = undefined) => {
-  return await fetchAccounts(ACCOUNT_TYPE.PARTNER, restricted);
+export const fetchPartners = async (
+  restricted = undefined,
+  hub_user_id = null
+) => {
+  return await fetchAccounts(ACCOUNT_TYPE.PARTNER, restricted, hub_user_id);
 };
 
 export const fetchMentees = async () => {

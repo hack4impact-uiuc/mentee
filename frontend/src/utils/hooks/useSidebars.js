@@ -19,7 +19,7 @@ import { getLoginPath } from "utils/auth.service";
  * @param {Function} t translation function
  * @returns Sidebar for user type
  */
-export default function useSidebars(userType, t) {
+export default function useSidebars(userType, user, t) {
   var url_prefix_hub = "";
   if (parseInt(userType) == ACCOUNT_TYPE.HUB) {
     url_prefix_hub = getLoginPath();
@@ -185,6 +185,11 @@ export default function useSidebars(userType, t) {
   ];
   const hubSidebar = [
     {
+      label: t("common.messages"),
+      key: `messages/${ACCOUNT_TYPE.PARTNER}`,
+      icon: <MessageOutlined />,
+    },
+    {
       label: "Explore",
       key: "galleries",
       icon: <SearchOutlined />,
@@ -212,11 +217,25 @@ export default function useSidebars(userType, t) {
     //   ],
     // },
     {
-      label: t("sidebars.training"),
+      label: t("sidebars.community"),
       key: url_prefix_hub + "/partner/training",
       icon: <VideoCameraOutlined />,
     },
+    {
+      label: t("sidebars.profile"),
+      key: url_prefix_hub + "/profile",
+      icon: <UserOutlined />,
+    },
   ];
+  if (parseInt(userType) == ACCOUNT_TYPE.HUB) {
+    if (user && !user.hub_id) {
+      hubSidebar.push({
+        label: t("sidebars.invite_link"),
+        key: url_prefix_hub + "/invite-link",
+        icon: <VideoCameraOutlined />,
+      });
+    }
+  }
   const adminSidebar = [
     {
       label: "Explore",

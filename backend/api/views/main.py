@@ -121,14 +121,56 @@ def get_accounts(account_type):
                 accounts = []
             accounts.append(account)
     elif account_type == Account.PARTNER:
+        Hub_users = Hub.objects()
+        Hub_users_object = {}
+        for hub_user in Hub_users:
+            Hub_users_object[str(hub_user.id)] = {
+                "name": hub_user.name,
+                "url": hub_user.url,
+                "email": hub_user.email,
+                "image": hub_user.image,
+            }
         if "restricted" in request.args:
             if request.args["restricted"] == "true":
-                accounts = PartnerProfile.objects(restricted=True)
+                if "hub_user_id" in request.args:
+                    if request.args["hub_user_id"] != "":
+                        accounts = PartnerProfile.objects.filter(
+                            restricted=True, hub_id=request.args["hub_user_id"]
+                        )
+                    else:
+                        accounts = PartnerProfile.objects(restricted=True)
+                else:
+                    accounts = PartnerProfile.objects.filter(
+                        restricted=True, hub_id=None
+                    )
             else:
-                accounts = PartnerProfile.objects(restricted__ne=True)
+                if "hub_user_id" in request.args:
+                    if request.args["hub_user_id"] != "":
+                        accounts = PartnerProfile.objects.filter(
+                            restricted__ne=True, hub_id=request.args["hub_user_id"]
+                        )
+                    else:
+                        accounts = PartnerProfile.objects.filter(restricted__ne=True)
+                else:
+                    accounts = PartnerProfile.objects.filter(
+                        restricted__ne=True, hub_id=None
+                    )
         else:
-            accounts = PartnerProfile.objects()
-
+            if "hub_user_id" in request.args:
+                if request.args["hub_user_id"] != "":
+                    accounts = PartnerProfile.objects(
+                        hub_id=request.args["hub_user_id"]
+                    )
+                else:
+                    accounts = PartnerProfile.objects()
+            else:
+                accounts = PartnerProfile.objects(hub_id=None)
+        temp = []
+        for account in accounts:
+            if account.hub_id is not None:
+                account.hub_user = Hub_users_object[str(account.hub_id)]
+            temp.append(account)
+        accounts = temp
     elif account_type == Account.GUEST:
         accounts = Guest.objects()
     elif account_type == Account.SUPPORT:
@@ -166,7 +208,6 @@ def get_account(id):
             account = Support.objects.get(id=id)
         elif account_type == Account.HUB:
             account = Hub.objects.get(id=id)
-
         else:
             msg = "Level param doesn't match existing account types"
             return create_response(status=422, message=msg)
@@ -176,6 +217,24 @@ def get_account(id):
             msg = "No mentee with that id"
         elif account_type == Account.MENTOR:
             msg = "No mentor with that id"
+        elif account_type == Account.HUB:
+            try:
+                account = PartnerProfile.objects.get(id=id)
+                hub_user = None
+                if "hub_id" in account and account.hub_id is not None:
+                    hub_profile = Hub.objects.get(id=account.hub_id)
+                    hub_user = {
+                        "id": str(hub_profile.id),
+                        "email": hub_profile.email,
+                        "name": hub_profile.name,
+                        "image": hub_profile.image,
+                        "url": hub_profile.url,
+                        "invite_key": hub_profile.invite_key,
+                    }
+                account.hub_user = hub_user
+                return create_response(data={"account": account})
+            except:
+                return create_response(status=422, message=msg)
         logger.info(msg)
         return create_response(status=422, message=msg)
     pair_partner = None
@@ -292,6 +351,7 @@ def create_mentor_profile():
 
     firebase_uid = firebase_user.uid
     data["firebase_uid"] = firebase_uid
+    new_account.firebase_uid = firebase_uid
     new_account.save()
     if account_type == Account.MENTEE:
         mentee_partenr_id = data.get("organization")
@@ -522,6 +582,7 @@ def edit_mentor(id):
             not authorized
             and int(login_user_role) != Account.ADMIN
             and int(login_user_role) != Account.SUPPORT
+            and int(login_user_role) != Account.HUB
         ):
             return response
 
@@ -531,6 +592,8 @@ def edit_mentor(id):
             account = MentorProfile.objects.get(id=id)
         elif account_type == Account.PARTNER:
             account = PartnerProfile.objects.get(id=id)
+        elif account_type == Account.HUB:
+            account = Hub.objects.get(id=id)
         else:
             msg = "Level param doesn't match existing account types"
             return create_response(status=422, message=msg)
@@ -574,6 +637,7 @@ def uploadImage(id):
             not authorized
             and int(login_user_role) != Account.ADMIN
             and int(login_user_role) != Account.SUPPORT
+            and int(login_user_role) != Account.HUB
         ):
             return response
 
@@ -583,6 +647,8 @@ def uploadImage(id):
             account = MentorProfile.objects.get(id=id)
         elif account_type == Account.PARTNER:
             account = PartnerProfile.objects.get(id=id)
+        elif account_type == Account.HUB:
+            account = Hub.objects.get(id=id)
         else:
             msg = "Level param doesn't match existing account types"
             return create_response(status=422, message=msg)

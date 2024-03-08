@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { fetchPartners } from "../../utils/api";
 import {
   Input,
-  Checkbox,
   Modal,
   Result,
   Spin,
@@ -14,13 +13,14 @@ import {
   Button,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import MenteeButton from "../MenteeButton";
 import "../css/Gallery.scss";
 import { useAuth } from "../../utils/hooks/useAuth";
 import PartnerCard from "../PartnerCard";
-import { getRegions, getSDGs } from "utils/consts";
+import { ACCOUNT_TYPE, getRegions, getSDGs } from "utils/consts";
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
+import { useSelector } from "react-redux";
+import { getRole } from "utils/auth.service";
 
 const { Title } = Typography;
 
@@ -37,18 +37,30 @@ function PartnerGallery(props) {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [query2, setQuery2] = useState();
   const [sdgs, setSdgs] = useState([]);
+  const { user } = useSelector((state) => state.user);
+  const role = getRole();
 
   useEffect(() => {
-    async function getPartners() {
-      const Partner_data = await fetchPartners();
+    async function getPartners(hub_user_id) {
+      const Partner_data = await fetchPartners(undefined, hub_user_id);
       if (Partner_data) {
         setPartners(Partner_data);
       }
       setPageLoaded(true);
     }
 
-    getPartners();
-  }, []);
+    var hub_user_id = null;
+    if (role == ACCOUNT_TYPE.HUB && user) {
+      if (user.hub_id) {
+        hub_user_id = user.hub_id;
+      } else {
+        hub_user_id = user._id.$oid;
+      }
+    }
+    if (user) {
+      getPartners(hub_user_id);
+    }
+  }, [user]);
 
   const getFilterdPartners = () =>
     partners.filter((partner) => {

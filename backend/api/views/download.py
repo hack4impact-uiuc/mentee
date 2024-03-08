@@ -9,6 +9,7 @@ from api.models import (
     MenteeProfile,
     NewMentorApplication,
     MenteeApplication,
+    Hub,
 )
 from flask import send_file, Blueprint, request
 from api.utils.require_auth import admin_only
@@ -81,6 +82,8 @@ def download_appointments():
 def download_accounts_info():
     data = request.args
     account_type = int(data.get("account_type", 0))
+    hub_user_id = data.get("hub_user_id")
+
     accounts = None
 
     try:
@@ -97,7 +100,23 @@ def download_accounts_info():
             for partner_item in partner_data:
                 partner_object[str(partner_item.id)] = partner_item.organization
         elif account_type == Account.PARTNER:
-            accounts = PartnerProfile.objects(firebase_uid__nin=admin_ids)
+            if hub_user_id is not None:
+                accounts = PartnerProfile.objects.filter(
+                    firebase_uid__nin=admin_ids, hub_id=hub_user_id
+                )
+            else:
+                accounts = PartnerProfile.objects(firebase_uid__nin=admin_ids)
+
+            Hub_users = Hub.objects()
+            Hub_user_names_object = {}
+            for hub_user in Hub_users:
+                Hub_user_names_object[str(hub_user.id)] = hub_user.name
+            temp = []
+            for account in accounts:
+                if account.hub_id is not None:
+                    account.hub_user_name = Hub_user_names_object[str(account.hub_id)]
+                temp.append(account)
+            accounts = temp
 
     except:
         msg = "Failed to get accounts"
@@ -321,6 +340,7 @@ def download_partner_accounts(accounts):
                 ",".join(acct.regions),
                 acct.intro,
                 acct.website,
+                acct.hub_user_name,
                 acct.linkedin,
                 acct.sdgs,
                 acct.topics,
@@ -341,6 +361,7 @@ def download_partner_accounts(accounts):
         "Regions Work In",
         "Brief Introduction",
         "Website",
+        "Hub",
         "LinkedIn",
         "SDGS",
         "Project Topics",
