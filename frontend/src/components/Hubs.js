@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import {
   deleteAccountById,
   fetchAccountById,
@@ -16,6 +16,7 @@ import {
   EyeTwoTone,
   UploadOutlined,
   UserOutlined,
+  CopyOutlined,
 } from "@ant-design/icons";
 
 import "./css/Training.scss";
@@ -37,6 +38,9 @@ export const Hubs = () => {
   const [alreadyInFirebase, setAlreadyInFirebase] = useState(false);
   const [image, setImage] = useState(null);
   const [changedImage, setChangedImage] = useState(false);
+  const [inviteURL, setInviteURL] = useState("");
+  const inviteURLRef = useRef(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const showModal = async (_id, isNew) => {
     if (isNew === false) {
@@ -46,8 +50,14 @@ export const Hubs = () => {
         form.setFieldValue("name", record.name);
         form.setFieldValue("email", record.email);
         form.setFieldValue("url", record.url);
+        form.setFieldValue("invite_key", record.invite_key);
         if (record.image) {
           setImage(record.image);
+        }
+        if (record.url && record.invite_key) {
+          setInviteURL(
+            window.location.host + "/" + record.url + "/" + record.invite_key
+          );
         }
       }
       setSelectedID(_id.$oid);
@@ -56,6 +66,7 @@ export const Hubs = () => {
       setSelectedID("");
       form.resetFields();
       setImage(null);
+      setInviteURL("");
     }
   };
 
@@ -65,6 +76,7 @@ export const Hubs = () => {
     setSelectedID("");
     form.resetFields();
     setImage(null);
+    setInviteURL("");
   };
 
   const handleValuesChange = () => {
@@ -123,6 +135,31 @@ export const Hubs = () => {
       ACCOUNT_TYPE.HUB
     );
     setAlreadyInFirebase(inFirebase);
+  };
+
+  const generateLink = async () => {
+    const charset =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let key = "";
+
+    for (let i = 0; i < 20; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      key += charset[randomIndex];
+    }
+    form.setFieldValue("invite_key", key);
+    var hub_url = form.getFieldValue("url");
+    if (hub_url) {
+      setInviteURL(window.location.host + "/" + hub_url + "/" + key);
+    }
+    setValuesChanged(true);
+  };
+
+  const copyInviteLink = () => {
+    if (inviteURL) {
+      inviteURLRef.current.select();
+      document.execCommand("copy");
+      messageApi.success("Copied");
+    }
   };
 
   const HubForm = () => (
@@ -211,6 +248,40 @@ export const Hubs = () => {
       >
         <Input addonBefore="URL" />
       </Form.Item>
+      <p>
+        ※Please only enter the name of the hub to be used in the URL and not the
+        full url
+      </p>
+      <Button
+        className={css`
+          margin-top: 0px;
+          margin-bottom: 5px;
+        `}
+        type="primary"
+        onClick={() => {
+          generateLink();
+        }}
+      >
+        {"Generate Key"}
+      </Button>
+      <Form.Item name="invite_key" style={{ display: "none" }}>
+        <Input addonBefore="Invite Key" readOnly />
+      </Form.Item>
+      <div style={{ display: "flex", marginBottom: "20px" }}>
+        <Input
+          style={{}}
+          ref={inviteURLRef}
+          addonBefore="Invite URL"
+          readOnly
+          value={inviteURL}
+        />
+        <div
+          style={{ cursor: "pointer", paddingTop: "6px", marginLeft: "10px" }}
+          onClick={() => copyInviteLink()}
+        >
+          <CopyOutlined />
+        </div>
+      </div>
       <ImgCrop
         rotate
         fillColor={"transparent"}
@@ -269,10 +340,19 @@ export const Hubs = () => {
       render: (email) => <span>{email}</span>,
     },
     {
-      title: "URL",
+      title: "Hub URL",
       dataIndex: "url",
       key: "url",
       render: (url) => <span>{url}</span>,
+    },
+    {
+      title: "Invite URL",
+      key: "invite_url",
+      render: (record) => {
+        if (record.invite_key) {
+          return <span>{"/" + record.url + "/" + record.invite_key}</span>;
+        }
+      },
     },
     {
       title: "Logo",
@@ -364,6 +444,7 @@ export const Hubs = () => {
   }, [reload]);
   return (
     <div className="trains">
+      {contextHolder}
       <div className="rolesContainer">
         <div
           className={css`
