@@ -432,6 +432,7 @@
     "deleteEvent": "حذف الحدث",
     "succuessDelete" : "لقد قمت بحذف حدث بنجاح",
     "searchByRole": "البحث حسب دور المستخدم",
+    "searchByHub": "البحث حسب مستخدم المحور",
     "errorTimeSetting": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
     "errorURL": "عنوان URL غير صحيح",
     "viewEvent": "عرض المناسبة",
@@ -439,7 +440,9 @@
     "edit":"يحرر",
     "delete":"يمسح",
     "upcoming":"القادمة",
-    "past":"ماضي"
+    "past":"ماضي",
+    "attatchment":"مرفق",
+    "period":"فترة"
   },
   "mentorAppointmentPage": {
     "addAppointment": "أضف موعد",
