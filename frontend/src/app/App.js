@@ -48,6 +48,7 @@ import { useSelector } from "react-redux";
 import { ACCOUNT_TYPE } from "utils/consts";
 import { fetchAccounts } from "utils/api";
 import CreateMeetingLink from "components/CreateMeetingLink";
+import MeetingPanel from 'components/MeetingPanel';
 
 const { Content } = Layout;
 
@@ -567,6 +568,7 @@ function App() {
                 <CreateMeetingLink />  
               </PrivateRoute>
             </Content>
+            <MeetingPanel />
           </Layout>
         </Router>
       </ConfigProvider>
