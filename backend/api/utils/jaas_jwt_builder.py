@@ -1,10 +1,9 @@
 import time, uuid
 from authlib.jose import jwt
 
-
 class JaaSJwtBuilder:
     """
-    The JaaSJwtBuilder class helps with the generation of the JaaS JWT.
+        The JaaSJwtBuilder class helps with the generation of the JaaS JWT.
     """
 
     EXP_TIME_DELAY_SEC = 7200
@@ -14,24 +13,22 @@ class JaaSJwtBuilder:
     # Used as a delay for the nbf claim value.
 
     def __init__(self) -> None:
-        self.header = {"alg": "RS256"}
+        self.header = { 'alg' : 'RS256' }
         self.userClaims = {}
         self.featureClaims = {}
         self.payloadClaims = {}
 
     def withDefaults(self):
         """Returns the JaaSJwtBuilder with default valued claims."""
-        return (
-            self.withExpTime(int(time.time() + JaaSJwtBuilder.EXP_TIME_DELAY_SEC))
-            .withNbfTime(int(time.time() - JaaSJwtBuilder.NBF_TIME_DELAY_SEC))
-            .withLiveStreamingEnabled(True)
-            .withRecordingEnabled(True)
-            .withOutboundCallEnabled(True)
-            .withTranscriptionEnabled(True)
-            .withModerator(True)
-            .withRoomName("*")
-            .withUserId(str(uuid.uuid4()))
-        )
+        return self.withExpTime(int(time.time() + JaaSJwtBuilder.EXP_TIME_DELAY_SEC)) \
+            .withNbfTime(int(time.time() - JaaSJwtBuilder.NBF_TIME_DELAY_SEC)) \
+                .withLiveStreamingEnabled(True) \
+                    .withRecordingEnabled(True) \
+                        .withOutboundCallEnabled(True) \
+                            .withTranscriptionEnabled(True) \
+                                .withModerator(True) \
+                                    .withRoomName('*') \
+                                        .withUserId(str(uuid.uuid4()))
 
     def withApiKey(self, apiKey):
         """
@@ -39,7 +36,7 @@ class JaaSJwtBuilder:
 
         :param apiKey A string as the API Key https://jaas.8x8.vc/#/apikeys
         """
-        self.header["kid"] = apiKey
+        self.header['kid'] = apiKey
         return self
 
     def withUserAvatar(self, avatarUrl):
@@ -48,7 +45,7 @@ class JaaSJwtBuilder:
 
         :param avatarUrl A string representing the url to get the user avatar.
         """
-        self.userClaims["avatar"] = avatarUrl
+        self.userClaims['avatar'] = avatarUrl
         return self
 
     def withModerator(self, isModerator):
@@ -57,7 +54,7 @@ class JaaSJwtBuilder:
 
         :param isModerator A boolean if set to True, user is moderator and False otherwise.
         """
-        self.userClaims["moderator"] = "true" if isModerator == True else "false"
+        self.userClaims['moderator'] = 'true' if isModerator == True else 'false'
         return self
 
     def withUserName(self, userName):
@@ -66,7 +63,7 @@ class JaaSJwtBuilder:
 
         :param userName A string representing the user's name.
         """
-        self.userClaims["name"] = userName
+        self.userClaims['name'] = userName
         return self
 
     def withUserEmail(self, userEmail):
@@ -75,7 +72,7 @@ class JaaSJwtBuilder:
 
         :param userEmail A string representing the user's email address.
         """
-        self.userClaims["email"] = userEmail
+        self.userClaims['email'] = userEmail
         return self
 
     def withLiveStreamingEnabled(self, isEnabled):
@@ -84,7 +81,7 @@ class JaaSJwtBuilder:
 
         :param isEnabled A boolean if set to True, live streaming is enabled and False otherwise.
         """
-        self.featureClaims["livestreaming"] = "true" if isEnabled == True else "false"
+        self.featureClaims['livestreaming'] = 'true' if isEnabled == True else 'false'
         return self
 
     def withRecordingEnabled(self, isEnabled):
@@ -93,7 +90,7 @@ class JaaSJwtBuilder:
 
         :param isEnabled A boolean if set to True, recording is enabled and False otherwise.
         """
-        self.featureClaims["recording"] = "true" if isEnabled == True else "false"
+        self.featureClaims['recording'] = 'true' if isEnabled == True else 'false'
         return self
 
     def withTranscriptionEnabled(self, isEnabled):
@@ -102,7 +99,7 @@ class JaaSJwtBuilder:
 
         :param isEnabled A boolean if set to True, transcription is enabled and False otherwise.
         """
-        self.featureClaims["transcription"] = "true" if isEnabled == True else "false"
+        self.featureClaims['transcription'] = 'true' if isEnabled == True else 'false'
         return self
 
     def withOutboundCallEnabled(self, isEnabled):
@@ -111,7 +108,7 @@ class JaaSJwtBuilder:
 
         :param isEnabled A boolean if set to True, outbound calls are enabled and False otherwise.
         """
-        self.featureClaims["outbound-call"] = "true" if isEnabled == True else "false"
+        self.featureClaims['outbound-call'] = 'true' if isEnabled == True else 'false'
         return self
 
     def withExpTime(self, expTime):
@@ -120,7 +117,7 @@ class JaaSJwtBuilder:
 
         :param expTime Unix time in seconds since epochs plus a delay. Expiration time of the JWT.
         """
-        self.payloadClaims["exp"] = expTime
+        self.payloadClaims['exp'] = expTime
         return self
 
     def withNbfTime(self, nbfTime):
@@ -129,7 +126,7 @@ class JaaSJwtBuilder:
 
         :param nbfTime Unix time in seconds since epochs.
         """
-        self.payloadClaims["nbfTime"] = nbfTime
+        self.payloadClaims['nbfTime'] = nbfTime
         return self
 
     def withRoomName(self, roomName):
@@ -138,7 +135,7 @@ class JaaSJwtBuilder:
 
         :param roomName A string representing the room to join.
         """
-        self.payloadClaims["room"] = roomName
+        self.payloadClaims['room'] = roomName
         return self
 
     def withAppID(self, AppId):
@@ -147,7 +144,7 @@ class JaaSJwtBuilder:
 
         :param AppId A string representing the unique AppID (previously tenant).
         """
-        self.payloadClaims["sub"] = AppId
+        self.payloadClaims['sub'] = AppId
         return self
 
     def withUserId(self, userId):
@@ -156,7 +153,7 @@ class JaaSJwtBuilder:
 
         :param A string representing the user, should be unique from your side.
         """
-        self.userClaims["id"] = userId
+        self.userClaims['id'] = userId
         return self
 
     def signWith(self, key):
@@ -165,8 +162,8 @@ class JaaSJwtBuilder:
 
         :param key A string representing the private key in PEM format.
         """
-        context = {"user": self.userClaims, "features": self.featureClaims}
-        self.payloadClaims["context"] = context
-        self.payloadClaims["iss"] = "chat"
-        self.payloadClaims["aud"] = "jitsi"
+        context = { 'user': self.userClaims, 'features': self.featureClaims }
+        self.payloadClaims['context'] = context
+        self.payloadClaims['iss'] = 'chat'
+        self.payloadClaims['aud'] = 'jitsi'
         return jwt.encode(self.header, self.payloadClaims, key)
