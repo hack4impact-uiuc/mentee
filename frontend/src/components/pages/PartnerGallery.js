@@ -87,9 +87,8 @@ function PartnerGallery(props) {
       const matchSdgs =
         sdgs.length === 0 || sdgs.some((s) => partner.sdgs.indexOf(s) >= 0);
       const matchHub =
-        !(role == ACCOUNT_TYPE.SUPPORT) ||
-        !searchHub ||
-        (partner.hub_id && partner.hub_id == searchHub);
+        !searchHub || (partner.hub_id && partner.hub_id == searchHub);
+
       const matchestopics =
         !query2 ||
         (partner.topics &&
@@ -158,22 +157,18 @@ function PartnerGallery(props) {
         onChange={(selected) => setSdgs(selected)}
         maxTagCount="responsive"
       />
-      {role == ACCOUNT_TYPE.SUPPORT && (
-        <>
-          <Title level={4}>HUB</Title>
-          <Select
-            className={css`
-              width: 100%;
-            `}
-            placeholder={"HUB"}
-            allowClear
-            // mode="multiple"
-            options={hubOptions}
-            onChange={(selected) => setSearchHub(selected)}
-            maxTagCount="responsive"
-          />
-        </>
-      )}
+      <Title level={4}>HUB</Title>
+      <Select
+        className={css`
+          width: 100%;
+        `}
+        placeholder={"HUB"}
+        allowClear
+        // mode="multiple"
+        options={hubOptions}
+        onChange={(selected) => setSearchHub(selected)}
+        maxTagCount="responsive"
+      />
     </>
   );
 
