@@ -186,8 +186,6 @@ def get_accounts(account_type):
         accounts = Support.objects()
     elif account_type == Account.HUB:
         accounts = Hub.objects()
-    elif account_type == Account.ADMIN:
-        accounts = Admin.objects()
     else:
         msg = "Given parameter does not match the current exiting account_types of accounts"
         return create_response(status=422, message=msg)
