@@ -186,6 +186,8 @@ def get_accounts(account_type):
         accounts = Support.objects()
     elif account_type == Account.HUB:
         accounts = Hub.objects()
+    elif account_type == Account.ADMIN:
+        accounts = Admin.objects()
     else:
         msg = "Given parameter does not match the current exiting account_types of accounts"
         return create_response(status=422, message=msg)
@@ -679,6 +681,9 @@ def uploadImage(id):
                 account = PartnerProfile.objects.get(id=id)
             elif account_type == Account.HUB:
                 account = Hub.objects.get(id=id)
+            elif account_type == Account.ADMIN:
+                account = Admin.objects.get(id=id)
+
             else:
                 msg = "Level param doesn't match existing account types"
                 return create_response(status=422, message=msg)
