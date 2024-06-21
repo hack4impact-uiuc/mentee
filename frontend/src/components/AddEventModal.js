@@ -148,8 +148,6 @@ function AddEventModal({
     } else {
       notification["error"]({
         message: t("events.errorAdd"),
-        duration: 0,
-        key: "errorAdd",
       });
     }
   }
@@ -161,8 +159,6 @@ function AddEventModal({
         if (values.url && !validateUrl(values.url)) {
           notification["error"]({
             message: t("events.errorURL"),
-            duration: 0,
-            key: "errorURL",
           });
           return;
         }
@@ -182,8 +178,6 @@ function AddEventModal({
         } else {
           notification["error"]({
             message: t("events.errorTimeSetting"),
-            duration: 0,
-            key: "errorTimeSetting",
           });
           return;
         }

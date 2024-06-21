@@ -121,8 +121,6 @@ function AddAppointmentModal({
     } else {
       notification["error"]({
         message: t("mentorAppointmentPage.errorBooking"),
-        duration: 0,
-        key: "errorBooking",
       });
     }
   }
