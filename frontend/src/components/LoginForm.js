@@ -125,12 +125,10 @@ function LoginForm({ role, defaultEmail, location }) {
       );
       let direct_path = localStorage.getItem("direct_path");
       if (direct_path) {
-        setTimeout(() => {
-          history.push(direct_path);
-        }, 1000);
+        history.push(direct_path);
         setTimeout(() => {
           localStorage.removeItem("direct_path");
-        }, 2000);
+        }, 1000);
       } else {
         if (role == ACCOUNT_TYPE.HUB) {
           history.push(location.pathname + REDIRECTS[role]);
