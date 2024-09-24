@@ -1,6 +1,6 @@
 from api.models.Hub import Hub
 from api.models.PartnerProfile import PartnerProfile
-from api.models import Education, Video, MentorProfile, MenteeProfile
+from api.models import Education, Video, MentorProfile, MenteeProfile, Admin
 from api.utils.constants import Account
 
 
@@ -132,12 +132,17 @@ def edit_profile(data: dict = {}, profile: object = None):
     """
     if not data or not profile:
         return False
+    if isinstance(profile, Admin):
+        profile.roomName = data.get("roomName", profile.roomName)
+        return True
     if isinstance(profile, Hub):
         profile.invite_key = data.get("invite_key", profile.invite_key)
         profile.name = data.get("name", profile.name)
         profile.preferred_language = data.get(
             "preferred_language", profile.preferred_language
         )
+        profile.roomName = data.get("roomName", profile.roomName)
+
         return True
     if isinstance(profile, PartnerProfile):
         # Edit fields or keep original data if no added data
@@ -166,6 +171,7 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.preferred_language = data.get(
             "preferred_language", profile.preferred_language
         )
+        profile.roomName = data.get("roomName", profile.roomName)
         return True
 
     if isinstance(profile, MentorProfile):
@@ -287,6 +293,7 @@ def edit_profile(data: dict = {}, profile: object = None):
     profile.preferred_language = data.get(
         "preferred_language", profile.preferred_language
     )
+    profile.roomName = data.get("roomName", profile.roomName)
 
     # Create education object
     if "education" in data:
