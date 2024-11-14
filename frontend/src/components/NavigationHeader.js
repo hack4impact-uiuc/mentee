@@ -19,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import { fetchUser } from "features/userSlice";
 import { uploadAccountImage } from "utils/api";
+import Profile from "./pages/Profile";
 
 const { Header } = Layout;
 
@@ -155,6 +156,15 @@ function NavigationHeader() {
       style={{ background: colorBgContainer, display: "flex" }}
       theme="light"
     >
+      {user &&
+        !user.timezone &&
+        (role === ACCOUNT_TYPE.MENTEE ||
+          role === ACCOUNT_TYPE.MENTOR ||
+          role === ACCOUNT_TYPE.PARTNER) && (
+          <div style={{ color: "red" }}>
+            Please set time zone in <a href="/profile">profile page</a>
+          </div>
+        )}
       {isMobile && <MenuFoldOutlined onClick={() => dispatch(collapse())} />}
       <div style={{ flex: "1 1 0%" }} />
       {supportUserID && user && (

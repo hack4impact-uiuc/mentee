@@ -33,6 +33,7 @@ def new_profile(data: dict = {}, profile_type: int = -1):
             email_notifications=data.get("email_notifications", True),
             text_notifications=data.get("text_notifications", False),
             hub_id=data.get("hub_id"),
+            timezone=data.get("timezone"),
         )
         new_profile.website = data.get("website")
         new_profile.linkedin = data.get("linkedin")
@@ -52,6 +53,7 @@ def new_profile(data: dict = {}, profile_type: int = -1):
             email_notifications=data.get("email_notifications", True),
             text_notifications=data.get("text_notifications", False),
             taking_appointments=data.get("taking_appointments", False),
+            timezone=data.get("timezone"),
         )
 
         new_profile.website = data.get("website")
@@ -86,6 +88,7 @@ def new_profile(data: dict = {}, profile_type: int = -1):
             education_level=data.get("education_level", "elementary"),
             immigrant_status=data.get("immigrant_status"),
             workstate=data.get("workstate"),
+            timezone=data.get("timezone"),
         )
 
         if "video" in data and data.get("video") is not None:
@@ -173,6 +176,7 @@ def edit_profile(data: dict = {}, profile: object = None):
             "preferred_language", profile.preferred_language
         )
         profile.roomName = data.get("roomName", profile.roomName)
+        profile.timezone = data.get("timezone", profile.timezone)
         return True
 
     if isinstance(profile, MentorProfile):
@@ -194,6 +198,7 @@ def edit_profile(data: dict = {}, profile: object = None):
         )
         profile.linkedin = data.get("linkedin", profile.linkedin)
         profile.website = data.get("website", profile.website)
+        profile.timezone = data.get("timezone", profile.timezone)
 
         if ex_organization != profile.organization:
             # for old data---------------------------------
@@ -267,6 +272,7 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.is_private = data.get("is_private", profile.is_private)
         profile.specializations = data.get("specializations", profile.specializations)
         profile.workstate = data.get("workstate", profile.workstate)
+        profile.timezone = data.get("timezone", profile.timezone)
         profile.immigrant_status = data.get(
             "immigrant_status", profile.immigrant_status
         )
