@@ -23,6 +23,7 @@ import GroupMessages from "components/pages/GroupMessages";
 import ApplicationForm from "components/pages/ApplicationForm";
 import SocketComponent from "components/SocketComponent";
 import AdminTraining from "components/pages/AdminTraining";
+import AdminSign from "components/pages/AdminSign";
 import TrainingData from "components/pages/TrainingData";
 import EventDetail from "components/pages/EventDetail";
 import { Languages } from "components/Languages";
@@ -505,6 +506,21 @@ function App() {
               <PrivateRoute path="/admin-training">
                 {role == ACCOUNT_TYPE.ADMIN ? (
                   <AdminTraining />
+                ) : (
+                  <>
+                    {cur_time - startPathTime > 100 && (
+                      <Result
+                        status="403"
+                        title="403"
+                        subTitle={t("gallery.unauthorizedAccess")}
+                      />
+                    )}
+                  </>
+                )}
+              </PrivateRoute>
+              <PrivateRoute path="/admin-sign">
+                {role == ACCOUNT_TYPE.ADMIN ? (
+                  <AdminSign />
                 ) : (
                   <>
                     {cur_time - startPathTime > 100 && (
