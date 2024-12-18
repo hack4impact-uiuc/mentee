@@ -5,6 +5,7 @@ import { css } from "@emotion/css";
 import LanguageDropdown from "components/LanguageDropdown";
 // import { ReactComponent as Logo } from "resources/mentee.svg";
 import BigLogoImage from "resources/Mentee_logo_letter.png";
+import N50Logo from "resources/N50_logo.png";
 // import { ReactComponent as SmallLogo } from "resources/menteeSmall.svg";
 import SmallLogoImage from "resources/Mentee_logo_small.png";
 import { useMediaQuery } from "react-responsive";
@@ -37,6 +38,21 @@ function HomeLayout({ children, ignoreHomeLayout, allHubData, location }) {
     "/application-training",
     "/build-profile",
     "/digital-sign",
+    "/n50/application-form",
+    "/n50/application-training",
+    "/n50/build-profile",
+  ];
+
+  const N50Path = [
+    "/n50",
+    "/n50/login",
+    "/n50/mentor/login",
+    "/n50/mentee/login",
+    "/n50/partner/login",
+    "/n50/apply",
+    "/n50/application-form",
+    "/n50/application-training",
+    "/n50/build-profile",
   ];
 
   const homeLayoutPaths = [
@@ -112,18 +128,31 @@ function HomeLayout({ children, ignoreHomeLayout, allHubData, location }) {
           `}
           onClick={() => history.push("/")}
         /> */}
-        <img
-          src={BigLogoImage}
-          alt={""}
-          className={css`
-            position: absolute;
-            top: 1em;
-            left: 0.5em;
-            height: 50px;
-            cursor: pointer;
-          `}
-          onClick={() => history.push("/")}
-        />
+        {(isTablet && N50Path.includes(location.pathname)) ? (
+          <img
+            src={N50Logo}
+            alt={""}
+            className={css`
+              position: absolute;
+              top: 0em;
+              left: 0.5em;
+              height: 75px;
+            `}
+          />
+        ) : (
+          <img
+            src={BigLogoImage}
+            alt={""}
+            className={css`
+              position: absolute;
+              top: 1em;
+              left: 0.5em;
+              height: 50px;
+              cursor: pointer;
+            `}
+            onClick={() => history.push("/")}
+          />
+        )}
         <Space
           className={css`
             position: absolute;
@@ -292,6 +321,70 @@ function HomeLayout({ children, ignoreHomeLayout, allHubData, location }) {
                       `}
                     />
                   </div>
+                )}
+                {N50Path.includes(location.pathname) && (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        paddingTop: "35%",
+                      }}
+                    >
+                      <img
+                        src={N50Logo}
+                        alt={""}
+                        className={css`
+                          width: 100%;
+                          max-width: 300px;
+                          fill-opacity: 0.7;
+                        `}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "90%",
+                        textAlign: "right",
+                        marginBottom: "0px",
+                        position: "absolute",
+                        bottom: "30px",
+                        paddingRight: "20px",
+                      }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "end" }}>
+                        <div
+                          style={{
+                            fontSize: "20px",
+                            fontStyle: "italic",
+                            paddingTop: "15px",
+                          }}
+                        >
+                          {t("common.powered_by")}
+                        </div>
+                        <div>
+                          {/* <Logo
+                          className={css`
+                            height: 80px;
+                            width: 160px;
+                            cursor: pointer;
+                            margin-left: 10px;
+                          `}
+                          onClick={() => history.push("/")}
+                        /> */}
+                          <img
+                            src={BigLogoImage}
+                            alt={""}
+                            className={css`
+                              width: 50px;
+                              cursor: pointer;
+                              margin-left: 10px;
+                            `}
+                            onClick={() => history.push("/")}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
               </>
             )}

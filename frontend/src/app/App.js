@@ -63,7 +63,7 @@ function App() {
   const path = window.location.href;
   const [role, setRole] = useState(getRole());
   const [allHubData, setAllHubData] = useState({});
-
+  const [n50Flag, setN50flag] = useState(false);
   // TODO: Remove this when we have a proper solution for this
   // some kind of cached method of updating on login status change
   // useEffect(() => {
@@ -91,9 +91,23 @@ function App() {
 
   useEffect(() => {
     setStartPathTime(new Date().getTime());
+    setTimeout(() => {
+      let n50_flag = localStorage.getItem("n50_user");
+      if (n50_flag) {
+        setN50flag(true);
+      } else {
+        setN50flag(false);
+      }
+    }, 500);
     if (path.indexOf("/event") > 0) {
       if (!role) {
         let direct_path = "event" + path.split("/event")[1];
+        localStorage.setItem("direct_path", direct_path);
+      }
+    }
+    if (path.indexOf("/new_training") > 0) {
+      if (!role) {
+        let direct_path = "new_training" + path.split("/new_training")[1];
         localStorage.setItem("direct_path", direct_path);
       }
     }
@@ -128,16 +142,31 @@ function App() {
                 <PublicRoute exact path="/">
                   <Home />
                 </PublicRoute>
+                <PublicRoute exact path="/n50">
+                  <Home />
+                </PublicRoute>
                 <PublicRoute path="/login">
+                  <Login />
+                </PublicRoute>
+                <PublicRoute path="/n50/login">
                   <Login />
                 </PublicRoute>
                 <PublicRoute path="/mentor/login">
                   <Login />
                 </PublicRoute>
+                <PublicRoute path="/n50/mentor/login">
+                  <Login />
+                </PublicRoute>
                 <PublicRoute path="/mentee/login">
                   <Login />
                 </PublicRoute>
+                <PublicRoute path="/n50/mentee/login">
+                  <Login />
+                </PublicRoute>
                 <PublicRoute path="/partner/login">
+                  <Login />
+                </PublicRoute>
+                <PublicRoute path="/n50/partner/login">
                   <Login />
                 </PublicRoute>
                 <PublicRoute path="/readonly/login">
@@ -152,13 +181,25 @@ function App() {
                 <PublicRoute path="/apply">
                   <Apply />
                 </PublicRoute>
+                <PublicRoute path="/n50/apply">
+                  <Apply />
+                </PublicRoute>
                 <PublicRoute path="/application-form">
+                  <ApplicationForm />
+                </PublicRoute>
+                <PublicRoute path="/n50/application-form">
                   <ApplicationForm />
                 </PublicRoute>
                 <PublicRoute path="/application-training">
                   <Training />
                 </PublicRoute>
+                <PublicRoute path="/n50/application-training">
+                  <Training />
+                </PublicRoute>
                 <PublicRoute path="/build-profile">
+                  <BuildProfile />
+                </PublicRoute>
+                <PublicRoute path="/n50/build-profile">
                   <BuildProfile />
                 </PublicRoute>
                 {Object.keys(allHubData).map((hub_url) => {
@@ -598,6 +639,9 @@ function App() {
               <PrivateRoute path="/messages/:receiverId">
                 <Messages />
               </PrivateRoute>
+              <PrivateRoute path={"/partner_group_messages/:receiverId"}>
+                <GroupMessages />
+              </PrivateRoute>
               <PrivateRoute path="/events">
                 <Events />
               </PrivateRoute>
@@ -608,6 +652,7 @@ function App() {
                 <CreateMeetingLink />
               </PrivateRoute>
               {role == ACCOUNT_TYPE.HUB && <HubFooter />}
+              {n50Flag && <HubFooter />}
             </Content>
             <MeetingPanel />
           </Layout>

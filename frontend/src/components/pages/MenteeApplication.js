@@ -4,9 +4,16 @@ import { Form, Input, Radio, Typography, Select, Button } from "antd";
 import { useTranslation } from "react-i18next";
 import { createApplication, fetchPartners, getAllcountries } from "utils/api";
 import "components/css/MentorApplicationPage.scss";
+import { N50_ID } from "utils/consts";
 
 const { Paragraph } = Typography;
-function MenteeApplication({ email, role, onSubmitSuccess, onSubmitFailure }) {
+function MenteeApplication({
+  email,
+  role,
+  n50_flag,
+  onSubmitSuccess,
+  onSubmitFailure,
+}) {
   const { t } = useTranslation();
   const options = useSelector((state) => state.options);
   const [loading, setLoading] = useState();
@@ -17,16 +24,27 @@ function MenteeApplication({ email, role, onSubmitSuccess, onSubmitFailure }) {
       const partenr_data = await fetchPartners(undefined, null);
       var temp_partner_options = [];
       partenr_data.map((item) => {
-        temp_partner_options.push({
-          value: item._id.$oid,
-          label: item.organization,
-        });
+        if (n50_flag) {
+          if (item._id.$oid === N50_ID) {
+            temp_partner_options.push({
+              value: item._id.$oid,
+              label: item.organization,
+            });
+          }
+        } else {
+          temp_partner_options.push({
+            value: item._id.$oid,
+            label: item.organization,
+          });
+        }
         return true;
       });
-      temp_partner_options.push({
-        value: null,
-        label: t("commonApplication.no-affiliation"),
-      });
+      if (!n50_flag) {
+        temp_partner_options.push({
+          value: null,
+          label: t("commonApplication.no-affiliation"),
+        });
+      }
       setPartnerOptions(temp_partner_options);
       setLoading(false);
     }
@@ -129,6 +147,9 @@ function MenteeApplication({ email, role, onSubmitSuccess, onSubmitFailure }) {
   ];
 
   const onFinish = async (values) => {
+    if (n50_flag) {
+      values.partner = N50_ID;
+    }
     setLoading(true);
     let immigrantStatus = values.immigrantStatus;
     let topics = values.topics;
@@ -183,7 +204,6 @@ function MenteeApplication({ email, role, onSubmitSuccess, onSubmitFailure }) {
 
     const res = await createApplication(data);
     setLoading(false);
-    console.log("res", res);
     if (res && res.status === 200) {
       onSubmitSuccess();
     } else {
@@ -519,6 +539,8 @@ function MenteeApplication({ email, role, onSubmitSuccess, onSubmitFailure }) {
             filterOption={(input, option) =>
               (option?.label.toLowerCase() ?? "").includes(input.toLowerCase())
             }
+            defaultValue={n50_flag ? N50_ID : null}
+            disabled={n50_flag}
             options={[...partnerOptions]}
           />
         </Form.Item>
