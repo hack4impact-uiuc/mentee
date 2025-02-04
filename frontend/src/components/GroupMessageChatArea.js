@@ -196,7 +196,6 @@ function GroupMessageChatArea(props) {
         });
       }, 0);
     }
-
   };
 
   const styles = {
