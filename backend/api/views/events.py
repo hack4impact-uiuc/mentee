@@ -31,12 +31,30 @@ event = Blueprint("event", __name__)  # initialize blueprint
 def get_events(role):
     lang = request.args.get("lang", "en-US")
     hub_user_id = request.args.get("hub_user_id", None)
+    partner_id = request.args.get("partner_id", None)
+    user_id = request.args.get("user_id", None)
     if int(role) == Account.ADMIN:
         events = Event.objects().order_by("-start_datetime")
     elif int(role) == Account.HUB:
         events = Event.objects.filter(
             role__in=[role], hub_id=str(hub_user_id)
         ).order_by("-start_datetime")
+        temp = []
+        if partner_id:
+            for event in events:
+                if (
+                    (event.partner_ids is None)
+                    or (len(event.partner_ids) == 0)
+                    or (partner_id in event.partner_ids)
+                ):
+                    temp.append(event)
+            if user_id:
+                print("usss", user_id)
+                for event in events:
+                    print("eeeee", event.user_id, str(event.user_id) == user_id)
+                    if str(event.user_id) == user_id:
+                        temp.append(event)
+            events = temp
     else:
         events = Event.objects(role__in=[role]).order_by("-start_datetime")
     result = []
@@ -81,7 +99,7 @@ def send_mail_for_event(
     recipients, role_name, title, eventdate, target_url, start_datetime, end_datetime
 ):
     for recipient in recipients:
-        if recipient.timezone:
+        if "timezone" in recipient and recipient.timezone:
             match = re.match(r"UTC([+-]\d{2}):(\d{2})", recipient.timezone)
             if match:
                 hours_offset = int(match.group(1))
@@ -153,6 +171,10 @@ def new_event():
         if "hub_id" in data:
             hub_id = data["hub_id"]
 
+        partner_ids = None
+        if "partner_ids" in data:
+            partner_ids = list(data["partner_ids"])
+
         if event_id == 0:
             event = Event(
                 user_id=user_id,
@@ -161,6 +183,7 @@ def new_event():
                 description=description,
                 descriptionTranslated=descriptionTranslated,
                 role=list(roles),
+                partner_ids=partner_ids,
                 start_datetime=start_datetime,
                 end_datetime=end_datetime,
                 url=url,
@@ -220,21 +243,35 @@ def new_event():
                 )
             if hub_id is not None:
                 role_name = "Hub"
-                partners = PartnerProfile.objects.filter(hub_id=hub_id).only(
-                    "email", "preferred_language"
-                )
+                if partner_ids:
+                    partners = PartnerProfile.objects.filter(id__in=partner_ids).only(
+                        "email", "preferred_language"
+                    )
+                else:
+                    partners = PartnerProfile.objects.filter(hub_id=hub_id).only(
+                        "email", "preferred_language"
+                    )
                 hub_users = Hub.objects(id=hub_id).only(
                     "email", "preferred_language", "url"
                 )
                 recipients = []
                 for hub_user in hub_users:
+                    role_name = hub_user.name
                     recipients.append(hub_user)
                     target_url = (
                         front_url + hub_user.url + "/event/" + str(new_event_id)
                     )
                 for partner_user in partners:
                     recipients.append(partner_user)
-                send_mail_for_event(recipients, role_name, title, eventdate, target_url)
+                send_mail_for_event(
+                    recipients,
+                    role_name,
+                    title,
+                    eventdate,
+                    target_url,
+                    start_datetime,
+                    end_datetime,
+                )
         else:
             event = Event.objects.get(id=event_id)
             event.user_id = user_id

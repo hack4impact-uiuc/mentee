@@ -5,7 +5,11 @@ import moment from "moment-timezone";
 import { SendOutlined } from "@ant-design/icons";
 import EmojiPicker from "emoji-picker-react";
 import { useAuth } from "utils/hooks/useAuth";
-import { sendNotifyUnreadMessage } from "utils/api";
+import {
+  sendNotifyUnreadMessage,
+  downloadBlob,
+  getLibraryFile,
+} from "utils/api";
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
 import { ACCOUNT_TYPE } from "utils/consts";
@@ -33,6 +37,13 @@ function GroupMessageChatArea(props) {
   const [showReplyEmojiPicker, setShowReplyEmojiPicker] = useState(false);
   const [shouldScroll, setShouldScroll] = useState(true);
   const [expandedMessages, setExpandedMessages] = useState({});
+  const [groupUsers, setGroupUsers] = useState([]);
+  const [showUserList, setShowUserList] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [activeInput, setActiveInput] = useState(null);
+  const [tagUsers, setTagUsers] = useState([]);
+
+  const textAreaRef = useRef(null);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current != null) {
@@ -92,6 +103,22 @@ function GroupMessageChatArea(props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (particiants) {
+      // Ensure each participant has a name property before filtering
+      const filteredUsers =
+        particiants
+          .filter((user) => user && user._id && user._id.$oid !== profileId)
+          .filter((user) => user.name) || // Only include users with a name property
+        [];
+      setGroupUsers(filteredUsers);
+    }
+  }, [particiants, profileId]);
+
+  useEffect(() => {
+    console.log("Participants:", particiants); // Debug log
+  }, [particiants]);
+
   const toggleExpand = (id) => {
     setExpandedMessages((prev) => ({
       ...prev,
@@ -141,15 +168,26 @@ function GroupMessageChatArea(props) {
     setShouldScroll(true);
 
     // Simple notification
-    if (particiants?.length > 0) {
-      setTimeout(() => {
-        particiants.forEach((user) => {
-          if (user._id.$oid !== profileId) {
-            sendNotifyUnreadMessage(user._id.$oid);
-          }
-        });
-      }, 0);
+    if (tagUsers.length == 0) {
+      if (particiants?.length > 0) {
+        setTimeout(() => {
+          particiants.forEach((user) => {
+            if (user._id.$oid !== profileId) {
+              sendNotifyUnreadMessage(user._id.$oid);
+            }
+          });
+        }, 0);
+      }
+    } else {
+      tagUsers.map((tag_id) => {
+        if (tag_id !== profileId) {
+          sendNotifyUnreadMessage(tag_id);
+        }
+        return false;
+      });
     }
+
+    setTagUsers([]);
   };
 
   const sendReplyMessage = (block_id) => {
@@ -159,6 +197,15 @@ function GroupMessageChatArea(props) {
       temp[block_id] = false;
       setReplyInputFlags(temp);
       setRefreshFlag(!refreshFlag);
+      setTagUsers([]);
+      if (tagUsers.length > 0) {
+        tagUsers.map((tag_id) => {
+          if (tag_id !== profileId) {
+            sendNotifyUnreadMessage(tag_id);
+          }
+          return false;
+        });
+      }
       return;
     }
 
@@ -224,7 +271,11 @@ function GroupMessageChatArea(props) {
       border-radius: 8px;
       padding: 10px;
       margin-bottom: 10px;
-      background-color:rgb(255, 255, 255); // Background color for the container
+      background-color: rgb(
+        255,
+        255,
+        255
+      ); // Background color for the container
     `,
     parentMessage: css`
       padding: 10px 15px;
@@ -237,7 +288,7 @@ function GroupMessageChatArea(props) {
       padding: 10px 10px;
       border-radius: 8px;
       margin-bottom: 4px;
-      background-color: #FFBB91; // Updated background color for title
+      background-color: #ffbb91; // Updated background color for title
       font-weight: bold;
       color: #000; // Example text color
     `,
@@ -284,8 +335,34 @@ function GroupMessageChatArea(props) {
     ];
   };
 
+  const handleDownload = async (id, file_name) => {
+    let response = await getLibraryFile(id);
+    downloadBlob(response, file_name);
+  };
+  const downloadFile = (message_body) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(message_body, "text/html");
+
+    // Get the <a> element
+    const link = doc.querySelector("a");
+    if (link) {
+      const altValue = link.getAttribute("alt"); // "Example Link"
+      const file_name = link.textContent; // "Click here"
+
+      if (altValue.includes("download_file_")) {
+        let file_id = altValue.replace("download_file_", "");
+        handleDownload(file_id, file_name);
+      }
+    }
+  };
+
   const HtmlContent = ({ content }) => {
-    return <div dangerouslySetInnerHTML={{ __html: content }} />;
+    return (
+      <div
+        onClick={() => downloadFile(content)}
+        dangerouslySetInnerHTML={{ __html: content }}
+      />
+    );
   };
 
   const onEmojiClick = (event, kind = "main") => {
@@ -296,6 +373,104 @@ function GroupMessageChatArea(props) {
     }
     setShowEmojiPicker(false); // Hide picker after selection
     setShowReplyEmojiPicker(false);
+  };
+
+  const handleInputChange = (e, type = "main") => {
+    const value = e.target.value;
+
+    if (type === "main") {
+      setMessageText(value);
+    } else {
+      setReplyMessageText(value);
+    }
+
+    // Check for @ symbol
+    if (value.endsWith("@")) {
+      console.log("@ detected, showing user list");
+      setActiveInput(type);
+      setShowUserList(true);
+      // Filter out users with undefined names and current user
+      setFilteredUsers(
+        particiants?.filter(
+          (user) =>
+            user &&
+            user._id &&
+            user._id.$oid !== profileId &&
+            (user.name || user.person_name) // Check for both name fields
+        ) || []
+      );
+    } else if (showUserList) {
+      const lastAtIndex = value.lastIndexOf("@");
+      if (lastAtIndex !== -1) {
+        const searchTerm = value.slice(lastAtIndex + 1).toLowerCase();
+        const filtered =
+          particiants?.filter(
+            (user) =>
+              user &&
+              user._id &&
+              user._id.$oid !== profileId &&
+              (user.name || user.person_name) && // Check for both name fields
+              (user.name?.toLowerCase().includes(searchTerm) ||
+                user.person_name?.toLowerCase().includes(searchTerm))
+          ) || [];
+        setFilteredUsers(filtered);
+      } else {
+        setShowUserList(false);
+      }
+    }
+  };
+
+  const handleUserSelect = (user, type) => {
+    // Get the appropriate name, fallback to person_name if name is not available
+    const userName = user.name || user.person_name;
+    let temp = tagUsers;
+    if (!temp.includes(user._id.$oid)) {
+      temp.push(user._id.$oid);
+    }
+    setTagUsers(temp);
+    if (!userName) return; // Don't proceed if no valid name is found
+
+    const currentText = type === "main" ? messageText : replyMessageText;
+    const lastAtIndex = currentText.lastIndexOf("@");
+    const newText = currentText.slice(0, lastAtIndex) + "@" + userName + " ";
+
+    if (type === "main") {
+      setMessageText(newText);
+    } else {
+      setReplyMessageText(newText);
+    }
+
+    setShowUserList(false);
+  };
+
+  const formatMessageText = (text) => {
+    if (!text) return text;
+
+    // First find all participants' names to match against
+    const participantNames =
+      particiants
+        ?.map((user) => ({
+          name: user.name || user.person_name,
+          id: user._id.$oid,
+        }))
+        .filter((user) => user.name) || [];
+
+    // Sort names by length (longest first) to handle cases where one name contains another
+    participantNames.sort((a, b) => b.name.length - a.name.length);
+
+    let formattedText = text;
+
+    // Replace each @mention with styled span
+    participantNames.forEach((participant) => {
+      const mentionText = `@${participant.name}`;
+      const regex = new RegExp(mentionText, "g");
+      formattedText = formattedText.replace(
+        regex,
+        `<span class="tagged-user">${mentionText}</span>`
+      );
+    });
+
+    return formattedText;
   };
 
   const renderMessages = (data, depth = 0) => {
@@ -341,67 +516,104 @@ function GroupMessageChatArea(props) {
                 </span>
                 <div className="convo" style={{ flex: 1, marginLeft: "10px" }}>
                   {block.title && (
-                    <div className={styles.title}>
-                      {block.title}
-                    </div>
+                    <div className={styles.title}>{block.title}</div>
                   )}
                   <div
                     className={css`
-                      ${styles.parentMessage} // Apply new parent message styles
+                      ${styles.parentMessage}// Apply new parent message styles
                     `}
                   >
-                    <HtmlContent content={linkify(block.body)} />
+                    <div
+                      onClick={() => downloadFile(block.body)}
+                      className="message-text"
+                      dangerouslySetInnerHTML={{
+                        __html: formatMessageText(block.body),
+                      }}
+                    />
                   </div>
-                  <span style={{ opacity: "40%", display: "block", marginTop: "12px"}}>
+                  <span
+                    style={{
+                      opacity: "40%",
+                      display: "block",
+                      marginTop: "12px",
+                    }}
+                  >
                     <NavLink
                       to={`/gallery/${
                         sender_user?.hub_user_id
                           ? ACCOUNT_TYPE.PARTNER
                           : ACCOUNT_TYPE.HUB
                       }/${block.sender_id.$oid}`}
-                      style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}
+                      style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                        fontWeight: "bold",
+                      }}
                     >
                       {sender_user?.name || sender_user?.organization}
                     </NavLink>
                   </span>
-                  <span style={{ opacity: "40%", display: "block", marginTop: "4px" }}>
+                  <span
+                    style={{
+                      opacity: "40%",
+                      display: "block",
+                      marginTop: "4px",
+                    }}
+                  >
                     {block.time
                       ? block.time
-                      : moment.utc(block.created_at.$date).local().format("LLL")}
+                      : moment
+                          .utc(block.created_at.$date)
+                          .local()
+                          .format("LLL")}
                   </span>
-                  <div style={{ display: "flex", alignItems: "center", marginTop: "4px" }}>
-                    <Button
-                      onClick={() => {
-                        setReplyInputFlags((prevFlags) => ({
-                          ...prevFlags,
-                          [block._id.$oid]: true,
-                        }));
-                        setReplyMessageText("");
-                      }}
-                      className="reply-button"
-                      type="link"
-                      style={{ padding: 0 }}
-                    >
-                      Reply
-                    </Button>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {profileId !== block.sender_id.$oid && (
+                      <Button
+                        onClick={() => {
+                          setReplyInputFlags((prevFlags) => ({
+                            ...prevFlags,
+                            [block._id.$oid]: true,
+                          }));
+                          setReplyMessageText("");
+                        }}
+                        className="reply-button"
+                        type="link"
+                        style={{ padding: 0 }}
+                      >
+                        Reply
+                      </Button>
+                    )}
                     {block.children && block.children.length > 0 && (
                       <Button
                         type="link"
                         onClick={() => toggleExpand(block._id.$oid)}
                         style={{ padding: 0, marginLeft: "10px" }}
                       >
-                        {expandedMessages[block._id.$oid] ? "-" : `+ (${block.children.length})`}
+                        {expandedMessages[block._id.$oid]
+                          ? "-"
+                          : `+ (${block.children.length})`}
                       </Button>
                     )}
                   </div>
                   {replyInputFlags[block._id.$oid] && (
-                    <div className="reply-message-container" style={{ marginLeft: "-50px" }}>
+                    <div
+                      className="reply-message-container"
+                      style={{ position: "relative" }}
+                    >
                       <TextArea
                         className="reply-message-textarea"
                         value={replyMessageText}
-                        onChange={(e) => setReplyMessageText(e.target.value)}
+                        onChange={(e) => handleInputChange(e, "reply")}
                         autoSize={{ minRows: 1, maxRows: 3 }}
                       />
+                      {renderUserList("reply")}
                       <img
                         alt=""
                         className="emoji-icon"
@@ -438,14 +650,50 @@ function GroupMessageChatArea(props) {
               </div>
             </div>
           </div>
-          {block.children && block.children.length > 0 && expandedMessages[block._id.$oid] && (
-            <div style={{ marginLeft: "20px" }}>
-              {renderMessages(block.children, depth + 1)}
-            </div>
-          )}
+          {block.children &&
+            block.children.length > 0 &&
+            expandedMessages[block._id.$oid] && (
+              <div style={{ marginLeft: "20px" }}>
+                {renderMessages(block.children, depth + 1)}
+              </div>
+            )}
         </div>
       );
     });
+  };
+
+  const renderUserList = (type) => {
+    if (!showUserList || activeInput !== type || !filteredUsers.length)
+      return null;
+
+    return (
+      <div
+        className="user-list-dropdown"
+        style={{
+          position: "absolute",
+          top: type === "main" ? "-170px" : "100%",
+          left: 0,
+          right: 0,
+          zIndex: 1050,
+        }}
+      >
+        {filteredUsers.map((user) => {
+          const userName = user.name || user.person_name;
+          if (!userName) return null; // Skip users without a valid name
+
+          return (
+            <div
+              key={user._id.$oid}
+              className="user-option"
+              onClick={() => handleUserSelect(user, type)}
+            >
+              <Avatar size="small" src={user.image?.url} />
+              <span>{userName}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
   };
 
   return (
@@ -456,60 +704,53 @@ function GroupMessageChatArea(props) {
         </Spin>
         <div ref={messagesEndRef} />
       </div>
-      <div
-        className="conversation-footer"
-        style={{ justifyContent: "flex-start" }}
-      >
-        <div
-          style={{
-            width: "80%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-            marginLeft: "20px",
-          }}
-        >
+      <div className="conversation-footer">
+        <div className="message-input-container">
           {/* Title input */}
-          <TextArea
-            className="message-input"
-            placeholder={t("messages.titlePlaceholder")}
-            value={messageTitle}
-            onChange={(e) => setMessageTitle(e.target.value)}
-            autoSize={{ minRows: 1, maxRows: 1 }}
-            style={{ textAlign: "left" }}
-          />
-
-          {/* Message input container */}
-          <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <div className="title-container">
             <TextArea
+              className="message-input title-input"
+              placeholder={t("messages.titlePlaceholder")}
+              value={messageTitle}
+              onChange={(e) => setMessageTitle(e.target.value)}
+              autoSize={{ minRows: 1, maxRows: 1 }}
+              style={{ textAlign: "left" }}
+            />
+          </div>
+
+          {/* Message input with icons */}
+          <div className="message-with-icons">
+            <TextArea
+              ref={textAreaRef}
               className="message-input"
               placeholder={t("messages.sendMessagePlaceholder")}
               value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
+              onChange={(e) => handleInputChange(e, "main")}
               autoSize={{ minRows: 1, maxRows: 3 }}
               style={{ textAlign: "left" }}
             />
-            <img
-              alt=""
-              className="emoji-icon"
-              src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
-              onClick={() => {
-                setShowEmojiPicker((val) => !val);
-                setShowReplyEmojiPicker(false); // Ensure only one picker is open
-              }}
-            />
-            <Button
-              id="sendMessagebtn"
-              onClick={sendMessage}
-              className={css`
-                margin-left: 0.5em;
-              `}
-              shape="circle"
-              type="primary"
-              ref={buttonRef}
-              icon={<SendOutlined rotate={315} />}
-              size={48}
-            />
+
+            <div className="message-icons">
+              <img
+                alt=""
+                className="emoji-icon"
+                src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+                onClick={() => {
+                  setShowEmojiPicker((val) => !val);
+                  setShowReplyEmojiPicker(false);
+                }}
+              />
+
+              <Button
+                onClick={sendMessage}
+                className="send-button"
+                shape="circle"
+                type="primary"
+                icon={<SendOutlined rotate={315} />}
+                size={32}
+              />
+            </div>
+            {renderUserList("main")}
           </div>
         </div>
 

@@ -8,6 +8,7 @@ from api.utils.request_utils import send_email, send_sms
 from api.utils.constants import (
     WEEKLY_NOTIF_REMINDER,
     UNREAD_MESSAGE_TEMPLATE,
+    GROUPCHAT_TAGGED_MESSAGE_TEMPLATE,
     TRANSLATIONS,
 )
 from api.utils.require_auth import all_users
@@ -102,7 +103,7 @@ def send_unread_alert(id):
                                 "unread_message"
                             ],
                         },
-                        template_id=UNREAD_MESSAGE_TEMPLATE,
+                        template_id=GROUPCHAT_TAGGED_MESSAGE_TEMPLATE,
                     )
                     if not res:
                         msg = "Failed to send unread message alert email " + res_msg
@@ -152,7 +153,7 @@ def update_unread_count():
 
 
 @notifications.route("/weeklyemails", methods=["GET"])
-#@all_users -- Commented as it was failing to send emails due to JWT token issues
+# @all_users -- Commented as it was failing to send emails due to JWT token issues
 def send_weekly_emails():
     try:
         mentee_users = MenteeProfile.objects()

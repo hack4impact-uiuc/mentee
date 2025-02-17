@@ -46,6 +46,7 @@ function Events() {
   const [mobileFilterVisible, setMobileFilterVisible] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [users, setUsers] = useState([]);
+  const [hubPartners, setHubPartners] = useState([]);
   const [upcomingFlag, setUpcomingFlag] = useState(false);
   const [pastFlag, setPastFlag] = useState(false);
   const [reload, setReload] = useState(true);
@@ -54,15 +55,26 @@ function Events() {
   const { user } = useSelector((state) => state.user);
   const role = getRole();
   useEffect(() => {
-    async function getAllEvents(hub_user_id) {
-      const all_evnet_data = await fetchEvents(role, hub_user_id);
+    async function getAllEvents(hub_user_id, partner_id, user_id) {
+      const all_evnet_data = await fetchEvents(
+        role,
+        hub_user_id,
+        partner_id,
+        user_id
+      );
       setAllEvents(all_evnet_data);
       setPageLoaded(true);
     }
     var hub_user_id = null;
+    var partner_id = null;
+    var user_id = null;
+    if (user) {
+      user_id = user._id.$oid;
+    }
     if (role == ACCOUNT_TYPE.HUB && user) {
       if (user.hub_id) {
         hub_user_id = user.hub_id;
+        partner_id = user._id.$oid;
         if (user.hub_user) {
           setHubUrl("/" + user.hub_user.url);
         }
@@ -71,7 +83,7 @@ function Events() {
         setHubUrl("/" + user.url);
       }
     }
-    getAllEvents(hub_user_id);
+    getAllEvents(hub_user_id, partner_id, user_id);
 
     async function getAllUsersData(hub_user_id) {
       const admin_data = await fetchAccounts(ACCOUNT_TYPE.ADMIN);
@@ -79,6 +91,7 @@ function Events() {
         const partenr_data = await fetchPartners(undefined, hub_user_id);
         const hub_user = await fetchAccountById(hub_user_id, ACCOUNT_TYPE.HUB);
         setUsers([...partenr_data, hub_user, ...admin_data]);
+        setHubPartners([...partenr_data]);
       } else {
         const mentor_data = await fetchMentors();
         const mentee_data = await fetchMentees();
@@ -260,6 +273,7 @@ function Events() {
             setOpen={setEventModalvisible}
             refresh={() => setReload(!reload)}
             reloading={() => setPageLoaded(false)}
+            partnerData={hubPartners}
           />
         </div>
       </Affix>
@@ -312,6 +326,7 @@ function Events() {
             setOpen={setEventModalvisible}
             refresh={() => setReload(!reload)}
             reloading={() => setPageLoaded(false)}
+            partnerData={hubPartners}
           />
           <div
             className={css`
@@ -355,6 +370,7 @@ function Events() {
                   hubOptions={hubOptions}
                   refresh={() => setReload(!reload)}
                   reloading={() => setPageLoaded(false)}
+                  partnerData={hubPartners}
                 />
               );
             })}

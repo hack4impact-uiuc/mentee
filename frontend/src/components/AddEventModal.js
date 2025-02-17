@@ -23,6 +23,8 @@ import { validateUrl } from "utils/misc";
 import { ACCOUNT_TYPE } from "utils/consts";
 import { useSelector } from "react-redux";
 
+const { Option } = Select;
+
 function AddEventModal({
   role,
   open,
@@ -31,6 +33,7 @@ function AddEventModal({
   event_item,
   refresh,
   reloading,
+  partnerData,
 }) {
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const { t } = useTranslation();
@@ -63,6 +66,9 @@ function AddEventModal({
       }
       if (event_item.hub_id) {
         form.setFieldValue("hub_id", event_item.hub_id);
+      }
+      if (event_item.partner_ids) {
+        form.setFieldValue("partner_ids", event_item.partner_ids);
       }
 
       if (event_item.start_datetime) {
@@ -130,6 +136,7 @@ function AddEventModal({
       description: values.description,
       url: values.url,
       hub_id: values.hub_id ? values.hub_id : hub_user_id,
+      partner_ids: values.partner_ids,
     };
 
     reloading();
@@ -304,23 +311,25 @@ function AddEventModal({
         </Form.Item>
       )}
       {isHub && (
-        <Form.Item
-          style={{ display: "none" }}
-          name="user_role"
-          label={t("common.role")}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Select
-            allowClear
-            mode="multiple"
-            options={[{ value: ACCOUNT_TYPE.HUB, label: "Hub" }]}
-            maxTagCount="responsive"
-          />
-        </Form.Item>
+        <>
+          <Form.Item
+            style={{ display: "none" }}
+            name="user_role"
+            label={t("common.role")}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Select
+              allowClear
+              mode="multiple"
+              options={[{ value: ACCOUNT_TYPE.HUB, label: "Hub" }]}
+              maxTagCount="responsive"
+            />
+          </Form.Item>
+        </>
       )}
       {isHub && (
         <Form.Item
@@ -473,6 +482,42 @@ function AddEventModal({
               : image && image.url
           }
         />
+      )}
+      {isHub && partnerData && partnerData.length > 0 && (
+        <>
+          <Form.Item
+            style={{ marginTop: "20px" }}
+            name="partner_ids"
+            label="Partner"
+            rules={[
+              {
+                required: false,
+              },
+            ]}
+          >
+            <Select mode="multiple">
+              {partnerData.map((item) => {
+                return (
+                  <Option
+                    value={
+                      item._id
+                        ? item._id.$oid
+                        : item.id.$oid
+                        ? item.id.$oid
+                        : item.id
+                    }
+                  >
+                    {item.person_name}
+                  </Option>
+                );
+              })}
+            </Select>
+          </Form.Item>
+          <p>
+            *if blank (no users selected) the event will be visible by all the
+            users in the hub
+          </p>
+        </>
       )}
     </Form>
   );

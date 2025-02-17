@@ -82,11 +82,18 @@ export const fetchEventById = (id) => {
   );
 };
 
-export const fetchEvents = async (type, hub_user_id = null) => {
+export const fetchEvents = async (
+  type,
+  hub_user_id = null,
+  partner_id = null,
+  user_id = null
+) => {
   const requestExtension = `/events/${type}`;
   return authGet(requestExtension, {
     params: {
       hub_user_id: hub_user_id,
+      partner_id: partner_id,
+      user_id: user_id,
     },
   }).then(
     (response) => response.data.result.events,
@@ -267,6 +274,43 @@ export const saveSignedDoc = async (signedBlob, user_email, train_id, role) => {
   return response;
 };
 
+export const newLibraryCreate = async (values, user) => {
+  const requestExtension = `/training/new_library`;
+  const formData = new FormData();
+  formData.append("front_url", FRONT_BASE_URL);
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  formData.append("user_id", user._id.$oid);
+  formData.append("user_name", !user.hub_id ? user.name : user.person_name);
+  formData.append("hub_id", !user.hub_id ? user._id.$oid : user.hub_id);
+  let response = await authPost(requestExtension, formData).catch((err) => {
+    console.error(err);
+  });
+  return response?.data;
+};
+
+export const getCommunityLibraries = async (user) => {
+  const requestExtension = `/training/community_libraries`;
+  const res = await authGet(requestExtension, {
+    params: {
+      hub_id: !user.hub_id ? user._id.$oid : user.hub_id,
+    },
+  }).catch(console.error);
+  const data = res.data.result.library;
+  let newData = [];
+  let seenOids = new Set();
+  for (let item of data) {
+    const oid = item._id["$oid"];
+    if (!seenOids.has(oid)) {
+      item.id = oid;
+      newData.push(item);
+      seenOids.add(oid);
+    }
+  }
+  return newData;
+};
+
 export const getTrainings = async (
   role,
   user_email = null,
@@ -331,7 +375,18 @@ export const newNotify = async (message, mentorId, readed) => {
   return notify;
 };
 
-export const deleteTrainbyId = (id, accountType) => {
+export const deleteLibrarybyId = (id) => {
+  const requestExtension = `/training/library/${id}`;
+  return authDelete(requestExtension).then(
+    (response) => response,
+    (err) => {
+      console.error(err);
+      return false;
+    }
+  );
+};
+
+export const deleteTrainbyId = (id) => {
   const requestExtension = `/training/${id}`;
   return authDelete(requestExtension).then(
     (response) => response,
@@ -340,6 +395,15 @@ export const deleteTrainbyId = (id, accountType) => {
       return false;
     }
   );
+};
+
+export const getLibraryById = async (id) => {
+  const requestExtension = `/training/library/${id}`;
+  let response = await authGet(requestExtension, {
+    params: {},
+  }).catch(console.error);
+  const train = response.data.result.library;
+  return train;
 };
 
 export const getTrainById = async (id, user_email = null) => {
@@ -353,6 +417,17 @@ export const getTrainById = async (id, user_email = null) => {
   return train;
 };
 
+export const getLibraryFile = async (id, lang = i18n.language) => {
+  const requestExtension = `/training/libraryFile/${id}`;
+  let response = await authGet(requestExtension, {
+    responseType: "blob",
+    params: {
+      lang: lang,
+    },
+  }).catch(console.error);
+  return response;
+};
+
 export const getTrainVideo = async (id, lang = i18n.language) => {
   const requestExtension = `/training/trainVideo/${id}`;
   let response = await authGet(requestExtension, {
@@ -362,6 +437,18 @@ export const getTrainVideo = async (id, lang = i18n.language) => {
     },
   }).catch(console.error);
   return response;
+};
+
+export const EditDataById = async (id, values = []) => {
+  const requestExtension = `/training/library/${id}`;
+  const formData = new FormData();
+  Object.entries(values).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  let response = await authPut(requestExtension, formData).catch((err) => {
+    console.error(err);
+  });
+  return response?.data;
 };
 
 export const EditTrainById = async (id, values = []) => {
@@ -1278,3 +1365,13 @@ export const fetchMentorsAppointments = async () =>
 
 export const fetchMenteesAppointments = async () =>
   await fetchAppointmentsByType(PLURAL_TYPE.MENTEES);
+
+export const getGroupParticipants = (hubId) => {
+  const requestExtension = `/messages/group/participants/${hubId}`;
+  return authGet(requestExtension).then(
+    (response) => response.data.result.participants,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
