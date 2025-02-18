@@ -6,7 +6,7 @@ import { SendOutlined } from "@ant-design/icons";
 import EmojiPicker from "emoji-picker-react";
 import { useAuth } from "utils/hooks/useAuth";
 import {
-  sendNotifyUnreadMessage,
+  sendNotifyGroupMessage,
   downloadBlob,
   getLibraryFile,
 } from "utils/api";
@@ -173,7 +173,7 @@ function GroupMessageChatArea(props) {
         setTimeout(() => {
           particiants.forEach((user) => {
             if (user._id.$oid !== profileId) {
-              sendNotifyUnreadMessage(user._id.$oid);
+              // sendNotifyGroupMessage(user._id.$oid, false);
             }
           });
         }, 0);
@@ -181,7 +181,7 @@ function GroupMessageChatArea(props) {
     } else {
       tagUsers.map((tag_id) => {
         if (tag_id !== profileId) {
-          sendNotifyUnreadMessage(tag_id);
+          sendNotifyGroupMessage(tag_id, true);
         }
         return false;
       });
@@ -192,7 +192,7 @@ function GroupMessageChatArea(props) {
 
   const sendReplyMessage = (block_id) => {
     let currentMessage = replyMessageText;
-    if (!currentMessage.trim().length) {
+    if (!currentMessage.trim().length > 0) {
       let temp = replyInputFlags;
       temp[block_id] = false;
       setReplyInputFlags(temp);
@@ -244,15 +244,25 @@ function GroupMessageChatArea(props) {
     //setShouldScroll(true);
 
     // Send notifications
-    if (particiants?.length > 0) {
-      setTimeout(() => {
-        particiants.forEach((user) => {
-          if (user._id.$oid !== profileId) {
-            sendNotifyUnreadMessage(user._id.$oid);
-          }
-        });
-      }, 0);
+    if (tagUsers.length > 0) {
+      tagUsers.map((tag_id) => {
+        if (tag_id !== profileId) {
+          sendNotifyGroupMessage(tag_id, true);
+        }
+        return false;
+      });
+    } else {
+      if (particiants?.length > 0) {
+        setTimeout(() => {
+          particiants.forEach((user) => {
+            if (user._id.$oid !== profileId) {
+              // sendNotifyGroupMessage(user._id.$oid, false);
+            }
+          });
+        }, 0);
+      }
     }
+    setTagUsers([]);
   };
 
   const styles = {
