@@ -1179,13 +1179,43 @@ export const getGroupMessageData = (hub_user_id) => {
   );
 };
 
-export const getMessageData = (sender_id, recipient_id) => {
+export const getMessageData = (sender_id, recipient_id, options = {}) => {
   if (typeof recipient_id !== "string") return;
+  
+  // Use the new paginated endpoint if pagination options are provided
+  if (options.limit || options.before || options.after) {
+    return getPaginatedMessages(sender_id, recipient_id, options);
+  }
+  
+  // Otherwise use the original endpoint for backward compatibility
   const requestExtension = `/messages/direct/?recipient_id=${recipient_id}&sender_id=${sender_id}`;
   return authGet(requestExtension).then(
     (response) => response.data.result.Messages,
     (err) => {
       console.error(err);
+    }
+  );
+};
+
+export const getPaginatedMessages = (sender_id, recipient_id, options = {}) => {
+  if (typeof recipient_id !== "string") return;
+  
+  const { limit = 30, before, after } = options;
+  let requestExtension = `/messages/paginated/?recipient_id=${recipient_id}&sender_id=${sender_id}&limit=${limit}`;
+  
+  if (before) {
+    requestExtension += `&before=${before}`;
+  }
+  
+  if (after) {
+    requestExtension += `&after=${after}`;
+  }
+  
+  return authGet(requestExtension).then(
+    (response) => response.data.result,
+    (err) => {
+      console.error(err);
+      return { messages: [], pagination: { total: 0, has_more: false } };
     }
   );
 };

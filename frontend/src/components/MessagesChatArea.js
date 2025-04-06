@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Avatar, Input, Button, Spin, Modal, theme, Drawer } from "antd";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { Avatar, Input, Button, Spin, Modal, theme, Drawer, DatePicker, Space, Tooltip, Alert } from "antd";
 import { withRouter, NavLink } from "react-router-dom";
 import { ACCOUNT_TYPE } from "utils/consts";
 import moment from "moment-timezone";
-import { SendOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { SendOutlined, ArrowLeftOutlined, CalendarOutlined, ArrowDownOutlined, UpOutlined } from "@ant-design/icons";
 import { useAuth } from "utils/hooks/useAuth";
 import {
   fetchAccountById,
@@ -55,9 +55,21 @@ function MessagesChatArea(props) {
     inviteeId,
     restrictedPartners,
     user,
+    messagesPagination,
+    loadOlderMessages,
+    jumpToLatest,
+    dateFilter,
+    setDateFilter,
+    loadConversation
   } = props;
   const messagesEndRef = useRef(null);
+  const messagesStartRef = useRef(null);
   const buttonRef = useRef(null);
+  const chatContainerRef = useRef(null);
+  const [showJumpButton, setShowJumpButton] = useState(false);
+  const [isDateFilterVisible, setIsDateFilterVisible] = useState(false);
+  const [reachedBeginning, setReachedBeginning] = useState(false);
+  
   const scrollToBottom = () => {
     if (messagesEndRef.current != null) {
       messagesEndRef.current.scrollIntoView({
@@ -65,6 +77,46 @@ function MessagesChatArea(props) {
         block: "nearest",
       });
     }
+  };
+  
+  // Handle scroll events to detect when user has scrolled up
+  const handleScroll = useCallback(() => {
+    if (!chatContainerRef.current) return;
+    
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    const scrollPosition = scrollHeight - scrollTop - clientHeight;
+    
+    // Show jump button when scrolled up more than 300px from bottom
+    setShowJumpButton(scrollPosition > 300);
+    
+    // We don't automatically load more messages when scrolling to the top
+    // This will be handled by a button instead
+  }, []);
+  
+  // Apply date filters and reload messages
+  const applyDateFilter = (dates) => {
+    if (!dates || !dates[0] || !dates[1]) {
+      setDateFilter({
+        startDate: null,
+        endDate: null,
+      });
+      
+      // If clearing filters, reload conversation
+      loadConversation(otherId);
+    } else {
+      setDateFilter({
+        startDate: dates[0].startOf('day'),
+        endDate: dates[1].endOf('day'),
+      });
+      
+      // Reload conversation with new filters
+      loadConversation(otherId, {
+        after: dates[0].startOf('day').toISOString(),
+        before: dates[1].endOf('day').toISOString()
+      });
+    }
+    
+    setIsDateFilterVisible(false);
   };
 
   function scrollToElement(id) {
@@ -150,18 +202,34 @@ function MessagesChatArea(props) {
       }
     }
     fetchAccount();
-  }, [updateContent, otherId, messages]);
+  }, [updateContent, otherId, messages, profileId, restrictedPartners, user, userType]);
 
   useEffect(() => {
     if (messageId) {
       if (!messages?.length) return;
       scrollToElement(messageId);
-    } else {
+    } else if (!messagesPagination?.loading) {
       scrollToBottom();
     }
-  }, [loading, messages, messageId]);
+    
+    // Check if we've reached the beginning of the conversation
+    if (messages?.length > 0 && messagesPagination?.total === messages.length) {
+      setReachedBeginning(true);
+    } else {
+      setReachedBeginning(false);
+    }
+  }, [loading, messages, messageId, messagesPagination]);
+  
+  // Add scroll event listener to chat container
+  useEffect(() => {
+    const container = chatContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [handleScroll]);
 
-  async function getAppointments() {
+  const getAppointments = useCallback(async () => {
     const mentorID = profileId;
     var formattedAppointments = {};
     if (isMentor) {
@@ -213,8 +281,9 @@ function MessagesChatArea(props) {
         setBookedData(booked_data);
       }
     }
-  }
-  async function getAvailableInFuture() {
+  }, [profileId, isMentor, isMentee]);
+  
+  const getAvailableInFuture = useCallback(async () => {
     const availability_data = await fetchAvailability(profileId);
     const now = moment();
 
@@ -238,14 +307,14 @@ function MessagesChatArea(props) {
       });
     }
     setAvailabeInFuture(future_availables);
-  }
+  }, [profileId, bookedData]);
 
   useEffect(() => {
     if (isOpenCalendarModal === false) {
       getAppointments();
       getAvailableInFuture();
     }
-  }, [isOpenCalendarModal]);
+  }, [isOpenCalendarModal, getAppointments, getAvailableInFuture]);
 
   const handleUpdateAccount = () => {
     setUpdateContent(!updateContent);
@@ -461,6 +530,47 @@ function MessagesChatArea(props) {
                 ? accountData.professional_title
                 : accountData.intro}
             </div>
+            
+            {/* Date Filter Button */}
+            <div className="date-filter-button">
+              <Tooltip title="Filter by date">
+                <Button 
+                  icon={<CalendarOutlined />} 
+                  onClick={() => setIsDateFilterVisible(!isDateFilterVisible)}
+                  type={dateFilter.startDate ? "primary" : "default"}
+                  size="small"
+                >
+                  Date Filter
+                </Button>
+              </Tooltip>
+            </div>
+            
+            {/* Date Filter Dropdown */}
+            {isDateFilterVisible && (
+              <div className="date-filter-container">
+                <Space direction="vertical" size={12}>
+                  <DatePicker.RangePicker 
+                    onChange={applyDateFilter}
+                    value={[dateFilter.startDate, dateFilter.endDate]}
+                    allowClear
+                    style={{ width: '100%' }}
+                  />
+                  <div className="date-filter-actions">
+                    <Button size="small" onClick={() => setIsDateFilterVisible(false)}>
+                      Cancel
+                    </Button>
+                    <Button 
+                      size="small" 
+                      type="primary" 
+                      onClick={() => applyDateFilter(null)}
+                      disabled={!dateFilter.startDate && !dateFilter.endDate}
+                    >
+                      Clear Filters
+                    </Button>
+                  </div>
+                </Space>
+              </div>
+            )}
             {((isBookingVisible && inviteeId === otherId) ||
               isAlreadyInvited) && (
               <div className="mentor-profile-book-appt-btn">
@@ -503,7 +613,56 @@ function MessagesChatArea(props) {
       ) : (
         <div></div>
       )}
-      <div className="conversation-content">
+      <div className="conversation-content" ref={chatContainerRef}>
+          {/* Loading older messages indicator */}
+          {messagesPagination?.loading && (
+            <div className="messages-loading-more" ref={messagesStartRef}>
+              <Spin size="small" />
+              <span>Loading older messages...</span>
+            </div>
+          )}
+          
+          {/* Reached beginning of conversation message */}
+          {reachedBeginning && messages.length > 0 && (
+            <Alert
+              message="You've reached the beginning of the conversation"
+              type="info"
+              showIcon
+              className="conversation-beginning-alert"
+            />
+          )}
+          
+          {/* Load more button - only show if not loading and has more messages */}
+          {!messagesPagination?.loading && messagesPagination?.hasMore && (
+            <div className="load-more-container" style={{ textAlign: 'center', padding: '15px 0' }}>
+              <Button 
+                onClick={() => loadOlderMessages(otherId)} 
+                icon={<UpOutlined />}
+                type="primary"
+                ghost
+              >
+                Load More Messages
+              </Button>
+            </div>
+          )}
+          
+          {/* Loading indicator for pagination */}
+          {messagesPagination?.loading && (
+            <div style={{ textAlign: 'center', padding: '15px 0' }}>
+              <Spin size="small" /> <span style={{ marginLeft: '10px' }}>Loading older messages...</span>
+            </div>
+          )}
+          
+          {/* No messages placeholder */}
+          {messages.length === 0 && !loading && (
+            <div className="no-messages-placeholder">
+              <p>No messages found</p>
+              {dateFilter.startDate && (
+                <p>Try adjusting your date filter</p>
+              )}
+            </div>
+          )}
+          
           {accountData &&
             messages.map((block, index) => {
               return (
@@ -648,6 +807,40 @@ function MessagesChatArea(props) {
             >
               {t("messages.send")}
             </Button>
+            
+            {/* Jump to latest button */}
+            {showJumpButton && (
+              <Tooltip title="Jump to latest messages">
+                <Button 
+                  className="jump-to-latest-button"
+                  shape="circle" 
+                  type="primary"
+                  icon={<ArrowDownOutlined />} 
+                  onClick={() => {
+                    // First clear any date filters
+                    setDateFilter({
+                      startDate: null,
+                      endDate: null,
+                    });
+                    
+                    // Then jump to latest messages
+                    jumpToLatest();
+                    
+                    // Finally scroll to bottom
+                    setTimeout(() => {
+                      scrollToBottom();
+                    }, 100);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    bottom: '80px',
+                    right: '20px',
+                    zIndex: 10,
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)'
+                  }}
+                />
+              </Tooltip>
+            )}
           </>
         )}
       </div>

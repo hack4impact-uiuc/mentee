@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MessagesSidebar from "components/MessagesSidebar";
 import { Layout, message } from "antd";
 import MessagesChatArea from "components/MessagesChatArea";
-import { getLatestMessages, getMessageData, fetchPartners } from "utils/api";
+import { getLatestMessages, getMessageData, getPaginatedMessages, fetchPartners } from "utils/api";
 import socket from "utils/socket";
 
 import "../css/Messages.scss";
@@ -66,6 +66,8 @@ function Messages(props) {
   useEffect(() => {
     setCurrentPath(props.location.pathname);
   }, [props.location.pathname]);
+  
+  // This useEffect will be moved after the dateFilter declaration
 
   useEffect(() => {
     if (socket && profileId) {
@@ -76,30 +78,146 @@ function Messages(props) {
     }
   }, [socket, profileId, activeMessageId]);
 
-  const loadConversation = useCallback(async (conversationId) => {
+  const [messagesPagination, setMessagesPagination] = useState({
+    hasMore: false,
+    oldestTimestamp: null,
+    newestTimestamp: null,
+    total: 0,
+    loading: false
+  });
+  const [dateFilter, setDateFilter] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  
+  // Reset filters when active message ID changes
+  useEffect(() => {
+    if (activeMessageId) {
+      setDateFilter({
+        startDate: null,
+        endDate: null,
+      });
+    }
+  }, [activeMessageId, setDateFilter]);
+
+  // Load initial or filtered conversation messages
+  const loadConversation = useCallback(async (conversationId, options = {}) => {
     if (!conversationId || !profileId) return;
     
-    if (messagesCache[conversationId]) {
+    // Use cache if available and no special options are provided
+    const useCache = !options.limit && !options.before && !options.after && 
+                    !dateFilter.startDate && !dateFilter.endDate;
+    
+    if (useCache && messagesCache[conversationId]) {
       setMessages(messagesCache[conversationId]);
       return;
     }
     
     setLoading(true);
     try {
-      const messageData = await getMessageData(profileId, conversationId);
-      console.log("getMessageData: ", messageData);
-      setMessages(messageData || []);
+      // Apply date filters if set
+      const fetchOptions = { ...options, limit: options.limit || 30 };
+      if (dateFilter.startDate) {
+        fetchOptions.after = dateFilter.startDate.toISOString();
+      }
+      if (dateFilter.endDate) {
+        fetchOptions.before = dateFilter.endDate.toISOString();
+      }
       
-      setMessagesCache(prevCache => ({
-        ...prevCache,
-        [conversationId]: messageData || []
-      }));
+      const result = await getMessageData(profileId, conversationId, fetchOptions);
+      
+      // Handle both old and new API response formats
+      if (Array.isArray(result)) {
+        // Old API format
+        setMessages(result || []);
+        setMessagesPagination({
+          hasMore: false,
+          oldestTimestamp: null,
+          newestTimestamp: null,
+          total: result.length,
+          loading: false
+        });
+      } else {
+        // New paginated API format
+        setMessages(result.messages || []);
+        setMessagesPagination({
+          hasMore: result.pagination?.has_more || false,
+          oldestTimestamp: result.pagination?.oldest_timestamp,
+          newestTimestamp: result.pagination?.newest_timestamp,
+          total: result.pagination?.total || 0,
+          loading: false
+        });
+      }
+      
+      // Only cache default view (not filtered or paginated views)
+      if (useCache) {
+        setMessagesCache(prevCache => ({
+          ...prevCache,
+          [conversationId]: Array.isArray(result) ? result : result.messages || []
+        }));
+      }
     } catch (error) {
       console.error("Error loading conversation:", error);
     } finally {
       setLoading(false);
     }
-  }, [profileId, messagesCache]);
+  }, [profileId, messagesCache, dateFilter]);
+  
+  // Load older messages when user scrolls up or clicks "Load More"
+  const loadOlderMessages = useCallback(async (conversationId) => {
+    if (!conversationId || !profileId || !messages.length || messagesPagination.loading) return;
+    
+    // Get the timestamp of the oldest message we have
+    const oldestMessage = messages[0];
+    if (!oldestMessage || !oldestMessage.created_at) return;
+    
+    setMessagesPagination(prev => ({ ...prev, loading: true }));
+    
+    try {
+      const result = await getPaginatedMessages(profileId, conversationId, {
+        limit: 30,
+        before: oldestMessage.created_at,
+        after: dateFilter.startDate ? dateFilter.startDate.toISOString() : undefined
+      });
+      
+      if (result && result.messages && result.messages.length > 0) {
+        // Prepend older messages to the current list
+        setMessages(prevMessages => [...result.messages, ...prevMessages]);
+        
+        // Update pagination info
+        setMessagesPagination({
+          hasMore: result.pagination?.has_more || false,
+          oldestTimestamp: result.pagination?.oldest_timestamp,
+          newestTimestamp: result.pagination?.newest_timestamp,
+          total: result.pagination?.total || 0,
+          loading: false
+        });
+      } else {
+        setMessagesPagination(prev => ({
+          ...prev,
+          hasMore: false,
+          loading: false
+        }));
+      }
+    } catch (error) {
+      console.error("Error loading older messages:", error);
+      setMessagesPagination(prev => ({ ...prev, loading: false }));
+    }
+  }, [profileId, messages, messagesPagination.loading, dateFilter]);
+  
+  // Jump to latest messages
+  const jumpToLatest = useCallback(() => {
+    if (!activeMessageId || !profileId) return;
+    
+    // Clear date filters
+    setDateFilter({
+      startDate: null,
+      endDate: null,
+    });
+    
+    // Load the latest messages
+    loadConversation(activeMessageId);
+  }, [activeMessageId, profileId, loadConversation]);
   
   // Memoized function to fetch data
   const fetchData = useCallback(async () => {
@@ -181,11 +299,24 @@ function Messages(props) {
     const isUserType = receiverId && ['1', '2', '3', '4', '5'].includes(receiverId);
     
     if (receiverId && !isUserType) {
+      // Reset date filters when changing conversations
+      setDateFilter({
+        startDate: null,
+        endDate: null,
+      });
+      
       dispatch(setActiveMessageId(receiverId));
       if (user_type) setUserType(user_type);
       
     } else if (isUserType && latestConvos.length > 0) {
       const firstConvo = latestConvos[0];
+      
+      // Reset date filters when changing conversations
+      setDateFilter({
+        startDate: null,
+        endDate: null,
+      });
+      
       dispatch(setActiveMessageId(firstConvo.otherId));
       setUserType(firstConvo.otherUser.user_type);
       
@@ -195,7 +326,7 @@ function Messages(props) {
         history.replace(`/messages/${firstConvo.otherId}?user_type=${firstConvo.otherUser.user_type}`);
       }
     }
-  }, [props.location.search, props.match, profileId, dispatch, latestConvos, history, currentPath]);
+  }, [props.location.search, props.match, profileId, dispatch, latestConvos, history, currentPath, setDateFilter]);
 
   useEffect(() => {
     if (!props.location.pathname.startsWith('/messages')) return;
@@ -258,6 +389,12 @@ function Messages(props) {
           inviteeId={inviteeId}
           restrictedPartners={restrictedPartners}
           user={user}
+          messagesPagination={messagesPagination}
+          loadOlderMessages={loadOlderMessages}
+          jumpToLatest={jumpToLatest}
+          dateFilter={dateFilter}
+          setDateFilter={setDateFilter}
+          loadConversation={loadConversation}
         />
       </Layout>
     </Layout>

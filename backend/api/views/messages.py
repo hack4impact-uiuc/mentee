@@ -634,6 +634,88 @@ def get_direct_messages():
         return create_response(status=422, message=msg)
 
 
+@messages.route("/paginated/", methods=["GET"])
+@all_users
+def get_paginated_messages():
+    """Get paginated messages with optional date filtering
+    
+    Query Parameters:
+    - sender_id: ID of the sender (required)
+    - recipient_id: ID of the recipient (required)
+    - limit: Number of messages to return (default: 30)
+    - before: ISO date to fetch messages before a certain timestamp
+    - after: ISO date to fetch messages after a certain timestamp
+    """
+    try:
+        sender_id = request.args.get("sender_id")
+        recipient_id = request.args.get("recipient_id")
+        limit = int(request.args.get("limit", 30))
+        before = request.args.get("before")
+        after = request.args.get("after")
+        
+        if not sender_id or not recipient_id:
+            return create_response(status=400, message="sender_id and recipient_id are required")
+        
+        # Base query
+        query = (Q(sender_id=sender_id) & Q(recipient_id=recipient_id)) | \
+                (Q(sender_id=recipient_id) & Q(recipient_id=sender_id))
+        
+        # Add date filters if provided
+        if before:
+            try:
+                before_date = datetime.fromisoformat(before.replace('Z', '+00:00'))
+                query = query & Q(created_at__lt=before_date)
+            except ValueError:
+                return create_response(status=400, message="Invalid 'before' date format. Use ISO format.")
+                
+        if after:
+            try:
+                after_date = datetime.fromisoformat(after.replace('Z', '+00:00'))
+                query = query & Q(created_at__gt=after_date)
+            except ValueError:
+                return create_response(status=400, message="Invalid 'after' date format. Use ISO format.")
+        
+        # Get total count for pagination info
+        total_count = DirectMessage.objects(query).count()
+        
+        # Get oldest and newest message timestamps for range info
+        oldest_message = DirectMessage.objects(query).order_by("created_at").first()
+        newest_message = DirectMessage.objects(query).order_by("-created_at").first()
+        
+        # Get messages with pagination - sorted by descending date to get latest messages first
+        messages = DirectMessage.objects(query).order_by("-created_at").limit(limit)
+        
+        # Convert to list for response and reverse to get ascending order for display
+        message_list = [json.loads(message.to_json()) for message in messages]
+        message_list.reverse()  # Frontend expects ascending order
+        
+        # Mark messages as read if the viewer is the recipient
+        if sender_id == request.args.get("viewer_id", sender_id):
+            DirectMessage.objects(
+                sender_id=recipient_id,
+                recipient_id=sender_id,
+                message_read=False
+            ).update(message_read=True)
+        
+        # Prepare response with pagination metadata
+        response_data = {
+            "messages": message_list,
+            "pagination": {
+                "total": total_count,
+                "has_more": total_count > len(message_list),
+                "oldest_timestamp": oldest_message.created_at if oldest_message else None,
+                "newest_timestamp": newest_message.created_at if newest_message else None
+            }
+        }
+        
+        return create_response(data=response_data, status=200, message="Success")
+        
+    except Exception as e:
+        msg = f"Error retrieving paginated messages: {str(e)}"
+        logger.error(msg)
+        return create_response(status=422, message=msg)
+
+
 @messages.route("/details/", methods=["GET"])
 @all_users
 def get_message_details():
@@ -880,8 +962,9 @@ def get_partners():
             query["hub_user_id"] = hub_user_id
             
         # Use projection to limit fields returned (optimization)
+        # Remove hub_user_id from projection since it's causing an error
         partners = PartnerProfile.objects(**query).only(
-            "id", "organization", "image", "restricted", "hub_user_id", "email"
+            "id", "organization", "image", "restricted", "email"
         )
         
         # Convert to list of dictionaries with minimal required data
@@ -900,8 +983,8 @@ def get_partners():
             if hasattr(partner, "restricted"):
                 partner_dict["restricted"] = partner.restricted
                 
-            if hasattr(partner, "hub_user_id"):
-                partner_dict["hub_user_id"] = partner.hub_user_id
+            # Skip hub_user_id field since it's not available in the model
+            # If needed in the future, make sure it's properly defined in the PartnerProfile model
                 
             partner_data.append(partner_dict)
         
