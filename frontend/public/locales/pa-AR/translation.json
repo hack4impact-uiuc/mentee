@@ -67,6 +67,7 @@
   "common": {
     "admin": "مسؤل",
     "support": "ملاتړ کوونکی",
+    "moderator": "منځګړی",
     "hub": "د مرکز شریک",
     "powered_by":"د لخوا ځواکمن شوی!",
     "apply": "درخواست کول",
@@ -550,6 +551,10 @@
   },
   "partnerProfile": {
     "briefIntro": "ستاسو د موسسې/ سازمان/ شرکت لنډه پیژنده",
+    "AUAFbriefIntro":"د ځان لنډه پیژندنه",
+    "AUAFcontactFullName":"خپل بشپړ نوم ولیکئ",
+    "title":"خپل سرلیک ولیکئ",
+    "requiredTitle":"مهرباني وکړئ سرلیک دننه کړئ",
     "collaborationGrants": "د مرستې په اړه د همکارۍ لپاره چمتو\n",
     "collaborationProjects": "د پروژو همکاری لپاره چمتو",
     "contactFullName": "د اړیکی نیونکی مکمل نوم ( لمړی نوم)",

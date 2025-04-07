@@ -17,6 +17,7 @@ from api.models import (
     MenteeProfile,
     Admin,
     Guest,
+    Moderator,
     PartnerProfile,
     MenteeApplication,
     NewMentorApplication,
@@ -75,10 +76,10 @@ class MenteeForm(Form):
 class PartnerForm(Form):
     firebase_uid = StringField(validators=[InputRequired()])
     email = StringField(validators=[InputRequired()])
-    organization = StringField(validators=[InputRequired()])
-    location = StringField(validators=[InputRequired()])
+    # organization = StringField(validators=[InputRequired()])
+    # location = StringField(validators=[InputRequired()])
     intro = StringField(validators=[InputRequired()])
-    regions = FieldList(StringField(), validators=[validators.DataRequired()])
+    # regions = FieldList(StringField(), validators=[validators.DataRequired()])
     sdgs = FieldList(StringField(), validators=[validators.DataRequired()])
 
 
@@ -274,6 +275,8 @@ def get_profile_model(role):
         return Guest
     elif role == Account.SUPPORT:
         return Support
+    elif role == Account.MODERATOR:
+        return Moderator
     elif role == Account.HUB:
         return Hub
     else:

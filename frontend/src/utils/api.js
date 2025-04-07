@@ -751,6 +751,16 @@ export const sendNotifyGroupMessage = (recipient_id, tagged = false) => {
   );
 };
 
+export const deleteGroupMessage = (message_id) => {
+  const requestExtension = `/messages/group_delete/${message_id}`;
+  return authDelete(requestExtension).then(
+    (response) => response.message,
+    (err) => {
+      console.error(err);
+    }
+  );
+};
+
 export const sendNotifyUnreadMessage = (recipient_id) => {
   const requestExtension = `/notifications/unread_alert/${recipient_id}`;
   return authGet(requestExtension).then(
@@ -1096,7 +1106,6 @@ export const getDetailMessages = (
   showOnlyUnanswered = false
 ) => {
   let queryParams = new URLSearchParams();
-  
   if (searchTerm) queryParams.append("searchTerm", searchTerm);
   if (startDate) queryParams.append("startDate", startDate);
   if (endDate) queryParams.append("endDate", endDate);
@@ -1106,7 +1115,6 @@ export const getDetailMessages = (
   queryParams.append("unanswered_only", showOnlyUnanswered);
   
   const requestExtension = `/messages/contacts/mentors/${pageNumber}?${queryParams.toString()}`;
-  
   return authGet(requestExtension).then(
     (response) => {
       return {

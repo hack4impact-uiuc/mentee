@@ -221,10 +221,16 @@ def get_sidebar(user_id):
                         continue
                 otherUser = json.loads(otherUser.to_json())
                 if user_type == Account.PARTNER.value:
-                    otherUserObj = {
-                        "name": otherUser["organization"],
-                        "user_type": user_type,
-                    }
+                    if "organization" in otherUser:
+                        otherUserObj = {
+                            "name": otherUser["organization"],
+                            "user_type": user_type,
+                        }
+                    else:
+                        otherUserObj = {
+                            "name": otherUser["title"],
+                            "user_type": user_type,
+                        }
                 else:
                     otherUserObj = {
                         "name": otherUser["name"],
@@ -555,11 +561,33 @@ def get_sidebar_mentors(page_number):
 
     sorted_data = sorted_data[start_record:end_record]
     total_length = len(formatted_data)
+
     return create_response(
         data={"data": sorted_data, "total_length": total_length},
         status=200,
         message="res",
     )
+
+
+@messages.route("/group_delete/<string:message_id>", methods=["DELETE"])
+@all_users
+def delete_group_message(message_id):
+    try:
+        message = GroupMessage.objects.get(id=message_id)
+    except:
+        msg = "Invalid message id"
+        logger.info(msg)
+        return create_response(status=422, message=msg)
+    try:
+        message.is_deleted = True
+        message.save()
+        return create_response(
+            status=200, message=f"message_id: {message_id} deleted successfully"
+        )
+    except:
+        msg = "Failed to delete message"
+        logger.info(msg)
+        return create_response(status=422, message=msg)
 
 
 @messages.route("/group/", methods=["GET"])
@@ -569,7 +597,7 @@ def get_group_messages():
         hub_user_id = request.args.get("hub_user_id", None)
         if hub_user_id is not None and hub_user_id != "":
             messages = GroupMessage.objects(
-                Q(hub_user_id=request.args.get("hub_user_id"))
+                Q(hub_user_id=request.args.get("hub_user_id")) & Q(is_deleted__ne=True)
             )
         else:
             messages = PartnerGroupMessage.objects()
@@ -604,10 +632,11 @@ def get_direct_messages():
 
 
 @socketio.on("editGroupMessage")
-def editGroupMessage(id, hub_user_id, message_body, methods=["POST"]):
+def editGroupMessage(id, hub_user_id, message_title, message_body, methods=["POST"]):
     try:
         if hub_user_id is not None:
             message = GroupMessage.objects.get(id=id)
+            message.title = message_title
             message.body = message_body
             message.message_edited = True
 

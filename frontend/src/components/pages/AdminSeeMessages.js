@@ -58,12 +58,9 @@ export const AdminMessages = () => {
     try {
       // Only fetch if we don't already have partners data
       if (partners.length === 0) {
-
         const partnersData = await api.fetchPartners();
 
         if (Array.isArray(partnersData) && partnersData.length > 0) {
-
-
           setPartners(partnersData);
         } else {
           setPartners([]);
@@ -87,7 +84,6 @@ export const AdminMessages = () => {
       const existingPartner = partners.find(
         (partner) => partner._id.$oid === partnerId
       );
-
 
       if (existingPartner) {
         setSelectedPartnerData(existingPartner);
@@ -127,7 +123,6 @@ export const AdminMessages = () => {
     const assignMentees = Array.isArray(partnerData.assign_mentees)
       ? partnerData.assign_mentees
       : [];
-    
 
     const mentorIds = assignMentors
       .map((mentor) => {
@@ -204,7 +199,6 @@ export const AdminMessages = () => {
           apiPartnerId = selectedPartner;
         }
 
-
         let { data: newData, total_length } = (await api.getDetailMessages(
           pageNumber,
           pageSize,
@@ -215,10 +209,7 @@ export const AdminMessages = () => {
           VIEW_MODE,
           showOnlyUnanswered
         )) || { data: [], total_length: 0 };
-        
-
         if (newData) {
-
           newData = newData.map((item) => {
             return {
               ...item,
@@ -233,7 +224,6 @@ export const AdminMessages = () => {
           ) {
             newData = filterDataByPartner(newData, selectedPartnerData);
             total_length = newData.length;
-
           }
 
           if (showOnlyUnanswered) {
@@ -813,7 +803,6 @@ export const AdminMessages = () => {
                 const isMenteeSender = senderId === menteeId;
 
                 const date = new Date(message.created_at.$date);
-                
                 const showUnansweredTag = selectedRow?.hasUnansweredMessages && isMenteeSender && index === 0;
 
                 return (
