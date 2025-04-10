@@ -310,6 +310,7 @@ function ProfileContent(props) {
           <div className="mentor-profile-heading">
             {props.mentor &&
             props.mentor.hub_user &&
+            props.mentor.hub_user.url &&
             props.mentor.hub_user.url.includes("AUAF") ? (
               <b>{t("partnerProfile.AUAFbriefIntro")}</b>
             ) : (
@@ -338,6 +339,7 @@ function ProfileContent(props) {
       <br />
       {props.mentor &&
       props.mentor.hub_user &&
+      props.mentor.hub_user.url &&
       props.mentor.hub_user.url.includes("AUAF") ? (
         <></>
       ) : (
@@ -409,6 +411,7 @@ function ProfileContent(props) {
           <div className="mentor-profile-heading">
             {props.mentor &&
             props.mentor.hub_user &&
+            props.mentor.hub_user.url &&
             props.mentor.hub_user.url.includes("AUAF") ? (
               <b>{t("partnerProfile.contactFullName")}</b>
             ) : (
@@ -419,6 +422,7 @@ function ProfileContent(props) {
           <br /> <br />
           {props.mentor &&
           props.mentor.hub_user &&
+          props.mentor.hub_user.url &&
           props.mentor.hub_user.url.includes("AUAF") ? (
             <></>
           ) : (
@@ -455,6 +459,7 @@ function ProfileContent(props) {
           <br /> <br />
           {props.mentor &&
           props.mentor.hub_user &&
+          props.mentor.hub_user.url &&
           props.mentor.hub_user.url.includes("AUAF") ? (
             <></>
           ) : (
