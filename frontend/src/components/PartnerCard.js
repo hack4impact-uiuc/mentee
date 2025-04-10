@@ -163,7 +163,11 @@ function PartnerCard(props) {
             </Typography>
           </div>
         )}
-        {!(props.hub_user && props.hub_user.url.includes("AUAF")) && (
+        {!(
+          props.hub_user &&
+          props.hub_user.url &&
+          props.hub_user.url.includes("AUAF")
+        ) && (
           <Typography>
             <Title
               level={5}
