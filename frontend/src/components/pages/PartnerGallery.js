@@ -112,7 +112,10 @@ function PartnerGallery(props) {
 
       let matchesName = false;
       if (
-        (user && user.hub_user && user.hub_user.url.includes("AUAF")) ||
+        (user &&
+          user.hub_user &&
+          user.hub_user.url &&
+          user.hub_user.url.includes("AUAF")) ||
         (user.role === ACCOUNT_TYPE.HUB &&
           user.url &&
           user.url.includes("AUAF"))
@@ -137,7 +140,10 @@ function PartnerGallery(props) {
 
   const getFilterForm = () => (
     <>
-      {(user && user.hub_user && user.hub_user.url.includes("AUAF")) ||
+      {(user &&
+        user.hub_user &&
+        user.hub_user.url &&
+        user.hub_user.url.includes("AUAF")) ||
       (user.role === ACCOUNT_TYPE.HUB &&
         user.url &&
         user.url.includes("AUAF")) ? (
