@@ -89,13 +89,13 @@ function Messages(props) {
           }
         });
 
-        if (window.location.pathname.includes('/messages/')){
+        if (window.location.pathname.includes("/messages/")) {
           history.push(
             `/messages/${data?.data[0].otherId}?user_type=${data?.data[0].otherUser.user_type}`
           );
         }
       } else {
-        if (window.location.pathname.includes('/messages/')){
+        if (window.location.pathname.includes("/messages/")) {
           history.push("/messages/3");
         }
       }

@@ -101,7 +101,11 @@ function MessagesChatArea(props) {
             return false;
           });
         }
-        if (otherId && same_kind_user_ids.includes(otherId) && otherId.length > 3) {
+        if (
+          otherId &&
+          same_kind_user_ids.includes(otherId) &&
+          otherId.length > 3
+        ) {
           account = await fetchAccountById(otherId, userType);
         }
       } else {
@@ -122,11 +126,15 @@ function MessagesChatArea(props) {
             }
             return false;
           });
-          if (otherId && otherId.length > 3 && !restricted_user_ids.includes(otherId)) {
+          if (
+            otherId &&
+            otherId.length > 3 &&
+            !restricted_user_ids.includes(otherId)
+          ) {
             account = await fetchAccountById(otherId, userType);
           }
         } else {
-          if (otherId && otherId.length > 3){
+          if (otherId && otherId.length > 3) {
             account = await fetchAccountById(otherId, userType);
           }
         }

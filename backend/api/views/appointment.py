@@ -74,7 +74,9 @@ def get_requests_by_id(account_type, id):
                     appointment.mentor_name = mentor.name
                     appointment.save()
             except:
-                msg = f"Could not find mentor with given id " + str(appointment.mentor_id)
+                msg = f"Could not find mentor with given id " + str(
+                    appointment.mentor_id
+                )
                 logger.info(msg)
                 continue
 

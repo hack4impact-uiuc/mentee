@@ -190,7 +190,7 @@ def get_sidebar(user_id):
             Q(recipient_id=user_id) | Q(sender_id=user_id)
         ).order_by("-created_at")
 
-        print('send messages', len(sentMessages))
+        print("send messages", len(sentMessages))
 
         contacts = []
         sidebarContacts = set()
@@ -205,7 +205,7 @@ def get_sidebar(user_id):
             if otherId not in sidebarContacts and otherId not in search_user_ids:
                 otherUser = None
                 user_type = Account.MENTOR.value
-                print('otherId', otherId)
+                print("otherId", otherId)
                 search_user_ids.add(otherId)
                 try:
                     otherUser = MentorProfile.objects.get(id=otherId)
@@ -622,7 +622,11 @@ def get_group_messages():
 def get_direct_messages():
     try:
         recipient_id = request.args.get("recipient_id")
-        if (recipient_id == str(Account.MENTEE.value) or recipient_id == str(Account.MENTOR.value) or recipient_id == str(Account.PARTNER.value)):
+        if (
+            recipient_id == str(Account.MENTEE.value)
+            or recipient_id == str(Account.MENTOR.value)
+            or recipient_id == str(Account.PARTNER.value)
+        ):
             msg = "Invalid parameters provided"
             logger.info(msg)
             return create_response(status=422, message=msg)

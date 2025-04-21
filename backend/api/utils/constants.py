@@ -66,6 +66,7 @@ class Account(Enum):
         if isinstance(other, Account):
             return self.value == other.value
         return self.value == other
+
     def __int__(self):
         return self.value
 

@@ -28,7 +28,9 @@ function NavigationSider() {
   const sidebarItems = useSidebars(role, user, t);
   const isMobile = useMediaQuery({ query: `(max-width: 761px)` });
   let main_domain_url = history.location.pathname.split("/")[0];
-  const currentPage = [history.location.pathname.replace(main_domain_url+'/', '')];
+  const currentPage = [
+    history.location.pathname.replace(main_domain_url + "/", ""),
+  ];
   const n50_flag = localStorage.getItem("n50_user");
 
   const onClick = ({ key }) => {
@@ -52,7 +54,7 @@ function NavigationSider() {
         return "/";
     }
   };
-  
+
   return isMobile ? (
     <Drawer
       open={isMobile && !collapsed}

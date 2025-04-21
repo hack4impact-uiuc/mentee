@@ -119,7 +119,8 @@ function Gallery(props) {
         all_data.map((item) => {
           temp.push({
             // value: item.id ? item.id : item._id["$oid"],
-            value: item.organization + "_" + (item.id ? item.id : item._id["$oid"]),
+            value:
+              item.organization + "_" + (item.id ? item.id : item._id["$oid"]),
             label: item.organization,
           });
           return false;
@@ -185,8 +186,12 @@ function Gallery(props) {
       const matchesName =
         !query || mentor.name.toUpperCase().includes(query.toUpperCase());
       const matchPartner =
-        !selectedPartnerOrg || selectedPartnerOrg.length === 0 || 
-        (mentor.pair_partner && selectedPartnerOrg.includes(mentor.pair_partner.organization + '_' + (mentor.pair_partner.id)));
+        !selectedPartnerOrg ||
+        selectedPartnerOrg.length === 0 ||
+        (mentor.pair_partner &&
+          selectedPartnerOrg.includes(
+            mentor.pair_partner.organization + "_" + mentor.pair_partner.id
+          ));
 
       return (
         matchesSpecializations &&
