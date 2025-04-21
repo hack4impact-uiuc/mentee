@@ -47,7 +47,7 @@ function Gallery(props) {
   const [favoriteMentorIds, setFavoriteMentorIds] = useState(new Set());
   const [pageLoaded, setPageLoaded] = useState(false);
   const [allPartners, setAllPartners] = useState([]);
-  const [selectedPartnerID, setSelectedPartnerID] = useState(undefined);
+  const [selectedPartnerOrg, setSelectedPartnerOrg] = useState(undefined);
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
     async function getMentors() {
@@ -118,7 +118,8 @@ function Gallery(props) {
       if (all_data) {
         all_data.map((item) => {
           temp.push({
-            value: item.id ? item.id : item._id["$oid"],
+            // value: item.id ? item.id : item._id["$oid"],
+            value: item.organization + "_" + (item.id ? item.id : item._id["$oid"]),
             label: item.organization,
           });
           return false;
@@ -184,8 +185,8 @@ function Gallery(props) {
       const matchesName =
         !query || mentor.name.toUpperCase().includes(query.toUpperCase());
       const matchPartner =
-        !selectedPartnerID ||
-        (mentor.pair_partner && mentor.pair_partner.id === selectedPartnerID);
+        !selectedPartnerOrg || selectedPartnerOrg.length === 0 || 
+        (mentor.pair_partner && selectedPartnerOrg.includes(mentor.pair_partner.organization + '_' + (mentor.pair_partner.id)));
 
       return (
         matchesSpecializations &&
@@ -221,7 +222,7 @@ function Gallery(props) {
       </Title>
       <Select
         onChange={(value) => {
-          setSelectedPartnerID(value);
+          setSelectedPartnerOrg(value);
         }}
         placeholder={t("common.partner")}
         options={allPartners}
@@ -230,6 +231,8 @@ function Gallery(props) {
           width: 100%;
         `}
         allowClear
+        mode="multiple"
+        maxTagCount="responsive"
       />
       <Title level={4}>{t("common.languages")}</Title>
       <Select

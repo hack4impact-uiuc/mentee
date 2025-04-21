@@ -65,15 +65,18 @@ def get_requests_by_id(account_type, id):
         missing_name = AppointmentRequest.objects(mentee_id=id).filter(
             mentor_name__not__exists=True
         )
+        missing_mentor_ids = set()
         for appointment in missing_name:
             try:
-                mentor = MentorProfile.objects.get(id=appointment.mentor_id)
+                if appointment.mentor_id not in missing_mentor_ids:
+                    missing_mentor_ids.add(appointment.mentor_id)
+                    mentor = MentorProfile.objects.get(id=appointment.mentor_id)
+                    appointment.mentor_name = mentor.name
+                    appointment.save()
             except:
-                msg = f"Could not find mentor with given id"
+                msg = f"Could not find mentor with given id " + str(appointment.mentor_id)
                 logger.info(msg)
                 continue
-            appointment.mentor_name = mentor.name
-            appointment.save()
 
     # Fetch appointments by respective mentee/mentor id
     res = None

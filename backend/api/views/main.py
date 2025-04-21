@@ -203,7 +203,9 @@ def get_accounts(account_type):
 # @all_users
 def get_account(id):
     try:
-        account_type = int(request.args["account_type"])
+        account_type = (request.args["account_type"])
+        if isinstance(account_type, str):
+            account_type = int(account_type)
     except:
         msg = "Missing account_type param or account_type param is not an int"
         return create_response(status=422, message=msg)

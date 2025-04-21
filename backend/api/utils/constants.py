@@ -63,7 +63,14 @@ class Account(Enum):
     MODERATOR = 7
 
     def __eq__(self, other):
+        if isinstance(other, Account):
+            return self.value == other.value
         return self.value == other
+    def __int__(self):
+        return self.value
+
+    def __hash__(self):
+        return hash(self.value)
 
 
 # Mentor Application Status

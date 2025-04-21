@@ -10,7 +10,7 @@ import { collapse } from "features/userSlice";
 import BigLogoImage from "resources/Mentee_logo_letter.png";
 import N50SmallLogoImage from "resources/N50 Logo_small.png";
 // import { ReactComponent as SmallLogo } from "resources/menteeSmall.svg";
-import SmallLogoImage from "resources/Mentee_logo_small.png";
+// import SmallLogoImage from "resources/Mentee_logo_small.png";
 import "components/css/Navigation.scss";
 import { ACCOUNT_TYPE } from "utils/consts";
 import { css } from "@emotion/css";
@@ -27,7 +27,8 @@ function NavigationSider() {
   const role = getRole();
   const sidebarItems = useSidebars(role, user, t);
   const isMobile = useMediaQuery({ query: `(max-width: 761px)` });
-  const currentPage = [history.location.pathname.split("/")[1]];
+  let main_domain_url = history.location.pathname.split("/")[0];
+  const currentPage = [history.location.pathname.replace(main_domain_url+'/', '')];
   const n50_flag = localStorage.getItem("n50_user");
 
   const onClick = ({ key }) => {
@@ -51,7 +52,7 @@ function NavigationSider() {
         return "/";
     }
   };
-
+  
   return isMobile ? (
     <Drawer
       open={isMobile && !collapsed}
