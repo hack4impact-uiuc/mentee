@@ -40,7 +40,7 @@ function Gallery(props) {
   const location = useLocation();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [allPartners, setAllPartners] = useState([]);
-  const [selectedPartnerID, setSelectedPartnerID] = useState(undefined);
+  const [selectedPartnerOrg, setSelectedPartnerOrg] = useState(undefined);
   const verified = location.state && location.state.verified;
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
@@ -110,7 +110,9 @@ function Gallery(props) {
       var temp = [];
       all_data.map((item) => {
         temp.push({
-          value: item.id ? item.id : item._id["$oid"],
+          // value: item.id ? item.id : item._id["$oid"],
+          value:
+            item.organization + "_" + (item.id ? item.id : item._id["$oid"]),
           label: item.organization,
         });
         return false;
@@ -133,8 +135,12 @@ function Gallery(props) {
         interests.length === 0 ||
         interests.some((l) => specializs.indexOf(l) >= 0);
       const matchPartner =
-        !selectedPartnerID ||
-        (mentee.pair_partner && mentee.pair_partner.id === selectedPartnerID);
+        !selectedPartnerOrg ||
+        selectedPartnerOrg.length === 0 ||
+        (mentee.pair_partner &&
+          selectedPartnerOrg.includes(
+            mentee.pair_partner.organization + "_" + mentee.pair_partner.id
+          ));
       return matchesLanguages && matchesName && matchInterests && matchPartner;
     });
   };
@@ -165,7 +171,7 @@ function Gallery(props) {
       </Title>
       <Select
         onChange={(value) => {
-          setSelectedPartnerID(value);
+          setSelectedPartnerOrg(value);
         }}
         placeholder={t("common.partner")}
         options={allPartners}
@@ -174,6 +180,8 @@ function Gallery(props) {
           width: 100%;
         `}
         allowClear
+        mode="multiple"
+        maxTagCount="responsive"
       />
       <Title level={4}>{t("common.languages")}</Title>
       <Select
