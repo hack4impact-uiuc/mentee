@@ -190,8 +190,11 @@ def get_sidebar(user_id):
             Q(recipient_id=user_id) | Q(sender_id=user_id)
         ).order_by("-created_at")
 
+        print("send messages", len(sentMessages))
+
         contacts = []
         sidebarContacts = set()
+        search_user_ids = set()
         for message in sentMessages:
             otherId = message["recipient_id"]
             message_read = message["message_read"]
@@ -199,9 +202,11 @@ def get_sidebar(user_id):
             if str(otherId) == user_id:
                 otherId = message["sender_id"]
 
-            if otherId not in sidebarContacts:
+            if otherId not in sidebarContacts and otherId not in search_user_ids:
                 otherUser = None
                 user_type = Account.MENTOR.value
+                print("otherId", otherId)
+                search_user_ids.add(otherId)
                 try:
                     otherUser = MentorProfile.objects.get(id=otherId)
                 except:
@@ -218,51 +223,52 @@ def get_sidebar(user_id):
                         logger.info(e)
                         msg = "Could not find mentor or mentee for given ids"
                         logger.info(msg)
-                        continue
-                otherUser = json.loads(otherUser.to_json())
-                if user_type == Account.PARTNER.value:
-                    if "organization" in otherUser:
-                        otherUserObj = {
-                            "name": otherUser["organization"],
-                            "user_type": user_type,
-                        }
+                        pass
+                if otherUser:
+                    otherUser = json.loads(otherUser.to_json())
+                    if user_type == Account.PARTNER.value:
+                        if "organization" in otherUser:
+                            otherUserObj = {
+                                "name": otherUser["organization"],
+                                "user_type": user_type,
+                            }
+                        else:
+                            otherUserObj = {
+                                "name": otherUser["title"],
+                                "user_type": user_type,
+                            }
                     else:
                         otherUserObj = {
-                            "name": otherUser["title"],
+                            "name": otherUser["name"],
                             "user_type": user_type,
                         }
-                else:
-                    otherUserObj = {
-                        "name": otherUser["name"],
-                        "user_type": user_type,
+
+                    if "image" in otherUser:
+                        otherUserObj["image"] = otherUser["image"]["url"]
+
+                    sidebarObject = {
+                        "otherId": str(otherId),
+                        "message_read": message_read,
+                        "numberOfMessages": len(
+                            [
+                                messagee
+                                for messagee in sentMessages
+                                if (
+                                    messagee["recipient_id"] == otherId
+                                    or messagee["sender_id"] == otherId
+                                )
+                            ]
+                        ),
+                        "otherUser": otherUserObj,
+                        "latestMessage": json.loads(message.to_json()),
                     }
 
-                if "image" in otherUser:
-                    otherUserObj["image"] = otherUser["image"]["url"]
+                    allMessages = [
+                        json.loads(message.to_json()) for message in sentMessages
+                    ]
 
-                sidebarObject = {
-                    "otherId": str(otherId),
-                    "message_read": message_read,
-                    "numberOfMessages": len(
-                        [
-                            messagee
-                            for messagee in sentMessages
-                            if (
-                                messagee["recipient_id"] == otherId
-                                or messagee["sender_id"] == otherId
-                            )
-                        ]
-                    ),
-                    "otherUser": otherUserObj,
-                    "latestMessage": json.loads(message.to_json()),
-                }
-
-                allMessages = [
-                    json.loads(message.to_json()) for message in sentMessages
-                ]
-
-                contacts.append(sidebarObject)
-                sidebarContacts.add(otherId)
+                    contacts.append(sidebarObject)
+                    sidebarContacts.add(otherId)
 
         return create_response(
             data={
@@ -615,12 +621,22 @@ def get_group_messages():
 @all_users
 def get_direct_messages():
     try:
-        messages = DirectMessage.objects(
-            Q(sender_id=request.args.get("sender_id"))
-            & Q(recipient_id=request.args.get("recipient_id"))
-            | Q(sender_id=request.args.get("recipient_id"))
-            & Q(recipient_id=request.args.get("sender_id"))
-        )
+        recipient_id = request.args.get("recipient_id")
+        if (
+            recipient_id == str(Account.MENTEE.value)
+            or recipient_id == str(Account.MENTOR.value)
+            or recipient_id == str(Account.PARTNER.value)
+        ):
+            msg = "Invalid parameters provided"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+        else:
+            messages = DirectMessage.objects(
+                Q(sender_id=request.args.get("sender_id"))
+                & Q(recipient_id=request.args.get("recipient_id"))
+                | Q(sender_id=request.args.get("recipient_id"))
+                & Q(recipient_id=request.args.get("sender_id"))
+            )
     except:
         msg = "Invalid parameters provided"
         logger.info(msg)

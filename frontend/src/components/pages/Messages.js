@@ -89,11 +89,15 @@ function Messages(props) {
           }
         });
 
-        history.push(
-          `/messages/${data?.data[0].otherId}?user_type=${data?.data[0].otherUser.user_type}`
-        );
+        if (window.location.pathname.includes("/messages/")) {
+          history.push(
+            `/messages/${data?.data[0].otherId}?user_type=${data?.data[0].otherUser.user_type}`
+          );
+        }
       } else {
-        history.push("/messages/3");
+        if (window.location.pathname.includes("/messages/")) {
+          history.push("/messages/3");
+        }
       }
     }
 
@@ -120,7 +124,7 @@ function Messages(props) {
       );
       setUserType(user_type);
 
-      if (activeMessageId && profileId) {
+      if (activeMessageId && profileId && activeMessageId.length > 3) {
         setLoading(true);
         setMessages(await getMessageData(profileId, activeMessageId));
         setLoading(false);
