@@ -124,11 +124,17 @@ function GroupMessageChatArea(props) {
     }));
   };
 
-  const linkify = (text) => {
-    const urlPattern =
-      /(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]/gi;
-    return text.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
-  };
+  function linkify(text) {
+    const urlRegex = /(\b(https?:\/\/|www\.)[^\s<>]+[^\s<>.,:;"')\]\s])/gi;
+
+    return text.replace(urlRegex, function (url) {
+      let href = url;
+      if (!url.match(/^https?:\/\//i)) {
+        href = "http://" + url;
+      }
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+  }
 
   const sendMessage = (e) => {
     let currentMessage = messageText;
@@ -367,7 +373,6 @@ function GroupMessageChatArea(props) {
 
     // Check for @ symbol
     if (value.endsWith("@")) {
-      console.log("@ detected, showing user list");
       setActiveInput(type);
       setShowUserList(true);
       // Filter out users with undefined names and current user
@@ -457,6 +462,8 @@ function GroupMessageChatArea(props) {
         `<span class="tagged-user">${mentionText}</span>`
       );
     });
+
+    formattedText = linkify(formattedText);
 
     if (message_edited) {
       formattedText += ' <span style="opacity:0.5">(edited)</span>';
