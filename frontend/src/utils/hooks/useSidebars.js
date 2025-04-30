@@ -359,6 +359,10 @@ export default function useSidebars(userType, user, t) {
           key: "hub-data",
         },
         {
+          label: "Partner Data",
+          key: "partner-data",
+        },
+        {
           label: "All Appointments",
           key: "all-appointments",
         },

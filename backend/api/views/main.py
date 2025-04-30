@@ -15,6 +15,7 @@ from api.utils.request_utils import PartnerForm
 
 from api.models import (
     Admin,
+    DirectMessage,
     MenteeApplication,
     MentorApplication,
     MentorProfile,
@@ -229,6 +230,160 @@ def get_account(id):
                     "invite_key": hub_profile.invite_key,
                 }
                 account.hub_user = hub_user
+            if account.assign_mentees is not None and len(account.assign_mentees) > 0:
+                mentee_ids = []
+                for mentee in account.assign_mentees:
+                    mentee_ids.append(mentee["id"])
+
+                mentees = MenteeProfile.objects.filter(id__in=mentee_ids).all()
+                send_messages = DirectMessage.objects.filter(
+                    sender_id__in=mentee_ids
+                ).all()
+
+                received_mentor_contacts = {}
+                received_mentor_ids = []
+                for send_message in send_messages:
+                    if send_message.recipient_id not in received_mentor_ids:
+                        received_mentor_ids.append(send_message.recipient_id)
+
+                    if str(send_message.sender_id) not in received_mentor_contacts:
+                        received_mentor_contacts[str(send_message.sender_id)] = {}
+                        received_mentor_contacts[str(send_message.sender_id)][
+                            str(send_message.recipient_id)
+                        ] = {}
+                    else:
+                        if (
+                            str(send_message.recipient_id)
+                            not in received_mentor_contacts[str(send_message.sender_id)]
+                        ):
+                            received_mentor_contacts[str(send_message.sender_id)][
+                                str(send_message.recipient_id)
+                            ] = {}
+
+                received_mentor_data = MentorProfile.objects.filter(
+                    id__in=received_mentor_ids
+                ).all()
+                mentor_data_objects = {}
+                for received_mentor in received_mentor_data:
+                    mentor_data_objects[str(received_mentor.id)] = received_mentor
+
+                temp = []
+                for mentee in mentees:
+                    message_receive_data = []
+                    if str(mentee.id) in received_mentor_contacts:
+                        for received_mentor in received_mentor_data:
+                            if str(received_mentor.id) in mentor_data_objects:
+                                message_receive_data.append(
+                                    {
+                                        "image": mentor_data_objects[
+                                            str(received_mentor.id)
+                                        ].image,
+                                        "receiver_name": mentor_data_objects[
+                                            str(received_mentor.id)
+                                        ].name,
+                                        "numberOfMessages": len(
+                                            [
+                                                messagee
+                                                for messagee in send_messages
+                                                if (
+                                                    messagee["recipient_id"]
+                                                    == received_mentor.id
+                                                    and messagee["sender_id"]
+                                                    == mentee.id
+                                                )
+                                            ]
+                                        ),
+                                    }
+                                )
+                    temp.append(
+                        {
+                            "id": mentee.id,
+                            "name": mentee.name,
+                            "email": mentee.email,
+                            "image": mentee.image,
+                            "message_receive_data": message_receive_data,
+                        }
+                    )
+                account.assign_mentees = temp
+
+            if account.assign_mentors is not None and len(account.assign_mentors) > 0:
+                mentor_ids = []
+                for mentor in account.assign_mentors:
+                    mentor_ids.append(mentor["id"])
+
+                mentors = MentorProfile.objects.filter(id__in=mentor_ids).all()
+                received_messages = DirectMessage.objects.filter(
+                    recipient_id__in=mentor_ids
+                ).all()
+                sent_mentee_contacts = {}
+                sent_mentee_ids = []
+                for received_message in received_messages:
+                    if received_message.sender_id not in sent_mentee_ids:
+                        sent_mentee_ids.append(received_message.sender_id)
+
+                    if str(received_message.recipient_id) not in sent_mentee_contacts:
+                        sent_mentee_contacts[str(received_message.recipient_id)] = {}
+                        sent_mentee_contacts[str(received_message.recipient_id)][
+                            str(received_message.sender_id)
+                        ] = {}
+                    else:
+                        if (
+                            str(received_message.sender_id)
+                            not in sent_mentee_contacts[
+                                str(received_message.recipient_id)
+                            ]
+                        ):
+                            sent_mentee_contacts[str(received_message.recipient_id)][
+                                str(received_message.sender_id)
+                            ] = {}
+
+                sent_mentee_data = MenteeProfile.objects.filter(
+                    id__in=sent_mentee_ids
+                ).all()
+                mentee_data_objects = {}
+                for sent_mentee in sent_mentee_data:
+                    mentee_data_objects[str(sent_mentee.id)] = sent_mentee
+
+                temp = []
+                for mentor in mentors:
+                    message_receive_data = []
+                    if str(mentor.id) in sent_mentee_contacts:
+                        for sent_mentee in sent_mentee_data:
+                            if str(sent_mentee.id) in mentee_data_objects:
+                                message_receive_data.append(
+                                    {
+                                        "image": mentee_data_objects[
+                                            str(sent_mentee.id)
+                                        ].image,
+                                        "receiver_name": mentee_data_objects[
+                                            str(sent_mentee.id)
+                                        ].name,
+                                        "numberOfMessages": len(
+                                            [
+                                                messagee
+                                                for messagee in received_messages
+                                                if (
+                                                    messagee["sender_id"]
+                                                    == sent_mentee.id
+                                                    and messagee["recipient_id"]
+                                                    == mentor.id
+                                                )
+                                            ]
+                                        ),
+                                    }
+                                )
+
+                    temp.append(
+                        {
+                            "id": mentor.id,
+                            "name": mentor.name,
+                            "email": mentor.email,
+                            "image": mentor.image,
+                            "message_receive_data": message_receive_data,
+                        }
+                    )
+                account.assign_mentors = temp
+
         elif account_type == Account.GUEST:
             account = Guest.objects.get(id=id)
         elif account_type == Account.SUPPORT:
