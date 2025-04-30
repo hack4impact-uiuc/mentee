@@ -30,6 +30,7 @@ import TrainingData from "components/pages/TrainingData";
 import EventDetail from "components/pages/EventDetail";
 import { Languages } from "components/Languages";
 import { Hubs } from "components/Hubs";
+import { AdminPartnerData } from "components/AdminPartnerData";
 import { Specializations } from "components/Specializations";
 import { AdminMessages } from "components/pages/AdminSeeMessages";
 import PartnerGallery from "components/pages/PartnerGallery";
@@ -566,6 +567,21 @@ function App() {
                   <PrivateRoute path="/hub-data">
                     {role == ACCOUNT_TYPE.ADMIN ? (
                       <Hubs />
+                    ) : (
+                      <>
+                        {cur_time - startPathTime > 100 && (
+                          <Result
+                            status="403"
+                            title="403"
+                            subTitle={t("gallery.unauthorizedAccess")}
+                          />
+                        )}
+                      </>
+                    )}
+                  </PrivateRoute>
+                  <PrivateRoute path="/partner-data">
+                    {role == ACCOUNT_TYPE.ADMIN ? (
+                      <AdminPartnerData />
                     ) : (
                       <>
                         {cur_time - startPathTime > 100 && (
