@@ -574,12 +574,20 @@ function AdminDataTable({
           <>
             <Column title="Name" dataIndex="name" key="name" />
             {!isGuest && !isSupport && !isModerator && (
-              <Column
-                title="No. of Appointments"
-                dataIndex="numOfAppointments"
-                key="numOfAppointments"
-                align="center"
-              />
+              <>
+                <Column
+                  title="Affiliated"
+                  dataIndex="partner"
+                  key="partner"
+                  align="center"
+                />
+                <Column
+                  title="Total messages sent"
+                  dataIndex="total_sent_messages"
+                  key="total_sent_messages"
+                  align="center"
+                />
+              </>
             )}
             {(isGuest || isSupport || isModerator) && (
               <Column
@@ -591,12 +599,18 @@ function AdminDataTable({
             )}
             {!isMentee && !isGuest && !isSupport && !isModerator && (
               <>
-                <Column
+                {/* <Column
                   title="Appointments Available?"
                   dataIndex="appointmentsAvailable"
                   key="appointmentsAvailable"
                   align="center"
                   render={(text) => (text ? text : "N/A")}
+                /> */}
+                <Column
+                  title="Total messages received"
+                  dataIndex="total_received_messages"
+                  key="total_received_messages"
+                  align="center"
                 />
                 <Column
                   title="Videos Posted?"

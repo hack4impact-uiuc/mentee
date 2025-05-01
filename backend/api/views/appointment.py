@@ -1,6 +1,13 @@
 from datetime import datetime, timezone, timedelta
 from flask import Blueprint, request
-from api.models import AppointmentRequest, Availability, MentorProfile, MenteeProfile
+from api.models import (
+    AppointmentRequest,
+    Availability,
+    DirectMessage,
+    MentorProfile,
+    MenteeProfile,
+    PartnerProfile,
+)
 from api.core import create_response, logger
 from api.utils.request_utils import (
     ApppointmentForm,
@@ -397,23 +404,43 @@ def delete_request(appointment_id):
 @admin_only
 def get_mentors_appointments():
     mentors = MentorProfile.objects()
-    appointments = AppointmentRequest.objects()
+    # appointments = AppointmentRequest.objects()
+    messages = DirectMessage.objects()
+
+    all_partners = PartnerProfile.objects()
+    partners_by_assign_mentor = {}
+    for partner_account in all_partners:
+        if partner_account.assign_mentors:
+            for mentor_item in partner_account.assign_mentors:
+                partners_by_assign_mentor[str(mentor_item["id"])] = partner_account
 
     data = []
     for mentor in mentors:
-        mentor_appts = [
-            appointment
-            for appointment in appointments
-            if appointment.mentor_id == mentor.id
+        # mentor_appts = [
+        #     appointment
+        #     for appointment in appointments
+        #     if appointment.mentor_id == mentor.id
+        # ]
+        sent_messages = [
+            message for message in messages if message.sender_id == mentor.id
         ]
+        receive_messages = [
+            message for message in messages if message.recipient_id == mentor.id
+        ]
+        partner = ""
+        if str(mentor.id) in partners_by_assign_mentor:
+            partner = partners_by_assign_mentor[str(mentor.id)].organization
         data.append(
             {
                 "name": mentor.name,
                 "email": mentor.email,
+                "partner": partner,
                 "id": str(mentor.id),
                 "image": mentor.image,
-                "appointments": mentor_appts,
-                "numOfAppointments": len(mentor_appts),
+                # "appointments": mentor_appts,
+                # "numOfAppointments": len(mentor_appts),
+                "total_sent_messages": len(sent_messages),
+                "total_received_messages": len(receive_messages),
                 "appointmentsAvailable": (
                     "Yes"
                     if [
@@ -436,15 +463,31 @@ def get_mentors_appointments():
 @admin_only
 def get_mentees_appointments():
     mentees = MenteeProfile.objects()
+    messages = DirectMessage.objects()
+    all_partners = PartnerProfile.objects()
+    partners_by_assign_mentee = {}
+    for partner_account in all_partners:
+        if partner_account.assign_mentees:
+            for mentee_item in partner_account.assign_mentees:
+                partners_by_assign_mentee[str(mentee_item["id"])] = partner_account
     data = []
     for mentee in mentees:
-        mentee_appts = AppointmentRequest.objects(mentee_id=mentee.id)
+        # mentee_appts = AppointmentRequest.objects(mentee_id=mentee.id)
+        sent_messages = [
+            message for message in messages if message.sender_id == mentee.id
+        ]
+        partner = ""
+        if str(mentee.id) in partners_by_assign_mentee:
+            partner = partners_by_assign_mentee[str(mentee.id)].organization
         mentee = mentee.to_mongo()
         mentee["id"] = str(mentee.pop("_id", None))
+
         data.append(
             {
                 **mentee,
-                "numOfAppointments": len(mentee_appts),
+                # "numOfAppointments": len(mentee_appts),
+                "total_sent_messages": len(sent_messages),
+                "partner": partner,
             }
         )
 
