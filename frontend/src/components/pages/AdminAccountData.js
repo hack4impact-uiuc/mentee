@@ -292,7 +292,7 @@ function AdminAccountData() {
         {(displayOption === keys.MENTORS || displayOption === keys.MENTEES) && (
           <Input.Search
             style={{ marginLeft: "2rem" }}
-            placeholder="Search by Partner"
+            placeholder="Search by Partner affiliated"
             id="search"
             prefix={<UserOutlined />}
             allowClear

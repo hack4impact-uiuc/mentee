@@ -421,6 +421,9 @@ def download_mentee_accounts(accounts, partner_object):
         sent_messages = [
             message for message in messages if message.sender_id == acct.id
         ]
+        receive_messages = [
+            message for message in messages if message.recipient_id == acct.id
+        ]
         partner = ""
         if str(acct.id) in partners_by_assign_mentee:
             partner = partners_by_assign_mentee[str(acct.id)].organization
@@ -470,6 +473,7 @@ def download_mentee_accounts(accounts, partner_object):
                 int(acct.is_private) if acct.is_private != None else "N/A",
                 acct.video.url if acct.video else "None",
                 ",".join(acct.favorite_mentors_ids),
+                len(receive_messages),
                 len(sent_messages),
                 partner,
             ]
@@ -494,6 +498,7 @@ def download_mentee_accounts(accounts, partner_object):
         "private account",
         "video url",
         "favorite_mentor_ids",
+        "total_received_messages",
         "total_sent_messages",
         "Affiliated",
     ]
