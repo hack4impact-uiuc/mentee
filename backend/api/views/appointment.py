@@ -476,6 +476,9 @@ def get_mentees_appointments():
         sent_messages = [
             message for message in messages if message.sender_id == mentee.id
         ]
+        receive_messages = [
+            message for message in messages if message.recipient_id == mentee.id
+        ]
         partner = ""
         if str(mentee.id) in partners_by_assign_mentee:
             partner = partners_by_assign_mentee[str(mentee.id)].organization
@@ -487,6 +490,7 @@ def get_mentees_appointments():
                 **mentee,
                 # "numOfAppointments": len(mentee_appts),
                 "total_sent_messages": len(sent_messages),
+                "total_received_messages": len(receive_messages),
                 "partner": partner,
             }
         )

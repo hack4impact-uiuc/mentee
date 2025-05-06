@@ -587,6 +587,12 @@ function AdminDataTable({
                   key="total_sent_messages"
                   align="center"
                 />
+                <Column
+                  title="Total messages received"
+                  dataIndex="total_received_messages"
+                  key="total_received_messages"
+                  align="center"
+                />
               </>
             )}
             {(isGuest || isSupport || isModerator) && (
@@ -606,12 +612,6 @@ function AdminDataTable({
                   align="center"
                   render={(text) => (text ? text : "N/A")}
                 /> */}
-                <Column
-                  title="Total messages received"
-                  dataIndex="total_received_messages"
-                  key="total_received_messages"
-                  align="center"
-                />
                 <Column
                   title="Videos Posted?"
                   dataIndex="videosUp"
