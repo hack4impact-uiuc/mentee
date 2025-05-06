@@ -339,6 +339,8 @@ def get_train_file(id):
 
     if lang in TARGET_LANGS:
         document = get_translation_document(train.translations, lang)
+        if not document:
+            document = train.filee.read()
     else:
         document = train.filee.read()
 
