@@ -216,6 +216,20 @@ function AdminAccountData() {
     setFilterData(newFiltered);
   };
 
+  const handleSearchByPartner = (partner_name) => {
+    if (!partner_name) {
+      setFilterData(displayData);
+      return;
+    }
+    let newFiltered = [];
+    if (displayOption === keys.MENTORS || displayOption === keys.MENTEES) {
+      newFiltered = displayData.filter((account) => {
+        return account.partner.match(new RegExp(partner_name, "i"));
+      });
+      setFilterData(newFiltered);
+    }
+  };
+
   const handleSearchAccount = (name) => {
     if (!name) {
       setFilterData(displayData);
@@ -275,6 +289,17 @@ function AdminAccountData() {
         <Button className="" onClick={() => handleResetFilters()}>
           Clear Filters
         </Button>
+        {(displayOption === keys.MENTORS || displayOption === keys.MENTEES) && (
+          <Input.Search
+            style={{ marginLeft: "2rem" }}
+            placeholder="Search by Partner affiliated"
+            id="search"
+            prefix={<UserOutlined />}
+            allowClear
+            size="medium"
+            onSearch={(value) => handleSearchByPartner(value)}
+          />
+        )}
       </div>
       <div className="table-header">
         <div className="table-title">

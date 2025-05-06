@@ -10,6 +10,7 @@ from api.models import (
     NewMentorApplication,
     MenteeApplication,
     Hub,
+    DirectMessage,
 )
 from flask import send_file, Blueprint, request
 from api.utils.require_auth import admin_only
@@ -273,9 +274,28 @@ def download_mentee_apps(apps, partner_object):
 
 
 def download_mentor_accounts(accounts):
+    messages = DirectMessage.objects()
+
+    all_partners = PartnerProfile.objects()
+    partners_by_assign_mentor = {}
+    for partner_account in all_partners:
+        if partner_account.assign_mentors:
+            for mentor_item in partner_account.assign_mentors:
+                partners_by_assign_mentor[str(mentor_item["id"])] = partner_account
+
     accts = []
 
     for acct in accounts:
+        sent_messages = [
+            message for message in messages if message.sender_id == acct.id
+        ]
+        receive_messages = [
+            message for message in messages if message.recipient_id == acct.id
+        ]
+        partner = ""
+        if str(acct.id) in partners_by_assign_mentor:
+            partner = partners_by_assign_mentor[str(acct.id)].organization
+
         educations = []
         for edu in acct.education:
             educations.append(
@@ -306,6 +326,9 @@ def download_mentor_accounts(accounts):
                 "Yes" if acct.offers_group_appointments else "No",
                 "Yes" if acct.text_notifications else "No",
                 "Yes" if acct.email_notifications else "No",
+                len(receive_messages),
+                len(sent_messages),
+                partner,
             ]
         )
     columns = [
@@ -327,6 +350,9 @@ def download_mentor_accounts(accounts):
         "offers_group_appointments",
         "text_notifications",
         "email_notifications",
+        "total_received_messages",
+        "total_sent_messages",
+        "Affiliated",
     ]
     return generate_sheet("accounts", accts, columns)
 
@@ -381,9 +407,27 @@ def download_partner_accounts(accounts):
 
 
 def download_mentee_accounts(accounts, partner_object):
+    messages = DirectMessage.objects()
+    all_partners = PartnerProfile.objects()
+    partners_by_assign_mentee = {}
+    for partner_account in all_partners:
+        if partner_account.assign_mentees:
+            for mentee_item in partner_account.assign_mentees:
+                partners_by_assign_mentee[str(mentee_item["id"])] = partner_account
+
     accts = []
 
     for acct in accounts:
+        sent_messages = [
+            message for message in messages if message.sender_id == acct.id
+        ]
+        receive_messages = [
+            message for message in messages if message.recipient_id == acct.id
+        ]
+        partner = ""
+        if str(acct.id) in partners_by_assign_mentee:
+            partner = partners_by_assign_mentee[str(acct.id)].organization
+
         educations = []
         for edu in acct.education:
             educations.append(
@@ -429,6 +473,9 @@ def download_mentee_accounts(accounts, partner_object):
                 int(acct.is_private) if acct.is_private != None else "N/A",
                 acct.video.url if acct.video else "None",
                 ",".join(acct.favorite_mentors_ids),
+                len(receive_messages),
+                len(sent_messages),
+                partner,
             ]
         )
     columns = [
@@ -451,6 +498,9 @@ def download_mentee_accounts(accounts, partner_object):
         "private account",
         "video url",
         "favorite_mentor_ids",
+        "total_received_messages",
+        "total_sent_messages",
+        "Affiliated",
     ]
     return generate_sheet("accounts", accts, columns)
 

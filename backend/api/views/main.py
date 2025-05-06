@@ -12,6 +12,7 @@ from api.utils.google_storage import (
 )
 from api.views.auth import create_firebase_user
 from api.utils.request_utils import PartnerForm
+from mongoengine.queryset.visitor import Q
 
 from api.models import (
     Admin,
@@ -237,7 +238,7 @@ def get_account(id):
 
                 mentees = MenteeProfile.objects.filter(id__in=mentee_ids).all()
                 send_messages = DirectMessage.objects.filter(
-                    sender_id__in=mentee_ids
+                    Q(sender_id__in=mentee_ids) | Q(recipient_id__in=mentee_ids)
                 ).all()
 
                 received_mentor_contacts = {}
@@ -273,26 +274,33 @@ def get_account(id):
                     if str(mentee.id) in received_mentor_contacts:
                         for received_mentor in received_mentor_data:
                             if str(received_mentor.id) in mentor_data_objects:
+                                message_data = [
+                                    messagee.to_mongo()
+                                    for messagee in send_messages
+                                    if (
+                                        (
+                                            messagee["recipient_id"]
+                                            == received_mentor.id
+                                            and messagee["sender_id"] == mentee.id
+                                        )
+                                        or (
+                                            messagee["recipient_id"] == mentee.id
+                                            and messagee["sender_id"]
+                                            == received_mentor.id
+                                        )
+                                    )
+                                ]
                                 message_receive_data.append(
                                     {
+                                        "id": received_mentor.id,
                                         "image": mentor_data_objects[
                                             str(received_mentor.id)
                                         ].image,
                                         "receiver_name": mentor_data_objects[
                                             str(received_mentor.id)
                                         ].name,
-                                        "numberOfMessages": len(
-                                            [
-                                                messagee
-                                                for messagee in send_messages
-                                                if (
-                                                    messagee["recipient_id"]
-                                                    == received_mentor.id
-                                                    and messagee["sender_id"]
-                                                    == mentee.id
-                                                )
-                                            ]
-                                        ),
+                                        "message_data": message_data,
+                                        "numberOfMessages": len(message_data),
                                     }
                                 )
                     temp.append(
@@ -313,7 +321,7 @@ def get_account(id):
 
                 mentors = MentorProfile.objects.filter(id__in=mentor_ids).all()
                 received_messages = DirectMessage.objects.filter(
-                    recipient_id__in=mentor_ids
+                    Q(recipient_id__in=mentor_ids) | Q(sender_id__in=mentor_ids)
                 ).all()
                 sent_mentee_contacts = {}
                 sent_mentee_ids = []
@@ -350,26 +358,32 @@ def get_account(id):
                     if str(mentor.id) in sent_mentee_contacts:
                         for sent_mentee in sent_mentee_data:
                             if str(sent_mentee.id) in mentee_data_objects:
+                                message_data = [
+                                    messagee.to_mongo()
+                                    for messagee in received_messages
+                                    if (
+                                        (
+                                            messagee["sender_id"] == sent_mentee.id
+                                            and messagee["recipient_id"] == mentor.id
+                                        )
+                                        or (
+                                            messagee["sender_id"] == mentor.id
+                                            and messagee["recipient_id"]
+                                            == sent_mentee.id
+                                        )
+                                    )
+                                ]
                                 message_receive_data.append(
                                     {
+                                        "id": sent_mentee.id,
                                         "image": mentee_data_objects[
                                             str(sent_mentee.id)
                                         ].image,
                                         "receiver_name": mentee_data_objects[
                                             str(sent_mentee.id)
                                         ].name,
-                                        "numberOfMessages": len(
-                                            [
-                                                messagee
-                                                for messagee in received_messages
-                                                if (
-                                                    messagee["sender_id"]
-                                                    == sent_mentee.id
-                                                    and messagee["recipient_id"]
-                                                    == mentor.id
-                                                )
-                                            ]
-                                        ),
+                                        "message_data": message_data,
+                                        "numberOfMessages": len(message_data),
                                     }
                                 )
 
