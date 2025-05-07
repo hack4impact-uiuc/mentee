@@ -302,9 +302,7 @@ function AddEventModal({
           <Select
             allowClear
             mode="multiple"
-            options={[
-              { value: ACCOUNT_TYPE.MENTEE, label: "Mentee" },
-            ]}
+            options={[{ value: ACCOUNT_TYPE.MENTEE, label: "Mentee" }]}
             maxTagCount="responsive"
           />
         </Form.Item>
