@@ -304,7 +304,6 @@ function AddEventModal({
             mode="multiple"
             options={[
               { value: ACCOUNT_TYPE.MENTEE, label: "Mentee" },
-              { value: ACCOUNT_TYPE.MENTOR, label: "Mentor" },
             ]}
             maxTagCount="responsive"
           />
