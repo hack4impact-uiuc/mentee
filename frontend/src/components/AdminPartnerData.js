@@ -20,6 +20,7 @@ import {
   Col,
   Typography,
   Tag,
+  Button,
 } from "antd";
 import {
   UserOutlined,
@@ -27,6 +28,7 @@ import {
   DownOutlined,
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
+import { HubsDropdown } from "../components/AdminDropdowns";
 
 import "./css/Training.scss";
 import { ACCOUNT_TYPE } from "utils/consts";
@@ -37,6 +39,9 @@ export const AdminPartnerData = () => {
   const [subLoading, setSubLoading] = useState(false);
   const [data, setData] = useState([]);
   const [filterData, setfilterData] = useState([]);
+  const [hubOptions, setHubOptions] = useState([]);
+  const [resetFilters, setResetFilters] = useState(false);
+  const [searchHubUserId, setSearchHubUserId] = useState(null);
 
   const [messageApi, contextHolder] = message.useMessage();
   const { Sider } = Layout;
@@ -86,10 +91,6 @@ export const AdminPartnerData = () => {
 
   const getFilteredModalMessages = () => {
     if (!modalData || !Array.isArray(modalData)) return [];
-
-    // if (modalMessageFilter === "all") {
-    //   return modalData;
-    // }
 
     return modalData.filter((message) => {
       const matchSearchWord =
@@ -225,10 +226,17 @@ export const AdminPartnerData = () => {
     const getData = async () => {
       setLoading(true);
       let dataa = await fetchAccounts(ACCOUNT_TYPE.PARTNER);
+      const hub_data = await fetchAccounts(ACCOUNT_TYPE.HUB);
       if (dataa) {
         setData(dataa);
-        setfilterData(dataa);
+        setfilterData(dataa.filter((x) => !x.hub_id));
       }
+      var temp = [];
+      hub_data.map((hub_item) => {
+        temp.push({ label: hub_item.name, value: hub_item._id.$oid });
+        return true;
+      });
+      setHubOptions(temp);
       setLoading(false);
     };
     getData();
@@ -349,6 +357,38 @@ export const AdminPartnerData = () => {
     setSubLoading(false);
   };
 
+  const searchbyHub = (key) => {
+    setSearchHubUserId(key);
+  };
+
+  const handleResetFilters = () => {
+    setResetFilters(!resetFilters);
+    setSearchHubUserId(null);
+  };
+
+  useEffect(() => {
+    setfilterData(
+      data.filter((x) => {
+        let matchHub = false;
+        if (searchHubUserId) {
+          matchHub = x.hub_id == searchHubUserId;
+        } else {
+          matchHub = !x.hub_id;
+        }
+
+        let mathcQuery = false;
+        if (searchQuery) {
+          mathcQuery =
+            x.organization &&
+            x.organization.toUpperCase().includes(searchQuery.toUpperCase());
+        } else {
+          mathcQuery = true;
+        }
+        return matchHub && mathcQuery;
+      })
+    );
+  }, [searchHubUserId, searchQuery, data]);
+
   return (
     <div className="">
       {contextHolder}
@@ -379,21 +419,29 @@ export const AdminPartnerData = () => {
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
-                  if (!e.target.value) {
-                    setfilterData(data);
-                  } else {
-                    setfilterData(
-                      data.filter(
-                        (x) =>
-                          x.organization &&
-                          x.organization
-                            .toUpperCase()
-                            .includes(e.target.value.toUpperCase())
-                      )
-                    );
-                  }
                 }}
               />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                padding: "0 20px",
+                marginBottom: "10px",
+              }}
+            >
+              <div style={{ lineHeight: "30px" }}>Filter Hub</div>
+              <HubsDropdown
+                className="table-button hub-drop-down"
+                options={hubOptions}
+                onChange={(key) => searchbyHub(key)}
+                onReset={resetFilters}
+              />
+              <Button
+                style={{ marginLeft: "10px" }}
+                onClick={() => handleResetFilters()}
+              >
+                Clear Filters
+              </Button>
             </div>
             <Divider className="header-divider" orientation="left"></Divider>
             <div className="messages-sidebar" style={{ paddingTop: "1em" }}>
