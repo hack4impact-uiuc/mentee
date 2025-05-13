@@ -17,6 +17,7 @@ function Messages(props) {
   const dispatch = useDispatch();
   const [latestConvos, setLatestConvos] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
+  const [paused, setPaused] = useState(false);
   const activeMessageId = useSelector(
     (state) => state.messages.activeMessageId
   );
@@ -43,7 +44,11 @@ function Messages(props) {
       setBookingVisible(true);
       setinviteeId(data.inviteeId);
     }
-    if (data?.sender_id?.$oid === activeMessageId) {
+    if (
+      data?.sender_id?.$oid === activeMessageId ||
+      data?.sender_id === activeMessageId
+    ) {
+      setPaused(data.paused_flag);
       setMessages((prevMessages) => [...prevMessages, data]);
       dispatch(
         updateNotificationsCount({
@@ -171,6 +176,7 @@ function Messages(props) {
           inviteeId={inviteeId}
           restrictedPartners={restrictedPartners}
           user={user}
+          paused={paused}
         />
       </Layout>
     </Layout>

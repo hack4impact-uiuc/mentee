@@ -51,7 +51,7 @@ function Gallery(props) {
   const user = useSelector((state) => state.user.user);
   useEffect(() => {
     async function getMentors() {
-      const mentor_data = await fetchMentors();
+      const mentor_data = await fetchMentors(true);
       if (mentor_data) {
         if (user && user.pair_partner && user.pair_partner.restricted) {
           if (user.pair_partner.assign_mentors) {

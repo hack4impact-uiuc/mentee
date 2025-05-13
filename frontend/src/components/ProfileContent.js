@@ -177,7 +177,9 @@ function ProfileContent(props) {
         <div className="mentor-profile-actions">
           <div className="mentor-profile-book-appt-btn">
             {isMentee &&
-              (props.isMentor || accountType === ACCOUNT_TYPE.MENTOR) && (
+              (props.isMentor || accountType === ACCOUNT_TYPE.MENTOR) &&
+              props.mentor &&
+              props.mentor.paused_flag != true && (
                 <>
                   <MentorContactModal
                     mentorName={props.mentor?.name}

@@ -262,6 +262,13 @@ function AdminDataTable({
       setIschanged(!isChanged);
     }
   }
+  async function changePausedFlag(value, data) {
+    var edit_data = {
+      paused_flag: value,
+    };
+    await editAccountProfile(edit_data, data.id, ACCOUNT_TYPE.MENTOR);
+    refresh();
+  }
   function handleRestricted(value) {
     var selected_partner = selectedPartner;
     selected_partner.restricted = value;
@@ -625,6 +632,22 @@ function AdminDataTable({
                   key="profilePicUp"
                   align="center"
                   render={(text) => (text ? text : "N/A")}
+                />
+                <Column
+                  title="Paused"
+                  dataIndex="paused_flag"
+                  key="paused_flag"
+                  align="center"
+                  render={(text, data) => {
+                    return (
+                      <Switch
+                        size="small"
+                        checked={data.paused_flag}
+                        // handleClick={handleClick}
+                        onChange={(e) => changePausedFlag(e, data)}
+                      />
+                    );
+                  }}
                 />
               </>
             )}

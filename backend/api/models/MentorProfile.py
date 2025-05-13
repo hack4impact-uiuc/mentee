@@ -34,8 +34,9 @@ class MentorProfile(Document, Mixin):
     preferred_language = StringField(required=False, default="en-US")
     roomName = StringField(required=False)
     organization = StringField(required=False)
-    timezone = StringField(required=True)
+    timezone = StringField(required=False)
     mentorMentee = StringField(required=False)
+    paused_flag = BooleanField(required=False)
 
     def __repr__(self):
         return f"""<MentorProfile firebase_id: {self.firebase_uid} 
