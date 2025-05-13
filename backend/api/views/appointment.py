@@ -441,6 +441,7 @@ def get_mentors_appointments():
                 # "numOfAppointments": len(mentor_appts),
                 "total_sent_messages": len(sent_messages),
                 "total_received_messages": len(receive_messages),
+                "paused_flag": mentor.paused_flag,
                 "appointmentsAvailable": (
                     "Yes"
                     if [

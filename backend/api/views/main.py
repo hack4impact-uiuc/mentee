@@ -61,18 +61,32 @@ main = Blueprint("main", __name__)  # initialize blueprint
 def get_accounts(account_type):
     accounts = None
     if account_type == Account.MENTOR:
-        mentors_data = MentorProfile.objects().exclude(
-            "availability",
-            "videos",
-            "firebase_uid",
-            "linkedin",
-            "website",
-            "education",
-            "biography",
-            "taking_appointments",
-            "text_notifications",
-            "email_notifications",
-        )
+        if "restricted" in request.args and request.args["restricted"] == "true":
+            mentors_data = MentorProfile.objects.filter(paused_flag__ne=True).exclude(
+                "availability",
+                "videos",
+                "firebase_uid",
+                "linkedin",
+                "website",
+                "education",
+                "biography",
+                "taking_appointments",
+                "text_notifications",
+                "email_notifications",
+            )
+        else:
+            mentors_data = MentorProfile.objects().exclude(
+                "availability",
+                "videos",
+                "firebase_uid",
+                "linkedin",
+                "website",
+                "education",
+                "biography",
+                "taking_appointments",
+                "text_notifications",
+                "email_notifications",
+            )
         all_partners = PartnerProfile.objects()
         partners_by_assign_mentor = {}
         for partner_account in all_partners:

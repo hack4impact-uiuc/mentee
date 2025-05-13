@@ -20,6 +20,7 @@ function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const [onEdit, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -29,6 +30,14 @@ function Profile() {
   const handleSaveEdits = () => {
     dispatch(fetchUser({ id: profileId, role }));
   };
+
+  async function changePausedFlag(value) {
+    setLoading(true);
+    let edited_data = { ...user, paused_flag: value };
+    await editMentorProfile(edited_data, profileId);
+    handleSaveEdits();
+    setLoading(false);
+  }
 
   useEffect(() => {
     async function addTakingAppointments() {
@@ -174,7 +183,7 @@ function Profile() {
 
   return (
     <>
-      {!user ? (
+      {!user || loading ? (
         <div className="profile-loading">
           <Spin size="large" />
         </div>
@@ -186,6 +195,18 @@ function Profile() {
               src={user.image && user.image.url}
               icon={<UserOutlined />}
             />
+            {isMentor && (
+              <>
+                <Switch
+                  style={{ marginLeft: "5%", marginRight: "10px" }}
+                  size="small"
+                  checked={user.paused_flag}
+                  // handleClick={handleClick}
+                  onChange={(e) => changePausedFlag(e)}
+                />
+                <label>Paused</label>
+              </>
+            )}
             <div className="mentor-profile-content-flexbox">
               <div className="mentor-profile-info">
                 <ProfileContent

@@ -1,7 +1,18 @@
 from api.models.Hub import Hub
 from api.models.PartnerProfile import PartnerProfile
-from api.models import Education, Video, MentorProfile, MenteeProfile, Admin
+from api.models import (
+    Education,
+    Video,
+    MentorProfile,
+    MenteeProfile,
+    Admin,
+    DirectMessage,
+)
 from api.utils.constants import Account
+from api import socketio
+from datetime import datetime
+import json
+from bson import ObjectId
 
 
 def new_profile(data: dict = {}, profile_type: int = -1):
@@ -204,6 +215,67 @@ def edit_profile(data: dict = {}, profile: object = None):
         profile.linkedin = data.get("linkedin", profile.linkedin)
         profile.website = data.get("website", profile.website)
         profile.timezone = data.get("timezone", profile.timezone)
+        ex_paused_flag = profile.paused_flag
+        profile.paused_flag = data.get("paused_flag", profile.paused_flag)
+        if ex_paused_flag != profile.paused_flag:
+            if profile.paused_flag == True:
+                try:
+                    ex_messages = DirectMessage.objects.filter(
+                        recipient_id=profile.id
+                    ).order_by("-created_at")
+                    contacted_mentee_ids = set()
+                    for ex_message in ex_messages:
+                        if str(ex_message.sender_id) not in contacted_mentee_ids:
+                            message = DirectMessage(
+                                body="Please note that I needed to take a brief sabbatical from our community of support. In the meantime, please explore our other global mentors in the mentor gallery or reach out to global@menteeglobal.org with any questions you have.",
+                                message_read=False,
+                                sender_id=str(profile.id),
+                                recipient_id=str(ex_message.sender_id),
+                                created_at=datetime.utcnow().isoformat(),
+                            )
+
+                            send_data = {
+                                "body": "Please note that I needed to take a brief sabbatical from our community of support. In the meantime, please explore our other global mentors in the mentor gallery or reach out to global@menteeglobal.org with any questions you have.",
+                                "message_read": False,
+                                "sender_id": str(profile.id),
+                                "recipient_id": str(ex_message.sender_id),
+                                "created_at": datetime.utcnow().isoformat(),
+                                "paused_flag": profile.paused_flag,
+                            }
+                            socketio.emit(str(ex_message.sender_id), send_data)
+                            message.save()
+                            contacted_mentee_ids.add(str(ex_message.sender_id))
+                except Exception as e:
+                    print(e)
+            else:
+                try:
+                    ex_messages = DirectMessage.objects.filter(
+                        recipient_id=profile.id
+                    ).order_by("-created_at")
+                    contacted_mentee_ids = set()
+                    for ex_message in ex_messages:
+                        if str(ex_message.sender_id) not in contacted_mentee_ids:
+                            message = DirectMessage(
+                                body="I am back ! Please let me know if I can help with anything.",
+                                message_read=False,
+                                sender_id=str(profile.id),
+                                recipient_id=str(ex_message.sender_id),
+                                created_at=datetime.utcnow().isoformat(),
+                            )
+                            send_data = {
+                                "body": "I am back ! Please let me know if I can help with anything.",
+                                "message_read": False,
+                                "sender_id": str(profile.id),
+                                "recipient_id": str(ex_message.sender_id),
+                                "created_at": datetime.utcnow().isoformat(),
+                                "paused_flag": profile.paused_flag,
+                            }
+
+                            socketio.emit(str(ex_message.sender_id), send_data)
+                            message.save()
+                            contacted_mentee_ids.add(str(ex_message.sender_id))
+                except Exception as e:
+                    print(e)
 
         if ex_organization != profile.organization:
             # for old data---------------------------------
