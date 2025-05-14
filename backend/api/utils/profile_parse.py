@@ -11,8 +11,7 @@ from api.models import (
 from api.utils.constants import Account
 from api import socketio
 from datetime import datetime
-import json
-from bson import ObjectId
+from mongoengine.queryset.visitor import Q
 
 
 def new_profile(data: dict = {}, profile_type: int = -1):
@@ -221,16 +220,26 @@ def edit_profile(data: dict = {}, profile: object = None):
             if profile.paused_flag == True:
                 try:
                     ex_messages = DirectMessage.objects.filter(
-                        recipient_id=profile.id
+                        Q(recipient_id=profile.id) | Q(sender_id=profile.id)
                     ).order_by("-created_at")
                     contacted_mentee_ids = set()
+                    contacted_mentee_ids.add(str(profile.id))
                     for ex_message in ex_messages:
-                        if str(ex_message.sender_id) not in contacted_mentee_ids:
+                        if (
+                            str(ex_message.sender_id) not in contacted_mentee_ids
+                            or str(ex_message.recipient_id) not in contacted_mentee_ids
+                        ):
+                            new_recipient_id = (
+                                ex_message.recipient_id
+                                if (str(ex_message.sender_id) == str(profile.id))
+                                else ex_message.sender_id
+                            )
+
                             message = DirectMessage(
                                 body="Please note that I needed to take a brief sabbatical from our community of support. In the meantime, please explore our other global mentors in the mentor gallery or reach out to global@menteeglobal.org with any questions you have.",
                                 message_read=False,
                                 sender_id=str(profile.id),
-                                recipient_id=str(ex_message.sender_id),
+                                recipient_id=str(new_recipient_id),
                                 created_at=datetime.utcnow().isoformat(),
                             )
 
@@ -238,42 +247,51 @@ def edit_profile(data: dict = {}, profile: object = None):
                                 "body": "Please note that I needed to take a brief sabbatical from our community of support. In the meantime, please explore our other global mentors in the mentor gallery or reach out to global@menteeglobal.org with any questions you have.",
                                 "message_read": False,
                                 "sender_id": str(profile.id),
-                                "recipient_id": str(ex_message.sender_id),
+                                "recipient_id": str(new_recipient_id),
                                 "created_at": datetime.utcnow().isoformat(),
                                 "paused_flag": profile.paused_flag,
                             }
-                            socketio.emit(str(ex_message.sender_id), send_data)
+                            socketio.emit(str(new_recipient_id), send_data)
                             message.save()
-                            contacted_mentee_ids.add(str(ex_message.sender_id))
+                            contacted_mentee_ids.add(str(new_recipient_id))
                 except Exception as e:
                     print(e)
             else:
                 try:
                     ex_messages = DirectMessage.objects.filter(
-                        recipient_id=profile.id
+                        Q(recipient_id=profile.id) | Q(sender_id=profile.id)
                     ).order_by("-created_at")
                     contacted_mentee_ids = set()
+                    contacted_mentee_ids.add(str(profile.id))
                     for ex_message in ex_messages:
-                        if str(ex_message.sender_id) not in contacted_mentee_ids:
+                        if (
+                            str(ex_message.sender_id) not in contacted_mentee_ids
+                            or str(ex_message.recipient_id) not in contacted_mentee_ids
+                        ):
+                            new_recipient_id = (
+                                ex_message.recipient_id
+                                if (str(ex_message.sender_id) == str(profile.id))
+                                else ex_message.sender_id
+                            )
                             message = DirectMessage(
                                 body="I am back ! Please let me know if I can help with anything.",
                                 message_read=False,
                                 sender_id=str(profile.id),
-                                recipient_id=str(ex_message.sender_id),
+                                recipient_id=str(new_recipient_id),
                                 created_at=datetime.utcnow().isoformat(),
                             )
                             send_data = {
                                 "body": "I am back ! Please let me know if I can help with anything.",
                                 "message_read": False,
                                 "sender_id": str(profile.id),
-                                "recipient_id": str(ex_message.sender_id),
+                                "recipient_id": str(new_recipient_id),
                                 "created_at": datetime.utcnow().isoformat(),
                                 "paused_flag": profile.paused_flag,
                             }
 
-                            socketio.emit(str(ex_message.sender_id), send_data)
+                            socketio.emit(str(new_recipient_id), send_data)
                             message.save()
-                            contacted_mentee_ids.add(str(ex_message.sender_id))
+                            contacted_mentee_ids.add(str(new_recipient_id))
                 except Exception as e:
                     print(e)
 
@@ -314,7 +332,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                     title=video_data.get("title"),
                     url=video_data.get("url"),
                     tag=video_data.get("tag"),
-                    date_uploaded=video_data.get("date_uploaded"),
+                    date_uploaded=video_data.get("date_uploaded")["$date"]
+                    if "$date" in video_data.get("date_uploaded")
+                    else video_data.get("date_uploaded"),
                 )
                 if profile.videos:
                     profile.videos[0] = profile.video
@@ -333,7 +353,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                         title=video.get("title"),
                         url=video.get("url"),
                         tag=video.get("tag"),
-                        date_uploaded=video.get("date_uploaded"),
+                        date_uploaded=video.get("date_uploaded")["$date"]
+                        if "$date" in video.get("date_uploaded")
+                        else video.get("date_uploaded"),
                     )
                     for video in video_data
                 ]
@@ -391,7 +413,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                     title=video_data.get("title"),
                     url=video_data.get("url"),
                     tag=video_data.get("tag"),
-                    date_uploaded=video_data.get("date_uploaded"),
+                    date_uploaded=video_data.get("date_uploaded")["$date"]
+                    if "$date" in video_data.get("date_uploaded")
+                    else video_data.get("date_uploaded"),
                 )
             else:
                 profile.video = None
