@@ -201,7 +201,9 @@ function ProfileContent(props) {
               props.mentor &&
               props.mentor._id &&
               props.mentor._id["$oid"] !== profileId &&
-              profileId && (user && user.paused_flag !== true) && (
+              profileId &&
+              user &&
+              user.paused_flag !== true && (
                 <PublicMessageModal
                   menteeName={props.mentor.name}
                   menteeId={
