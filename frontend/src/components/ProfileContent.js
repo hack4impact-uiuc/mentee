@@ -26,6 +26,7 @@ import { formatDate } from "utils/consts";
 function ProfileContent(props) {
   const { t } = useTranslation();
   const options = useSelector((state) => state.options);
+  const user = useSelector((state) => state.user.user);
   const { accountType, account } = props;
   const profileId = getProfileId();
   const role = getRole();
@@ -177,7 +178,9 @@ function ProfileContent(props) {
         <div className="mentor-profile-actions">
           <div className="mentor-profile-book-appt-btn">
             {isMentee &&
-              (props.isMentor || accountType === ACCOUNT_TYPE.MENTOR) && (
+              (props.isMentor || accountType === ACCOUNT_TYPE.MENTOR) &&
+              props.mentor &&
+              props.mentor.paused_flag !== true && (
                 <>
                   <MentorContactModal
                     mentorName={props.mentor?.name}
@@ -198,7 +201,9 @@ function ProfileContent(props) {
               props.mentor &&
               props.mentor._id &&
               props.mentor._id["$oid"] !== profileId &&
-              profileId && (
+              profileId &&
+              user &&
+              user.paused_flag !== true && (
                 <PublicMessageModal
                   menteeName={props.mentor.name}
                   menteeId={

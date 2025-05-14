@@ -1372,8 +1372,8 @@ export const fetchMenteeByID = async (id) => {
   return await fetchAccountById(id, ACCOUNT_TYPE.MENTEE);
 };
 
-export const fetchMentors = async () => {
-  return await fetchAccounts(ACCOUNT_TYPE.MENTOR);
+export const fetchMentors = async (restricted = undefined) => {
+  return await fetchAccounts(ACCOUNT_TYPE.MENTOR, restricted);
 };
 export const fetchPartners = async (
   restricted = undefined,

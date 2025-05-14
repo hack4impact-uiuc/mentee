@@ -43,6 +43,7 @@ function MessagesChatArea(props) {
   const [appointments, setAppointments] = useState([]);
   const [availabeInFuture, setAvailabeInFuture] = useState([]);
   const [bookedData, setBookedData] = useState({});
+  const [refresh, setRefresh] = useState(false);
   const isMobile = useMediaQuery({ query: `(max-width: 761px)` });
   var total_index = 0;
   const {
@@ -158,6 +159,12 @@ function MessagesChatArea(props) {
           );
         }
       }
+    }
+    if (accountData && props.paused_flag !== accountData.paused_flag) {
+      var temp = accountData;
+      accountData.paused_flag = props.paused_flag;
+      setAccountData(temp);
+      setRefresh(!refresh);
     }
     fetchAccount();
   }, [updateContent, otherId, messages]);
@@ -626,21 +633,23 @@ function MessagesChatArea(props) {
               onChange={(e) => setMessageText(e.target.value)}
               autoSize={{ minRows: 1, maxRows: 3 }}
             />
-            <Button
-              id="sendMessagebtn"
-              onClick={sendMessage}
-              className={css`
-                margin-left: 0.5em;
-                padding: 0.5em;
-              `}
-              shape="default"
-              type="primary"
-              ref={buttonRef}
-              icon={<SendOutlined rotate={315} />}
-              size={48}
-            >
-              {t("messages.send")}
-            </Button>
+            {!accountData.paused_flag && !user.paused_flag && (
+              <Button
+                id="sendMessagebtn"
+                onClick={sendMessage}
+                className={css`
+                  margin-left: 0.5em;
+                  padding: 0.5em;
+                `}
+                shape="default"
+                type="primary"
+                ref={buttonRef}
+                icon={<SendOutlined rotate={315} />}
+                size={48}
+              >
+                {t("messages.send")}
+              </Button>
+            )}
           </>
         )}
       </div>
