@@ -252,6 +252,29 @@ function App() {
                       </>
                     )}
                   </PrivateRoute>
+                  <PrivateRoute path="/dashboard">
+                    {role == ACCOUNT_TYPE.ADMIN ? (
+                      <div style={{ padding: "40px", fontSize: "20px" }}>
+                        <a
+                          href="https://lookerstudio.google.com/u/0/reporting/c11362c3-fec0-4e34-bff7-cb302caf762d/page/p1iHF?s=u2xKH-NSqII"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Looker insights
+                        </a>
+                      </div>
+                    ) : (
+                      <>
+                        {cur_time - startPathTime > 100 && (
+                          <Result
+                            status="403"
+                            title="403"
+                            subTitle={t("gallery.unauthorizedAccess")}
+                          />
+                        )}
+                      </>
+                    )}
+                  </PrivateRoute>
                   <PrivateRoute path="/support/all-mentees">
                     {role == ACCOUNT_TYPE.SUPPORT ? (
                       <MenteeGallery isSupport={true} />

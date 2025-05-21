@@ -312,6 +312,11 @@ export default function useSidebars(userType, user, t) {
   }
   const adminSidebar = [
     {
+      label: "Dashboard",
+      key: `dashboard`,
+      icon: <LinkOutlined />,
+    },
+    {
       label: t("common.group_message"),
       key: `admin_group_messages`,
       icon: <MessageOutlined />,
