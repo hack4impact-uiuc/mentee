@@ -11,7 +11,12 @@ from api.models import (
     Specializations,
 )
 from api.utils.request_utils import send_email
-from api.utils.constants import Account, MENTOR_CONTACT_ME, TRANSLATIONS
+from api.utils.constants import (
+    Account,
+    MENTOR_CONTACT_ME,
+    TRANSLATIONS,
+    UNREAD_MESSAGE_TEMPLATE,
+)
 from api.utils.require_auth import all_users
 from api.utils.translate import get_translated_options
 from api.core import create_response, logger
@@ -112,9 +117,28 @@ def create_message():
         return create_response(status=422, message=msg)
 
     socketio.emit(data["recipient_id"], json.loads(message.to_json()))
+
+    email_sent_status = ""
+    try:
+        recipient = PartnerProfile.objects.get(id=data["recipient_id"])
+        res, res_msg = send_email(
+            recipient.email,
+            data={
+                "number_unread": "1",
+                recipient.preferred_language: True,
+                "subject": TRANSLATIONS[recipient.preferred_language]["unread_message"],
+            },
+            template_id=UNREAD_MESSAGE_TEMPLATE,
+        )
+        print("send mail status message----------", res_msg)
+        logger.info(res_msg)
+    except:
+        email_sent_status = ", But failed to send message"
+
+    print("email_sent_status", email_sent_status)
     return create_response(
         status=201,
-        message=f"Successfully saved message",
+        message=f"Successfully saved message" + email_sent_status,
     )
 
 
