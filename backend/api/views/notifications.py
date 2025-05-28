@@ -9,6 +9,8 @@ from api.utils.constants import (
     WEEKLY_NOTIF_REMINDER,
     UNREAD_MESSAGE_TEMPLATE,
     GROUPCHAT_TAGGED_MESSAGE_TEMPLATE,
+    NEW_GROUPCHAT_TEMPLATE,
+    REPLY_GROUPCHAT_TEMPLATE,
     TRANSLATIONS,
 )
 from api.utils.require_auth import all_users
@@ -67,6 +69,10 @@ def get_unread_dm_count(id):
 
 @notifications.route("/unread_alert_group/<id>", methods=["GET"])
 def send_unread_alert_group(id):
+    tagged = request.args.get("tagged")
+    new_message_flag = request.args.get("new_message_flag")
+    front_url = request.args.get("front_url", "")
+    title = request.args.get("title", "")
     try:
         email = None
         user_record = PartnerProfile.objects(Q(id=id)).first()
@@ -77,20 +83,46 @@ def send_unread_alert_group(id):
             if user_record is not None:
                 email = user_record.email
         if user_record is not None:
-            res, res_msg = send_email(
-                recipient=email,
-                data={
-                    "number_unread": "1",
-                    user_record.preferred_language: True,
-                    "subject": TRANSLATIONS[user_record.preferred_language][
-                        "unread_message"
-                    ],
-                },
-                template_id=GROUPCHAT_TAGGED_MESSAGE_TEMPLATE,
-            )
-            if not res:
-                msg = "Failed to send unread message alert email " + res_msg
-                logger.info(msg)
+            if tagged == "true":
+                res, res_msg = send_email(
+                    recipient=email,
+                    data={
+                        "number_unread": "1",
+                        user_record.preferred_language: True,
+                        "subject": TRANSLATIONS[user_record.preferred_language][
+                            "unread_message"
+                        ],
+                    },
+                    template_id=GROUPCHAT_TAGGED_MESSAGE_TEMPLATE,
+                )
+                if not res:
+                    msg = "Failed to send unread message alert email " + res_msg
+                    logger.info(msg)
+            if new_message_flag == "true":
+                res, res_msg = send_email(
+                    recipient=email,
+                    data={
+                        "link": front_url,
+                        "group_chat_title": title,
+                    },
+                    template_id=NEW_GROUPCHAT_TEMPLATE,
+                )
+                if not res:
+                    msg = "Failed to send new group message alert email " + res_msg
+                    logger.info(msg)
+            else:
+                res, res_msg = send_email(
+                    recipient=email,
+                    data={
+                        "link": front_url,
+                        "title": title,
+                    },
+                    template_id=REPLY_GROUPCHAT_TEMPLATE,
+                )
+                if not res:
+                    msg = "Failed to send reply group message alert email " + res_msg
+                    logger.info(msg)
+
     except Exception as e:
         logger.info(e)
         return create_response(status=422, message="failed")

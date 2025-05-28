@@ -22,6 +22,9 @@ SEND_INVITE_TEMPLATE = "d-f6405bbbafd144efa76a58814ac2f8f3"
 ALERT_TO_ADMINS = "d-1808cac1e196446ca8be2ef3ecf93bdb"
 EVENT_TEMPLATE = "d-5be889d30c0b40aebfa3b569aa5b40f0"
 NEW_ANNOUNCE_TEMPLATE = "d-a3c4f9ee95544df48d771b8336357ed6"
+NEW_GROUPCHAT_TEMPLATE = "d-6edceb23368244a2951b99624920a0bf"
+REPLY_GROUPCHAT_TEMPLATE = "d-4027a86a55384ed696a3b812e11f7316"
+
 
 # This lacks timezone so you'll need to add that according to whatever code you're working with
 APPT_TIME_FORMAT = "%m-%d-%Y at %I:%M%p"

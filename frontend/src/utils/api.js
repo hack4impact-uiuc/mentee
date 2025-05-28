@@ -741,9 +741,21 @@ export const fetchAvailability = (id) => {
   );
 };
 
-export const sendNotifyGroupMessage = (recipient_id, tagged = false) => {
+export const sendNotifyGroupMessage = (
+  recipient_id,
+  title,
+  tagged = true,
+  new_message_flag = true
+) => {
   const requestExtension = `/notifications/unread_alert_group/${recipient_id}`;
-  return authGet(requestExtension, { params: { tagged: tagged } }).then(
+  return authGet(requestExtension, {
+    params: {
+      title: title,
+      tagged: tagged,
+      new_message_flag: new_message_flag,
+      front_url: window.location.href,
+    },
+  }).then(
     (response) => response.message,
     (err) => {
       console.error(err);

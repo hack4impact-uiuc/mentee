@@ -177,7 +177,7 @@ function GroupMessageChatArea(props) {
         setTimeout(() => {
           particiants.forEach((user) => {
             if (user._id.$oid !== profileId) {
-              // sendNotifyGroupMessage(user._id.$oid, false);
+              sendNotifyGroupMessage(user._id.$oid, messageTitle.trim(), false);
             }
           });
         }, 0);
@@ -185,7 +185,7 @@ function GroupMessageChatArea(props) {
     } else {
       tagUsers.map((tag_id) => {
         if (tag_id !== profileId) {
-          sendNotifyGroupMessage(tag_id, true);
+          sendNotifyGroupMessage(tag_id, messageTitle.trim(), true);
         }
         return false;
       });
@@ -223,7 +223,7 @@ function GroupMessageChatArea(props) {
     setEditInputFlags({});
   };
 
-  const sendReplyMessage = (block_id) => {
+  const sendReplyMessage = (block_id, block_title) => {
     let currentMessage = replyMessageText;
     if (!currentMessage.trim().length > 0) {
       let temp = replyInputFlags;
@@ -268,7 +268,7 @@ function GroupMessageChatArea(props) {
     if (tagUsers.length > 0) {
       tagUsers.map((tag_id) => {
         if (tag_id !== profileId) {
-          sendNotifyGroupMessage(tag_id, true);
+          sendNotifyGroupMessage(tag_id, block_title, true, false);
         }
         return false;
       });
@@ -277,7 +277,7 @@ function GroupMessageChatArea(props) {
         setTimeout(() => {
           particiants.forEach((user) => {
             if (user._id.$oid !== profileId) {
-              // sendNotifyGroupMessage(user._id.$oid, false);
+              sendNotifyGroupMessage(user._id.$oid, block_title, false, false);
             }
           });
         }, 0);
@@ -794,7 +794,9 @@ function GroupMessageChatArea(props) {
                           </div>
                         )}
                         <Button
-                          onClick={() => sendReplyMessage(block._id.$oid)}
+                          onClick={() =>
+                            sendReplyMessage(block._id.$oid, block.title)
+                          }
                           className="reply-message-send-button"
                           shape="circle"
                           type="primary"
