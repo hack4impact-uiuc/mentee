@@ -104,6 +104,9 @@ def send_unread_alert_group(id):
                     data={
                         "link": front_url,
                         "group_chat_title": title,
+                        "subject": TRANSLATIONS[user_record.preferred_language][
+                            "new_group_message"
+                        ],
                     },
                     template_id=NEW_GROUPCHAT_TEMPLATE,
                 )
@@ -116,6 +119,9 @@ def send_unread_alert_group(id):
                     data={
                         "link": front_url,
                         "title": title,
+                        "subject": TRANSLATIONS[user_record.preferred_language][
+                            "reply_group_message"
+                        ],
                     },
                     template_id=REPLY_GROUPCHAT_TEMPLATE,
                 )

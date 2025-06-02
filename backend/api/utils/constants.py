@@ -118,6 +118,8 @@ TRANSLATIONS = {
         "training_complete": "Congratulations for completing the training",
         "app_rejected": "Thank you for your interest in MENTEE",
         "profile_complete": "MENTEE Profile Completed - Please login",
+        "new_group_message": "A new group chat message was added !",
+        "reply_group_message": "A new reply has been added to a group chat message !",
     },
     "es-US": {
         "unread_message": "MENTEE: ¡Has recibido un nuevo mensaje!",
@@ -136,6 +138,8 @@ TRANSLATIONS = {
         "training_complete": "Felicitaciones por completar la capacitación",
         "app_rejected": "Gracias por tu interés en MENTEE",
         "profile_complete": "Perfil de MENTEE completado: por favor, inicia sesión",
+        "new_group_message": "Se agregó un nuevo mensaje de chat grupal.",
+        "reply_group_message": "Se agregó una nueva respuesta a un mensaje de chat grupal.",
     },
     "pt-BR": {
         "unread_message": "MENTEE: Você recebeu uma nova mensagem!",
@@ -154,6 +158,8 @@ TRANSLATIONS = {
         "training_complete": "Parabéns por concluir o treinamento",
         "app_rejected": "Obrigado pelo seu interesse em MENTEE",
         "profile_complete": "Perfil de MENTEE completo - Faça login, por favor",
+        "new_group_message": "Uma nova mensagem de bate-papo em grupo foi adicionada",
+        "reply_group_message": "Uma nova resposta foi adicionada a uma mensagem de bate-papo em grupo",
     },
     "ar": {
         "unread_message": "متدرب: لديك رسالة جديدة!",
@@ -172,6 +178,8 @@ TRANSLATIONS = {
         "training_complete": "تهانينا على إتمام التدريب",
         "app_rejected": "شكرًا لاهتمامك في MENTEE",
         "profile_complete": "الملف الشخصي لـ MENTEE مكتمل - يرجى تسجيل الدخول",
+        "new_group_message": "تمت إضافة رسالة دردشة جماعية جديدة.",
+        "reply_group_message": "تمت إضافة رد جديد على رسالة دردشة جماعية.",
     },
     "fa-AF": {
         "unread_message": "منتی: شما یک پیام جدید دریافت کرده اید!",
@@ -190,6 +198,8 @@ TRANSLATIONS = {
         "training_complete": "تبریک بابت تکمیل آموزش",
         "app_rejected": "از علاقه‌مندی شما در منتی سپاسگزاریم",
         "profile_complete": "پروفایل منتی کامل شده است - لطفا وارد شوید",
+        "new_group_message": "یک پیام جدید به چت گروهی اضافه شد",
+        "reply_group_message": "پاسخ جدیدی به یک پیام چت گروهی اضافه شد",
     },
 }
 
