@@ -223,7 +223,7 @@ function GroupMessageChatArea(props) {
     setEditInputFlags({});
   };
 
-  const sendReplyMessage = (block_id, block_title) => {
+  const sendReplyMessage = (block_id, block_title, sender_id) => {
     let currentMessage = replyMessageText;
     if (!currentMessage.trim().length > 0) {
       let temp = replyInputFlags;
@@ -273,15 +273,7 @@ function GroupMessageChatArea(props) {
         return false;
       });
     } else {
-      if (particiants?.length > 0) {
-        setTimeout(() => {
-          particiants.forEach((user) => {
-            if (user._id.$oid !== profileId) {
-              sendNotifyGroupMessage(user._id.$oid, block_title, false, false);
-            }
-          });
-        }, 0);
-      }
+      sendNotifyGroupMessage(sender_id, block_title, false, false);
     }
     setTagUsers([]);
   };
@@ -795,7 +787,11 @@ function GroupMessageChatArea(props) {
                         )}
                         <Button
                           onClick={() =>
-                            sendReplyMessage(block._id.$oid, block.title)
+                            sendReplyMessage(
+                              block._id.$oid,
+                              block.title,
+                              block.sender_id.$oid
+                            )
                           }
                           className="reply-message-send-button"
                           shape="circle"
