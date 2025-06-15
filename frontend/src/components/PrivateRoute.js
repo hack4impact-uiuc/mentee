@@ -14,7 +14,6 @@ function PrivateRoute({ children, ...rest }) {
   if (path.indexOf("/group_messages") > 0) {
     login_url = "/" + path.split("/")[1];
   }
-  
 
   return (
     <Route
