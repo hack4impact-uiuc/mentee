@@ -95,7 +95,7 @@ function PartnerGallery(props) {
       let matchestopics = false;
       if (
         (user && user.hub_user && user.hub_user.url === "GSRFoundation") ||
-        (user.role === ACCOUNT_TYPE.HUB && user.url === "GSRFoundation")
+        (user && user.role === ACCOUNT_TYPE.HUB && user.url === "GSRFoundation")
       ) {
         matchestopics =
           !query2 ||
@@ -116,7 +116,8 @@ function PartnerGallery(props) {
           user.hub_user &&
           user.hub_user.url &&
           user.hub_user.url.includes("AUAF")) ||
-        (user.role === ACCOUNT_TYPE.HUB &&
+        (user &&
+          user.role === ACCOUNT_TYPE.HUB &&
           user.url &&
           user.url.includes("AUAF"))
       ) {
@@ -144,7 +145,8 @@ function PartnerGallery(props) {
         user.hub_user &&
         user.hub_user.url &&
         user.hub_user.url.includes("AUAF")) ||
-      (user.role === ACCOUNT_TYPE.HUB &&
+      (user &&
+        user.role === ACCOUNT_TYPE.HUB &&
         user.url &&
         user.url.includes("AUAF")) ? (
         <>
@@ -193,7 +195,9 @@ function PartnerGallery(props) {
           />
           <Title level={4}>
             {(user && user.hub_user && user.hub_user.url === "GSRFoundation") ||
-            (user.role === ACCOUNT_TYPE.HUB && user.url === "GSRFoundation")
+            (user &&
+              user.role === ACCOUNT_TYPE.HUB &&
+              user.url === "GSRFoundation")
               ? t("gallery.projectTopicsPlaceholder_GSR")
               : t("gallery.projectTopics")}
           </Title>
@@ -205,7 +209,9 @@ function PartnerGallery(props) {
               (user &&
                 user.hub_user &&
                 user.hub_user.url === "GSRFoundation") ||
-              (user.role === ACCOUNT_TYPE.HUB && user.url === "GSRFoundation")
+              (user &&
+                user.role === ACCOUNT_TYPE.HUB &&
+                user.url === "GSRFoundation")
                 ? t("gallery.projectTopicsPlaceholder_GSR")
                 : t("gallery.projectTopicsPlaceholder")
             }
