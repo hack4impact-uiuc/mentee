@@ -116,6 +116,12 @@ function App() {
         localStorage.setItem("direct_path", direct_path);
       }
     }
+    if (path.indexOf("/group_messages") > 0) {
+      if (!role) {
+        let direct_path = "group_messages" + path.split("/group_messages")[1];
+        localStorage.setItem("direct_path", direct_path);
+      }
+    }
   }, [path]);
 
   useEffect(() => {
@@ -233,7 +239,7 @@ function App() {
                 </PublicRoute>
               </HomeLayout>
             </Content>
-            {role && (
+            
               <Content style={{ height: "100vh", overflow: "hidden" }}>
                 {role && <NavigationHeader />}
                 <div style={{ height: "calc(100vh - 48px)", overflow: "auto" }}>
@@ -762,7 +768,7 @@ function App() {
                   {n50Flag && <HubFooter />}
                 </div>
               </Content>
-            )}
+            
             <MeetingPanel />
           </Layout>
         </Router>
