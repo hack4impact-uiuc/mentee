@@ -162,7 +162,7 @@ function GroupMessages(props) {
             : null
         )
       );
-      if (profileId) {
+      if (profileId || hub_user_id) {
         setLoading(true);
         setMessages(await getGroupMessageData(hub_user_id));
         setLoading(false);
@@ -175,7 +175,7 @@ function GroupMessages(props) {
     } else {
       getData(hub_user_id);
     }
-  }, [activeMessageId]);
+  }, [activeMessageId, profileId, hub_user_id]);
 
   useEffect(() => {
     if (role == ACCOUNT_TYPE.ADMIN || role == ACCOUNT_TYPE.MODERATOR) {
