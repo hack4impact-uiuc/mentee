@@ -482,184 +482,180 @@ function GroupMessageChatArea(props) {
               className="chatRight__inner message-area flex-start"
               data-chat="person1"
             >
-              <div className="flex" >
-                  <div className="convo" style={{ flex: 1 }}>
-
-                   <span
-                       style={{
-                         display: "flex",
-                         justifyContent:"start",
-                         alignItems:"center",
-                         gap:"10px",
-                       }}
-                   >
-                     <NavLink
-                           to={`/gallery/${
-                               sender_user?.hub_user_id
-                                   ? ACCOUNT_TYPE.PARTNER
-                                   : ACCOUNT_TYPE.HUB
-                           }/${block.sender_id.$oid}`}
-                       >
-
+              <div className="flex">
+                <div className="convo" style={{ flex: 1 }}>
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "start",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <NavLink
+                      to={`/gallery/${
+                        sender_user?.hub_user_id
+                          ? ACCOUNT_TYPE.PARTNER
+                          : ACCOUNT_TYPE.HUB
+                      }/${block.sender_id.$oid}`}
+                    >
                       <img
                         src={sender_user?.image?.url}
                         style={{
                           cursor: "pointer",
                           width: "40px",
                           height: "40px",
-                          borderRadius:"10px",
+                          borderRadius: "10px",
                         }}
                       />
-                  </NavLink>
+                    </NavLink>
                     <NavLink
-                        to={`/gallery/${
-                            sender_user?.hub_user_id
-                                ? ACCOUNT_TYPE.PARTNER
-                                : ACCOUNT_TYPE.HUB
-                        }/${block.sender_id.$oid}`}
-                        style={{
-                          color: "inherit",
-                          textDecoration: "none",
-                          fontWeight: "bold",
-                        }}
+                      to={`/gallery/${
+                        sender_user?.hub_user_id
+                          ? ACCOUNT_TYPE.PARTNER
+                          : ACCOUNT_TYPE.HUB
+                      }/${block.sender_id.$oid}`}
+                      style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                        fontWeight: "bold",
+                      }}
                     >
                       {sender_user?.name || sender_user?.organization}
                     </NavLink>
                   </span>
 
-                    {block.title && (
-                        <>
-                          {editInputFlags[block._id.$oid] ? (
-                              <div>
-                                <TextArea
-                                    className="message-input"
-                                    placeholder={t("messages.titlePlaceholder")}
-                                    defaultValue={block.title}
-                                    onChange={(e) => setEditTtile(e.target.value)}
-                                    autoSize={{ minRows: 1, maxRows: 1 }}
-                                    style={{ textAlign: "left", marginBottom: "3px" }}
-                                />
-                              </div>
-                          ) : (
-                              <div className={styles.title}>
-                                {block.title}
-                                <>
-                                  {block.message_edited ? (
-                                      <span style={{ opacity: 0.5 }}> (edited)</span>
-                                  ) : (
-                                      ""
-                                  )}
-                                </>
-
-                              </div>
-                          )}
-                        </>
-                    )}
-                    {props.role != ACCOUNT_TYPE.ADMIN &&
-                    props.role != ACCOUNT_TYPE.MODERATOR &&
-                    editInputFlags[block._id.$oid] ? (
-                        <>
-                          <div
-                              className="reply-message-container"
-                              style={{ paddingLeft: 0 }}
-                          >
-                            <TextArea
-                                className="reply-message-textarea"
-                                defaultValue={block.body}
-                                onChange={(e) => handleInputChange(e, "edit")}
-                                autoSize={{ minRows: 1, maxRows: 3 }}
-                            />
-                            {renderUserList("edit")}
-                            <img
-                                alt=""
-                                className="emoji-icon"
-                                src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
-                                onClick={(e) => {
-                                  if (
-                                      e.target.getBoundingClientRect().y <
-                                      window.innerHeight / 2
-                                  ) {
-                                    setEmojiUp(false);
-                                  } else {
-                                    setEmojiUp(true);
-                                  }
-                                  setShowReplyEmojiPicker((val) => !val);
-                                  setShowEmojiPicker(false); // Ensure only one picker is open
-                                }}
-                            />
-                            {showReplyEmojiPicker && (
-                                <div
-                                    className={
-                                      emojiUp
-                                          ? "up emoji-container"
-                                          : "down emoji-container"
-                                    }
-                                >
-                                  <EmojiPicker
-                                      onEmojiClick={(e) => onEmojiClick(e, "edit")}
-                                  />
-                                </div>
+                  {block.title && (
+                    <>
+                      {editInputFlags[block._id.$oid] ? (
+                        <div>
+                          <TextArea
+                            className="message-input"
+                            placeholder={t("messages.titlePlaceholder")}
+                            defaultValue={block.title}
+                            onChange={(e) => setEditTtile(e.target.value)}
+                            autoSize={{ minRows: 1, maxRows: 1 }}
+                            style={{ textAlign: "left", marginBottom: "3px" }}
+                          />
+                        </div>
+                      ) : (
+                        <div className={styles.title}>
+                          {block.title}
+                          <>
+                            {block.message_edited ? (
+                              <span style={{ opacity: 0.5 }}> (edited)</span>
+                            ) : (
+                              ""
                             )}
-                            <Button
-                                onClick={() => editMessage(block._id.$oid)}
-                                className="reply-message-send-button"
-                                shape="circle"
-                                type="primary"
-                                icon={<SendOutlined rotate={315} />}
-                                size={32}
+                          </>
+                        </div>
+                      )}
+                    </>
+                  )}
+                  {props.role != ACCOUNT_TYPE.ADMIN &&
+                  props.role != ACCOUNT_TYPE.MODERATOR &&
+                  editInputFlags[block._id.$oid] ? (
+                    <>
+                      <div
+                        className="reply-message-container"
+                        style={{ paddingLeft: 0 }}
+                      >
+                        <TextArea
+                          className="reply-message-textarea"
+                          defaultValue={block.body}
+                          onChange={(e) => handleInputChange(e, "edit")}
+                          autoSize={{ minRows: 1, maxRows: 3 }}
+                        />
+                        {renderUserList("edit")}
+                        <img
+                          alt=""
+                          className="emoji-icon"
+                          src="https://icons.getbootstrap.com/assets/icons/emoji-smile.svg"
+                          onClick={(e) => {
+                            if (
+                              e.target.getBoundingClientRect().y <
+                              window.innerHeight / 2
+                            ) {
+                              setEmojiUp(false);
+                            } else {
+                              setEmojiUp(true);
+                            }
+                            setShowReplyEmojiPicker((val) => !val);
+                            setShowEmojiPicker(false); // Ensure only one picker is open
+                          }}
+                        />
+                        {showReplyEmojiPicker && (
+                          <div
+                            className={
+                              emojiUp
+                                ? "up emoji-container"
+                                : "down emoji-container"
+                            }
+                          >
+                            <EmojiPicker
+                              onEmojiClick={(e) => onEmojiClick(e, "edit")}
                             />
                           </div>
-                        </>
-                    ) : (
-                        <>
-                          <div
-                              className={css`
+                        )}
+                        <Button
+                          onClick={() => editMessage(block._id.$oid)}
+                          className="reply-message-send-button"
+                          shape="circle"
+                          type="primary"
+                          icon={<SendOutlined rotate={315} />}
+                          size={32}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className={css`
                           ${styles.parentMessage}// Apply new parent message styles
                         `}
+                      >
+                        <div
+                          onClick={() => downloadFile(block.body)}
+                          className="message-text"
+                          dangerouslySetInnerHTML={{
+                            __html: formatMessageText(
+                              block.body,
+                              block.message_edited
+                            ),
+                          }}
+                        />
+                        {(props.role == ACCOUNT_TYPE.ADMIN ||
+                          props.role == ACCOUNT_TYPE.MODERATOR) && (
+                          <Popconfirm
+                            title={`Are you sure you want to delete this message?`}
+                            onConfirm={async () => {
+                              await deleteGroupMessage(block._id.$oid);
+                              props.refresh();
+                            }}
+                            onCancel={() => {}}
+                            okText="Yes"
+                            cancelText="No"
                           >
-                            <div
-                                onClick={() => downloadFile(block.body)}
-                                className="message-text"
-                                dangerouslySetInnerHTML={{
-                                  __html: formatMessageText(
-                                      block.body,
-                                      block.message_edited
-                                  ),
-                                }}
-                            />
-                            {(props.role == ACCOUNT_TYPE.ADMIN ||
-                                props.role == ACCOUNT_TYPE.MODERATOR) && (
-                                <Popconfirm
-                                    title={`Are you sure you want to delete this message?`}
-                                    onConfirm={async () => {
-                                      await deleteGroupMessage(block._id.$oid);
-                                      props.refresh();
-                                    }}
-                                    onCancel={() => {}}
-                                    okText="Yes"
-                                    cancelText="No"
-                                >
-                                  {/*<DeleteOutlined*/}
-                                  {/*  className="delete-user-btn"*/}
-                                  {/*  style={{*/}
-                                  {/*    marginLeft: "20px",*/}
-                                  {/*    marginTop: "3px",*/}
-                                  {/*    cursor: "pointer",*/}
-                                  {/*    fontSize: "15px",*/}
-                                  {/*  }}*/}
-                                  {/*  onClick={() => {*/}
-                                  {/*    var temp = {};*/}
-                                  {/*    temp[block._id.$oid] = true;*/}
-                                  {/*    setEditInputFlags(temp);*/}
-                                  {/*    setReplyInputFlags({});*/}
-                                  {/*  }}*/}
-                                  {/*/>*/}
-                                </Popconfirm>
-                            )}
-                          </div>
-                        </>
-                    )}
-
+                            {/*<DeleteOutlined*/}
+                            {/*  className="delete-user-btn"*/}
+                            {/*  style={{*/}
+                            {/*    marginLeft: "20px",*/}
+                            {/*    marginTop: "3px",*/}
+                            {/*    cursor: "pointer",*/}
+                            {/*    fontSize: "15px",*/}
+                            {/*  }}*/}
+                            {/*  onClick={() => {*/}
+                            {/*    var temp = {};*/}
+                            {/*    temp[block._id.$oid] = true;*/}
+                            {/*    setEditInputFlags(temp);*/}
+                            {/*    setReplyInputFlags({});*/}
+                            {/*  }}*/}
+                            {/*/>*/}
+                          </Popconfirm>
+                        )}
+                      </div>
+                    </>
+                  )}
 
                   <span
                     style={{

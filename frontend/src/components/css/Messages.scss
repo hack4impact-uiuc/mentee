@@ -428,12 +428,11 @@
   word-break: break-word;
 }
 
-
 $message-bg: #fff;
-$title-bg: #5C369C;
-$body-bg: #F4F5F9;
+$title-bg: #5c369c;
+$body-bg: #f4f5f9;
 $shadow-color: rgba(0, 0, 0, 0.1);
-$text-secondary: rgba(0,0,0,0.45);
+$text-secondary: rgba(0, 0, 0, 0.45);
 
 .message-card {
   display: flex;
@@ -558,7 +557,7 @@ $text-secondary: rgba(0,0,0,0.45);
     width: 200px;
     max-height: 180px;
     overflow-y: auto;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 1000;
 
     .mention-item {
