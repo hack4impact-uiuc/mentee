@@ -303,18 +303,18 @@ function GroupMessageChatArea(props) {
     parentMessage: css`
       padding: 10px 15px;
       border-radius: 8px;
-      background-color: #e6f7ff; // Example background color
-      border: 1px solid #91d5ff; // Example border color
+      background-color: #e2e0df; // Example background color
+      border: 1px solid #e2e0df; // Example border color
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Example shadow
       display: flex;
     `,
     title: css`
       padding: 10px 10px;
       border-radius: 8px;
-      margin-bottom: 4px;
-      background-color: #ffbb91; // Updated background color for title
+      margin-bottom: 10px;
+      background-color: #533a56; // Updated background color for title
       font-weight: bold;
-      color: #000; // Example text color
+      color: #ffffff; // Example text color
     `,
   };
 
@@ -483,29 +483,48 @@ function GroupMessageChatArea(props) {
               data-chat="person1"
             >
               <div className="flex">
-                <span>
-                  <NavLink
-                    to={`/gallery/${
-                      sender_user?.hub_user_id
-                        ? ACCOUNT_TYPE.PARTNER
-                        : ACCOUNT_TYPE.HUB
-                    }/${block.sender_id.$oid}`}
+                <div className="convo" style={{ flex: 1 }}>
+                  <span
+                    style={{
+                      display: "flex",
+                      justifyContent: "start",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
                   >
-                    <div style={{ width: "60px", textAlign: "center" }}>
-                      <Avatar
+                    <NavLink
+                      to={`/gallery/${
+                        sender_user?.hub_user_id
+                          ? ACCOUNT_TYPE.PARTNER
+                          : ACCOUNT_TYPE.HUB
+                      }/${block.sender_id.$oid}`}
+                    >
+                      <img
                         src={sender_user?.image?.url}
                         style={{
                           cursor: "pointer",
-                          width: "60px",
-                          height: "60px",
-                          border: "1.5px solid rgb(198, 204, 208)",
-                          borderRadius: "50%",
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "10px",
                         }}
                       />
-                    </div>
-                  </NavLink>
-                </span>
-                <div className="convo" style={{ flex: 1, marginLeft: "10px" }}>
+                    </NavLink>
+                    <NavLink
+                      to={`/gallery/${
+                        sender_user?.hub_user_id
+                          ? ACCOUNT_TYPE.PARTNER
+                          : ACCOUNT_TYPE.HUB
+                      }/${block.sender_id.$oid}`}
+                      style={{
+                        color: "inherit",
+                        textDecoration: "none",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {sender_user?.name || sender_user?.organization}
+                    </NavLink>
+                  </span>
+
                   {block.title && (
                     <>
                       {editInputFlags[block._id.$oid] ? (
@@ -529,21 +548,6 @@ function GroupMessageChatArea(props) {
                               ""
                             )}
                           </>
-                          {profileId === block.sender_id.$oid && (
-                            <EditOutlined
-                              style={{
-                                marginLeft: "20px",
-                                marginTop: "3px",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                var temp = {};
-                                temp[block._id.$oid] = true;
-                                setEditInputFlags(temp);
-                                setReplyInputFlags({});
-                              }}
-                            />
-                          )}
                         </div>
                       )}
                     </>
@@ -632,37 +636,22 @@ function GroupMessageChatArea(props) {
                             okText="Yes"
                             cancelText="No"
                           >
-                            <DeleteOutlined
-                              className="delete-user-btn"
-                              style={{
-                                marginLeft: "20px",
-                                marginTop: "3px",
-                                cursor: "pointer",
-                                fontSize: "15px",
-                              }}
-                              onClick={() => {
-                                var temp = {};
-                                temp[block._id.$oid] = true;
-                                setEditInputFlags(temp);
-                                setReplyInputFlags({});
-                              }}
-                            />
+                            {/*<DeleteOutlined*/}
+                            {/*  className="delete-user-btn"*/}
+                            {/*  style={{*/}
+                            {/*    marginLeft: "20px",*/}
+                            {/*    marginTop: "3px",*/}
+                            {/*    cursor: "pointer",*/}
+                            {/*    fontSize: "15px",*/}
+                            {/*  }}*/}
+                            {/*  onClick={() => {*/}
+                            {/*    var temp = {};*/}
+                            {/*    temp[block._id.$oid] = true;*/}
+                            {/*    setEditInputFlags(temp);*/}
+                            {/*    setReplyInputFlags({});*/}
+                            {/*  }}*/}
+                            {/*/>*/}
                           </Popconfirm>
-                        )}
-                        {profileId === block.sender_id.$oid && (
-                          <EditOutlined
-                            style={{
-                              marginLeft: "20px",
-                              marginTop: "3px",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              var temp = {};
-                              temp[block._id.$oid] = true;
-                              setEditInputFlags(temp);
-                              setReplyInputFlags({});
-                            }}
-                          />
                         )}
                       </div>
                     </>
@@ -672,29 +661,7 @@ function GroupMessageChatArea(props) {
                     style={{
                       opacity: "40%",
                       display: "block",
-                      marginTop: "12px",
-                    }}
-                  >
-                    <NavLink
-                      to={`/gallery/${
-                        sender_user?.hub_user_id
-                          ? ACCOUNT_TYPE.PARTNER
-                          : ACCOUNT_TYPE.HUB
-                      }/${block.sender_id.$oid}`}
-                      style={{
-                        color: "inherit",
-                        textDecoration: "none",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {sender_user?.name || sender_user?.organization}
-                    </NavLink>
-                  </span>
-                  <span
-                    style={{
-                      opacity: "40%",
-                      display: "block",
-                      marginTop: "4px",
+                      marginTop: "15px",
                     }}
                   >
                     {block.time
