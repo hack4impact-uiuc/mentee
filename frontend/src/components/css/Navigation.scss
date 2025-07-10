@@ -24,7 +24,7 @@
   fill: white;
 }
 .navigation-footer {
-  display: flex;
+  display: contents;
   justify-content: end;
   position: fixed;
   bottom: 0px;
@@ -38,5 +38,9 @@
     height: 90px;
     width: 100%;
     padding: 1em;
+  }
+
+  .navigation-footer {
+    display: contents;
   }
 }
