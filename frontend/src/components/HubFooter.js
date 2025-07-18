@@ -30,9 +30,8 @@ function HubFooter() {
           fontSize: "15px",
           fontStyle: "italic",
           paddingTop: "10px",
-          justifyContent: "end",
-          marginRight: "1vw",
         }}
+        className="logo-container"
       >
         <span>{t("common.powered_by")}</span>
         <img
