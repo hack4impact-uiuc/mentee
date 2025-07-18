@@ -491,9 +491,12 @@
     padding: 0;
   }
   .appointments-date-text-block {
-    width: 60px;
+    width: 25%;
   }
   .appointments-row {
     width: calc(100% - 60px);
+  }
+  .appointments-tabs-view .ant-card-body {
+    padding: 0;
   }
 }
