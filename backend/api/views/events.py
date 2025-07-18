@@ -39,21 +39,26 @@ def get_events(role):
         events = Event.objects.filter(
             role__in=[role], hub_id=str(hub_user_id)
         ).order_by("-start_datetime")
-        temp = []
+
         if partner_id:
+            temp = []
             for event in events:
-                if (
-                    (event.partner_ids is None)
-                    or (len(event.partner_ids) == 0)
-                    or (partner_id in event.partner_ids)
-                ):
+                include_event = True
+
+                if partner_id:
+                    if (
+                        event.partner_ids is not None
+                        and len(event.partner_ids) > 0
+                        and partner_id not in event.partner_ids
+                    ):
+                        include_event = False
+
+                if user_id:
+                    if str(event.user_id) != user_id:
+                        include_event = False
+
+                if include_event:
                     temp.append(event)
-            if user_id:
-                print("usss", user_id)
-                for event in events:
-                    print("eeeee", event.user_id, str(event.user_id) == user_id)
-                    if str(event.user_id) == user_id:
-                        temp.append(event)
             events = temp
     else:
         events = Event.objects(role__in=[role]).order_by("-start_datetime")
