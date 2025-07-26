@@ -626,7 +626,6 @@ function MessagesChatArea(props) {
         {accountData && (
           <>
             <TextArea
-              style={{ width: "calc(100% - 220px" }}
               className="message-input"
               placeholder={t("messages.sendMessagePlaceholder")}
               value={messageText}
