@@ -3,10 +3,26 @@ from flask import request
 from firebase_admin import auth as firebase_admin_auth
 from api.core import create_response, logger
 from api.utils.constants import Account
+import time
 
 AUTHORIZED = True
 UNAUTHORIZED = False
 ALL_USERS = True
+
+
+def verify_token_with_expiry(token):
+    try:
+        claims = firebase_admin_auth.verify_id_token(token, check_revoked=True)
+        
+        current_time = int(time.time())
+        token_exp = claims.get('exp', 0)
+        
+        if current_time >= token_exp:
+            raise Exception("Token has expired")
+            
+        return claims
+    except Exception as e:
+        raise e
 
 
 def verify_user(required_role):
@@ -15,18 +31,17 @@ def verify_user(required_role):
 
     try:
         token = headers.get("Authorization")
-        claims = firebase_admin_auth.verify_id_token(token)
+        claims = verify_token_with_expiry(token)
         role = claims.get("role")
     except Exception as e:
-        msg = "Error parsing JWT token -- not included in header or invalid token"
+        msg = "Invalid or missing authentication token"
         logger.info(msg)
         logger.info(e)
-        return UNAUTHORIZED, create_response(status=500, message=msg)
+        return UNAUTHORIZED, create_response(status=401, message=msg)
 
     if (
         required_role == ALL_USERS
         or int(role) == required_role
-        or int(role) == Account.SUPPORT
     ):
         return AUTHORIZED, None
     else:
@@ -78,6 +93,19 @@ def partner_only(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         authorized, response = verify_user(Account.PARTNER)
+
+        if authorized:
+            return fn(*args, **kwargs)
+        else:
+            return response
+
+    return wrapper
+
+
+def support_only(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        authorized, response = verify_user(Account.SUPPORT)
 
         if authorized:
             return fn(*args, **kwargs)
