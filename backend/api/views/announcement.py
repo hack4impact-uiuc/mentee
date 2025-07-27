@@ -4,7 +4,11 @@ from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_lim
 from numpy import imag
 from werkzeug.utils import secure_filename
 from api.core import create_response, logger
-from api.utils.input_validation import validate_file_upload, sanitize_text, secure_filename_enhanced
+from api.utils.input_validation import (
+    validate_file_upload,
+    sanitize_text,
+    secure_filename_enhanced,
+)
 from api.models import (
     Announcement,
     Event,
@@ -139,10 +143,14 @@ def new_announce(role):
 
         document = request.files.get("document", None)
         if document:
-            valid, error_msg = validate_file_upload(document, allowed_extensions={'pdf', 'doc', 'docx', 'txt'}, max_size_mb=10)
+            valid, error_msg = validate_file_upload(
+                document,
+                allowed_extensions={"pdf", "doc", "docx", "txt"},
+                max_size_mb=10,
+            )
             if not valid:
                 return create_response(status=400, message=error_msg)
-            
+
             file_name = secure_filename_enhanced(document.filename)
             if file_name == "":
                 return create_response(status=400, message="Missing file name")
@@ -280,10 +288,12 @@ def edit(id):
 
     document = request.files.get("document", None)
     if document:
-        valid, error_msg = validate_file_upload(document, allowed_extensions={'pdf', 'doc', 'docx', 'txt'}, max_size_mb=10)
+        valid, error_msg = validate_file_upload(
+            document, allowed_extensions={"pdf", "doc", "docx", "txt"}, max_size_mb=10
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
-        
+
         file_name = secure_filename_enhanced(document.filename)
         if file_name == "":
             return create_response(status=400, message="Missing file name")

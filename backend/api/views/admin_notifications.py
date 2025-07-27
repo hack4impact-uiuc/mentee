@@ -5,6 +5,7 @@ from datetime import datetime
 from api.utils.require_auth import admin_only
 from datetime import datetime
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
+
 admin_notifications = Blueprint("admin_notifications", __name__)  # initialize blueprint
 
 

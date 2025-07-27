@@ -48,15 +48,20 @@ from api.utils.request_utils import (
 from api.utils.constants import NEW_APPLICATION_STATUS
 from api.utils.profile_parse import new_profile, edit_profile
 from api.utils.constants import Account
-from api.utils.require_auth import all_users, mentee_only, verify_user, verify_token_with_expiry
+from api.utils.require_auth import (
+    all_users,
+    mentee_only,
+    verify_user,
+    verify_token_with_expiry,
+)
 from api.utils.input_validation import (
-    validate_email_format, 
-    validate_password, 
-    validate_json_data, 
-    sanitize_text, 
+    validate_email_format,
+    validate_password,
+    validate_json_data,
+    sanitize_text,
     validate_file_upload,
     validate_object_id,
-    secure_filename_enhanced
+    secure_filename_enhanced,
 )
 from api.utils.web_security import api_rate_limit, CSRFProtection, upload_rate_limit
 from firebase_admin import auth as firebase_admin_auth
@@ -135,9 +140,9 @@ def get_accounts(account_type):
             if partner_account.assign_mentees:
                 for mentee_item in partner_account.assign_mentees:
                     if "id" in mentee_item:
-                        partners_by_assign_mentee[
-                            str(mentee_item["id"])
-                        ] = partner_account
+                        partners_by_assign_mentee[str(mentee_item["id"])] = (
+                            partner_account
+                        )
         for account in mentees_data:
             if str(account.id) in partners_by_assign_mentee:
                 pair_partner = partners_by_assign_mentee[str(account.id)]
@@ -488,19 +493,19 @@ def get_account(id):
 @CSRFProtection.csrf_protect
 def create_mentor_profile():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     email = sanitize_text(data.get("email"))
     password = data.get("password")
-    
+
     if email:
         valid, error_msg = validate_email_format(email)
         if not valid:
             return create_response(status=422, message=error_msg)
-    
+
     if password:
         valid, error_msg = validate_password(password)
         if not valid:
@@ -856,11 +861,14 @@ def edit_mentor(id):
 
         authorized, response = verify_user(account_type)
         admin_support_access = (
-            int(login_user_role) == Account.ADMIN 
+            int(login_user_role) == Account.ADMIN
             or int(login_user_role) == Account.HUB
-            or (int(login_user_role) == Account.SUPPORT and account_type in [Account.MENTEE, Account.MENTOR])
+            or (
+                int(login_user_role) == Account.SUPPORT
+                and account_type in [Account.MENTEE, Account.MENTOR]
+            )
         )
-        
+
         if not authorized and not admin_support_access:
             return response
 
@@ -905,13 +913,15 @@ def uploadImage(id):
     valid, error_msg = validate_object_id(id)
     if not valid:
         return create_response(status=422, message="Invalid account ID")
-    
+
     if "image" not in request.files:
         return create_response(status=422, message="No image file provided")
-    
+
     image = request.files["image"]
-    
-    valid, error_msg = validate_file_upload(image, allowed_extensions={'jpg', 'jpeg', 'png', 'gif'}, max_size_mb=5)
+
+    valid, error_msg = validate_file_upload(
+        image, allowed_extensions={"jpg", "jpeg", "png", "gif"}, max_size_mb=5
+    )
     if not valid:
         return create_response(status=422, message=error_msg)
     try:
@@ -943,11 +953,14 @@ def uploadImage(id):
 
             authorized, response = verify_user(account_type)
             admin_support_access = (
-                int(login_user_role) == Account.ADMIN 
+                int(login_user_role) == Account.ADMIN
                 or int(login_user_role) == Account.HUB
-                or (int(login_user_role) == Account.SUPPORT and account_type in [Account.MENTEE, Account.MENTOR])
+                or (
+                    int(login_user_role) == Account.SUPPORT
+                    and account_type in [Account.MENTEE, Account.MENTOR]
+                )
             )
-            
+
             if not authorized and not admin_support_access:
                 return response
             if account_type == Account.MENTEE:

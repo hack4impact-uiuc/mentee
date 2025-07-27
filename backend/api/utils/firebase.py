@@ -8,6 +8,8 @@ client = pyrebase.initialize_app(
         "authDomain": "mentee-d0304.firebaseapp.com",
         "databaseURL": "",
         "storageBucket": "mentee-d0304.appspot.com",
-        "serviceAccount": SecureEnvironmentManager.get_optional_env("GOOGLE_APPLICATION_CREDENTIALS"),
+        "serviceAccount": SecureEnvironmentManager.get_optional_env(
+            "GOOGLE_APPLICATION_CREDENTIALS"
+        ),
     }
 )

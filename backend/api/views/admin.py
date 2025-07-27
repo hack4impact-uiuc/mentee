@@ -19,7 +19,12 @@ from api.models import (
     Image,
 )
 from api.utils.require_auth import admin_only, all_users
-from api.utils.input_validation import validate_file_upload, sanitize_text, validate_email_format, secure_filename_enhanced
+from api.utils.input_validation import (
+    validate_file_upload,
+    sanitize_text,
+    validate_email_format,
+    secure_filename_enhanced,
+)
 from api.utils.request_utils import get_profile_model, imgur_client
 from api.utils.constants import Account
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
@@ -105,16 +110,18 @@ def upload_account_emails():
     """
     if "fileupload" not in request.files:
         return create_response(status=422, message="No file provided")
-    
+
     f = request.files["fileupload"]
-    
-    valid, error_msg = validate_file_upload(f, allowed_extensions={'csv'}, max_size_mb=5)
+
+    valid, error_msg = validate_file_upload(
+        f, allowed_extensions={"csv"}, max_size_mb=5
+    )
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     password = sanitize_text(request.form.get("pass", ""))
     isMentor = request.form.get("mentorOrMentee") == "true"
-    
+
     if not password:
         return create_response(status=422, message="Password is required")
 
@@ -123,11 +130,11 @@ def upload_account_emails():
         for line in reader:
             if line and len(line) > 0:
                 email = sanitize_text(line[0])
-                
+
                 valid, error_msg = validate_email_format(email)
                 if not valid:
                     continue
-                
+
                 duplicates = VerifiedEmail.objects(
                     email=email, is_mentor=isMentor, password=password
                 )
@@ -150,13 +157,15 @@ def create_hub_account():
     name = sanitize_text(request.form.get("name", ""))
     url = sanitize_text(request.form.get("url", ""))
     invite_key = sanitize_text(request.form.get("invite_key", ""))
-    
+
     if not email or not password or not name:
-        return create_response(status=400, message="Email, password, and name are required")
-    
+        return create_response(
+            status=400, message="Email, password, and name are required"
+        )
+
     if not validate_email_format(email):
         return create_response(status=400, message="Invalid email format")
-    
+
     image = None
     if "image" in request.files:
         image = request.files["image"]
@@ -261,15 +270,15 @@ def upload_account_emailText():
     messageText = sanitize_text(request.form.get("messageText", ""))
     password = sanitize_text(request.form.get("password", ""))
     name = sanitize_text(request.form.get("name", ""))
-    
+
     if not role_str or not messageText or not password or not name:
         return create_response(status=400, message="All fields are required")
-    
+
     try:
         role = int(role_str)
     except ValueError:
         return create_response(status=400, message="Invalid role format")
-        
+
     if role == Account.GUEST or role == Account.SUPPORT or role == Account.MODERATOR:
         email = messageText
         email = email.replace(" ", "")

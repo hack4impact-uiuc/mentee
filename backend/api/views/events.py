@@ -315,11 +315,13 @@ def uploadImage(id):
                 image_response = imgur_client.delete_image(event.image_file.image_hash)
 
             image = request.files["image"]
-            
-            valid, error_msg = validate_file_upload(image, allowed_extensions={'jpg', 'jpeg', 'png', 'gif'}, max_size_mb=5)
+
+            valid, error_msg = validate_file_upload(
+                image, allowed_extensions={"jpg", "jpeg", "png", "gif"}, max_size_mb=5
+            )
             if not valid:
                 return create_response(status=400, message=error_msg)
-            
+
             image_response = imgur_client.send_image(image)
             new_image = Image(
                 url=image_response["data"]["link"],

@@ -3,6 +3,7 @@ from api.models import Availability, MentorProfile
 from api.core import create_response, logger
 from api.utils.require_auth import all_users
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
+
 availability = Blueprint("availability", __name__)
 
 

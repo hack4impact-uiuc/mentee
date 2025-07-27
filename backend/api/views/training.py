@@ -3,7 +3,11 @@ from flask import Blueprint, request
 import json
 from h11 import Data
 from werkzeug.utils import secure_filename
-from api.utils.input_validation import validate_file_upload, sanitize_text, secure_filename_enhanced
+from api.utils.input_validation import (
+    validate_file_upload,
+    sanitize_text,
+    secure_filename_enhanced,
+)
 from api.utils.web_security import upload_rate_limit, CSRFProtection, api_rate_limit
 from api.core import create_response, logger
 from bson import ObjectId
@@ -380,10 +384,12 @@ def edit_library_by_id(id):
 
     file = request.files.get("file", None)
     if file:
-        valid, error_msg = validate_file_upload(file, allowed_extensions={'pdf', 'doc', 'docx', 'txt'}, max_size_mb=25)
+        valid, error_msg = validate_file_upload(
+            file, allowed_extensions={"pdf", "doc", "docx", "txt"}, max_size_mb=25
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
-        
+
         file_name = secure_filename_enhanced(file.filename)
         if file_name == "":
             return create_response(status=400, message="Missing file name")
@@ -442,11 +448,13 @@ def get_train_id_edit(id):
         document = request.files.get("document", None)
         if not document:
             return create_response(status=400, message="Missing file")
-        
-        valid, error_msg = validate_file_upload(document, allowed_extensions={'pdf', 'doc', 'docx'}, max_size_mb=25)
+
+        valid, error_msg = validate_file_upload(
+            document, allowed_extensions={"pdf", "doc", "docx"}, max_size_mb=25
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
-        
+
         file_name = secure_filename_enhanced(document.filename)
         if file_name == "":
             return create_response(status=400, message="Missing file name")
@@ -469,18 +477,20 @@ def saveSignedDoc():
         signedPdf = request.files.get("signedPdf")
         if not signedPdf:
             return create_response(status=400, message="No signed PDF provided")
-        
-        valid, error_msg = validate_file_upload(signedPdf, allowed_extensions={'pdf'}, max_size_mb=10)
+
+        valid, error_msg = validate_file_upload(
+            signedPdf, allowed_extensions={"pdf"}, max_size_mb=10
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
-        
+
         user_email = sanitize_text(request.form.get("user_email", ""))
         role = sanitize_text(request.form.get("role", ""))
         train_id = sanitize_text(request.form.get("train_id", ""))
-        
+
         if not user_email or not role or not train_id:
             return create_response(status=400, message="Missing required fields")
-        
+
         ex_signed_doc = (
             SignedDocs.objects()
             .filter(user_email=user_email)
@@ -514,10 +524,12 @@ def new_policy(role):
     try:
         name = sanitize_text(request.form.get("name", ""))
         description = sanitize_text(request.form.get("description", ""))
-        
+
         if not name or not description:
-            return create_response(status=400, message="Name and description are required")
-            
+            return create_response(
+                status=400, message="Name and description are required"
+            )
+
         nameTranslated = get_all_translations(description)
         descriptionTranslated = get_all_translations(description)
         hub_id = None
@@ -542,8 +554,10 @@ def new_policy(role):
         file_name = secure_filename_enhanced(document.filename)
         if file_name == "":
             return create_response(status=400, message="Missing file name")
-            
-        valid, error_msg = validate_file_upload(document, allowed_extensions={'pdf', 'doc', 'docx'}, max_size_mb=25)
+
+        valid, error_msg = validate_file_upload(
+            document, allowed_extensions={"pdf", "doc", "docx"}, max_size_mb=25
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
 
@@ -568,10 +582,10 @@ def new_library():
         user_id = sanitize_text(request.form.get("user_id", ""))
         hub_id = sanitize_text(request.form.get("hub_id", ""))
         user_name = sanitize_text(request.form.get("user_name", ""))
-        
+
         if not name or not description or not user_id or not hub_id or not user_name:
             return create_response(status=400, message="All fields are required")
-        
+
         nameTranslated = get_all_translations(name)
         descriptionTranslated = get_all_translations(description)
 
@@ -593,8 +607,10 @@ def new_library():
         file_name = secure_filename_enhanced(file.filename)
         if file_name == "":
             return create_response(status=400, message="Missing file name")
-            
-        valid, error_msg = validate_file_upload(file, allowed_extensions={'pdf', 'doc', 'docx', 'txt'}, max_size_mb=25)
+
+        valid, error_msg = validate_file_upload(
+            file, allowed_extensions={"pdf", "doc", "docx", "txt"}, max_size_mb=25
+        )
         if not valid:
             return create_response(status=400, message=error_msg)
 
@@ -615,13 +631,17 @@ def new_library():
 @CSRFProtection.csrf_protect
 def new_train(role):
     try:
-        send_notification = True if request.form.get("send_notification", "false") == "true" else False
+        send_notification = (
+            True if request.form.get("send_notification", "false") == "true" else False
+        )
         name = sanitize_text(request.form.get("name", ""))
         description = sanitize_text(request.form.get("description", ""))
-        
+
         if not name or not description:
-            return create_response(status=400, message="Name and description are required")
-        
+            return create_response(
+                status=400, message="Name and description are required"
+            )
+
         nameTranslated = get_all_translations(name)
         descriptionTranslated = get_all_translations(description)
         typee = sanitize_text(request.form.get("typee", ""))
@@ -679,8 +699,12 @@ def new_train(role):
             file_name = secure_filename_enhanced(document.filename)
             if file_name == "":
                 return create_response(status=400, message="Missing file name")
-                
-            valid, error_msg = validate_file_upload(document, allowed_extensions={'pdf', 'doc', 'docx', 'txt'}, max_size_mb=25)
+
+            valid, error_msg = validate_file_upload(
+                document,
+                allowed_extensions={"pdf", "doc", "docx", "txt"},
+                max_size_mb=25,
+            )
             if not valid:
                 return create_response(status=400, message=error_msg)
 

@@ -44,8 +44,8 @@ masters = Blueprint("masters", __name__)
 
 # @masters.route("/translate", methods=["PUT"])
 # @admin_only
-#@api_rate_limit
-#@CSRFProtection.csrf_protect
+# @api_rate_limit
+# @CSRFProtection.csrf_protect
 # def translate():
 #     mapping = {"languages": Languages, "specializations": Specializations}
 #     optionType = request.form["optionType"]

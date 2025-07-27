@@ -4,6 +4,7 @@ from flask import Blueprint, request
 from api.utils.constants import Account
 from api.utils.require_auth import mentee_only
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
+
 mentee = Blueprint("mentee", __name__)
 
 

@@ -13,11 +13,11 @@ from api.utils.constants import (
 from api.utils.request_utils import send_email, get_profile_model
 from api.utils.firebase import client as firebase_client
 from api.utils.input_validation import (
-    validate_email_format, 
-    validate_password, 
-    validate_role, 
+    validate_email_format,
+    validate_password,
+    validate_role,
     validate_json_data,
-    sanitize_text
+    sanitize_text,
 )
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
 
@@ -29,18 +29,18 @@ auth = Blueprint("auth", __name__)  # initialize blueprint
 @CSRFProtection.csrf_protect
 def verify_email():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data, ["email"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     email = sanitize_text(data.get("email"))
     preferred_language = sanitize_text(data.get("preferred_language", "en-US"))
-    
+
     valid, error_msg = validate_email_format(email)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     if preferred_language not in TRANSLATIONS:
         preferred_language = "en-US"
     verification_link = None
@@ -100,27 +100,27 @@ def create_firebase_user(email, password):
 @CSRFProtection.csrf_protect
 def register():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data, ["email", "password", "role"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     email = sanitize_text(data.get("email"))
     password = data.get("password")
     role = data.get("role")
-    
+
     valid, error_msg = validate_email_format(email)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_password(password)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_role(role)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     admin_user = None
 
     # if whitelisted, set to admin
@@ -158,11 +158,11 @@ def register():
 @CSRFProtection.csrf_protect
 def newregister():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data, ["name", "email", "password", "role"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     name = sanitize_text(data.get("name"))
     email = sanitize_text(data.get("email"))
     password = data.get("password")
@@ -170,15 +170,15 @@ def newregister():
     video_url = sanitize_text(data.get("video_url", ""))
     phone_number = sanitize_text(data.get("phone_number", ""))
     date_submitted = data.get("date_submitted")
-    
+
     valid, error_msg = validate_email_format(email)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_password(password)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_role(role)
     if not valid:
         return create_response(status=422, message=error_msg)
@@ -221,20 +221,20 @@ def newregister():
 @CSRFProtection.csrf_protect
 def login():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data, ["email", "password", "role"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     email = sanitize_text(data.get("email"))
     password = data.get("password")
     role = int(data.get("role"))
     path = sanitize_text(data.get("path", ""))
-    
+
     valid, error_msg = validate_email_format(email)
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_role(role)
     if not valid:
         return create_response(status=422, message=error_msg)
@@ -397,14 +397,14 @@ def send_forgot_password_email(email, preferred_language="en-US"):
 @CSRFProtection.csrf_protect
 def forgot_password():
     data = request.json
-    
+
     valid, error_msg = validate_json_data(data, ["email"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     email = sanitize_text(data.get("email"))
     preferred_language = sanitize_text(data.get("preferred_language", "en-US"))
-    
+
     valid, error_msg = validate_email_format(email)
     if not valid:
         return create_response(status=422, message=error_msg)

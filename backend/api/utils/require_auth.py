@@ -13,13 +13,13 @@ ALL_USERS = True
 def verify_token_with_expiry(token):
     try:
         claims = firebase_admin_auth.verify_id_token(token, check_revoked=True)
-        
+
         current_time = int(time.time())
-        token_exp = claims.get('exp', 0)
-        
+        token_exp = claims.get("exp", 0)
+
         if current_time >= token_exp:
             raise Exception("Token has expired")
-            
+
         return claims
     except Exception as e:
         raise e
@@ -39,10 +39,7 @@ def verify_user(required_role):
         logger.info(e)
         return UNAUTHORIZED, create_response(status=401, message=msg)
 
-    if (
-        required_role == ALL_USERS
-        or int(role) == required_role
-    ):
+    if required_role == ALL_USERS or int(role) == required_role:
         return AUTHORIZED, None
     else:
         msg = "Unauthorized"

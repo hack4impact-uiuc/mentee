@@ -15,6 +15,7 @@ from api.utils.constants import (
 )
 from api.utils.require_auth import all_users
 from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
+
 notifications = Blueprint("notifications", __name__)
 
 

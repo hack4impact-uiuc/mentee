@@ -19,10 +19,10 @@ from api.utils.constants import (
 )
 from api.utils.require_auth import all_users, admin_only, mentor_only, mentee_only
 from api.utils.input_validation import (
-    validate_json_data, 
-    validate_object_id, 
-    sanitize_text, 
-    validate_string_length
+    validate_json_data,
+    validate_object_id,
+    sanitize_text,
+    validate_string_length,
 )
 from api.utils.web_security import api_rate_limit, CSRFProtection, XSSProtection
 from api.utils.translate import get_translated_options
@@ -106,28 +106,28 @@ def update_message(message_id):
 @CSRFProtection.csrf_protect
 def create_message():
     data = request.get_json()
-    
+
     valid, error_msg = validate_json_data(data, ["message", "user_id", "recipient_id"])
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     message_text = sanitize_text(data.get("message"))
     user_id = sanitize_text(data.get("user_id"))
     recipient_id = sanitize_text(data.get("recipient_id"))
     time_data = data.get("time")
-    
+
     valid, error_msg = validate_string_length(message_text, 5000, "Message")
     if not valid:
         return create_response(status=422, message=error_msg)
-    
+
     valid, error_msg = validate_object_id(user_id)
     if not valid:
         return create_response(status=422, message="Invalid sender ID")
-    
+
     valid, error_msg = validate_object_id(recipient_id)
     if not valid:
         return create_response(status=422, message="Invalid recipient ID")
-    
+
     availabes_in_future = None
     if "availabes_in_future" in data:
         availabes_in_future = data.get("availabes_in_future")

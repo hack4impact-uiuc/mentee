@@ -214,7 +214,7 @@ def send_email(
                 sanitized_data[key] = html.escape(value)
             else:
                 sanitized_data[key] = value
-        
+
         if len(TARGET_LANGS.intersection(sanitized_data.keys())) == 0:
             sanitized_data["en-US"] = True
         message.dynamic_template_data = sanitized_data
