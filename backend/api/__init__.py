@@ -148,7 +148,9 @@ def create_app():
 
     # HTTPS and Security Settings
     app.config["PREFERRED_URL_SCHEME"] = "https"
-    app.config["SESSION_COOKIE_SECURE"] = True
+    # Only use secure cookies in production
+    is_production = os.environ.get("FLASK_ENV") == "production"
+    app.config["SESSION_COOKIE_SECURE"] = is_production
     app.config["SESSION_COOKIE_HTTPONLY"] = True
     app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     app.config["PERMANENT_SESSION_LIFETIME"] = 3600  # 1 hour
@@ -161,7 +163,8 @@ def create_app():
     def request_entity_too_large(error):
         return {"message": "File too large (max 50MB)", "status": 413}, 413
 
-    CORS(app)  # add CORS
+    # Configure CORS with credentials support for CSRF tokens
+    CORS(app, supports_credentials=True, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
 
     # Initialize Web Security Middleware
     security_middleware = WebSecurityMiddleware(app)
