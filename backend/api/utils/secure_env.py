@@ -4,7 +4,6 @@ from typing import Optional, List
 
 
 class SecureEnvironmentManager:
-
     REQUIRED_VARS = [
         "MONGO_USER",
         "MONGO_PASSWORD",
@@ -86,7 +85,6 @@ class SecureEnvironmentManager:
 
 
 def get_mongo_connection_string() -> str:
-
     user = SecureEnvironmentManager.get_required_env("MONGO_USER")
     password = SecureEnvironmentManager.get_required_env("MONGO_PASSWORD")
     host = SecureEnvironmentManager.get_required_env("MONGO_HOST")
@@ -96,7 +94,6 @@ def get_mongo_connection_string() -> str:
 
 
 def get_firebase_credentials() -> dict:
-
     return {
         "api_key": SecureEnvironmentManager.get_required_env("FIREBASE_API_KEY"),
         "credentials_path": SecureEnvironmentManager.get_optional_env(
@@ -106,7 +103,6 @@ def get_firebase_credentials() -> dict:
 
 
 def get_sendgrid_config() -> dict:
-
     return {
         "api_key": SecureEnvironmentManager.get_required_env("SENDGRID_API_KEY"),
         "sender_email": SecureEnvironmentManager.get_optional_env(
@@ -125,7 +121,6 @@ def get_twilio_config() -> dict:
 
 
 def initialize_secure_environment():
-
     print("🔒 Initializing secure environment...")
 
     missing_vars = SecureEnvironmentManager.validate_environment()

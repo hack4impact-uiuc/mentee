@@ -68,12 +68,10 @@ class XSSProtection:
 
     @staticmethod
     def get_csp_header():
-
         return XSSProtection.generate_csp_header()
 
 
 class CSRFProtection:
-
     @staticmethod
     def generate_csrf_token():
         """Generate a CSRF token"""
@@ -113,19 +111,16 @@ class CSRFProtection:
 
 
 class RateLimiter:
-
     def __init__(self):
         self.requests = defaultdict(deque)
         self.blocked_ips = {}
 
     def _get_client_id(self):
-
         client_ip = request.environ.get("HTTP_X_FORWARDED_FOR", request.remote_addr)
         user_agent = request.headers.get("User-Agent", "unknown")
         return hashlib.md5(f"{client_ip}:{user_agent}".encode()).hexdigest()
 
     def _cleanup_old_requests(self, client_id, window_seconds):
-
         now = time.time()
         requests_queue = self.requests[client_id]
 
@@ -135,7 +130,6 @@ class RateLimiter:
     def is_rate_limited(
         self, client_id=None, max_requests=60, window_seconds=60, endpoint=None
     ):
-
         if client_id is None:
             client_id = self._get_client_id()
 
@@ -150,7 +144,6 @@ class RateLimiter:
         current_requests = len(self.requests[client_id])
 
         if current_requests >= max_requests:
-
             self.blocked_ips[client_id] = time.time() + 900  # 15 minutes
             return (
                 True,
@@ -191,35 +184,30 @@ rate_limiter = RateLimiter()
 
 
 def auth_rate_limit(f):
-
     return rate_limiter.rate_limit(max_requests=5, window_seconds=300, endpoint="auth")(
         f
     )
 
 
 def api_rate_limit(f):
-
     return rate_limiter.rate_limit(max_requests=100, window_seconds=60, endpoint="api")(
         f
     )
 
 
 def upload_rate_limit(f):
-
     return rate_limiter.rate_limit(
         max_requests=10, window_seconds=300, endpoint="upload"
     )(f)
 
 
 class WebSecurityMiddleware:
-
     def __init__(self, app=None):
         self.app = app
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
-
         app.after_request(self.add_security_headers)
         app.before_request(self.security_check)
 
@@ -237,14 +225,14 @@ class WebSecurityMiddleware:
         response.headers["Content-Security-Policy"] = XSSProtection.get_csp_header()
 
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-        response.headers["Permissions-Policy"] = (
-            "geolocation=(), microphone=(), camera=()"
-        )
+        response.headers[
+            "Permissions-Policy"
+        ] = "geolocation=(), microphone=(), camera=()"
 
         if os.environ.get("FLASK_ENV") == "production":
-            response.headers["Strict-Transport-Security"] = (
-                "max-age=31536000; includeSubDomains"
-            )
+            response.headers[
+                "Strict-Transport-Security"
+            ] = "max-age=31536000; includeSubDomains"
 
         return response
 
@@ -256,12 +244,11 @@ class WebSecurityMiddleware:
         headers_dict["Content-Security-Policy"] = XSSProtection.get_csp_header()
         headers_dict["Referrer-Policy"] = "strict-origin-when-cross-origin"
         headers_dict["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
-        headers_dict["Strict-Transport-Security"] = (
-            "max-age=31536000; includeSubDomains"
-        )
+        headers_dict[
+            "Strict-Transport-Security"
+        ] = "max-age=31536000; includeSubDomains"
 
     def security_check(self):
-
         if request.endpoint and any(
             sensitive in request.endpoint for sensitive in ["auth", "login", "register"]
         ):
@@ -281,7 +268,6 @@ class WebSecurityMiddleware:
 
 
 def get_security_report():
-
     return {
         "web_security_status": "PROTECTED",
         "protections_enabled": [

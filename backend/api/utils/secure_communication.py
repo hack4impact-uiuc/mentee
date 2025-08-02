@@ -4,16 +4,13 @@ from urllib.parse import urlparse
 
 
 class SecureCommunicationValidator:
-
     @staticmethod
     def validate_url_security(url):
-
         if not url:
             return True
 
         parsed = urlparse(url)
         if parsed.scheme and parsed.scheme.lower() == "http":
-
             if parsed.hostname in ["localhost", "127.0.0.1", "0.0.0.0"]:
                 return True
             return False
@@ -41,13 +38,11 @@ class SecureCommunicationValidator:
 
     @staticmethod
     def check_secure_configuration():
-
         issues = []
 
         flask_env = os.environ.get("FLASK_ENV", "development")
 
         if flask_env == "production":
-
             if not os.environ.get("FORCE_HTTPS"):
                 issues.append("FORCE_HTTPS not set in production environment")
 
@@ -58,7 +53,6 @@ class SecureCommunicationValidator:
             ]
 
             for setting in required_secure_settings:
-
                 pass
 
         return issues
@@ -77,7 +71,6 @@ class SecureCommunicationValidator:
 
     @staticmethod
     def get_security_report():
-
         report = {
             "secure_communication_status": "SECURE",
             "issues": [],
