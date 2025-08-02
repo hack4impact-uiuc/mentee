@@ -21,7 +21,7 @@ const getCsrfToken = async () => {
     });
     return response.data.csrf_token;
   } catch (error) {
-    console.error('Failed to get CSRF token:', error);
+    console.error("Failed to get CSRF token:", error);
     return null;
   }
 };
@@ -29,9 +29,9 @@ const getCsrfToken = async () => {
 const authGet = async (url, config) =>
   instance.get(url, {
     ...config,
-    headers: { 
+    headers: {
       Authorization: await getUserIdToken(),
-      ...(config?.headers || {})
+      ...(config?.headers || {}),
     },
   });
 
@@ -39,11 +39,11 @@ const authPost = async (url, data, config) => {
   const csrfToken = await getCsrfToken();
   const headers = {
     Authorization: await getUserIdToken(),
-    ...(config?.headers || {})
+    ...(config?.headers || {}),
   };
-  
+
   if (csrfToken) {
-    headers['X-CSRF-Token'] = csrfToken;
+    headers["X-CSRF-Token"] = csrfToken;
   }
 
   return instance.post(url, data, {
@@ -56,11 +56,11 @@ const authPut = async (url, data, config) => {
   const csrfToken = await getCsrfToken();
   const headers = {
     Authorization: await getUserIdToken(),
-    ...(config?.headers || {})
+    ...(config?.headers || {}),
   };
-  
+
   if (csrfToken) {
-    headers['X-CSRF-Token'] = csrfToken;
+    headers["X-CSRF-Token"] = csrfToken;
   }
 
   return instance.put(url, data, {
@@ -73,11 +73,11 @@ const authPatch = async (url, data, config) => {
   const csrfToken = await getCsrfToken();
   const headers = {
     Authorization: await getUserIdToken(),
-    ...(config?.headers || {})
+    ...(config?.headers || {}),
   };
-  
+
   if (csrfToken) {
-    headers['X-CSRF-Token'] = csrfToken;
+    headers["X-CSRF-Token"] = csrfToken;
   }
 
   return instance.patch(url, data, {
@@ -90,11 +90,11 @@ const authDelete = async (url, config) => {
   const csrfToken = await getCsrfToken();
   const headers = {
     Authorization: await getUserIdToken(),
-    ...(config?.headers || {})
+    ...(config?.headers || {}),
   };
-  
+
   if (csrfToken) {
-    headers['X-CSRF-Token'] = csrfToken;
+    headers["X-CSRF-Token"] = csrfToken;
   }
 
   return instance.delete(url, {

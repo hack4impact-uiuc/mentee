@@ -11,12 +11,15 @@ const instance = axios.create({
 // Function to get CSRF token
 const getCsrfToken = async () => {
   try {
-    const response = await axios.get(`${AUTH_URL.replace('auth/', 'api/csrf-token')}`, {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      `${AUTH_URL.replace("auth/", "api/csrf-token")}`,
+      {
+        withCredentials: true,
+      }
+    );
     return response.data.csrf_token;
   } catch (error) {
-    console.error('Failed to get CSRF token:', error);
+    console.error("Failed to get CSRF token:", error);
     return null;
   }
 };
@@ -34,9 +37,9 @@ const post = async (url, data, params) => {
     const headers = {
       ...(params?.headers || {}),
     };
-    
+
     if (csrfToken) {
-      headers['X-CSRF-Token'] = csrfToken;
+      headers["X-CSRF-Token"] = csrfToken;
     }
 
     const response = await instance.post(url, data, {
