@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Layout, Drawer } from "antd";
-import { NavLink, withRouter, useHistory } from "react-router-dom";
+import { NavLink, withRouter, useHistory, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,7 @@ const { Sider } = Layout;
 function NavigationSider() {
   const { t } = useTranslation();
   const history = useHistory();
+  const location = useLocation();
   const collapsed = useSelector((state) => state.user.collapsed);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -32,6 +33,13 @@ function NavigationSider() {
     history.location.pathname.replace(main_domain_url + "/", ""),
   ];
   const n50_flag = localStorage.getItem("n50_user");
+
+  // Check if we're on a messages route
+  const isMessagesRoute =
+    location.pathname.includes("/messages") ||
+    location.pathname.includes("/group_messages") ||
+    location.pathname.includes("/partner_group_messages") ||
+    location.pathname.includes("/admin_group_messages");
 
   const onClick = ({ key }) => {
     isMobile && dispatch(collapse());
@@ -121,6 +129,7 @@ function NavigationSider() {
       theme="light"
       className={css`
         box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+        ${isMessagesRoute && !collapsed ? 'display: flex; flex-direction: column;' : ''}
       `}
       style={{
         overflow: "auto",
@@ -222,14 +231,43 @@ function NavigationSider() {
           icon={<UserOutlined />}
         />
       )} */}
-      <Menu
-        onClick={onClick}
-        defaultOpenKeys={["galleries"]}
-        selectedKeys={currentPage}
-        mode="inline"
-        items={sidebarItems}
-        theme="light"
-      />
+      <div style={{ flex: isMessagesRoute && !collapsed ? '1' : 'none' }}>
+        <Menu
+          onClick={onClick}
+          defaultOpenKeys={["galleries"]}
+          selectedKeys={currentPage}
+          mode="inline"
+          items={sidebarItems}
+          theme="light"
+        />
+      </div>
+      {/* Messages Footer Logo - Only show on desktop messages routes */}
+      {isMessagesRoute && !collapsed && (
+        <div
+          className="sidebar-messages-footer"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+            fontSize: "13px",
+            fontStyle: "italic",
+            padding: "12px",
+            borderTop: "1px solid #f0f0f0",
+            marginTop: "auto",
+          }}
+        >
+          <span>{t("common.powered_by")}</span>
+          <img
+            src={BigLogoImage}
+            alt=""
+            className={css`
+              height: 35px;
+              margin-left: 6px;
+            `}
+          />
+        </div>
+      )}
     </Sider>
   );
 }
