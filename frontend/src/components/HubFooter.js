@@ -16,17 +16,22 @@ function HubFooter() {
   } = theme.useToken();
   const { t } = useTranslation();
   const history = useHistory();
-  
+
   // Check if we're on a messages route
-  const isMessagesRoute = location.pathname.includes('/messages') || 
-                         location.pathname.includes('/group_messages') ||
-                         location.pathname.includes('/partner_group_messages') ||
-                         location.pathname.includes('/admin_group_messages');
-  
+  const isMessagesRoute =
+    location.pathname.includes("/messages") ||
+    location.pathname.includes("/group_messages") ||
+    location.pathname.includes("/partner_group_messages") ||
+    location.pathname.includes("/admin_group_messages");
+
   // TODO: Add a proper admin notifications dropdown
   return (
     <Footer
-      className={isMessagesRoute ? "navigation-footer messages-footer" : "navigation-footer"}
+      className={
+        isMessagesRoute
+          ? "navigation-footer messages-footer"
+          : "navigation-footer"
+      }
       style={{ background: colorBgContainer }}
       theme="light"
     >
