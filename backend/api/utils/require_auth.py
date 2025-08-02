@@ -18,7 +18,7 @@ def verify_token_with_expiry(token):
         current_time = int(time.time())
         token_exp = claims.get("exp", 0)
         token_iat = claims.get("iat", 0)  # issued at time
-        
+
         # Add clock skew tolerance of 60 seconds for 'iat' (issued at) validation
         # This helps with small clock differences between client and server
         if token_iat > current_time + 60:
@@ -29,25 +29,25 @@ def verify_token_with_expiry(token):
 
         return claims
     except Exception as e:
-        # If it's a Firebase error about token being used too early, 
+        # If it's a Firebase error about token being used too early,
         # we can be more lenient in development
         error_msg = str(e)
         if "Token used too early" in error_msg or "Clock skew" in error_msg:
             try:
                 # Try verifying without revocation check as a fallback
                 claims = firebase_admin_auth.verify_id_token(token, check_revoked=False)
-                
+
                 current_time = int(time.time())
                 token_exp = claims.get("exp", 0)
-                
+
                 # Still check expiration
                 if current_time >= token_exp:
                     raise Exception("Token has expired")
-                    
+
                 return claims
             except:
                 pass  # If this also fails, raise the original error
-        
+
         raise e
 
 

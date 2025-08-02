@@ -164,7 +164,11 @@ def create_app():
         return {"message": "File too large (max 50MB)", "status": 413}, 413
 
     # Configure CORS with credentials support for CSRF tokens
-    CORS(app, supports_credentials=True, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
+    CORS(
+        app,
+        supports_credentials=True,
+        origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    )
 
     # Initialize Web Security Middleware
     security_middleware = WebSecurityMiddleware(app)
