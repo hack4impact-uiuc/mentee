@@ -15,3 +15,4 @@ app.log
 backend/app.log
 tests/.env
 tests/cypress/screenshots/
+/venv-libratom/
