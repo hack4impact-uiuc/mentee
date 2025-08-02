@@ -129,7 +129,9 @@ function NavigationSider() {
       theme="light"
       className={css`
         box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
-        ${isMessagesRoute && !collapsed ? 'display: flex; flex-direction: column;' : ''}
+        ${isMessagesRoute && !collapsed
+          ? "display: flex; flex-direction: column;"
+          : ""}
       `}
       style={{
         overflow: "auto",
@@ -231,7 +233,7 @@ function NavigationSider() {
           icon={<UserOutlined />}
         />
       )} */}
-      <div style={{ flex: isMessagesRoute && !collapsed ? '1' : 'none' }}>
+      <div style={{ flex: isMessagesRoute && !collapsed ? "1" : "none" }}>
         <Menu
           onClick={onClick}
           defaultOpenKeys={["galleries"]}
