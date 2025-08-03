@@ -332,11 +332,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                     title=video_data.get("title"),
                     url=video_data.get("url"),
                     tag=video_data.get("tag"),
-                    date_uploaded=(
-                        video_data.get("date_uploaded")["$date"]
-                        if "$date" in video_data.get("date_uploaded")
-                        else video_data.get("date_uploaded")
-                    ),
+                    date_uploaded=video_data.get("date_uploaded")["$date"]
+                    if "$date" in video_data.get("date_uploaded")
+                    else video_data.get("date_uploaded"),
                 )
                 if profile.videos:
                     profile.videos[0] = profile.video
@@ -355,11 +353,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                         title=video.get("title"),
                         url=video.get("url"),
                         tag=video.get("tag"),
-                        date_uploaded=(
-                            video.get("date_uploaded")["$date"]
-                            if "$date" in video.get("date_uploaded")
-                            else video.get("date_uploaded")
-                        ),
+                        date_uploaded=video.get("date_uploaded")["$date"]
+                        if "$date" in video.get("date_uploaded")
+                        else video.get("date_uploaded"),
                     )
                     for video in video_data
                 ]
@@ -417,11 +413,9 @@ def edit_profile(data: dict = {}, profile: object = None):
                     title=video_data.get("title"),
                     url=video_data.get("url"),
                     tag=video_data.get("tag"),
-                    date_uploaded=(
-                        video_data.get("date_uploaded")["$date"]
-                        if "$date" in video_data.get("date_uploaded")
-                        else video_data.get("date_uploaded")
-                    ),
+                    date_uploaded=video_data.get("date_uploaded")["$date"]
+                    if "$date" in video_data.get("date_uploaded")
+                    else video_data.get("date_uploaded"),
                 )
             else:
                 profile.video = None

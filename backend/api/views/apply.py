@@ -1,6 +1,5 @@
 from os import name
 from bson import is_valid
-from api.utils.web_security import auth_rate_limit, CSRFProtection, api_rate_limit
 from flask import Blueprint, request
 from sqlalchemy import null
 from api.models import (
@@ -234,8 +233,6 @@ def check_profile_exists(email, role):
 
 
 @apply.route("/changeStateTraining", methods=["POST"])
-@api_rate_limit
-@CSRFProtection.csrf_protect
 def change_state_traing_status():
     data = request.get_json()
     role = data.get("role")
@@ -343,8 +340,6 @@ def change_state_to_build_profile(email, role):
 
 @apply.route("/<id>/<role>", methods=["DELETE"])
 @admin_only
-@api_rate_limit
-@CSRFProtection.csrf_protect
 def delete_application(id, role):
     role = int(role)
     if role == Account.MENTOR:
@@ -372,8 +367,6 @@ def delete_application(id, role):
 # PUT requests for /application by object ID
 @apply.route("/<id>/<role>", methods=["PUT"])
 @admin_only
-@api_rate_limit
-@CSRFProtection.csrf_protect
 def edit_application(id, role):
     admin_data = Admin.objects()
 
@@ -541,8 +534,6 @@ def edit_application(id, role):
 
 # POST request for Mentee Appointment
 @apply.route("/new", methods=["POST"])
-@api_rate_limit
-@CSRFProtection.csrf_protect
 def create_application():
     admin_data = Admin.objects()
 
