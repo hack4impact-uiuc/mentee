@@ -1,28 +1,4 @@
-# Exclude everything by default
-*
-
-# Include only necessary files
-!api/
+!api
 !manage.py
 !requirements.txt
-!firebase_service_key.json
-!scripts.py
-
-# Explicitly exclude sensitive files (even if included above)
-.env
-.env.*
-*.log
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.git/
-.gitignore
-.pytest_cache/
-.coverage
-.DS_Store
-Thumbs.db
-*.key
-*.pem
-*.p12
-user_options.json
+!creds.ini
