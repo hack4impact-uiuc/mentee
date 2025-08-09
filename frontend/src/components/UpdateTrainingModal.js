@@ -16,6 +16,7 @@ import "components/css/Training.scss";
 const { Option } = Select;
 
 const ALL_MENTORS_VALUE = "__ALL_MENTORS__";
+const ALL_MENTEES_VALUE = "__ALL_MENTEES__";
 
 const extractIdValue = (item) => {
   if (!item) return null;
@@ -159,6 +160,10 @@ function UpdateTrainingModal({
     setMentors([]);
     if (val === ACCOUNT_TYPE.MENTEE) {
       setMentees(menteeOptions);
+      const allMenteeIds = (menteeOptions || [])
+        .map((item) => extractIdValue(item))
+        .filter(Boolean);
+      form.setFieldValue("mentee_id", allMenteeIds);
     }
     if (val === ACCOUNT_TYPE.MENTOR) {
       setMentors(mentorOptions);
@@ -177,6 +182,18 @@ function UpdateTrainingModal({
       form.setFieldValue("mentor_id", allMentorIds);
     } else {
       form.setFieldValue("mentor_id", selectedValues);
+    }
+    setValuesChanged(true);
+  };
+
+  const handleMenteeSelectChange = (selectedValues) => {
+    if (selectedValues?.includes(ALL_MENTEES_VALUE)) {
+      const allMenteeIds = (mentees || [])
+        .map((item) => extractIdValue(item))
+        .filter(Boolean);
+      form.setFieldValue("mentee_id", allMenteeIds);
+    } else {
+      form.setFieldValue("mentee_id", selectedValues);
     }
     setValuesChanged(true);
   };
@@ -371,7 +388,8 @@ function UpdateTrainingModal({
                 },
               ]}
             >
-              <Select mode="multiple">
+              <Select mode="multiple" onChange={handleMenteeSelectChange} allowClear>
+                <Option value={ALL_MENTEES_VALUE}>Select All Mentees</Option>
                 {mentees.map((item) => {
                   return (
                     <Option
