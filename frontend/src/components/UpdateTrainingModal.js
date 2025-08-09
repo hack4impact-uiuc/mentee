@@ -356,7 +356,11 @@ function UpdateTrainingModal({
                 },
               ]}
             >
-              <Select mode="multiple" onChange={handleMentorSelectChange} allowClear>
+              <Select
+                mode="multiple"
+                onChange={handleMentorSelectChange}
+                allowClear
+              >
                 <Option value={ALL_MENTORS_VALUE}>Select All Mentors</Option>
                 {mentors.map((item) => {
                   return (
@@ -388,7 +392,11 @@ function UpdateTrainingModal({
                 },
               ]}
             >
-              <Select mode="multiple" onChange={handleMenteeSelectChange} allowClear>
+              <Select
+                mode="multiple"
+                onChange={handleMenteeSelectChange}
+                allowClear
+              >
                 <Option value={ALL_MENTEES_VALUE}>Select All Mentees</Option>
                 {mentees.map((item) => {
                   return (
