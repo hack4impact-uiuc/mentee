@@ -154,6 +154,7 @@ function UpdateTrainingModal({
   const changeRole = (val) => {
     setRole(val);
     form.setFieldValue("partner_id", "");
+    form.setFieldValue("hub_id", "");
     form.setFieldValue("mentor_id", null);
     form.setFieldValue("mentee_id", null);
     setMentees([]);
@@ -333,11 +334,15 @@ function UpdateTrainingModal({
             label="Partner"
             rules={[
               {
-                required: false,
+                required: true,
+                message: "Please select a partner",
               },
             ]}
           >
-            <Select onChange={(partner_id) => setMentorMentees(partner_id)}>
+            <Select
+              onChange={(partner_id) => setMentorMentees(partner_id)}
+              placeholder="Select a partner"
+            >
               <Option value={""}></Option>
               {partnerOptions.map((item) => {
                 return <Option value={item.value}>{item.label}</Option>;
@@ -417,17 +422,18 @@ function UpdateTrainingModal({
             </Form.Item>
           </>
         )}
-        {role === ACCOUNT_TYPE.HUB && (
+        {form.getFieldValue("role") === ACCOUNT_TYPE.HUB && (
           <Form.Item
             name="hub_id"
             label="Hub"
             rules={[
               {
                 required: true,
+                message: "Please select a hub",
               },
             ]}
           >
-            <Select>
+            <Select placeholder="Select a hub">
               <Option value={""}></Option>
               {hubOptions.map((item) => {
                 return <Option value={item.value}>{item.label}</Option>;
