@@ -339,7 +339,7 @@ function UpdateTrainingModal({
               },
             ]}
           >
-            <Select 
+            <Select
               onChange={(partner_id) => setMentorMentees(partner_id)}
               placeholder="Select a partner"
             >
