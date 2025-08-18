@@ -342,6 +342,13 @@ function UpdateTrainingModal({
             <Select
               onChange={(partner_id) => setMentorMentees(partner_id)}
               placeholder="Select a partner"
+              showSearch
+              filterOption={(input, option) =>
+                (option.children || "")
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
             >
               <Option value={""}></Option>
               {partnerOptions.map((item) => {
@@ -357,7 +364,10 @@ function UpdateTrainingModal({
               label="Mentor"
               rules={[
                 {
-                  required: false,
+                  required: true,
+                  type: "array",
+                  min: 1,
+                  message: "Please select at least one mentor",
                 },
               ]}
             >
@@ -365,6 +375,14 @@ function UpdateTrainingModal({
                 mode="multiple"
                 onChange={handleMentorSelectChange}
                 allowClear
+                placeholder="Select mentors for this training"
+                showSearch
+                filterOption={(input, option) =>
+                  (option.children || "")
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
               >
                 <Option value={ALL_MENTORS_VALUE}>Select All Mentors</Option>
                 {mentors.map((item) => {
@@ -393,7 +411,10 @@ function UpdateTrainingModal({
               label="Mentee"
               rules={[
                 {
-                  required: false,
+                  required: true,
+                  type: "array",
+                  min: 1,
+                  message: "Please select at least one mentee",
                 },
               ]}
             >
@@ -401,6 +422,14 @@ function UpdateTrainingModal({
                 mode="multiple"
                 onChange={handleMenteeSelectChange}
                 allowClear
+                placeholder="Select mentees for this training"
+                showSearch
+                filterOption={(input, option) =>
+                  (option.children || "")
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
               >
                 <Option value={ALL_MENTEES_VALUE}>Select All Mentees</Option>
                 {mentees.map((item) => {
@@ -433,7 +462,16 @@ function UpdateTrainingModal({
               },
             ]}
           >
-            <Select placeholder="Select a hub">
+            <Select
+              placeholder="Select a hub"
+              showSearch
+              filterOption={(input, option) =>
+                (option.children || "")
+                  .toString()
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
               <Option value={""}></Option>
               {hubOptions.map((item) => {
                 return <Option value={item.value}>{item.label}</Option>;
