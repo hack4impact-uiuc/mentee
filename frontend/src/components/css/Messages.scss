@@ -580,3 +580,83 @@ $text-secondary: rgba(0, 0, 0, 0.45);
     }
   }
 }
+
+
+/* --- Fix reply input responsiveness --- */
+.reply-message-container {
+  /* let it actually shrink */
+  min-width: 0;            /* override 500px */
+  width: 100%;
+  padding-left: 0;         /* 50px eats space on phones */
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* allow wrapping on ultra small screens */
+  flex-wrap: nowrap;
+}
+
+.reply-message-container .reply-message-textarea,
+.reply-message-container .reply-message-textarea textarea {
+  /* critical for flex items to shrink instead of overflow */
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.reply-message-container .reply-message-send-button {
+  flex: 0 0 auto;
+}
+
+/* Mentions list should not push layout */
+.user-list-dropdown {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Prevent the footer from causing horizontal scrollbars on mobile */
+@media (max-width: 761px) {
+  .conversation-footer {
+    width: 100%;            /* override 100vw */
+    padding: 12px;
+  }
+
+  .conversation-footer .message-input-container {
+    max-width: 100%;        /* override 80% cap */
+    margin-left: 0;
+  }
+
+  /* Let main composer be flexible too */
+  .message-with-icons {
+    flex-wrap: nowrap;
+  }
+  .message-with-icons .message-input,
+  .message-with-icons .ant-input,
+  .message-with-icons textarea {
+    min-width: 0;           /* allow shrink in flex */
+  }
+
+  /* If your phones are very narrow, allow wrap for the reply row */
+  @media (max-width: 400px) {
+    .reply-message-container {
+      flex-wrap: wrap;
+    }
+    .reply-message-container .reply-message-send-button {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+}
+
+/* General text safety */
+.message-text {
+  overflow-wrap: anywhere;   /* prevent long URLs from breaking layout */
+  word-break: break-word;
+}
+
+
+.reply-message-container .emoji-container {
+  right: 8px;  /* avoid off-screen */
+}
+
