@@ -42,13 +42,12 @@ function ApplicationOrganizer({ isMentor }) {
       title: "Affiliation",
       dataIndex: "organization",
       key: "organization",
-      render: (organization, record) => organization ? (
-        <a href={`/gallery/3/${record.partner}`}>
-          {organization}
-        </a>
-      ) : (
-        <span>No affiliation</span>
-      ),
+      render: (organization, record) =>
+        organization ? (
+          <a href={`/gallery/3/${record.partner}`}>{organization}</a>
+        ) : (
+          <span>No affiliation</span>
+        ),
     },
     {
       title: "Notes",
