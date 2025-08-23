@@ -215,8 +215,6 @@ function LoginForm({ role, defaultEmail, n50_flag, location }) {
             style={{
               width: "100%",
               textAlign: "end",
-              position: "absolute",
-              top: "70px",
             }}
           >
             <Link to={{ pathname: "/forgot-password", state: { role } }}>

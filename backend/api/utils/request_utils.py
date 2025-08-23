@@ -294,3 +294,15 @@ def application_model(role):
         return PartnerApplication
     else:
         raise ValueError("Invalid role")
+
+
+def get_organization_by_partner_id(application):
+    if application.partner:
+        try:
+            partner_data = PartnerProfile.objects.get(id=application.partner)
+            application.organization = partner_data.organization
+        except:
+            application.organization = None
+    else:
+        application.organization = None
+    return application
