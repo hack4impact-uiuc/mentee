@@ -62,6 +62,7 @@ def get_applications():
 @admin_only
 def get_mentee_applications():
     application = MenteeApplication.objects
+    application = [get_organization_by_partner_id(app) for app in application]
     return create_response(data={"mentor_applications": application})
 
 
