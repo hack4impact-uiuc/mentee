@@ -468,7 +468,7 @@ function GroupMessageChatArea(props) {
   };
   const screens = useBreakpoint();
 
-  const MAX_XS_INDENT_DEPTH = 3;
+  const MAX_XS_INDENT_DEPTH = 4;
   const computeIndent = (d) => {
     const isSmall = !screens.md;          // true when width < 768px
     const base = isSmall ? 16 : 40;       // per-level indent
@@ -789,7 +789,7 @@ function GroupMessageChatArea(props) {
           {block.children &&
             block.children.length > 0 &&
             expandedMessages[block._id.$oid] && (
-              <div style={{ marginLeft: "20px" }}>
+              <div style={{ marginLeft: 0 }}>
                 {renderMessages(block.children, depth + 1)}
               </div>
             )}
