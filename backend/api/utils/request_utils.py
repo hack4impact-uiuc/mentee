@@ -296,13 +296,18 @@ def application_model(role):
         raise ValueError("Invalid role")
 
 
-def get_organization_by_partner_id(application):
-    if application.partner:
-        try:
-            partner_data = PartnerProfile.objects.get(id=application.partner)
-            application.organization = partner_data.organization
-        except:
-            application.organization = None
-    else:
-        application.organization = None
-    return application
+def get_organizations_by_applications(applications):
+    partner_ids = set()
+    for app in applications:
+        if app.partner:
+            partner_ids.add(app.partner)
+
+    partners = PartnerProfile.objects.filter(id__in=partner_ids)
+    partner_dict = {str(partner.id): partner for partner in partners}
+
+    for app in applications:
+        if app.partner and app.partner in partner_dict.keys():
+            app.organization = partner_dict[app.partner].organization
+        else:
+            app.organization = None
+    return applications
