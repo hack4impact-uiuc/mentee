@@ -36,7 +36,7 @@ from api.utils.request_utils import (
     MenteeApplicationForm,
     PartnerApplicationForm,
     get_profile_model,
-    get_organizations_by_applications,
+    get_organization_by_partner_id,
 )
 from api.utils.constants import Account
 from firebase_admin import auth as firebase_admin_auth
@@ -50,20 +50,20 @@ apply = Blueprint("apply", __name__)
 @apply.route("/", methods=["GET"])
 @admin_only
 def get_applications():
-    new_applications = list(NewMentorApplication.objects.all())
-    old_applications = list(MentorApplication.objects.all())
-    applications = get_organizations_by_applications(
-        new_applications + old_applications
-    )
-    return create_response(data={"mentor_applications": applications})
+    new_application = NewMentorApplication.objects
+    old_application = MentorApplication.objects
+
+    new_application = [get_organization_by_partner_id(app) for app in new_application]
+    application = [y for x in [new_application, old_application] for y in x]
+    return create_response(data={"mentor_applications": application})
 
 
 @apply.route("/menteeApps", methods=["GET"])
 @admin_only
 def get_mentee_applications():
-    applications = list(MenteeApplication.objects.all())
-    applications = get_organizations_by_applications(applications)
-    return create_response(data={"mentor_applications": applications})
+    application = MenteeApplication.objects
+    application = [get_organization_by_partner_id(app) for app in application]
+    return create_response(data={"mentor_applications": application})
 
 
 # GET request for mentor applications for by id
