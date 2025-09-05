@@ -52,9 +52,8 @@ apply = Blueprint("apply", __name__)
 def get_applications():
     new_applications = list(NewMentorApplication.objects.all())
     old_applications = list(MentorApplication.objects.all())
-    applications = get_organizations_by_applications(
-        new_applications + old_applications
-    )
+    new_applications = get_organizations_by_applications(new_applications)
+    applications = new_applications + old_applications
     return create_response(data={"mentor_applications": applications})
 
 
