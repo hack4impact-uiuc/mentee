@@ -3,6 +3,8 @@ import moment from "moment";
 import "./css/MentorApplicationView.scss";
 
 const questions = {
+  organization:
+    "What organization is supporting you locally or what organization are you affiliated with? ",
   referral: "From whom or where did you hear about us?",
   donation: "Are you able to offer a donation for one year?",
   methods: "Methods of mentorship:",
@@ -51,6 +53,10 @@ function MentorAppInfo({ info }) {
       <div className="single-info-section">
         <div className="question">Email</div>
         <div className="answer">{info.email}</div>
+      </div>
+      <div className="question">{questions.organization}</div>
+      <div className="answer">
+        {info.organization ? info.organization : "No affiliation"}
       </div>
       <div className="single-info-section">
         <div className="question">{questions.referral}</div>

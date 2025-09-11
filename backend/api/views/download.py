@@ -146,10 +146,13 @@ def download_apps_info():
     partner_object = {}
     try:
         if account_type == Account.MENTOR:
-            apps = NewMentorApplication.objects
+            apps = NewMentorApplication.objects()
+            partner_data = PartnerProfile.objects()
+            for partner_item in partner_data:
+                partner_object[str(partner_item.id)] = partner_item.organization
         elif account_type == Account.MENTEE:
-            apps = MenteeApplication.objects
-            partner_data = PartnerProfile.objects
+            apps = MenteeApplication.objects()
+            partner_data = PartnerProfile.objects()
             for partner_item in partner_data:
                 partner_object[str(partner_item.id)] = partner_item.organization
 
@@ -159,7 +162,7 @@ def download_apps_info():
         return create_response(status=422, message=msg)
 
     if account_type == Account.MENTOR:
-        return download_mentor_apps(apps)
+        return download_mentor_apps(apps, partner_object)
     elif account_type == Account.MENTEE:
         return download_mentee_apps(apps, partner_object)
 
@@ -168,7 +171,7 @@ def download_apps_info():
     return create_response(status=422, message=msg)
 
 
-def download_mentor_apps(apps):
+def download_mentor_apps(apps, partner_object):
     accts = []
 
     for acct in apps:
@@ -196,6 +199,13 @@ def download_mentor_apps(apps):
                 acct.pastLiveLocation,
                 acct.application_state,
                 acct.notes,
+                (
+                    partner_object[acct.partner]
+                    if acct.partner and acct.partner in partner_object
+                    else acct.organization
+                    if acct.organization
+                    else ""
+                ),
             ]
         )
     columns = [
@@ -221,6 +231,7 @@ def download_mentor_apps(apps):
         "past live location",
         "application state",
         "notes",
+        "Organization Affiliation",
     ]
     return generate_sheet("accounts", accts, columns)
 

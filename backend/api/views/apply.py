@@ -36,6 +36,7 @@ from api.utils.request_utils import (
     MenteeApplicationForm,
     PartnerApplicationForm,
     get_profile_model,
+    get_organizations_by_applications,
 )
 from api.utils.constants import Account
 from firebase_admin import auth as firebase_admin_auth
@@ -49,18 +50,19 @@ apply = Blueprint("apply", __name__)
 @apply.route("/", methods=["GET"])
 @admin_only
 def get_applications():
-    new_application = NewMentorApplication.objects
-    old_application = MentorApplication.objects
-
-    application = [y for x in [new_application, old_application] for y in x]
-    return create_response(data={"mentor_applications": application})
+    new_applications = list(NewMentorApplication.objects.all())
+    old_applications = list(MentorApplication.objects.all())
+    new_applications = get_organizations_by_applications(new_applications)
+    applications = new_applications + old_applications
+    return create_response(data={"mentor_applications": applications})
 
 
 @apply.route("/menteeApps", methods=["GET"])
 @admin_only
 def get_mentee_applications():
-    application = MenteeApplication.objects
-    return create_response(data={"mentor_applications": application})
+    applications = list(MenteeApplication.objects.all())
+    applications = get_organizations_by_applications(applications)
+    return create_response(data={"mentor_applications": applications})
 
 
 # GET request for mentor applications for by id
@@ -69,6 +71,11 @@ def get_mentee_applications():
 def get_application_by_id(id):
     try:
         application = NewMentorApplication.objects.get(id=id)
+        if application is not None and application.partner is not None:
+            partner_data = PartnerProfile.objects.get(id=application.partner)
+            if partner_data is not None:
+                application.organization = partner_data.organization
+        return create_response(data={"mentor_application": application})
     except:
         try:
             application = MentorApplication.objects.get(id=id)

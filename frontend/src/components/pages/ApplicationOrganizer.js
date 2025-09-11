@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Select, Table, Button, Popconfirm } from "antd";
+import { Modal, Select, Table, Button, Popconfirm, Spin, Empty } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import {
   fetchApplications,
@@ -24,6 +24,7 @@ function ApplicationOrganizer({ isMentor }) {
   const [visible, setVisible] = useState(false);
   const [selectedID, setSelectedID] = useState(null);
   const [appInfo, setAppInfo] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const columns = [
     {
@@ -37,6 +38,17 @@ function ApplicationOrganizer({ isMentor }) {
       dataIndex: "email",
       key: "email",
       render: (email) => <a>{email}</a>,
+    },
+    {
+      title: "Affiliation",
+      dataIndex: "organization",
+      key: "organization",
+      render: (organization, record) =>
+        organization ? (
+          <a href={`/gallery/3/${record.partner}`}>{organization}</a>
+        ) : (
+          <span>No affiliation</span>
+        ),
     },
     {
       title: "Notes",
@@ -68,7 +80,6 @@ function ApplicationOrganizer({ isMentor }) {
         </>
       ),
     },
-
     {
       title: "Full Application",
       dataIndex: "id",
@@ -111,6 +122,40 @@ function ApplicationOrganizer({ isMentor }) {
 
   useEffect(() => {
     const getAllApplications = async () => {
+      setLoading(true);
+      try {
+        const applications = await fetchApplications(isMentor);
+        if (applications) {
+          const newApplications = applications.mentor_applications.map(
+            (app, index) => {
+              return {
+                ...app,
+                index: index,
+                id: app._id["$oid"],
+              };
+            }
+          );
+          setApplicationData(newApplications);
+          setFilterdData(newApplications);
+        } else {
+          setApplicationData([]);
+          setFilterdData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching applications:", error);
+        setApplicationData([]);
+        setFilterdData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    onAuthStateChanged(getAllApplications);
+  }, []);
+
+  const updateApps = async () => {
+    setLoading(true);
+    try {
       const applications = await fetchApplications(isMentor);
       if (applications) {
         const newApplications = applications.mentor_applications.map(
@@ -122,35 +167,24 @@ function ApplicationOrganizer({ isMentor }) {
             };
           }
         );
-        setApplicationData(newApplications);
-        setFilterdData(newApplications);
-      }
-    };
-
-    onAuthStateChanged(getAllApplications);
-  }, []);
-
-  const updateApps = async () => {
-    const applications = await fetchApplications(isMentor);
-    if (applications) {
-      const newApplications = applications.mentor_applications.map(
-        (app, index) => {
-          return {
-            ...app,
-            index: index,
-            id: app._id["$oid"],
-          };
+        if (appState !== "all") {
+          setApplicationData(newApplications);
+          setFilterdData(filterApplications(newApplications, appState));
+        } else {
+          setApplicationData(newApplications);
+          setFilterdData(newApplications);
         }
-      );
-      if (appState !== "all") {
-        setApplicationData(newApplications);
-        setFilterdData(filterApplications(newApplications, appState));
       } else {
-        setApplicationData(newApplications);
-        setFilterdData(newApplications);
+        setApplicationData([]);
+        setFilterdData([]);
       }
+    } catch (error) {
+      console.error("Error updating applications:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
   /**
    * Filters application by application state and items stored in the corresponding named columns
    */
@@ -170,6 +204,7 @@ function ApplicationOrganizer({ isMentor }) {
         }));
     }
   }
+
   const handleModalClose = async () => {
     await updateApps();
     setVisible(false);
@@ -224,14 +259,27 @@ function ApplicationOrganizer({ isMentor }) {
         value={appState}
         options={[...getAppStatusOptions(), { value: "all", label: "All" }]}
       />
+
       <div style={{ margin: 10 }}>
-        <Table
-          id="applicationstable"
-          columns={columns}
-          dataSource={filterdData}
-        />
-        ;
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "50px" }}>
+            <Spin size="large" />
+            <p>Loading applications...</p>
+          </div>
+        ) : filterdData.length === 0 ? (
+          <Empty
+            description="No applications found"
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+          />
+        ) : (
+          <Table
+            id="applicationstable"
+            columns={columns}
+            dataSource={filterdData}
+          />
+        )}
       </div>
+
       {selectedID && (
         <Modal
           open={visible}
@@ -253,6 +301,7 @@ function ApplicationOrganizer({ isMentor }) {
     </div>
   );
 }
+
 const styles = {
   modalInput: {
     height: 65,

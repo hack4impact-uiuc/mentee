@@ -33,6 +33,7 @@ class NewMentorApplication(Document, Mixin):
     traingStatus = DictField(required=False)
     specializations = ListField(StringField(), required=False)
     partner = StringField()
+    organization = StringField()
 
     def __repr__(self):
         return f"""<Mentor Application email: {self.email}
