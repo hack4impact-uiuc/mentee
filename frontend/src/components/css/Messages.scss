@@ -581,13 +581,12 @@ $text-secondary: rgba(0, 0, 0, 0.45);
   }
 }
 
-
 /* --- Fix reply input responsiveness --- */
 .reply-message-container {
   /* let it actually shrink */
-  min-width: 0;            /* override 500px */
+  min-width: 0; /* override 500px */
   width: 100%;
-  padding-left: 0;         /* 50px eats space on phones */
+  padding-left: 0; /* 50px eats space on phones */
   gap: 8px;
   display: flex;
   align-items: center;
@@ -618,12 +617,12 @@ $text-secondary: rgba(0, 0, 0, 0.45);
 /* Prevent the footer from causing horizontal scrollbars on mobile */
 @media (max-width: 761px) {
   .conversation-footer {
-    width: 100%;            /* override 100vw */
+    width: 100%; /* override 100vw */
     padding: 12px;
   }
 
   .conversation-footer .message-input-container {
-    max-width: 100%;        /* override 80% cap */
+    max-width: 100%; /* override 80% cap */
     margin-left: 0;
   }
 
@@ -634,7 +633,7 @@ $text-secondary: rgba(0, 0, 0, 0.45);
   .message-with-icons .message-input,
   .message-with-icons .ant-input,
   .message-with-icons textarea {
-    min-width: 0;           /* allow shrink in flex */
+    min-width: 0; /* allow shrink in flex */
   }
 
   /* If your phones are very narrow, allow wrap for the reply row */
@@ -651,12 +650,10 @@ $text-secondary: rgba(0, 0, 0, 0.45);
 
 /* General text safety */
 .message-text {
-  overflow-wrap: anywhere;   /* prevent long URLs from breaking layout */
+  overflow-wrap: anywhere; /* prevent long URLs from breaking layout */
   word-break: break-word;
 }
 
-
 .reply-message-container .emoji-container {
-  right: 8px;  /* avoid off-screen */
+  right: 8px; /* avoid off-screen */
 }
-

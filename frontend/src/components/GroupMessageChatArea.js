@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Avatar, Input, Button, Spin, theme, Dropdown, Popconfirm ,Grid} from "antd";
+import {
+  Avatar,
+  Input,
+  Button,
+  Spin,
+  theme,
+  Dropdown,
+  Popconfirm,
+  Grid,
+} from "antd";
 import { withRouter, NavLink } from "react-router-dom";
 import moment from "moment-timezone";
 import { SendOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
@@ -14,7 +23,6 @@ import {
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
 import { ACCOUNT_TYPE } from "utils/consts";
-
 
 const { useBreakpoint } = Grid;
 
@@ -470,9 +478,9 @@ function GroupMessageChatArea(props) {
 
   const MAX_XS_INDENT_DEPTH = 4;
   const computeIndent = (d) => {
-    const isSmall = !screens.md;          // true when width < 768px
-    const base = isSmall ? 16 : 40;       // per-level indent
-    const cap  = isSmall ? 64 : 240;      // absolute pixel cap (optional)
+    const isSmall = !screens.md; // true when width < 768px
+    const base = isSmall ? 16 : 40; // per-level indent
+    const cap = isSmall ? 64 : 240; // absolute pixel cap (optional)
     const effectiveDepth = isSmall ? Math.min(d, MAX_XS_INDENT_DEPTH) : d;
 
     return Math.min(effectiveDepth * base, cap);
@@ -489,7 +497,7 @@ function GroupMessageChatArea(props) {
       return (
         <div className={isParent ? styles.parentMessageContainer : ""}>
           <div
-              style={{ marginLeft: indent }}
+            style={{ marginLeft: indent }}
             className="chatRight__items you-received"
           >
             <div
