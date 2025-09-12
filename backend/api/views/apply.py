@@ -1,6 +1,6 @@
 from os import name
 from bson import is_valid
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from sqlalchemy import null
 from api.models import (
     Admin,
@@ -31,12 +31,14 @@ from api.utils.constants import (
 )
 from api.utils.request_utils import (
     send_email,
+    send_email_async,
     is_invalid_form,
     MentorApplicationForm,
     MenteeApplicationForm,
     PartnerApplicationForm,
     get_profile_model,
     get_organizations_by_applications,
+    get_admin_emails,
 )
 from api.utils.constants import Account
 from firebase_admin import auth as firebase_admin_auth
@@ -375,32 +377,33 @@ def delete_application(id, role):
 @apply.route("/<id>/<role>", methods=["PUT"])
 @admin_only
 def edit_application(id, role):
-    admin_data = Admin.objects()
-
     data = request.get_json()
     preferred_language = data.get("preferred_language", "en-US")
     if preferred_language not in TRANSLATIONS:
         preferred_language = "en-US"
+
     role = int(role)
     logger.info(data)
-    # Try to retrieve Mentor application from database
-    if role == Account.MENTOR:
-        try:
-            try:
-                application = NewMentorApplication.objects.get(id=id)
-            except:
-                application = MentorApplication.objects.get(id=id)
-        except:
-            msg = "No application with that object id"
-            logger.info(msg)
-            return create_response(status=422, message=msg)
-    if role == Account.MENTEE:
-        try:
-            application = MenteeApplication.objects.get(id=id)
-        except:
-            msg = "No application with that object id"
-            logger.info(msg)
-            return create_response(status=422, message=msg)
+
+    try:
+        if role == Account.MENTOR:
+            application = (
+                NewMentorApplication.objects(id=id).first()
+                or MentorApplication.objects(id=id).first()
+            )
+        elif role == Account.MENTEE:
+            application = MenteeApplication.objects(id=id).first()
+        else:
+            return create_response(status=422, message="Invalid role")
+
+        if not application:
+            return create_response(
+                status=422, message="No application with that object id"
+            )
+
+    except Exception as e:
+        logger.error(f"Error retrieving application: {e}")
+        return create_response(status=500, message="Internal server error")
 
     application.application_state = data.get(
         "application_state", application.application_state
@@ -408,86 +411,69 @@ def edit_application(id, role):
     application.notes = data.get("notes", application.notes)
     application.save()
 
-    # Send a notification email
-    if application.application_state == NEW_APPLICATION_STATUS["PENDING"]:
-        if role == Account.MENTOR:
-            mentor_email = application.email
-            success, msg = send_email(
-                recipient=mentor_email,
-                template_id=MENTOR_APP_SUBMITTED,
-                data={
-                    preferred_language: True,
-                    "subject": TRANSLATIONS[preferred_language]["app_approved"],
-                },
-            )
-        if role == Account.MENTEE:
-            mentor_email = application.email
-            success, msg = send_email(
-                recipient=mentor_email,
-                template_id=MENTEE_APP_SUBMITTED,
-                data={
-                    preferred_language: True,
-                    "subject": TRANSLATIONS[preferred_language]["app_approved"],
-                },
-            )
+    app_context = current_app.app_context()
+    new_state = application.application_state
 
-        if not success:
-            logger.info(msg)
-    if application.application_state == NEW_APPLICATION_STATUS["APPROVED"]:
+    if new_state == NEW_APPLICATION_STATUS["PENDING"]:
+        template_id = (
+            MENTOR_APP_SUBMITTED if role == Account.MENTOR else MENTEE_APP_SUBMITTED
+        )
+        send_email_async(
+            recipient=application.email,
+            template_id=template_id,
+            data={
+                preferred_language: True,
+                "subject": TRANSLATIONS[preferred_language]["app_approved"],
+            },
+            app_context=app_context,
+        )
+
+    elif new_state == NEW_APPLICATION_STATUS["APPROVED"]:
         front_url = data.get("front_url", "")
         n50_url = ""
-        if application.partner == N50_ID_DEV or application.partner == N50_ID_PROD:
+        if application.partner in [N50_ID_DEV, N50_ID_PROD]:
             n50_url = "n50/"
-        target_url = (
-            front_url
-            + n50_url
-            + "application-training?role="
-            + str(role)
-            + "&email="
-            + urllib.parse.quote(application.email)
-        )
-        mentor_email = application.email
-        success, msg = send_email(
-            recipient=mentor_email,
+        target_url = f"{front_url}{n50_url}application-training?role={role}&email={urllib.parse.quote(application.email)}"
+
+        send_email_async(
+            recipient=application.email,
+            template_id=APP_APROVED,
             data={
                 "link": target_url,
                 preferred_language: True,
                 "subject": TRANSLATIONS[preferred_language]["app_approved"],
             },
-            template_id=APP_APROVED,
+            app_context=app_context,
         )
-        if not success:
-            logger.info(msg)
 
-        # Add to verified emails
-
-    # send out rejection emails when put in rejected column
-    if application.application_state == NEW_APPLICATION_STATUS["REJECTED"]:
-        mentor_email = application.email
-        success, msg = send_email(
-            recipient=mentor_email,
+    elif new_state == NEW_APPLICATION_STATUS["REJECTED"]:
+        send_email_async(
+            recipient=application.email,
             template_id=MENTOR_APP_REJECTED,
             data={
                 preferred_language: True,
                 "subject": TRANSLATIONS[preferred_language]["app_rejected"],
             },
+            app_context=app_context,
         )
-    if application.application_state == NEW_APPLICATION_STATUS["COMPLETED"]:
-        mentor_email = application.email
-        success, msg = send_email(
-            recipient=mentor_email,
+
+    elif new_state == NEW_APPLICATION_STATUS["COMPLETED"]:
+        send_email_async(
+            recipient=application.email,
             template_id=PROFILE_COMPLETED,
             data={
                 preferred_language: True,
                 "subject": TRANSLATIONS[preferred_language]["profile_completed"],
             },
+            app_context=app_context,
         )
-        for admin in admin_data:
-            txt_role = "Mentor"
-            if role == Account.MENTEE:
-                txt_role = "Mentee"
-            success, msg = send_email(
-                recipient=admin.email,
+
+        admin_emails = get_admin_emails()
+        txt_role = "Mentor" if role == Account.MENTOR else "Mentee"
+
+        for admin_email in admin_emails:
+            send_email_async(
+                recipient=admin_email,
                 template_id=ALERT_TO_ADMINS,
                 data={
                     "name": application.name,
@@ -496,34 +482,30 @@ def edit_application(id, role):
                     "action": "completed profile",
                     preferred_language: True,
                 },
+                app_context=app_context,
             )
-        if not success:
-            logger.info(msg)
-    if application.application_state == NEW_APPLICATION_STATUS["BUILDPROFILE"]:
+
+    elif new_state == NEW_APPLICATION_STATUS["BUILDPROFILE"]:
         front_url = data.get("front_url", "")
-        target_url = (
-            front_url
-            + "build-profile?role="
-            + str(role)
-            + "&email="
-            + urllib.parse.quote(application.email)
-        )
-        mentor_email = application.email
-        success, msg = send_email(
-            recipient=mentor_email,
+        target_url = f"{front_url}build-profile?role={role}&email={urllib.parse.quote(application.email)}"
+
+        send_email_async(
+            recipient=application.email,
+            template_id=TRAINING_COMPLETED,
             data={
                 "link": target_url,
                 preferred_language: True,
                 "subject": TRANSLATIONS[preferred_language]["training_complete"],
             },
-            template_id=TRAINING_COMPLETED,
+            app_context=app_context,
         )
-        for admin in admin_data:
-            txt_role = "Mentor"
-            if role == Account.MENTEE:
-                txt_role = "Mentee"
-            success, msg = send_email(
-                recipient=admin.email,
+
+        admin_emails = get_admin_emails()
+        txt_role = "Mentor" if role == Account.MENTOR else "Mentee"
+
+        for admin_email in admin_emails:
+            send_email_async(
+                recipient=admin_email,
                 template_id=ALERT_TO_ADMINS,
                 data={
                     "name": application.name,
@@ -532,11 +514,10 @@ def edit_application(id, role):
                     "action": "completed training",
                     preferred_language: True,
                 },
+                app_context=app_context,
             )
-        if not success:
-            logger.info(msg)
 
-    return create_response(status=200, message=f"Success")
+    return create_response(status=200, message="Success")
 
 
 # POST request for Mentee Appointment
