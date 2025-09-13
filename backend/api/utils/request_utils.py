@@ -1,6 +1,5 @@
 import os
 from typing import List, Optional, Union
-import threading
 from wtforms import Form
 from wtforms.fields import StringField, BooleanField, FieldList, IntegerField, FormField
 
@@ -27,7 +26,6 @@ from api.models import (
     Hub,
 )
 from api.utils.constants import Account, TARGET_LANGS
-from api.core import logger
 
 wtforms_json.init()
 
@@ -262,32 +260,6 @@ def send_sms(text: str = "", recipient: str = "") -> Tuple[bool, str]:
         return False, str(e)
 
     return True, ""
-
-
-def send_email_async(recipient, template_id, data, app_context):
-    """Send email in background thread"""
-
-    def send_with_context():
-        with app_context:
-            success, msg = send_email(
-                recipient=recipient, template_id=template_id, data=data
-            )
-            if not success:
-                logger.info(f"Async email failed: {msg}")
-
-    thread = threading.Thread(target=send_with_context)
-    thread.daemon = True
-    thread.start()
-
-
-def get_admin_emails():
-    """Get admin emails"""
-
-    try:
-        return [admin.email for admin in Admin.objects.only("email")]
-    except Exception as e:
-        logger.error(f"Error retrieving admin emails: {e}")
-        return []
 
 
 def get_profile_model(role):
