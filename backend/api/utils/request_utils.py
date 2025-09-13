@@ -1,6 +1,8 @@
 import os
 from typing import List, Optional, Union
 import threading
+
+from flask import copy_current_request_context
 from wtforms import Form
 from wtforms.fields import StringField, BooleanField, FieldList, IntegerField, FormField
 
@@ -267,6 +269,7 @@ def send_sms(text: str = "", recipient: str = "") -> Tuple[bool, str]:
 def send_email_async(recipient, template_id, data, app_context):
     """Send email in background thread"""
 
+    @copy_current_request_context
     def send_with_context():
         with app_context:
             success, msg = send_email(
