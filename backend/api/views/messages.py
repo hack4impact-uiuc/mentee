@@ -381,11 +381,11 @@ def get_sidebar_mentors(page_number):
     for message_item in all_messages:
         sender_id = message_item.sender_id
         recipient_id = message_item.recipient_id
-        
+
         if sender_id not in messages_by_sender_or_recipient:
             messages_by_sender_or_recipient[sender_id] = []
         messages_by_sender_or_recipient[sender_id].append(message_item)
-        
+
         if recipient_id not in messages_by_sender_or_recipient:
             messages_by_sender_or_recipient[recipient_id] = []
         messages_by_sender_or_recipient[recipient_id].append(message_item)
@@ -524,9 +524,7 @@ def get_sidebar_mentors(page_number):
 
             if view_mode == "mentee-to-mentor":
                 mentee_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg.sender_id == contact_id
+                    msg for msg in conversation_messages if msg.sender_id == contact_id
                 ]
                 if not mentee_messages:
                     skip_conversation = True
@@ -535,9 +533,7 @@ def get_sidebar_mentors(page_number):
 
             elif view_mode == "mentor-to-mentee":
                 mentor_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg.sender_id == user_id
+                    msg for msg in conversation_messages if msg.sender_id == user_id
                 ]
                 if not mentor_messages:
                     skip_conversation = True
@@ -547,9 +543,7 @@ def get_sidebar_mentors(page_number):
             elif view_mode == "mentors":
                 # For mentors only, ensure the latest message is from mentor
                 mentor_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg.sender_id == user_id
+                    msg for msg in conversation_messages if msg.sender_id == user_id
                 ]
                 if not mentor_messages:
                     skip_conversation = True
@@ -558,9 +552,7 @@ def get_sidebar_mentors(page_number):
 
             elif view_mode == "mentees":
                 mentee_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg.sender_id == contact_id
+                    msg for msg in conversation_messages if msg.sender_id == contact_id
                 ]
                 if not mentee_messages:
                     skip_conversation = True
