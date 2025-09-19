@@ -114,6 +114,14 @@ function ProfileContent(props) {
     ));
   };
 
+  const getPlainTags = (tags) => {
+    return tags.map((tag, idx) => (
+      <span className="mentor-plain-tag" key={idx}>
+        {tag}
+      </span>
+    ));
+  };
+
   const displayTags = () => {
     if (accountType == ACCOUNT_TYPE.HUB) {
       return <></>;
@@ -396,7 +404,7 @@ function ProfileContent(props) {
               <div className="mentor-profile-heading">
                 <b>{t("common.immigrationStatus")}</b>
               </div>
-              <div>{getTags(props.mentor.immigrant_status)}</div>
+              <div>{getPlainTags(props.mentor.immigrant_status)}</div>
               <br />
             </>
           )}
@@ -405,7 +413,7 @@ function ProfileContent(props) {
               <div className="mentor-profile-heading">
                 <b>{t("common.workOptions")}</b>
               </div>
-              <div>{getTags(props.mentor.workstate)}</div>
+              <div>{getPlainTags(props.mentor.workstate)}</div>
             </>
           )}
         </>
@@ -487,13 +495,24 @@ function ProfileContent(props) {
         </>
       )}
       {props.mentor.video && (
-        <div className="mentor-profile-heading">
+        <>
           <div className="mentor-profile-heading">
             <b>{t("commonProfile.video")}</b>
           </div>
-          <LinkOutlined className="mentor-profile-tag-icon" />
-          <Tooltip
-            title={
+          <div>
+            <LinkOutlined className="mentor-profile-tag-icon" />
+            <Tooltip
+              title={
+                <a
+                  href={formatLinkForHref(props.mentor.video.url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {props.mentor.video.url}
+                </a>
+              }
+              placement="topLeft"
+            >
               <a
                 href={formatLinkForHref(props.mentor.video.url)}
                 target="_blank"
@@ -501,22 +520,14 @@ function ProfileContent(props) {
               >
                 {props.mentor.video.url}
               </a>
-            }
-            placement="topLeft"
-          >
-            <a
-              href={formatLinkForHref(props.mentor.video.url)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {props.mentor.video.url}
-            </a>
-          </Tooltip>
-        </div>
+            </Tooltip>
+          </div>
+          <br />
+        </>
       )}
       {props.mentor.pair_partner && props.mentor.pair_partner.email && (
         <>
-          <div style={{ marginTop: "20px" }} className="mentor-profile-heading">
+          <div className="mentor-profile-heading">
             <b>{t("common.partner")}</b>
           </div>
           <Avatar

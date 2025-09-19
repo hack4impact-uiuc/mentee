@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   padding: 2%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 // TODO: Fix this. It is currently a temp fix for hidden edit
@@ -19,6 +21,19 @@
 }
 .mentor-profile-about {
   word-wrap: break-word;
+  line-height: 1.6;
+  color: #495057;
+}
+
+.mentor-profile-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212529;
+  margin: 16px 0 8px 0;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #800020;
+  display: block;
+  width: fit-content;
 }
 
 .mentor-profile-contact-icon {
@@ -28,6 +43,10 @@
 }
 
 @media (max-width: 768px) {
+  .mentor-profile-content-flexbox {
+    padding: 1rem;
+  }
+
   .mentor-profile-contact {
     margin-top: 4px;
   }
@@ -37,7 +56,52 @@
   }
 
   .mentor-profile-heading {
-    margin: 0;
+    margin: 12px 0 6px 0;
+    font-size: 16px;
+  }
+
+  .mentor-profile-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: 20px;
+  }
+
+  .mentor-profile-decorations {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mentor-profile-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .mentor-profile-tags-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mentor-profile-tag {
+    margin: 2px 0;
+  }
+
+  .mentor-specialization-tag {
+    margin: 2px 6px 2px 0;
+    font-size: 11px;
+    display: inline-block;
+    width: auto;
+    min-width: fit-content;
+
+    &:not(:last-child)::after {
+      content: " • ";
+      color: #666;
+      margin-left: 6px;
+      font-weight: normal;
+    }
   }
 }
 
@@ -64,7 +128,10 @@
     justify-content: space-between;
     flex-direction: row;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #f0f0f0;
   }
 
   .mentor-profile-decorations {
@@ -100,15 +167,15 @@
   }
 
   .mentor-profile-tag {
-    max-width: 25%;
-    padding-right: 20px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    padding: 4px 0;
+    margin: 2px 16px 2px 0;
+    background-color: transparent;
+    border: none;
   }
 
   .mentor-profile-tag-icon {
-    margin-right: 4px;
+    margin-right: 8px;
+    color: #6c757d;
   }
 
   .mentor-profile-about {
@@ -116,15 +183,31 @@
   }
 
   .mentor-specialization-tag {
-    border: 1px solid black;
-    border-radius: 13px;
-    font-weight: bold;
+    background-color: #800020;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 12px;
     display: inline-block;
     text-align: center;
-    padding-left: 12px;
-    padding-right: 12px;
-    margin-top: 6px;
-    margin-right: 6px;
+    padding: 6px 12px;
+    margin: 3px 6px 3px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .mentor-plain-tag {
+    color: #333;
+    font-weight: normal;
+    font-size: 14px;
+    display: inline-block;
+    margin: 2px 12px 2px 0;
+
+    &:not(:last-child)::after {
+      content: " • ";
+      color: #999;
+      margin-left: 8px;
+    }
   }
 
   .mentor-profile-contact {
