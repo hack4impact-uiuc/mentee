@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Modal, Select, Table, Button, Popconfirm, Spin, Empty } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import {
@@ -25,6 +25,33 @@ function ApplicationOrganizer({ isMentor }) {
   const [selectedID, setSelectedID] = useState(null);
   const [appInfo, setAppInfo] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const handleApplicationStateChange = useCallback(
+    async (id, newState) => {
+      const updatedData = applicationData.map((app) =>
+        app.id === id ? { ...app, application_state: newState } : app
+      );
+      setApplicationData(updatedData);
+
+      if (appState !== "all") {
+        setFilterdData(filterApplications(updatedData, appState));
+      } else {
+        setFilterdData(updatedData);
+      }
+
+      try {
+        await updateApplicationById(
+          { application_state: newState },
+          id,
+          isMentor
+        );
+      } catch (error) {
+        console.error("Update failed:", error);
+        await updateApps();
+      }
+    },
+    [applicationData, appState, isMentor]
+  );
 
   const columns = [
     {
@@ -66,13 +93,7 @@ function ApplicationOrganizer({ isMentor }) {
             style={styles.modalInput}
             type="dropdown-single"
             title={""}
-            onChange={async (e) => {
-              const dataa = {
-                application_state: e,
-              };
-              await updateApplicationById(dataa, id, isMentor);
-              await updateApps();
-            }}
+            onChange={(e) => handleApplicationStateChange(id, e)}
             options={getAppStatusOptions()}
             value={record.application_state}
             handleClick={() => {}}

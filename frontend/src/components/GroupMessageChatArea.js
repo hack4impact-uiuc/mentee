@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Avatar, Input, Button, Spin, theme, Dropdown, Popconfirm } from "antd";
+import {
+  Avatar,
+  Input,
+  Button,
+  Spin,
+  theme,
+  Dropdown,
+  Popconfirm,
+  Grid,
+} from "antd";
 import { withRouter, NavLink } from "react-router-dom";
 import moment from "moment-timezone";
 import { SendOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
@@ -14,6 +23,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { css } from "@emotion/css";
 import { ACCOUNT_TYPE } from "utils/consts";
+
+const { useBreakpoint } = Grid;
 
 function GroupMessageChatArea(props) {
   const {
@@ -463,19 +474,30 @@ function GroupMessageChatArea(props) {
 
     return formattedText;
   };
+  const screens = useBreakpoint();
+
+  const MAX_XS_INDENT_DEPTH = 4;
+  const computeIndent = (d) => {
+    const isSmall = !screens.md; // true when width < 768px
+    const base = isSmall ? 16 : 40; // per-level indent
+    const cap = isSmall ? 64 : 240; // absolute pixel cap (optional)
+    const effectiveDepth = isSmall ? Math.min(d, MAX_XS_INDENT_DEPTH) : d;
+
+    return Math.min(effectiveDepth * base, cap);
+  };
 
   const renderMessages = (data, depth = 0) => {
     return data.map((block) => {
       let sender_user = particiants.find(
         (x) => x._id.$oid === block.sender_id.$oid
       );
-
+      const indent = computeIndent(depth);
       const isParent = !block.parent_message_id;
 
       return (
         <div className={isParent ? styles.parentMessageContainer : ""}>
           <div
-            style={{ marginLeft: 50 * depth + "px" }}
+            style={{ marginLeft: indent }}
             className="chatRight__items you-received"
           >
             <div
@@ -775,7 +797,7 @@ function GroupMessageChatArea(props) {
           {block.children &&
             block.children.length > 0 &&
             expandedMessages[block._id.$oid] && (
-              <div style={{ marginLeft: "20px" }}>
+              <div style={{ marginLeft: 0 }}>
                 {renderMessages(block.children, depth + 1)}
               </div>
             )}

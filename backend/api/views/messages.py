@@ -379,12 +379,16 @@ def get_sidebar_mentors(page_number):
     messages_by_sender_or_recipient = {}
 
     for message_item in all_messages:
-        if message_item.sender_id not in messages_by_sender_or_recipient:
-            messages_by_sender_or_recipient[message_item.sender_id] = []
-        messages_by_sender_or_recipient[message_item.sender_id].append(message_item)
-        if message_item.recipient_id not in messages_by_sender_or_recipient:
-            messages_by_sender_or_recipient[message_item.recipient_id] = []
-        messages_by_sender_or_recipient[message_item.recipient_id].append(message_item)
+        sender_id = message_item.sender_id
+        recipient_id = message_item.recipient_id
+
+        if sender_id not in messages_by_sender_or_recipient:
+            messages_by_sender_or_recipient[sender_id] = []
+        messages_by_sender_or_recipient[sender_id].append(message_item)
+
+        if recipient_id not in messages_by_sender_or_recipient:
+            messages_by_sender_or_recipient[recipient_id] = []
+        messages_by_sender_or_recipient[recipient_id].append(message_item)
 
     if partner_id == "all":
         all_mentees = MenteeProfile.objects()
@@ -433,7 +437,7 @@ def get_sidebar_mentors(page_number):
         user_id = mentor.id
         mentor_user = json.loads(mentor.to_json())
         try:
-            sent_messages = ()
+            sent_messages = []
             if user_id in messages_by_sender_or_recipient:
                 sent_messages = messages_by_sender_or_recipient[user_id]
         except:
@@ -442,10 +446,11 @@ def get_sidebar_mentors(page_number):
             continue
         contacts = []
         for message in sent_messages:
-            if str(user_id) == message["recipient_id"]:
-                contacts.append(message["sender_id"])
-            else:
-                contacts.append(message["recipient_id"])
+            # Handle ObjectId comparison properly
+            if user_id == message.recipient_id:
+                contacts.append(message.sender_id)
+            elif user_id == message.sender_id:
+                contacts.append(message.recipient_id)
         contacts = list(dict.fromkeys(contacts))
         for contact_id in contacts:
             try:
@@ -468,8 +473,8 @@ def get_sidebar_mentors(page_number):
                 messagee
                 for messagee in sent_messages
                 if (
-                    messagee["recipient_id"] == contact_id
-                    or messagee["sender_id"] == contact_id
+                    messagee.recipient_id == contact_id
+                    or messagee.sender_id == contact_id
                 )
             ]
 
@@ -519,9 +524,7 @@ def get_sidebar_mentors(page_number):
 
             if view_mode == "mentee-to-mentor":
                 mentee_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg["sender_id"] == contact_id
+                    msg for msg in conversation_messages if msg.sender_id == contact_id
                 ]
                 if not mentee_messages:
                     skip_conversation = True
@@ -530,9 +533,7 @@ def get_sidebar_mentors(page_number):
 
             elif view_mode == "mentor-to-mentee":
                 mentor_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg["sender_id"] == str(user_id)
+                    msg for msg in conversation_messages if msg.sender_id == user_id
                 ]
                 if not mentor_messages:
                     skip_conversation = True
@@ -542,9 +543,7 @@ def get_sidebar_mentors(page_number):
             elif view_mode == "mentors":
                 # For mentors only, ensure the latest message is from mentor
                 mentor_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg["sender_id"] == str(user_id)
+                    msg for msg in conversation_messages if msg.sender_id == user_id
                 ]
                 if not mentor_messages:
                     skip_conversation = True
@@ -553,9 +552,7 @@ def get_sidebar_mentors(page_number):
 
             elif view_mode == "mentees":
                 mentee_messages = [
-                    msg
-                    for msg in conversation_messages
-                    if msg["sender_id"] == contact_id
+                    msg for msg in conversation_messages if msg.sender_id == contact_id
                 ]
                 if not mentee_messages:
                     skip_conversation = True
