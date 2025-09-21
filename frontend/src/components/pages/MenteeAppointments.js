@@ -47,12 +47,14 @@ function MenteeAppointments() {
           border: 2px solid ${colorPrimaryBg};
 
           border-radius: 13px;
-          margin: 1.5em 10% 0 0;
+          margin: 1.5em 0 0 0;
           padding: 1.7em 2.25em;
+          box-sizing: border-box;
+          max-width: 100%;
 
           @media only screen and (max-width: 768px) {
-            margin-right: 2em;
-            padding: 1em 1.5em;
+            margin-right: 0;
+            padding: 1em 1rem;
           }
         `}
       >
@@ -131,17 +133,29 @@ function MenteeAppointments() {
   }, [user]);
 
   return (
-    <div className="mentee-appointments-page">
+    <div
+      className="mentee-appointments-page"
+      style={{ overflowX: "hidden", padding: "1rem" }}
+    >
       {!haveInterest && <MenteeInterestModal />}
       <div className="mentee-appts-section">
         <div className="mentee-appts-header">
-          {t("menteeAppointments.welcome", { name: user?.name })}
+          <span
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "wrap",
+              display: "inline-block",
+              verticalAlign: "bottom",
+            }}
+          >
+            {t("menteeAppointments.welcome", { name: user?.name })}
+          </span>
         </div>
         <div className="mentee-appts-container">
           <Select
             defaultValue={currentTab.value}
             className="mentee-appts-overlay-style"
-            bordered={false}
             options={appointmentTabs}
             onChange={handleOverlayChange}
           />
