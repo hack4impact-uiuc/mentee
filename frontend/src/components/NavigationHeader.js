@@ -197,10 +197,17 @@ function NavigationHeader() {
           open={openDropdown}
           placement="bottom"
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", maxWidth: "200px" }}>
-            <Avatar 
-              size={24} 
-              src={user?.image?.url} 
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              maxWidth: "200px",
+            }}
+          >
+            <Avatar
+              size={24}
+              src={user?.image?.url}
               icon={<UserOutlined />}
               style={{ flexShrink: 0 }}
             />
