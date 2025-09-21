@@ -133,7 +133,10 @@ function MenteeAppointments() {
   }, [user]);
 
   return (
-    <div className="mentee-appointments-page" style={{ overflowX: "hidden", padding: "1rem" }}>
+    <div
+      className="mentee-appointments-page"
+      style={{ overflowX: "hidden", padding: "1rem" }}
+    >
       {!haveInterest && <MenteeInterestModal />}
       <div className="mentee-appts-section">
         <div className="mentee-appts-header">
@@ -146,7 +149,7 @@ function MenteeAppointments() {
               verticalAlign: "bottom",
             }}
           >
-             {t("menteeAppointments.welcome", { name: user?.name })}
+            {t("menteeAppointments.welcome", { name: user?.name })}
           </span>
         </div>
         <div className="mentee-appts-container">
