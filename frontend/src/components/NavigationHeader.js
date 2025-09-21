@@ -169,6 +169,7 @@ function NavigationHeader() {
     >
       {user &&
         !user.timezone &&
+        !isMobile &&
         (role === ACCOUNT_TYPE.MENTEE ||
           role === ACCOUNT_TYPE.MENTOR ||
           role === ACCOUNT_TYPE.PARTNER) && (
@@ -196,10 +197,24 @@ function NavigationHeader() {
           open={openDropdown}
           placement="bottom"
         >
-          <Space>
-            <Avatar size={24} src={user?.image?.url} icon={<UserOutlined />} />
-            {user?.name}
-          </Space>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", maxWidth: "200px" }}>
+            <Avatar 
+              size={24} 
+              src={user?.image?.url} 
+              icon={<UserOutlined />}
+              style={{ flexShrink: 0 }}
+            />
+            <span
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                minWidth: 0,
+              }}
+            >
+              {user?.name}
+            </span>
+          </div>
         </Dropdown>
         {role !== ACCOUNT_TYPE.ADMIN && <LanguageDropdown />}
         <Tooltip title={t("common.bug")}>
