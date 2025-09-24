@@ -489,6 +489,26 @@ def create_mentor_profile():
     if account_type == Account.MENTOR:
         data["taking_appointments"] = True
 
+    # Check for duplicate email before proceeding
+    if account_type == Account.MENTOR:
+        existing_mentor = MentorProfile.objects(email=email).first()
+        if existing_mentor:
+            msg = f"Email {email} is already registered as a mentor"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+    elif account_type == Account.MENTEE:
+        existing_mentee = MenteeProfile.objects(email=email).first()
+        if existing_mentee:
+            msg = f"Email {email} is already registered as a mentee"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+    elif account_type == Account.PARTNER:
+        existing_partner = PartnerProfile.objects(email=email).first()
+        if existing_partner:
+            msg = f"Email {email} is already registered as a partner"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+
     validate_data = None
     if account_type == Account.MENTOR:
         validate_data = MentorForm.from_json(data)
@@ -696,6 +716,26 @@ def create_profile_existing_account():
         msg = "Missing account_type param or account_type param is not an int"
         logger.info(msg)
         return create_response(status=422, message=msg)
+
+    # Check for duplicate email before proceeding
+    if account_type == Account.MENTOR:
+        existing_mentor = MentorProfile.objects(email=email).first()
+        if existing_mentor:
+            msg = f"Email {email} is already registered as a mentor"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+    elif account_type == Account.MENTEE:
+        existing_mentee = MenteeProfile.objects(email=email).first()
+        if existing_mentee:
+            msg = f"Email {email} is already registered as a mentee"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
+    elif account_type == Account.PARTNER:
+        existing_partner = PartnerProfile.objects(email=email).first()
+        if existing_partner:
+            msg = f"Email {email} is already registered as a partner"
+            logger.info(msg)
+            return create_response(status=422, message=msg)
 
     validate_data = None
     if account_type == Account.MENTOR:

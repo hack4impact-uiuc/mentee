@@ -2,18 +2,28 @@
 
 .mentee-appointments-page {
   display: flex;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .mentee-appts-section {
   width: 70%;
   padding-left: 2em;
   margin-bottom: 2em;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .mentee-appts-header {
   margin-top: 4em;
   font-size: large;
   font-weight: bold;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .mentee-appts-container {
@@ -154,10 +164,22 @@
 @media only screen and (max-width: 768px) {
   .mentee-appointments-page {
     flex-direction: column;
+    padding: 0 0.5rem;
   }
 
   .mentee-appts-section {
     width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mentee-appts-header {
+    margin-top: 2em;
+    font-size: 1.1rem;
+  }
+
+  .mentee-appts-container {
+    margin-top: 1.5em;
   }
 
   .status-section {
