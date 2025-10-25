@@ -277,7 +277,7 @@ export const TIMEZONE_OPTIONS = [
   },
   {
     value: "UTC+03:00",
-    label: "(UTC+03:00) Moscow, St. Petersburg, Volgograd",
+    label: "(UTC+03:00) East Africa Time",
   },
   { value: "UTC+04:00", label: "(UTC+04:00) Abu Dhabi, Muscat" },
   { value: "UTC+05:00", label: "(UTC+05:00) Islamabad, Karachi" },
